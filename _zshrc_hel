@@ -6,7 +6,7 @@ setopt appendhistory
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/julgoe/.zshrc'
+zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -38,7 +38,7 @@ compinit
 
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
 REPORTTIME=10 # print elapsed time when more than 10 seconds
-source /etc/zsh_command_not_found # to get info about similar commands
+#source /etc/zsh_command_not_found # to get info about similar commands
 PATH=$PATH:~/myConfigFiles/toolbox
 
 alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
@@ -50,7 +50,7 @@ alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/julgoe/.oh-my-zsh
+  export ZSH=/wang/users/jgoeltz/cluster_home/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
