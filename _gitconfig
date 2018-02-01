@@ -1,0 +1,9 @@
+[user]
+	email = goeltz@stud.uni-heidelberg.de
+	name = JulianGoeltz
+[alias]
+	adog = log --all --decorate --oneline --graph
+	co = checkout
+	st = status
+[core]
+	pager = less -FRSX

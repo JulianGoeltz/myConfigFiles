@@ -1,0 +1,16 @@
+# powerline
+#source "/home/julgoe/venvs/py2nest/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+
+# in .tmux.conf
+set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
+
+
+# List of plugins from https://github.com/tmux-plugins/tpm
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+# from https://github.com/tmux-plugins/tmux-battery
+set -g @plugin 'tmux-plugins/tmux-battery'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'

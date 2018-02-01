@@ -1,0 +1,142 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory
+bindkey -v
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/julgoe/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+
+######## Own stuff
+#source $HOME/nest/bin/nest_vars.sh
+#source $HOME/neuron/nrnenv
+#alias bluetoothqc="./based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* Bose QC35'|grep -o '\S*:\S*')"
+#alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
+# disable lightdm for a starting into ttyX instead of Xserver
+# sudo systemctl disable lightdm.service
+# reenable by using BOTH
+# sudo systemctl reenable lightdm.service
+# AND
+# sudo dpkg-reconfigure lightdm
+#alias guistart="sudo systemctl start lightdm.service"
+#alias guistop="sudo systemctl stop  lightdm.service"
+#alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
+#alias lock="gnome-screensaver-command --lock; sudo pm-suspend"
+#function lock {
+#	(sleep 1; sudo pm-suspend) &
+#	vlock -a	
+#}
+#if [ -x /usr/bin/mint-fortune ]; then
+#     /usr/bin/mint-fortune
+#fi
+
+setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
+REPORTTIME=10 # print elapsed time when more than 10 seconds
+source /etc/zsh_command_not_found # to get info about similar commands
+PATH=$PATH:~/myConfigFiles/toolbox
+
+alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+######## end
+
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+  export ZSH=/home/julgoe/.oh-my-zsh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="robbyrussell"
+
+# Set list of themes to load
+# Setting this variable when ZSH_THEME=random
+# cause zsh load theme from this variable instead of
+# looking in ~/.oh-my-zsh/themes/
+# An empty array have no effect
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+HIST_STAMPS="yyyy-mm-dd"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  git tmux
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"

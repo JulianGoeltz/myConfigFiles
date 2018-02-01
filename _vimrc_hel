@@ -1,0 +1,120 @@
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+Plug 'tmhedberg/SimpylFold'
+Plug 'vim-scripts/indentpython.vim'
+"Autocomplete
+Plug 'Valloric/YouCompleteMe'
+"Syntax check
+Plug 'vim-syntastic/syntastic'
+"Check PEP8
+Plug 'nvie/vim-flake8'
+"Color Schemes
+"Plug 'jnurmine/Zenburn'
+Plug 'altercation/vim-colors-solarized'
+"File Browsing
+"Plug 'scrooloose/nerdtree'
+"Searching
+Plug 'kien/ctrlp.vim'
+"Git
+Plug 'tpope/vim-fugitive'
+"Powerline. installed via pip
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+"Latex 
+Plug 'lervag/vimtex'
+"Diff parts of one file
+Plug 'AndrewRadev/linediff.vim'
+"vimwiki
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+" Initialize plugin system
+call plug#end()
+
+
+set nocompatible
+filetype plugin on
+syntax on
+set encoding=utf-8
+
+"use solarized colorscheme
+syntax enable
+colorscheme default
+set background=dark
+"let g:solarized_termcolors=16
+
+let g:SimpylFold_docstring_preview=1
+
+"Line numbering
+set nu
+"Use system clipboard
+set clipboard=unnamedplus
+
+"hide .pyc files
+"let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+
+let python_highlight_all=1
+
+"in order to have cursor at end of pasted stuff
+nnoremap p gp
+"noremap p gp
+nnoremap gP P
+"noremap gP P
+
+"python with virtualenv support
+"may result in problems if py != py2/3 with execfile
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+"easier navigations with split windows
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Enable folding
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+
+"automatically start search and highlight
+set incsearch hlsearch
+
+"on pressing tab show list of options, dont just insert first
+set wildmenu
+"always show at least one line below cursor and 5 to the side (scroll
+"apprptly)
+set scrolloff=1
+set sidescrolloff=5
+
+"for forward search in latex with zathura
+let g:vimtex_view_method = 'zathura'
+
+"for linediff
+noremap \ldt :Linediff<CR>
+noremap \ldo :LinediffReset<CR>
+
+"powerline
+set laststatus=2 " Always display the statusline in all windows
+
+"new lines into normal mode
+nmap <C-o> O<Esc>
+nmap <CR> o<Esc>
+
+"let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/', 'path_html':'~/Dropbox/uni/MasterThesis/vimwikiH/'}]
+
+
