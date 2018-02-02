@@ -10,6 +10,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 "Autocomplete
+""""""" BUILD AFTER INSTALLATION
 Plug 'Valloric/YouCompleteMe'
 "Syntax check
 Plug 'vim-syntastic/syntastic'
@@ -24,7 +25,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
 "Git
 Plug 'tpope/vim-fugitive'
-"Powerline. installed via pip
+"Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup

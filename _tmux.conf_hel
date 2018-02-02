@@ -1,5 +1,5 @@
 # powerline
-#source "/home/julgoe/venvs/py2nest/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+source "/wang/users/jgoeltz/cluster_home/pip_files/powerline/bindings/tmux/powerline.conf"
 
 # in .tmux.conf
 set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '

@@ -49,6 +49,8 @@ PATH=$PATH:~/pip_files
 
 alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+
+#alias loadPowerline=". /wang/users/jgoeltz/cluster_home/pip_files/powerline/bindings/zsh/powerline.zsh"
 ######## end
 
 
