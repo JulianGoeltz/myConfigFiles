@@ -19,10 +19,12 @@ function module ()
 { 
     eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd bash $*`
 }
-#source $HOME/nest/bin/nest_vars.sh
-#source $HOME/neuron/nrnenv
+module purge
+module load waf
+module load spack_visionary-defaults/2017-12-01 
+spack load nest
 #alias bluetoothqc="./based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* Bose QC35'|grep -o '\S*:\S*')"
-#alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
+alias cdmaster="cd ~/MasterThesis/"
 # disable lightdm for a starting into ttyX instead of Xserver
 # sudo systemctl disable lightdm.service
 # reenable by using BOTH
@@ -46,6 +48,8 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 #source /etc/zsh_command_not_found # to get info about similar commands
 PATH=$PATH:~/myConfigFiles/toolbox
 PATH=$PATH:~/pip_files
+export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
+export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
 
 export MANPATH=/usr/local/share/man:$MANPATH
 
