@@ -33,7 +33,7 @@ function lock {
 	vlock -a	
 }
 if [ -x /usr/bin/mint-fortune ]; then
-     /usr/bin/mint-fortune
+     #/usr/bin/mint-fortune
 fi
 
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
@@ -43,6 +43,8 @@ PATH=$PATH:~/myConfigFiles/toolbox
 
 alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+
+#alias loadPowerline=". /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh"
 ######## end
 
 
