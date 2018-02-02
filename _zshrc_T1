@@ -41,8 +41,8 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 source /etc/zsh_command_not_found # to get info about similar commands
 PATH=$PATH:~/myConfigFiles/toolbox
 
-alias sshhel="ssh -p -X 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
-alias sshice="ssh -p -X 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+alias sshhel="ssh -X -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+alias sshice="ssh -X -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other"
 alias cdmaster_hel="cd /mnt/hel_fs/"
 
