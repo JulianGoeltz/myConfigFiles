@@ -45,6 +45,7 @@ setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share 
 REPORTTIME=10 # print elapsed time when more than 10 seconds
 #source /etc/zsh_command_not_found # to get info about similar commands
 PATH=$PATH:~/myConfigFiles/toolbox
+PATH=$PATH:~/pip_files
 
 alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
