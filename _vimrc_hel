@@ -21,7 +21,9 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
 "Git
 Plug 'tpope/vim-fugitive'
-"Powerline-status installed via pip (on hel with pip install -v -b ~/tmpbuild -t ~/pip_files powerline-status
+"Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
+python import sys
+python sys.path.append('~/pip_files')
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
