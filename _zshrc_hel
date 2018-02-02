@@ -15,6 +15,10 @@ compinit
 
 ######## Own stuff
 source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
+function module () 
+{ 
+    eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd bash $*`
+}
 #source $HOME/nest/bin/nest_vars.sh
 #source $HOME/neuron/nrnenv
 #alias bluetoothqc="./based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* Bose QC35'|grep -o '\S*:\S*')"
