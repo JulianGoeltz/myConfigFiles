@@ -1,6 +1,9 @@
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
+"   this is using vim-plug https://github.com/junegunn/vim-plug
+"   download vim-plug in .vim folder
+"   plugins installed by :PlugInstall
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
@@ -117,4 +120,5 @@ nmap <CR> o<Esc>
 
 let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/', 'path_html':'~/Dropbox/uni/MasterThesis/vimwikiH/'}]
 
-
+map <leader><Space> :set foldlevel=0<CR>
+map <leader><Space><Space> :set foldlevel=99<CR>
