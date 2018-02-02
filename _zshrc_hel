@@ -47,6 +47,8 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 PATH=$PATH:~/myConfigFiles/toolbox
 PATH=$PATH:~/pip_files
 
+export MANPATH=/usr/local/share/man:$MANPATH
+
 alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 
