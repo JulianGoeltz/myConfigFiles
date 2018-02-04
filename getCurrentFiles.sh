@@ -6,22 +6,13 @@ then
 	HOST=hel
 else
 	echo neither T1 nor wang system
+	exit
 fi
 
 
 
 
 if [ "$1" = "get" ]
-then
-	echo _GETTING_ .zshrc, .vimrc, .gitconfig, .tmux, .ipython config and the folder .vim/after from home directory
-	cp ../.zshrc ./_zshrc_$HOST
-	cp ../.vimrc ./_vimrc_$HOST
-	cp ../.tmux.conf ./_tmux.conf_$HOST
-	cp ../.ipython/profile_default/ipython_config.py ./ipython_config_$HOST.py
-	cp ../.gitconfig ./_gitconfig
-	mkdir -p ./_vim/after
-	cp -r ../.vim/after/ ./_vim/
-elif [ "$1" = "set" ]
 then
 	echo git diff ./_zshrc_$HOST ../.zshrc
 	git diff ./_zshrc_$HOST ../.zshrc
@@ -35,6 +26,35 @@ then
 	git diff ./_gitconfig ../.gitconfig
 	echo diff -r ./_vim/after ../.vim/after
 	diff -r ./_vim/after ../.vim/after
+	read -p "##### Are you sure you want to get the config files? (y/Y sets config, all else stops): " choice
+	case "$choice" in 
+	  y|Y ) 
+		  echo "   Continuing..."
+		  ;;
+	  * ) exit;;
+	esac
+	echo _GETTING_ .zshrc, .vimrc, .gitconfig, .tmux, .ipython config and the folder .vim/after from home directory
+	cp ../.zshrc ./_zshrc_$HOST
+	cp ../.vimrc ./_vimrc_$HOST
+	cp ../.tmux.conf ./_tmux.conf_$HOST
+	cp ../.ipython/profile_default/ipython_config.py ./ipython_config_$HOST.py
+	cp ../.gitconfig ./_gitconfig
+	mkdir -p ./_vim/after
+	cp -r ../.vim/after/ ./_vim/
+elif [ "$1" = "set" ]
+then
+	echo git diff ../.zshrc ./_zshrc_$HOST 
+	git diff ../.zshrc ./_zshrc_$HOST 
+	echo git diff ../.vimrc ./_vimrc_$HOST
+	git diff ../.vimrc ./_vimrc_$HOST
+	echo git diff ../.tmux.conf ./_tmux.conf_$HOST
+	git diff ../.tmux.conf ./_tmux.conf_$HOST
+	echo git diff ../.ipython/profile_default/ipython_config.py ./ipython_config_$HOST.py
+	git diff ../.ipython/profile_default/ipython_config.py ./ipython_config_$HOST.py
+	echo git diff ../.gitconfig ./_gitconfig
+	git diff ../.gitconfig ./_gitconfig
+	echo diff -r ../.vim/after ./_vim/after
+	diff -r ../.vim/after ./_vim/after
 	read -p "##### Are you sure you want to set the config files? (y/Y sets config, all else stops): " choice
 	case "$choice" in 
 	  y|Y ) 
@@ -50,6 +70,33 @@ then
 	cp ./_gitconfig ../.gitconfig
 	mkdir -p ../.vim/after
 	cp -r ./_vim/after ../.vim/
+elif [ "$1" = "comp" ]
+then
+	echo git diff --no-index ./_zshrc_T1 ./_zshrc_hel
+	git diff --no-index ./_zshrc_T1 ./_zshrc_hel
+	echo git diff --no-index ./_vimrc_T1 ./_vimrc_hel
+	git diff --no-index ./_vimrc_T1 ./_vimrc_hel
+	echo git diff --no-index ./_tmux.conf_T1 ./_tmux.conf_hel
+	git diff --no-index ./_tmux.conf_T1 ./_tmux.conf_hel
+	echo git diff --no-index ./ipython_config_T1.py ./ipython_config_hel.py
+	git diff --no-index ./ipython_config_T1.py ./ipython_config_hel.py
+	read -p "##### type z, v, t or i to vimdiff respective, or else to quit: " choice
+	case "$choice" in 
+	  z|Z ) 
+		  file=_zshrc ;;
+	  v|V ) 
+		  file=_vimrc ;;
+	  t|T ) 
+		  file=_tmux.conf ;;
+	  i|I ) 
+		  file=ipython_config ;;
+	  * ) exit;;
+	esac
+	vimdiff "$file"_T1 "$file"_hel
 else
-	echo pass set or get to set or get
+	echo git diff ../.gitconfig ./_gitconfig
+	git diff ../.gitconfig ./_gitconfig
+	echo diff -r ../.vim/after ./_vim/after
+	diff -r ../.vim/after ./_vim/after
+	echo pass set or get to set or get - or comp
 fi

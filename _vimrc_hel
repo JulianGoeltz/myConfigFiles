@@ -4,6 +4,8 @@
 "   this is using vim-plug https://github.com/junegunn/vim-plug
 "   download vim-plug in .vim folder
 "   plugins installed by :PlugInstall
+set nocompatible	" Use Vim defaults instead of 100% vi compatibility
+set backspace=indent,eol,start	" more powerful backspacing
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes

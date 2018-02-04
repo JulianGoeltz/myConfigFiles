@@ -23,7 +23,7 @@ module purge
 module load waf
 module load spack_visionary-defaults/2017-12-01 
 spack load nest
-#alias bluetoothqc="./based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* Bose QC35'|grep -o '\S*:\S*')"
+
 alias cdmaster="cd ~/MasterThesis/"
 # disable lightdm for a starting into ttyX instead of Xserver
 # sudo systemctl disable lightdm.service
@@ -31,17 +31,7 @@ alias cdmaster="cd ~/MasterThesis/"
 # sudo systemctl reenable lightdm.service
 # AND
 # sudo dpkg-reconfigure lightdm
-#alias guistart="sudo systemctl start lightdm.service"
-#alias guistop="sudo systemctl stop  lightdm.service"
-#alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
 #alias lock="gnome-screensaver-command --lock; sudo pm-suspend"
-#function lock {
-#	(sleep 1; sudo pm-suspend) &
-#	vlock -a	
-#}
-#if [ -x /usr/bin/mint-fortune ]; then
-#     /usr/bin/mint-fortune
-#fi
 
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
 REPORTTIME=10 # print elapsed time when more than 10 seconds
