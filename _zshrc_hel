@@ -14,6 +14,7 @@ compinit
 
 
 ######## Own stuff
+export LC_COLLATE=en_US.UTF-8
 source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
 function module () 
 { 
