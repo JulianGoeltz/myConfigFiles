@@ -94,9 +94,5 @@ then
 	esac
 	vimdiff "$file"_T1 "$file"_hel
 else
-	echo git diff ../.gitconfig ./_gitconfig
-	git diff ../.gitconfig ./_gitconfig
-	echo diff -r ../.vim/after ./_vim/after
-	diff -r ../.vim/after ./_vim/after
 	echo pass set or get to set or get - or comp
 fi
