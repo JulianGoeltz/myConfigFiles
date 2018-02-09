@@ -15,7 +15,10 @@ compinit
 
 ######## Own stuff
 export LC_COLLATE=en_US.UTF-8
-source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
+alias spack_global="source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh"
+alias spack_local="source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh"
+spack_global
+
 function module () 
 { 
     eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd bash $*`
