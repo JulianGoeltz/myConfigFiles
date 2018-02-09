@@ -20,6 +20,8 @@ then
 	git diff ./_vimrc_$HOST ../.vimrc
 	echo git diff ./_tmux.conf_$HOST ../.tmux.conf
 	git diff ./_tmux.conf_$HOST ../.tmux.conf
+	echo git diff ./_ssh_config_$HOST ../.ssh/config
+	git diff ./_ssh_config_$HOST ../.ssh/config
 	echo git diff ./ipython_config_$HOST.py ../.ipython/profile_default/ipython_config.py
 	git diff ./ipython_config_$HOST.py ../.ipython/profile_default/ipython_config.py
 	echo git diff ./_gitconfig ../.gitconfig
@@ -37,6 +39,7 @@ then
 	cp ../.zshrc ./_zshrc_$HOST
 	cp ../.vimrc ./_vimrc_$HOST
 	cp ../.tmux.conf ./_tmux.conf_$HOST
+	cp ../.ssh/config ./_ssh_config_$HOST
 	cp ../.ipython/profile_default/ipython_config.py ./ipython_config_$HOST.py
 	cp ../.gitconfig ./_gitconfig
 	mkdir -p ./_vim/after
@@ -49,6 +52,8 @@ then
 	git diff ../.vimrc ./_vimrc_$HOST
 	echo git diff ../.tmux.conf ./_tmux.conf_$HOST
 	git diff ../.tmux.conf ./_tmux.conf_$HOST
+	echo git diff ../.ssh/config ./_ssh_config_$HOST
+	git diff ../.ssh/config ./_ssh_config_$HOST
 	echo git diff ../.ipython/profile_default/ipython_config.py ./ipython_config_$HOST.py
 	git diff ../.ipython/profile_default/ipython_config.py ./ipython_config_$HOST.py
 	echo git diff ../.gitconfig ./_gitconfig
@@ -66,6 +71,7 @@ then
 	cp ./_zshrc_$HOST ../.zshrc
 	cp ./_vimrc_$HOST ../.vimrc
 	cp ./_tmux.conf_$HOST ../.tmux.conf
+	cp ./_ssh_config_$HOST ../.ssh/config
 	cp ./ipython_config_$HOST.py ../.ipython/profile_default/ipython_config.py
 	cp ./_gitconfig ../.gitconfig
 	mkdir -p ../.vim/after
@@ -78,9 +84,11 @@ then
 	git diff --no-index ./_vimrc_T1 ./_vimrc_hel
 	echo git diff --no-index ./_tmux.conf_T1 ./_tmux.conf_hel
 	git diff --no-index ./_tmux.conf_T1 ./_tmux.conf_hel
+	echo git diff --no-index ./_ssh_config_T1 ./_ssh_config_hel
+	git diff --no-index ./_ssh_config_T1 ./_ssh_config_hel
 	echo git diff --no-index ./ipython_config_T1.py ./ipython_config_hel.py
 	git diff --no-index ./ipython_config_T1.py ./ipython_config_hel.py
-	read -p "##### type z, v, t or i to vimdiff respective, or else to quit: " choice
+	read -p "##### type z, v, t, s or i to vimdiff respective, or else to quit: " choice
 	case "$choice" in 
 	  z|Z ) 
 		  file=_zshrc ;;
@@ -88,6 +96,8 @@ then
 		  file=_vimrc ;;
 	  t|T ) 
 		  file=_tmux.conf ;;
+ 	  s|S )
+		  file=_ssh_config ;;
 	  i|I ) 
 		  file=ipython_config ;;
 	  * ) exit;;

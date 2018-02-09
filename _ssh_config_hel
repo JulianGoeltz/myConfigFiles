@@ -1,0 +1,2 @@
+host github*
+  ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
