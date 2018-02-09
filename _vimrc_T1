@@ -37,6 +37,8 @@ Plug 'lervag/vimtex'
 Plug 'AndrewRadev/linediff.vim'
 "vimwiki
 Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+"session managment
+Plug 'tpope/vim-obsession'
 " Initialize plugin system
 call plug#end()
 

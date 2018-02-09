@@ -6,6 +6,9 @@ source "/home/julgoe/venvs/py2nest/lib/python2.7/site-packages/powerline/binding
 # for url view-> press shortcut+u to view urls in buffer
 bind-key u capture-pane \; save-buffer /tmp/tmux-buffer \; new-window -n "urlview" '$SHELL -c "urlview < /tmp/tmux-buffer"'
 
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
 
 #set a Ctrl-b shortcut for reloading your tmux config
 bind r source-file ~/.tmux.conf
@@ -41,6 +44,13 @@ set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg
 # List of plugins from https://github.com/tmux-plugins/tpm
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
+
+# continuous ressurection:
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @continuum-restore 'on'
+# for vim
+set -g @resurrect-strategy-vim 'session'
 
 # from https://github.com/tmux-plugins/tmux-battery
 set -g @plugin 'tmux-plugins/tmux-battery'
