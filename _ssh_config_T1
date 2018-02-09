@@ -1,0 +1,3 @@
+Host gitviz.kip.uni-heidelberg.de
+    User git
+    IdentityFile ~/.ssh/gitviz.id_rsa
