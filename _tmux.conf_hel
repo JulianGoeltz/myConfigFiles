@@ -4,12 +4,9 @@
 
 # powerline
 # source "/wang/users/jgoeltz/cluster_home/pip_files/powerline/bindings/tmux/powerline.conf"
-if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "python3 ./tmpbuild/powerline-status/powerline    _status-2.6.data/scripts/powerline-config tmux setup"'
+if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "python3 ~/tmpbuild/powerline-status/powerline_status-2.6.data/scripts/powerline-config tmux setup"'
 # because others didnt work, try like this (if script gets deleted, it is also in my toolbox)
 #source "/wang/users/jgoeltz/cluster_home/spack/opt/spack/linux-debian8-x86_64/gcc-7.2.0/python-2.7.14-il3e37kckaqn4ipbyctr6e3cc2l6mpiu/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
-
-# in .tmux.conf
-# set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
 
 #set a Ctrl-b shortcut for reloading your tmux config
 bind r source-file ~/.tmux.conf
@@ -38,7 +35,9 @@ set -g status-interval 5
 set -g status-left-length 90
 set -g status-right-length 60
 set -g status-justify left
-set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
+#set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
+#set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
+set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| %a %d %b %R'
 
 # List of plugins from https://github.com/tmux-plugins/tpm
 set -g @plugin 'tmux-plugins/tpm'
