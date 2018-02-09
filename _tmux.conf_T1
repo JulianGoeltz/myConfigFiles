@@ -1,8 +1,7 @@
+#shortcut reference
+#https://danielmiessler.com/study/tmux/#reference
 # powerline
 source "/home/julgoe/venvs/py2nest/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
-
-# in .tmux.conf
-set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
 
 # for url view-> press shortcut+u to view urls in buffer
 bind-key u capture-pane \; save-buffer /tmp/tmux-buffer \; new-window -n "urlview" '$SHELL -c "urlview < /tmp/tmux-buffer"'
@@ -14,7 +13,6 @@ bind r source-file ~/.tmux.conf
 # Use vim bindings
 setw -g mode-keys vi
 
-
 #Remap pane navigation to vim
 unbind-key j
 bind-key j select-pane -D
@@ -25,6 +23,20 @@ bind-key h select-pane -L
 unbind-key l
 bind-key l select-pane -R
 
+#rename your terminals
+set -g set-titles on
+set -g set-titles-string '#(whoami)::#h'#::#(curl ipecho.net/plain;echo)'
+
+#Status bar customization
+set -g status-bg black
+set -g status-fg white
+set -g status-interval 5
+set -g status-left-length 90
+set -g status-right-length 60
+set -g status-justify left
+#set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
+#set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
+set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| Batt: #{battery_percentage} #{battery_remain}| %a %d %b %R'
 
 # List of plugins from https://github.com/tmux-plugins/tpm
 set -g @plugin 'tmux-plugins/tpm'
