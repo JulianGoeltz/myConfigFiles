@@ -125,3 +125,4 @@ let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/', 'path_html'
 
 map <leader><Space> :set foldlevel=0<CR>
 map <leader><Space><Space> :set foldlevel=99<CR>
+
