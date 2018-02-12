@@ -45,6 +45,8 @@ set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 
+set -g @plugin 'tmux-plugins/tmux-yank'
+
 # continuous ressurection:
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
