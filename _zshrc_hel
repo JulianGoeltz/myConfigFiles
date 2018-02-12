@@ -20,13 +20,14 @@ function module ()
 { 
     eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd bash $*`
 }
-module list
-module purge
-module list
 
-alias spack_global="source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh; module load waf; module load spack_visionary-defaults/2017-12-01; spack load nest"
+alias spack_global="source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh; module load waf; module load spack_visionary-defaults/2017-12-01; spack load nest; spack load py-pynn@0.7; module load nmpm_software/2018-02-01-1; spack load py-matplotlib"
 alias spack_local="source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh"
-# spack_global
+#module list
+#module purge
+#module list
+spack_global
+module list
 
 alias cdmaster="cd ~/MasterThesis/"
 # disable lightdm for a starting into ttyX instead of Xserver
