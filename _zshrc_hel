@@ -120,6 +120,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+RPROMPT='%{$fg[cyan]%}[%?]%{$reset_color%} | %{$fg[yellow]%}%*%{$reset_color%}'
+PROMPT='%B %{$fg[cyan]%}%c%b%{$reset_color%} $(git_prompt_info)'
 
 # User configuration
 
