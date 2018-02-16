@@ -19,6 +19,12 @@ source $HOME/neuron/nrnenv
 alias bluetoothqc="./based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* Bose QC35'|grep -o '\S*:\S*')"
 
 alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
+
+alias proxy_set="export ftp_proxy=http://proxy.kip.uni-heidelberg.de:2121; export http_proxy=http://proxy.kip.uni-heidelberg.de:8080; export https_proxy=https://proxy.kip.uni-heidelberg.de:8080"
+alias proxy_unset="export ftp_proxy=; export http_proxy=; export https_proxy="
+alias proxy_set_apt="sudo mv /etc/apt/_apt.conf /etc/apt/apt.conf"
+alias proxy_unset_apt="sudo mv /etc/apt/apt.conf /etc/apt/_apt.conf"
+
 # disable lightdm for a starting into ttyX instead of Xserver
 # sudo systemctl disable lightdm.service
 # reenable by using BOTH
