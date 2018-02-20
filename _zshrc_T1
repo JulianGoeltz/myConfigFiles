@@ -14,6 +14,10 @@ compinit
 
 
 ######## Own stuff
+export EDITOR=vim
+export VISUAL=vim
+alias vi=vim
+
 source $HOME/nest/bin/nest_vars.sh
 source $HOME/neuron/nrnenv
 alias bluetoothqc="./based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* Bose QC35'|grep -o '\S*:\S*')"
