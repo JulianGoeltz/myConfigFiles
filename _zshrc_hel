@@ -24,12 +24,25 @@ function module ()
     eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd bash $*`
 }
 
-alias spack_global="source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh; module load waf; module load spack_visionary-defaults/2017-12-01; spack load nest; spack load py-pynn@0.7; module load nmpm_software/2018-02-01-1; spack load py-matplotlib"
-alias spack_local="source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh"
+#spack_global
+source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
+module load waf
+module load spack_visionary-defaults/2017-12-01
+spack unload nest
+spack load nest@2.2.2
+spack load py-pynn@0.7
+spack load py-matplotlib
+spack load py-setuptools@35
+spack load py-packaging
+spack load py-flake8
+spack load py-appdirs
+
+#spack_local
+#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
 #module list
 #module purge
 #module list
-spack_global
+#module load nmpm_software/2018-02-01-1
 module list
 
 alias cdmaster="cd ~/MasterThesis/"

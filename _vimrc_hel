@@ -16,6 +16,7 @@ Plug 'vim-scripts/indentpython.vim'
 Plug 'Valloric/YouCompleteMe'
 "Syntax check
 Plug 'vim-syntastic/syntastic'
+let g:syntastic_python_checkers = ['flake8']
 "Check PEP8
 Plug 'nvie/vim-flake8'
 "Color Schemes
@@ -99,8 +100,10 @@ set foldlevel=99
 " Enable folding with the spacebar
 nnoremap <space> za
 
-"automatically start search and highlight
+"automatically start search and highlight, and caseinsensitiviy if lowercase
 set incsearch hlsearch
+set ignorecase
+set smartcase
 
 "on pressing tab show list of options, dont just insert first
 set wildmenu
