@@ -29,7 +29,7 @@ source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.
 module load waf
 module load spack_visionary-defaults/2017-12-01
 spack unload nest
-spack load nest@2.2.2
+spack load nest #@2.2.2
 spack load py-pynn@0.7
 spack load py-matplotlib
 spack load py-setuptools@35
@@ -44,6 +44,14 @@ spack load py-appdirs
 #module list
 #module load nmpm_software/2018-02-01-1
 module list
+
+function updateEnv ()
+{
+	# uses the current ssh agent and display to allow ssh forwarding and X11 forwarding
+	# -> pushing and pulling in git and display use
+	eval $(tmux show-environment -s | grep SSH_AUTH_SOCK)
+	eval $(tmux show-environment -s | grep DISPLAY)
+}
 
 alias cdmaster="cd ~/MasterThesis/"
 # disable lightdm for a starting into ttyX instead of Xserver

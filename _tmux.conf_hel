@@ -52,6 +52,7 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 # continuous ressurection:
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @continuum-save-interval '15'
 set -g @continuum-restore 'on'
 # for vim
 set -g @resurrect-strategy-vim 'session'
