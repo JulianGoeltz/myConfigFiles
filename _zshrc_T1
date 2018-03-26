@@ -54,7 +54,8 @@ PATH=$PATH:~/myConfigFiles/toolbox
 
 alias sshhel="ssh -A -X -o ConnectTimeout=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
-alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other"
+# alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other,IdentityFile=/home/julgoe/.ssh/id_rsa"
+alias sshhel_fs="sudo sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -o delay_connect,idmap=user,transform_symlinks,identityfile=~/.ssh/id_rsa,allow_other"
 alias sshhel_fs_unmount="sudo fusermount -u -z /mnt/hel_fs"
 alias cdmaster_hel="cd /mnt/hel_fs/"
 

@@ -5,3 +5,7 @@ Host gitviz.kip.uni-heidelberg.de
 Host brainscales-r.kip.uni-heidelberg.de:29418
     User goeltz
     IdentityFile ~/.ssh/gerrit_rsa
+
+Host brainscales-r.kip.uni-heidelberg.de:11022
+    User jgoeltz
+    IdentityFile ~/.ssh/id_rsa
