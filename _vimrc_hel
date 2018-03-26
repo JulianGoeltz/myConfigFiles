@@ -53,6 +53,8 @@ set encoding=utf-8
 syntax enable
 colorscheme default
 set background=dark
+set cursorline
+hi CursorLine cterm=NONE ctermbg=8
 "let g:solarized_termcolors=16
 
 let g:SimpylFold_docstring_preview=1

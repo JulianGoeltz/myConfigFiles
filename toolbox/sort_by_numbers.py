@@ -45,7 +45,9 @@ Options:
 
 __version__ = "0.0.3"
 
-_matcher = re.compile("([^-/]+?)_(\d+\.?\d*(?:e(?:\+|-|)\d+)?|[A-Za-z]+)(?:-|$|/|\.)")
+# _matcher = re.compile("([^-/]+?)_(\d+\.?\d*(?:e(?:\+|-|)\d+)?|[A-Za-z]+)(?:-|$|/|\.)")
+# in case the file is has suffix like dw_100-l2r_0.0010-learn_0.0050_training.svg
+_matcher = re.compile("([^-/]+?)_(\d+\.?\d*(?:e(?:\+|-|)\d+)?|[A-Za-z]+)(?:-|_|$|/)")
 
 
 def parse_filenames_for_numbers(filenames):
@@ -73,6 +75,8 @@ def sorted_filename(filenames, first=[], last=[],
 
     if verbose:
         print(fn_to_nums)
+
+    print("There are {} files ".format(len(fn_to_nums)), file=sys.stderr)
 
     num_numbers = map(len, fn_to_nums.itervalues())
     assert min(num_numbers) == max(num_numbers), "Amount of numbers varies"
@@ -105,6 +109,7 @@ def sorted_filename(filenames, first=[], last=[],
 
     order = first + order + last
 
+    print("Sorting like {}.".format(str(order)), file=sys.stderr)
     if verbose:
         print("Final order:", order)
 
