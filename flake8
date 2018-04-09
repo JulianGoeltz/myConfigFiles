@@ -1,0 +1,15 @@
+[flake8]
+ignore =
+    # F401: module imported but unused
+    F401,
+    # E402: module level import not at top of file
+    E402,
+    # E704: multiple statements on one line (def)
+    E704
+    # E401: multiple imports on one line
+    E401,
+    # W503: line break before binary operator
+    W503,
+    # E701: multiple statements on one line (colon)
+    E701,
+max-line-length = 120
