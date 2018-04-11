@@ -14,6 +14,8 @@ Plug 'vim-scripts/indentpython.vim'
 "Autocomplete
 """"""" BUILD AFTER INSTALLATION
 Plug 'Valloric/YouCompleteMe'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
+Plug 'jeaye/color_coded' " c colour coding
 "Syntax check
 Plug 'vim-syntastic/syntastic'
 let g:syntastic_python_checkers = ['flake8']
@@ -115,7 +117,7 @@ set scrolloff=1
 set sidescrolloff=5
 
 "for forward search in latex with zathura
-let g:vimtex_view_method = 'zathura'
+let g:vimtex_view_method = 'mupdf' "zathura'
 
 "for linediff
 noremap \ldt :Linediff<CR>
