@@ -15,7 +15,9 @@ Plug 'vim-scripts/indentpython.vim'
 """"""" BUILD AFTER INSTALLATION
 Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
-Plug 'jeaye/color_coded' " c colour coding
+" Not working.  Plug 'jeaye/color_coded' " c colour coding
+"Cpp highlightning
+Plug 'octol/vim-cpp-enhanced-highlight'
 "Syntax check
 Plug 'vim-syntastic/syntastic'
 let g:syntastic_python_checkers = ['flake8']
@@ -71,6 +73,8 @@ set clipboard=unnamedplus
 
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_extra_conf_vim_data = ['&filetype']
+"let g:ycm_extra_conf_globlist = ['~/MasterThesis/utils/adc_error/*']
 
 
 let python_highlight_all=1
