@@ -15,7 +15,7 @@ Plug 'vim-scripts/indentpython.vim'
 """"""" BUILD AFTER INSTALLATION
 Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
-Plug 'jeaye/color_coded' " c colour coding
+" not working. Plug 'jeaye/color_coded' " c colour coding
 "Syntax check
 Plug 'vim-syntastic/syntastic'
 "Check PEP8
