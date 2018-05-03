@@ -39,7 +39,9 @@ set -g status-right-length 60
 set -g status-justify left
 #set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
 #set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
-set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| Batt: #{battery_percentage} #{battery_remain}| %a %d %b %R'
+set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| Batt: #(acpi -b | grep  -o "[0-9]*%") & #(acpi -b | grep  -o "[0-9]*%"| tail -n1) #[fg=green]#(acpi -b |grep -o "Charging")#[fg=red]#(acpi -b |grep -o "Discharging") #[fg=white]| %a %d %b %R'
+# also look at checkLowBattery script
+# and acpi -b | grep -Po '[0-9]{2}:[0-9]{2}(?=:[0-9]{2})' as well as 
 
 # List of plugins from https://github.com/tmux-plugins/tpm
 set -g @plugin 'tmux-plugins/tpm'
@@ -55,7 +57,7 @@ set -g @continuum-restore 'on'
 set -g @resurrect-strategy-vim 'session'
 
 # from https://github.com/tmux-plugins/tmux-battery
-set -g @plugin 'tmux-plugins/tmux-battery'
+# not needed i think, as now done with acpi   set -g @plugin 'tmux-plugins/tmux-battery'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 # installed via $ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

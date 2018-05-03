@@ -1,0 +1,25 @@
+#!/bin/bash
+# from Higemaru on https://unix.stackexchange.com/questions/60778/how-can-i-get-an-alert-when-my-battery-is-about-to-die-in-linux-mint
+# used with (after chmod +x)
+## $ crontab -e
+## */5 * * * * /home/julgoe/myConfigFiles/checkLowBattery
+
+
+POWERSUPPLY="/sys/class/power_supply/AC/online" # could be different on your system!
+TOO_LOW=20 # how low is too low?
+NOT_CHARGING="0"
+ICON="/usr/share/icons/Mint-X/status/96/notification-battery-low.svg" # eye candy
+
+export DISPLAY=:0
+
+# BATTERY_LEVEL=$(acpi -b | grep -P -o '[0-9]+(?=%)')
+BATTERY_LEVEL=$(acpi -b | grep  -o '[0-9]*%' | grep -o '[0-9]*' | awk 'BEGIN{num=0}{ SUM += $1; num+=1} END { print SUM/num }')
+COMPARING_FLOATS=$(echo $BATTERY_LEVEL'<'$TOO_LOW | bc -l)
+STATUS=$(cat $POWERSUPPLY)
+
+if [ $BATTERY_LEVEL -le $TOO_LOW -a $STATUS = $NOT_CHARGING ]
+then
+    /usr/bin/notify-send -u critical -i "$ICON" -t 3000 "Battery low" "Battery level is ${BATTERY_LEVEL}%!"
+fi
+
+exit 0
