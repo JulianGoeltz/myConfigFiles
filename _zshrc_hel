@@ -17,6 +17,7 @@ compinit
 export LC_COLLATE=en_US.UTF-8
 export EDITOR=vim
 export VISUAL=vim
+export LESS=-Ri
 alias vi=vim
 
 function module () 
@@ -29,8 +30,8 @@ export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:
 #spack_global
 source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
 module load waf
-module load spack_visionary-defaults/2017-12-01
-module load developmisc_189 # for vim+x
+# module load spack_visionary-defaults/2017-12-01
+module load developmisc_288 # for vim+x
 # spack unload nest
 # spack load nest@2.2
 spack load nest
