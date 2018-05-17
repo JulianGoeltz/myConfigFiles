@@ -20,7 +20,7 @@ alias vi=vim
 
 source $HOME/nest/bin/nest_vars.sh
 source $HOME/neuron/nrnenv
-alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* LE-Bose QC35'|grep -o '\S*:\S*')"
+alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* Bose QC35'|grep -o '\S*:\S*')"
 
 alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
 
@@ -59,7 +59,7 @@ alias sshhel_fs="sudo sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de
 alias sshhel_fs_unmount="sudo fusermount -u -z /mnt/hel_fs"
 alias cdmaster_hel="cd /mnt/hel_fs/"
 
-#alias loadPowerline=". /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh"
+eval $(thefuck --alias) # for corrcet bindings
 ######## end
 
 
@@ -124,7 +124,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git tmux
+  git tmux thefuck
 )
 
 source $ZSH/oh-my-zsh.sh
