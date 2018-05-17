@@ -2,7 +2,9 @@
 
 functionCall='sbatch -p '
 # if third argument 
-if [ $# -gt 2 ]; then
+if [ $# -gt 3 ]; then
+	functionCall=$functionCall'experiment --wmod '$3' --hicann '$4' '
+elif [ $# -gt 2 ]; then
 	functionCall=$functionCall'experiment --wmod '$3' '
 else
 	functionCall=$functionCall'simulation '

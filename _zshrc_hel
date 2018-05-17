@@ -94,7 +94,7 @@ export MANPATH=/usr/local/share/man:$MANPATH
 alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 
-eval $(thefuck --alias) # for corrcet bindings
+# eval $(thefuck --alias) # for corrcet bindings
 ######## end
 
 
@@ -159,7 +159,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git tmux thefuck
+  git tmux # thefuck
 )
 
 source $ZSH/oh-my-zsh.sh
