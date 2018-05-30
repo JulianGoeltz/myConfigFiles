@@ -17,7 +17,7 @@ compinit
 export LC_COLLATE=en_US.UTF-8
 export EDITOR=vim
 export VISUAL=vim
-export LESS=-Ri
+export LESS=-Ri  #r: display colours; i: smartcase search;
 alias vi=vim
 
 function module () 
@@ -30,7 +30,8 @@ export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:
 #spack_global
 source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
 module load waf
-# module load spack_visionary-defaults/2017-12-01
+module load spack_visionary-defaults/2017-12-01
+module load simulation_py2_288
 module load developmisc_288 # for vim+x
 # spack unload nest
 # spack load nest@2.2
@@ -93,6 +94,26 @@ export MANPATH=/usr/local/share/man:$MANPATH
 
 alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+
+function whichLicences () {
+	for jobid in `squeue -p "experiment" -o "%i" | grep -o "[0-9]*"`; do
+		echo -n "Job $jobid "$(squeue -o "%i(%T) from %u" | grep $jobid | grep -o "([^=]*")" has "
+		scontrol show jobid $jobid | grep -o --color=never "Licenses=[WFB,0-9]*"                                         
+	 done
+}
+
+function updateEnvEverywhere () {
+	for _pane in `tmux list-panes -a -F '#{pane_id}'`
+	do
+		tmux send-keys -t ${_pane} ^z ^u updateEnv ^m fg ^m ;
+	done
+}
+
+function saveplottedtobackup() {
+	cp $1 /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted
+	cp $1 /loh/users/jgoeltz/data_tempodrom_backupPlotted
+}
+
 
 # eval $(thefuck --alias) # for corrcet bindings
 ######## end
