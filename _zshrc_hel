@@ -110,8 +110,12 @@ function updateEnvEverywhere () {
 }
 
 function saveplottedtobackup() {
-	cp $1 /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted
-	cp $1 /loh/users/jgoeltz/data_tempodrom_backupPlotted
+	cp $@ /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted
+	cp $@ /loh/users/jgoeltz/data_tempodrom_backupPlotted
+	for i in $@; do
+		chmod 444 /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$i;
+		chmod 444 /loh/users/jgoeltz/data_tempodrom_backupPlotted/$i;
+	done
 }
 
 
