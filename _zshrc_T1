@@ -20,7 +20,7 @@ alias vi=vim
 
 source $HOME/nest/bin/nest_vars.sh
 source $HOME/neuron/nrnenv
-alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* Bose QC35'|grep -o '\S*:\S*')"
+alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* [LE-]*Bose QC35'|grep -o '\S*:\S*')"
 
 alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
 
@@ -128,8 +128,41 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-RPROMPT='%{$fg[cyan]%}[%?]%{$reset_color%} | %{$fg[yellow]%}%*%{$reset_color%}'
-PROMPT='%B %{$fg[cyan]%}%c%b%{$reset_color%} $(git_prompt_info)'
+
+# ######## PROMPT
+# Old prompt
+# RPROMPT='%{$fg[cyan]%}[%?]%{$reset_color%} | %{$fg[yellow]%}%*%{$reset_color%}'
+# PROMPT='%B %{$fg[cyan]%}%c%b%{$reset_color%} $(git_prompt_info)'
+
+# use variables to make designing prompt easier
+show_prompt () {
+	autoload colors zsh/terminfo
+	if [[ "$terminfo[colors]" -ge 8 ]]; then
+	    colors
+	fi
+	for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE ORANGE; do
+	    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+	    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+	    (( count = $count + 1 ))
+	done
+	ZSH_THEME_GIT_PROMPT_PREFIX=", $PR_RED"
+	ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_NO_COLOR"
+	ZSH_THEME_GIT_PROMPT_DIRTY="$PR_LIGHT_YELLOW ⚡"
+	ZSH_THEME_GIT_PROMPT_CLEAN=""
+	# we have to use double quotes for this one to evaluate the colors
+	PR_NO_COLOR="%{$terminfo[sgr0]%}"
+	PROMPT="\
+┌─[$PR_CYAN%D{%m-%d/%H:%M:%S}$PR_NO_COLOR|$PR_LIGHT_GREEN%n$PR_NO_COLOR@$PR_LIGHT_YELLOW%m$PR_NO_COLOR"
+	PROMPT=$PROMPT'$(git_prompt_info)'
+	PROMPT=$PROMPT"$PR_NO_COLOR:$PR_BLUE%~$PR_NO_COLOR]
+└─☉ "
+	# └─⬧ "
+	# └─⧫ "
+	# ━
+	# └─☉ "
+	RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
+}
+show_prompt
 
 # User configuration
 

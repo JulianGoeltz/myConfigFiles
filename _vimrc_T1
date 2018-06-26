@@ -131,10 +131,15 @@ set laststatus=2 " Always display the statusline in all windows
 nmap <C-o> O<Esc>
 nmap <CR> o<Esc>
 
-let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/', 'path_html':'~/Dropbox/uni/MasterThesis/vimwikiH/'}]
+let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/text/',
+	\ 'path_html':'~/Dropbox/uni/MasterThesis/vimwiki/html/',
+	\ 'template_path': '~/Dropbox/uni/MasterThesis/vimwiki/templates'}]
 
 map <leader><Space> :set foldlevel=0<CR>
 map <leader><Space><Space> :set foldlevel=99<CR>
 
 "make updates, e.g. of gitgutter faster (in ms)
 set updatetime=100
+
+"omnicomplete
+set omnifunc=syntaxcomplete#Complete
