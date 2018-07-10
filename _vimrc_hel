@@ -143,3 +143,16 @@ map <leader><Space><Space> :set foldlevel=99<CR>
 
 "make updates, e.g. of gitgutter faster (in ms)
 set updatetime=100
+
+
+function! GetDiffBuffers()
+    return map(filter(range(1, winnr('$')), 'getwinvar(v:val, "&diff")'), 'winbufnr(v:val)')
+endfunction
+
+function! DiffPutAll()
+    for bufspec in GetDiffBuffers()
+        execute 'diffput' bufspec
+    endfor
+endfunction
+
+command! -range=-1 -nargs=* DPA call DiffPutAll()
