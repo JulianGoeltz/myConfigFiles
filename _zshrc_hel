@@ -43,7 +43,7 @@ spack load py-packaging
 spack load py-flake8
 spack load py-appdirs
 # for HW; older version to circumvent segfaults
-module load nmpm_software/2018-04-19-1
+module load nmpm_software/2018-07-12-1
 
 #spack_local
 #source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh

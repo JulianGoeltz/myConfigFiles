@@ -1,30 +1,44 @@
 #!/bin/bash
+
 standardWidth=20
-delimeterDone="|"
-delimeterNot="-"
+delimiterDone="|"
+delimiterNot='-'
+delimiterNot='\xe2\x94\x88'
+delimiterStart='\xe2\x96\x95'
+delimiterEnd='\xe2\x96\x8f'
+delimiterDone='\xe2\x96\x88'
+# split on new lines, not spaces. In case we have filenames including spaces
+IFS=$'\n'
+
 while true; do
 	echo -e \\033c
 	date +"%H:%M:%S"
-	squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "experimen\|goelt\|JOBID"
+	squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto
 	if [ "$1" != "" ]; then
 		echo $1
 		eval $1
 	fi
-	if [ -n "$StepNumber" ]; then
+	if [ -n "$(find ./ -name '*slurm*.out')" ]; then
 		for file in $(ls *slurm*.out); do
+			StepNumber=$(grep -oP "Numer_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
 			FileCount=$(grep step -c $file)
+			[ $? -ne 0 ] && continue
+			if [ -z "$StepNumber" ] ; then StepNumber=100; fi
 			counter=$(($FileCount * $standardWidth / $StepNumber))
-			echo -n $file": "
+			echo -n $file
+			jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber[0-9]*of[0-9]*" $file)
+			[ -n "$jobIsSweep" ] && echo -n "("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*")")"
+			echo -en ":"$delimiterStart
 			while (( $counter > 0 )); do
-				echo -n $delimeterDone
+				echo -en $delimiterDone
 				counter=$(($counter-1))
 			done
 			counter=$(($(($StepNumber-$FileCount)) * $standardWidth / $StepNumber))
 			while (( $counter > 0 )); do
-				echo -n $delimeterNot
+				echo -en $delimiterNot
 				counter=$(($counter-1))
 			done
-			echo
+			echo -e $delimiterEnd
 		done
 	fi
 	# sleep 5
@@ -38,12 +52,12 @@ while true; do
 	# 	counter=$File1Count
 	# 	echo -n $File1Name": "
 	# 	while (( $counter > 0 )); do
-	# 		echo -n $delimeterDone
+	# 		echo -n $delimiterDone
 	# 		counter=$(($counter-1))
 	# 	done
 	# 	counter=$(($File1Number-$File1Count))
 	# 	while (( $counter > 0 )); do
-	# 		echo -n $delimeterNot
+	# 		echo -n $delimiterNot
 	# 		counter=$(($counter-1))
 	# 	done
 	# fi
@@ -57,3 +71,6 @@ while true; do
 	# 	read -p "How many steps are planned?" File1Number
 	# fi
 done
+
+# redo previous change
+unset IFS
