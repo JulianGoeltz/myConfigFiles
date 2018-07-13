@@ -65,7 +65,7 @@ function squeueRepeat () {
 	while true; do
 		echo -e \\033c
 		date +"%H:%M:%S"
-		squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "experimen\|goelt\|JOBID"
+		squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "experimen\|goelt\|JOBID" --color=auto
 		if [ "$1" != "" ]; then
 			echo $1
 			eval $1

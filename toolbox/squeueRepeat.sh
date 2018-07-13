@@ -18,7 +18,7 @@ while true; do
 		echo $1
 		eval $1
 	fi
-	if [ -n "$(find ./ -name '*slurm*.out')" ]; then
+	if [ -n "$(find ./ -maxdepth 1 -name '*slurm*.out')" ]; then
 		for file in $(ls *slurm*.out); do
 			StepNumber=$(grep -oP "Numer_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
 			FileCount=$(grep step -c $file)
