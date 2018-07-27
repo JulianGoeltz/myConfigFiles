@@ -9,3 +9,6 @@ Host brainscales-r.kip.uni-heidelberg.de:29418
 Host brainscales-r.kip.uni-heidelberg.de:11022
     User jgoeltz
     IdentityFile ~/.ssh/id_rsa
+
+#Host github*
+#  ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
