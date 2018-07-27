@@ -24,10 +24,15 @@ while true; do
 			FileCount=$(grep step -c $file)
 			[ $? -ne 0 ] && continue
 			if [ -z "$StepNumber" ] ; then StepNumber=100; fi
+			if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
+			        StepNumber=$(echo $StepNumber | grep -o "[0-9]*$" | tail -n 1);
+		        fi
 			counter=$(($FileCount * $standardWidth / $StepNumber))
 			echo -n $file
 			jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber[0-9]*of[0-9]*" $file)
-			[ -n "$jobIsSweep" ] && echo -n "("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*")")"
+			if [ -n "$jobIsSweep" ] ; then
+				echo -n "("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
+			fi
 			echo -en ":"$delimiterStart
 			while (( $counter > 0 )); do
 				echo -en $delimiterDone
