@@ -1,7 +1,7 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=1000000
+SAVEHIST=1000000
 setopt appendhistory
 bindkey -v
 # End of lines configured by zsh-newuser-install
@@ -60,6 +60,24 @@ alias sshhel_fs_unmount="sudo fusermount -u -z /mnt/hel_fs"
 alias cdmaster_hel="cd /mnt/hel_fs/"
 
 eval $(thefuck --alias) # for corrcet bindings
+
+# makes 10s wait period before executing rm -rf *
+setopt rm_star_wait
+
+alias ipy="ipython -ic 'import numpy as np; import matplotlib.pyplot as plt'"
+alias ipy2="ipython2 -ic 'import numpy as np; import matplotlib.pyplot as plt'"
+
+# aliases for files, see man zshbuiltins
+alias -s pdf=zathura
+alias -s wiki=vim
+alias -s txt=vim
+alias -s py=vim
+alias -s svg=inkview
+alias -s out=less
+
+alias -g C=" | wc -l"
+alias -g G=" | grep"
+alias -g L=" | less" 
 ######## end
 
 

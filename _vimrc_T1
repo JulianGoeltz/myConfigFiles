@@ -29,8 +29,12 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
 "Git
 Plug 'tpope/vim-fugitive'
-"sign column indication of git changes
-Plug 'airblade/vim-gitgutter'
+"sign column indication of git changes (THIS BREAKS THE C-xC-o omnicomplete
+"FUNCTIONALITY, THUS DISABLED)
+"Plug 'airblade/vim-gitgutter'
+"omnicomplete
+"set omnifunc=syntaxcomplete#Complete
+
 "Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
@@ -140,6 +144,3 @@ map <leader><Space><Space> :set foldlevel=99<CR>
 
 "make updates, e.g. of gitgutter faster (in ms)
 set updatetime=100
-
-"omnicomplete
-set omnifunc=syntaxcomplete#Complete
