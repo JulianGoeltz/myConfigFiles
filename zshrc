@@ -1,12 +1,19 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=1000000
+SAVEHIST=1000000
 setopt appendhistory
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
+if [[ "$(hostname)" == "T1" ]]; then
+	zstyle :compinstall filename '/home/julgoe/.zshrc'
+elif [[ "$(hostname)" == "helvetica" ]]; then
+	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
+else
+	echo "no known host. what to do?"
+	exit
+fi
 
 autoload -Uz compinit
 compinit
@@ -20,114 +27,46 @@ export VISUAL=vim
 export LESS=-Ri  #r: display colours; i: smartcase search;
 alias vi=vim
 
-function module () 
-{ 
-    eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd bash $*`
-}
-# to have access to new module files, eg the one with vim+x
-export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
 
-#spack_global
-source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
-module load waf
-module load spack_visionary-defaults/2017-12-01
-module load simulation_py2_288
-module load developmisc_288 # for vim+x
-# spack unload nest
-# spack load nest@2.2
-spack load nest
-spack load py-pynn@0.7
-spack load py-matplotlib
-spack load py-setuptools@35
-spack load py-packaging
-spack load py-flake8
-spack load py-appdirs
-# for HW; older version to circumvent segfaults
-module load nmpm_software/2018-07-12-1
+alias sourcezsh="source ~/.zshrc"
 
-#spack_local
-#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
-#module list
-#module purge
-#module list
-#module load nmpm_software/2018-02-01-1
-module list
-
-function updateEnv ()
-{
-	# uses the current ssh agent and display to allow ssh forwarding and X11 forwarding
-	# -> pushing and pulling in git and display use
-	eval $(tmux show-environment -s | grep SSH_AUTH_SOCK)
-	eval $(tmux show-environment -s | grep DISPLAY)
-}
-
-function squeueRepeat () {
-	while true; do
-		echo -e \\033c
-		date +"%H:%M:%S"
-		squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "experimen\|goelt\|JOBID" --color=auto
-		if [ "$1" != "" ]; then
-			echo $1
-			eval $1
-		fi
-		sleep 5
-	done
-}
-alias cdmaster="cd ~/MasterThesis/"
-# disable lightdm for a starting into ttyX instead of Xserver
-# sudo systemctl disable lightdm.service
-# reenable by using BOTH
-# sudo systemctl reenable lightdm.service
-# AND
-# sudo dpkg-reconfigure lightdm
-#alias lock="gnome-screensaver-command --lock; sudo pm-suspend"
 
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
 REPORTTIME=10 # print elapsed time when more than 10 seconds
-#source /etc/zsh_command_not_found # to get info about similar commands
+[ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found # to get info about similar commands
 PATH=$PATH:~/myConfigFiles/toolbox
-PATH=$PATH:~/pip_files
-export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
-export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
 
-export MANPATH=/usr/local/share/man:$MANPATH
+alias sshhel="ssh -A -X -o ConnectTimeout=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+# alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other,IdentityFile=/home/julgoe/.ssh/id_rsa"
+alias sshhel_fs="sudo sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -o delay_connect,idmap=user,transform_symlinks,identityfile=~/.ssh/id_rsa,allow_other"
+alias sshhel_fs_unmount="sudo fusermount -u -z /mnt/hel_fs"
 
-alias sshhel="ssh -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
-alias sshice="ssh -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+# makes 10s wait period before executing rm -rf *
+setopt rm_star_wait
 
-function whichLicences () {
-	for jobid in `squeue -p "experiment" -o "%i" | grep -o "[0-9]*"`; do
-		echo -n "Job $jobid "$(squeue -o "%i(%T) from %u" | grep $jobid | grep -o "([^=]*")" has "
-		scontrol show jobid $jobid | grep -o --color=never "Licenses=[WFB,0-9]*"                                         
-	 done
-}
+alias ipy="ipython -ic 'import numpy as np; import matplotlib.pyplot as plt'"
+alias ipy2="ipython2 -ic 'import numpy as np; import matplotlib.pyplot as plt'"
 
-function updateEnvEverywhere () {
-	for _pane in `tmux list-panes -a -F '#{pane_id}'`
-	do
-		tmux send-keys -t ${_pane} ^z ^u updateEnv ^m fg ^m ;
-	done
-}
+# aliases for files, see man zshbuiltins
+alias -s pdf=zathura
+alias -s wiki=vim
+alias -s txt=vim
+alias -s py=vim
+alias -s svg=inkview
+alias -s out=less
 
-function saveplottedtobackup() {
-	cp $@ /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted
-	cp $@ /loh/users/jgoeltz/data_tempodrom_backupPlotted
-	for i in $@; do
-		chmod 444 /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$i;
-		chmod 444 /loh/users/jgoeltz/data_tempodrom_backupPlotted/$i;
-	done
-}
+alias -g C=" | wc -l"
+alias -g G=" | grep"
+alias -g L=" | less" 
 
 
-# eval $(thefuck --alias) # for corrcet bindings
+[ -e ~/.zsh/zshrc_host_$(hostname) ] && source ~/.zsh/zshrc_host_$(hostname)
 ######## end
 
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-  export ZSH=/wang/users/jgoeltz/cluster_home/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.

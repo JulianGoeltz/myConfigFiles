@@ -1,0 +1,55 @@
+# ##################################
+# same but different
+alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
+# Path to your oh-my-zsh installation.
+export ZSH=/home/julgoe/.oh-my-zsh
+
+
+# ##################################
+# very different
+source $HOME/nest/bin/nest_vars.sh
+source $HOME/neuron/nrnenv
+alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* [LE-]*Bose QC35'|grep -o '\S*:\S*')"
+
+alias cdmaster_hel="cd /mnt/hel_fs/"
+
+eval $(thefuck --alias) # for corrcet bindings
+
+function proxySwitch {
+	if [ -z "$http_proxy" ]; then
+		echo "No proxy is set, now setting in shell, git and apt"
+		export ftp_proxy=http://proxy.kip.uni-heidelberg.de:2121
+		export http_proxy=http://proxy.kip.uni-heidelberg.de:8080
+	       	export https_proxy=https://proxy.kip.uni-heidelberg.de:8080
+
+		export GIT_SSH_COMMAND="ssh -F ~/.ssh/config_prox"
+
+		escaped_http=${http_proxy/\/\//\\\/\\\/}
+		escaped_https=${https_proxy/\/\//\\\/\\\/}
+		cp /etc/apt/apt.conf /tmp/aptconfInplaceReplace
+		sed -i -e 's/Acquire::http::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::http::Proxy "'$escaped_http'";/g' /tmp/aptconfInplaceReplace
+		sed -i -e 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "'$escaped_https'";/g' /tmp/aptconfInplaceReplace
+		cat /tmp/aptconfInplaceReplace > /etc/apt/apt.conf
+		rm /tmp/aptconfInplaceReplace
+	else
+		echo "Proxy is set, now removing them"
+		export ftp_proxy=
+		export http_proxy=
+	       	export https_proxy=
+
+		unset GIT_SSH_COMMAND
+
+		cp /etc/apt/apt.conf /tmp/aptconfInplaceReplace
+		sed -i 's/Acquire::http::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::http::Proxy "";/g' /tmp/aptconfInplaceReplace
+		sed -i 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "";/g' /tmp/aptconfInplaceReplace
+		cat /tmp/aptconfInplaceReplace > /etc/apt/apt.conf
+		rm /tmp/aptconfInplaceReplace
+	fi
+}
+
+alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
+
+if [ -x /usr/bin/mint-fortune ]; then
+     #/usr/bin/mint-fortune
+fi
+

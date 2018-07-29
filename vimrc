@@ -15,12 +15,9 @@ Plug 'vim-scripts/indentpython.vim'
 """"""" BUILD AFTER INSTALLATION
 Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
-" Not working.  Plug 'jeaye/color_coded' " c colour coding
-"Cpp highlightning
-Plug 'octol/vim-cpp-enhanced-highlight'
+" not working. Plug 'jeaye/color_coded' " c colour coding
 "Syntax check
 Plug 'vim-syntastic/syntastic'
-let g:syntastic_python_checkers = ['flake8']
 "Check PEP8
 Plug 'nvie/vim-flake8'
 "Color Schemes
@@ -32,8 +29,31 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
 "Git
 Plug 'tpope/vim-fugitive'
-"sign column indication of git changes
-Plug 'airblade/vim-gitgutter'
+if system('hostname') =~ "T1"
+	"sign column indication of git changes (THIS BREAKS THE C-xC-o omnicomplete
+	"FUNCTIONALITY, THUS DISABLED)
+	"Plug 'airblade/vim-gitgutter'
+	"omnicomplete
+	"set omnifunc=syntaxcomplete#Complete
+	
+	"for forward search in latex with zathura
+	let g:vimtex_view_method = 'zathura'
+
+	let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/text/',
+		\ 'path_html':'~/Dropbox/uni/MasterThesis/vimwiki/html/',
+		\ 'template_path': '~/Dropbox/uni/MasterThesis/vimwiki/templates'}]
+elseif system('hostname') =~ "helvetica"
+	"sign column indication of git changes
+	Plug 'airblade/vim-gitgutter'
+
+	let g:ycm_extra_conf_vim_data = ['&filetype']
+	"let g:ycm_extra_conf_globlist = ['~/MasterThesis/utils/adc_error/*']
+
+	"for forward search in latex with zathura
+	let g:vimtex_view_method = 'mupdf' "zathura'
+endif
+
+
 "Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
@@ -75,8 +95,6 @@ set clipboard=unnamedplus
 
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_extra_conf_vim_data = ['&filetype']
-"let g:ycm_extra_conf_globlist = ['~/MasterThesis/utils/adc_error/*']
 
 
 let python_highlight_all=1
@@ -122,9 +140,6 @@ set wildmenu
 set scrolloff=1
 set sidescrolloff=5
 
-"for forward search in latex with zathura
-let g:vimtex_view_method = 'mupdf' "zathura'
-
 "for linediff
 noremap \ldt :Linediff<CR>
 noremap \ldo :LinediffReset<CR>
@@ -135,8 +150,6 @@ set laststatus=2 " Always display the statusline in all windows
 "new lines into normal mode
 nmap <C-o> O<Esc>
 nmap <CR> o<Esc>
-
-"let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/', 'path_html':'~/Dropbox/uni/MasterThesis/vimwikiH/'}]
 
 map <leader><Space> :set foldlevel=0<CR>
 map <leader><Space><Space> :set foldlevel=99<CR>

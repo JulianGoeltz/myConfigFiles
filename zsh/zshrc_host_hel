@@ -1,0 +1,89 @@
+# ##################################
+# same but different
+alias cdmaster="cd ~/MasterThesis/"
+# Path to your oh-my-zsh installation.
+export ZSH=/wang/users/jgoeltz/cluster_home/.oh-my-zsh
+
+
+# ##################################
+# very different
+function module () 
+{ 
+    eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd bash $*`
+}
+# to have access to new module files, eg the one with vim+x
+export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
+
+#spack_global
+source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
+module load waf
+module load spack_visionary-defaults/2017-12-01
+module load simulation_py2_288
+module load developmisc_288 # for vim+x
+# spack unload nest
+# spack load nest@2.2
+spack load nest
+spack load py-pynn@0.7
+spack load py-matplotlib
+spack load py-setuptools@35
+spack load py-packaging
+spack load py-flake8
+spack load py-appdirs
+# for HW; older version to circumvent segfaults
+module load nmpm_software/2018-07-12-1
+
+#spack_local
+#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
+#module list
+#module purge
+#module list
+#module load nmpm_software/2018-02-01-1
+module list
+
+PATH=$PATH:~/pip_files
+export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
+export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
+
+export MANPATH=/usr/local/share/man:$MANPATH
+function whichLicences () {
+	for jobid in `squeue -p "experiment" -o "%i" | grep -o "[0-9]*"`; do
+		echo -n "Job $jobid "$(squeue -o "%i(%T) from %u" | grep $jobid | grep -o "([^=]*")" has "
+		scontrol show jobid $jobid | grep -o --color=never "Licenses=[WFB,0-9]*"                                         
+	 done
+}
+
+function updateEnvEverywhere () {
+	for _pane in `tmux list-panes -a -F '#{pane_id}'`
+	do
+		tmux send-keys -t ${_pane} ^z ^u updateEnv ^m fg ^m ;
+	done
+}
+
+function saveplottedtobackup() {
+	cp $@ /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted
+	cp $@ /loh/users/jgoeltz/data_tempodrom_backupPlotted
+	for i in $@; do
+		chmod 444 /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$i;
+		chmod 444 /loh/users/jgoeltz/data_tempodrom_backupPlotted/$i;
+	done
+}
+function updateEnv ()
+{
+	# uses the current ssh agent and display to allow ssh forwarding and X11 forwarding
+	# -> pushing and pulling in git and display use
+	eval $(tmux show-environment -s | grep SSH_AUTH_SOCK)
+	eval $(tmux show-environment -s | grep DISPLAY)
+}
+
+function squeueRepeat () {
+	while true; do
+		echo -e \\033c
+		date +"%H:%M:%S"
+		squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "experimen\|goelt\|JOBID" --color=auto
+		if [ "$1" != "" ]; then
+			echo $1
+			eval $1
+		fi
+		sleep 5
+	done
+}
