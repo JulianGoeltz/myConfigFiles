@@ -7,7 +7,4 @@ if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "python3 ~/p
 #set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
 set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| %a %d %b %R'
 
-set -g @plugin 'tmux-plugins/tmux-continuum
-set -g @continuum-restore 'on'
-set -g @continuum-save-interval '15'
 
