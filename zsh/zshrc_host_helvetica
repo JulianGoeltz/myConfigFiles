@@ -16,28 +16,37 @@ export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:
 
 #spack_global
 source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
-module load waf
-module load spack_visionary-defaults/2017-12-01
-module load simulation_py2_288
-module load developmisc_288 # for vim+x
-# spack unload nest
-# spack load nest@2.2
-spack load nest
-spack load py-pynn@0.7
-spack load py-matplotlib
-spack load py-setuptools@35
-spack load py-packaging
-spack load py-flake8
-spack load py-appdirs
-# for HW; older version to circumvent segfaults
-module load nmpm_software/2018-07-12-1
+if [[ -z "$TMUX" ]]; then
+	module load spack_visionary-defaults/2017-12-01
+	module load developmisc_288 # for vim+x
+	read -k1 -t3 "testv?Do you want to load all packages(y/n)?"
+	if [[ $? -eq 1 || "$testv" == "y" || "$testv" == "z" ]]; then 
+		echo
+		echo "Loading modules..."
+		module load waf
+		module load simulation_py2_288
+		# spack unload nest
+		# spack load nest@2.2
+		spack load nest
+		spack load py-pynn@0.7
+		spack load py-matplotlib
+		spack load py-setuptools@35
+		spack load py-packaging
+		spack load py-flake8
+		spack load py-appdirs
+		# for HW; older version to circumvent segfaults
+		module load nmpm_software/2018-07-12-1
 
-#spack_local
-#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
-#module list
-#module purge
-#module list
-#module load nmpm_software/2018-02-01-1
+		#spack_local
+		#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
+		#module list
+		#module purge
+		#module list
+		#module load nmpm_software/2018-02-01-1
+	fi
+fi
+
+echo
 module list
 
 PATH=$PATH:~/pip_files
@@ -45,6 +54,9 @@ export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
 export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
 
 export MANPATH=/usr/local/share/man:$MANPATH
+
+precmd_functions=($precmd_functions updateEnvTmux)
+
 function whichLicences () {
 	for jobid in `squeue -p "experiment" -o "%i" | grep -o "[0-9]*"`; do
 		echo -n "Job $jobid "$(squeue -o "%i(%T) from %u" | grep $jobid | grep -o "([^=]*")" has "
@@ -67,8 +79,10 @@ function saveplottedtobackup() {
 		chmod 444 /loh/users/jgoeltz/data_tempodrom_backupPlotted/$i;
 	done
 }
-function updateEnv ()
-{
+function updateEnvTmux () {
+	[ -n "$TMUX" ] && updateEnv
+}
+function updateEnv () {
 	# uses the current ssh agent and display to allow ssh forwarding and X11 forwarding
 	# -> pushing and pulling in git and display use
 	eval $(tmux show-environment -s | grep SSH_AUTH_SOCK)

@@ -28,6 +28,7 @@ if [[ "$(hostname)" == "T1" ]]; then
 	echo "Combined ~/.ssh/config with local config_prox"
 elif [[ "$(hostname)" == "helvetica" ]]; then
 	ln -fsv $LocOfScript/ssh_config $HOME/.ssh/config
+	ln -fsv $LocOfScript/ssh_rc $HOME/.ssh/rc
 fi
 
 echo "--tmux"
