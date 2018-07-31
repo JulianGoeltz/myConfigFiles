@@ -18,6 +18,7 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.
 " not working. Plug 'jeaye/color_coded' " c colour coding
 "Syntax check
 Plug 'vim-syntastic/syntastic'
+let g:syntastic_python_checkers = ['flake8']
 "Check PEP8
 Plug 'nvie/vim-flake8'
 "Color Schemes

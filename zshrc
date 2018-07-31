@@ -45,9 +45,6 @@ alias sshhel_fs_unmount="sudo fusermount -u -z /mnt/hel_fs"
 # makes 10s wait period before executing rm -rf *
 setopt rm_star_wait
 
-alias ipy="ipython -ic 'import numpy as np; import matplotlib.pyplot as plt'"
-alias ipy2="ipython2 -ic 'import numpy as np; import matplotlib.pyplot as plt'"
-
 # aliases for files, see man zshbuiltins
 alias -s pdf=zathura
 alias -s wiki=vim

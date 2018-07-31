@@ -77,6 +77,7 @@ elif [ $# -gt 2 ]; then
 	slurmCall=$slurmCall'experiment --wmod '$3' '
 else
 	slurmCall=$slurmCall'simulation '
+        # --time=0:22:0'
 fi
 
 function sendAway () {

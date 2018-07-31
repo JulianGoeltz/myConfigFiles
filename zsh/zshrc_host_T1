@@ -4,6 +4,10 @@ alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
 # Path to your oh-my-zsh installation.
 export ZSH=/home/julgoe/.oh-my-zsh
 
+alias ipy="ipython2 -ic 'import numpy as np; import matplotlib.pyplot as plt'"
+# only set ipy3 alias if ipython3 exists
+if hash ipython3 2>/dev/null; then alias ipy3="ipython3 -ic 'import numpy as np; import matplotlib.pyplot as plt'"; fi
+
 
 # ##################################
 # very different

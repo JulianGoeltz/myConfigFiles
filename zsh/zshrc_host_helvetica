@@ -4,6 +4,9 @@ alias cdmaster="cd ~/MasterThesis/"
 # Path to your oh-my-zsh installation.
 export ZSH=/wang/users/jgoeltz/cluster_home/.oh-my-zsh
 
+alias ipy="module unload developmisc_288; ipython2 -ic 'import numpy as np; import matplotlib.pyplot as plt'; module load developmisc_288"
+# only set ipy3 alias if ipython3 exists
+if hash ipython3 2>/dev/null; then alias ipy3="ipython3 -ic 'import numpy as np; import matplotlib.pyplot as plt'"; fi
 
 # ##################################
 # very different
@@ -52,6 +55,8 @@ module list
 PATH=$PATH:~/pip_files
 export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
 export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
+export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python
+export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python/lib/python2.7/site-packages/
 
 export MANPATH=/usr/local/share/man:$MANPATH
 
