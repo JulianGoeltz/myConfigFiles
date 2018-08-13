@@ -28,6 +28,10 @@ function proxySwitch {
 
 		export GIT_SSH_COMMAND="ssh -F ~/.ssh/config_prox"
 
+		# setting the proxy in the file /etc/apt/apt.conf
+		# this will only work if it is writeable
+		# i.e. chmod u+x /etc/apt/apt.conf has been called
+		# (temporaruly writes to a /tmp file, this way no sudo is necessary)
 		escaped_http=${http_proxy/\/\//\\\/\\\/}
 		escaped_https=${https_proxy/\/\//\\\/\\\/}
 		cp /etc/apt/apt.conf /tmp/aptconfInplaceReplace
@@ -50,6 +54,18 @@ function proxySwitch {
 		rm /tmp/aptconfInplaceReplace
 	fi
 }
+
+function screenSet {
+
+	if [ -n "$(xrandr | grep 'HDMI2 connected')" ] ; then
+		# HDMI output is connected, i.e. probably in office, enlarge laptop display
+		xrandr --output eDP1 --mode 1600x900 --primary --output HDMI2 --auto --right-of eDP1 
+	else
+		# assume no other display connected, use only laptop
+		xrandr --output HDMI2 --off --output eDP1 --auto --primary
+	fi
+}
+
 
 alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
 
