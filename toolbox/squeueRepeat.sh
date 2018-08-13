@@ -20,6 +20,11 @@ while true; do
 	fi
 	if [ -n "$(find ./ -maxdepth 1 -name '*slurm*.out')" ]; then
 		for file in $(ls *slurm*.out); do
+			# if [ $(du $file | grep -o "^[0-9]*") -ge 200000 ]; then
+			# 	#this means the file is very large and it will take too long to search through
+			#         echo $file is too large, skipping
+			# 	continue
+		        # fi
 			StepNumber=$(grep -oP "Numer_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
 			FileCount=$(grep step -c $file)
 			[ $? -ne 0 ] && continue
@@ -46,12 +51,14 @@ while true; do
 			echo -e $delimiterEnd
 		done
 	fi
-	# sleep 5
+	sleep 10
 	# -p "what should be the repetition per job (everything but a number will quit): " 
-	read -t 5 input
-	if [ -n "$input" ]; then
-		read -p "How many steps are planned?" StepNumber
-	fi
+
+	# read -t 5 input
+	# if [ -n "$input" ]; then
+	# 	read -p "How many steps are planned?" StepNumber
+	# fi
+
 	# if [ -n "$File1Name" ]; then
 	# 	File1Count=$(grep step -c $File1Name)
 	# 	counter=$File1Count

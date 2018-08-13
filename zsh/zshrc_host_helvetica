@@ -4,15 +4,11 @@ alias cdmaster="cd ~/MasterThesis/"
 # Path to your oh-my-zsh installation.
 export ZSH=/wang/users/jgoeltz/cluster_home/.oh-my-zsh
 
-alias ipy="module unload developmisc_288; ipython2 -ic 'import numpy as np; import matplotlib.pyplot as plt'; module load developmisc_288"
-# only set ipy3 alias if ipython3 exists
-if hash ipython3 2>/dev/null; then alias ipy3="ipython3 -ic 'import numpy as np; import matplotlib.pyplot as plt'"; fi
-
 # ##################################
 # very different
 function module () 
 { 
-    eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd bash $*`
+    eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd zsh $*`
 }
 # to have access to new module files, eg the one with vim+x
 export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
@@ -38,7 +34,8 @@ if [[ -z "$TMUX" ]]; then
 		spack load py-flake8
 		spack load py-appdirs
 		# for HW; older version to circumvent segfaults
-		module load nmpm_software/2018-07-12-1
+		#module load nmpm_software/2018-07-12-1
+		module load nmpm_software/2018-08-05-1
 
 		#spack_local
 		#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
@@ -77,12 +74,53 @@ function updateEnvEverywhere () {
 }
 
 function saveplottedtobackup() {
-	cp $@ /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted
-	cp $@ /loh/users/jgoeltz/data_tempodrom_backupPlotted
-	for i in $@; do
-		chmod 444 /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$i;
-		chmod 444 /loh/users/jgoeltz/data_tempodrom_backupPlotted/$i;
+	for file in $@; do
+		if [ ! -f "$file" ] ; then
+			echo "$file is not a file, skipping"
+			continue
+		fi
+		madeFileWriteableFirst=false
+		if [ $(stat -c %a $file | grep -o '^[0-9]') -eq 4 ]; then
+			echo "might run into problems, then make file readable first"
+			chmod +w $file
+			madeFileWriteableFirst=true
+		fi
+
+		# copy to wang folder if not already done and make readonly
+		if [ -f "/wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$(basename $file)" ] ; then
+			echo "File $file already exists in /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/, not copying"
+		else
+			cp $file "/wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$(basename $file)"
+			chmod 444 "/wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$(basename $file)"
+		fi
+
+		# copy to loh folder if not already done and make readonly
+		if [ -f "/loh/users/jgoeltz/data_tempodrom_backupPlotted/$(basename $file)" ] ; then
+			echo "File $file already exists in /loh/users/jgoeltz/data_tempodrom_backupPlotted/, not copying"
+		else
+			cp $file "/loh/users/jgoeltz/data_tempodrom_backupPlotted/$(basename $file)"
+			chmod 444 "/loh/users/jgoeltz/data_tempodrom_backupPlotted/$(basename $file)"
+		fi
+
+		# make readonly again
+		if $madeFileWriteableFirst; then
+			chmod -w $file
+		fi
 	done
+}
+function diffHdf5 () {
+	if [ ! -f $1 ]; then
+		dataGroup=$1
+		shift
+	else
+		dataGroup='input/yaml_pure'
+	fi
+	diffCommand="vimdiff "
+	for file in $@; do
+		[ ! -f $file ] && continue
+		diffCommand=$diffCommand" <(h5dump -d $dataGroup $file) "
+	done
+	eval $diffCommand
 }
 function updateEnvTmux () {
 	[ -n "$TMUX" ] && updateEnv
@@ -94,15 +132,15 @@ function updateEnv () {
 	eval $(tmux show-environment -s | grep DISPLAY)
 }
 
-function squeueRepeat () {
-	while true; do
-		echo -e \\033c
-		date +"%H:%M:%S"
-		squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "experimen\|goelt\|JOBID" --color=auto
-		if [ "$1" != "" ]; then
-			echo $1
-			eval $1
-		fi
-		sleep 5
-	done
-}
+# function squeueRepeat () {
+# 	while true; do
+# 		echo -e \\033c
+# 		date +"%H:%M:%S"
+# 		squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "experimen\|goelt\|JOBID" --color=auto
+# 		if [ "$1" != "" ]; then
+# 			echo $1
+# 			eval $1
+# 		fi
+# 		sleep 5
+# 	done
+# }

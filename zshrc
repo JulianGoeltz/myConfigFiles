@@ -29,6 +29,7 @@ alias vi=vim
 
 
 alias sourcezsh="source ~/.zshrc"
+mkcd () { mkdir -p $1; cd $1}
 
 
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
@@ -49,7 +50,7 @@ setopt rm_star_wait
 alias -s pdf=zathura
 alias -s wiki=vim
 alias -s txt=vim
-alias -s py=vim
+# dont use this to be able to execute stuff; alias -s py=vim
 alias -s svg=inkview
 alias -s out=less
 
@@ -58,7 +59,25 @@ alias -g G=" | grep"
 alias -g L=" | less" 
 
 
+ipy (){
+	# determine if devmisc is loaded as a module on hel
+	if [ -n "$(module list 2>&1 | grep developmisc_288)" -a $? -eq 0 ]; then
+		module unload developmisc_288
+		reload_the_devmisc288=true
+	else
+		reload_the_devmisc288=false
+	fi
+	ipython2 -ic 'import numpy as np; import matplotlib.pyplot as plt; from pprint import pprint;'
+	if $reload_the_devmisc288; then module load developmisc_288; fi
+}
+# only set ipy3 alias if ipython3 exists
+if hash ipython3 2>/dev/null; then alias ipy3="ipython3 -ic 'import numpy as np; import matplotlib.pyplot as plt'"; fi
+
+
+# last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname) ] && source ~/.zsh/zshrc_host_$(hostname)
+
+
 ######## end
 
 
