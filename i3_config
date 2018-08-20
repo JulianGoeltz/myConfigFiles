@@ -180,10 +180,10 @@ bindsym $mod+d exec rofi -fuzzy -font "pango:monospace 12" \
 # bindsym $mod+Shift+a exec rofi -show run -lines 21 -eh 1.3 -opacity "50" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$text-color" -hlfg "$bg-color" -font "System San Francisco Display 10"
 
 # brightness
-bindsym XF86MonBrightnessUp "exec xbacklight +20"
-bindsym XF86MonBrightnessDown "exec xbacklight -20"
-bindsym Shift+XF86MonBrightnessUp "exec xbacklight -set 100"
-bindsym Shift+XF86MonBrightnessDown "exec xbacklight -set 1"
+bindsym XF86MonBrightnessUp "exec xbacklight +20; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
+bindsym XF86MonBrightnessDown "exec xbacklight -20; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
+bindsym Shift+XF86MonBrightnessUp "exec xbacklight -set 100; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
+bindsym Shift+XF86MonBrightnessDown "exec xbacklight -set 1; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
 
 # playpause
 bindsym  XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
@@ -228,3 +228,8 @@ focus_follows_mouse no
 
 # fusuma
 exec_always fusuma
+
+# dunst notification daemon for /usr/bin/notify-send
+exec_always dunst
+bindsym $mod+p exec notify-send 'DUNST_COMMAND_PAUSE'
+bindsym $mod+Shift+p exec notify-send 'DUNST_COMMAND_RESUME'

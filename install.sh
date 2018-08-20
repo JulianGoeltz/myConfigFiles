@@ -59,3 +59,6 @@ fi
 
 echo "--fusuma"
 ln -fsv $LocOfScript/fusuma.config $HOME/.config/fusuma/config.yml
+
+echo "--dunst"
+ln -fsv $LocOfScript/dunstrc $HOME/.config/dunst/dunstrc
