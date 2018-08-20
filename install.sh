@@ -56,3 +56,6 @@ if [[ "$(hostname)" == "T1" ]]; then
 		ln -fsv $LocOfScript/acpi_handler.sh /etc/acpi/handler.sh
 	fi
 fi
+
+echo "--fusuma"
+ln -fsv $LocOfScript/fusuma.config $HOME/.config/fusuma/config.yml

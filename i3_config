@@ -215,11 +215,16 @@ exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/spotify; exec /usr/bin/
 exec --no-startup-id i3-msg workspace 1
 
 # switch to next/prev window
-bindsym $mod+Left exec i3-msg "workspace $(( ($(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')-1-1)%10+1))"
-bindsym $mod+Right exec i3-msg "workspace $(( ($(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')+1-1)%10+1))"
+# bindsym $mod+Left exec i3-msg "workspace $(( ($(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')-1-1)%10+1))"
+# bindsym $mod+Right exec i3-msg "workspace $(( ($(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')+1-1)%10+1))"
+bindsym $mod+Left workspace prev
+bindsym $mod+Right workspace next
 
 # status bar
 # exec python /usr/local/bin/powerline/bindings/lemonbar/powerline-lemonbar.py –i3
 
 # dont focus on window for each mouse hover
 focus_follows_mouse no
+
+# fusuma
+exec_always fusuma
