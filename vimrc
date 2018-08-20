@@ -200,3 +200,7 @@ command! -range=-1 -nargs=* DPA call DiffPutAll()
 
 let g:slimux_select_from_current_window = 1
 map <Leader>b :SlimuxREPLSendBuffer<CR>
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+" from https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work#7078429
+cmap w!! w !sudo tee > /dev/null %

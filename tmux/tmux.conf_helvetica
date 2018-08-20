@@ -5,6 +5,8 @@ if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "python3 ~/p
 
 #set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
 #set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
-set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| %a %d %b %R'
+#this one correct, but unnecessary due to i3
+#set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| %a %d %b %R'
+set -g status-right ''
 
 

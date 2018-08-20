@@ -175,7 +175,8 @@ show_prompt () {
 	# └─⧫ "
 	# ━
 	# └─☉ "
-	RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
+	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
+	RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)$PR_NO_COLOR "
 }
 show_prompt
 

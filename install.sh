@@ -40,3 +40,25 @@ done
 
 echo "--vim"
 ln -fsv $LocOfScript/vimrc $HOME/.vimrc
+
+echo "--i3"
+ln -fsv $LocOfScript/i3_config $HOME/.config/i3/config
+ln -fsv $LocOfScript/i3status.sh $HOME/.config/i3/i3status.sh
+[ ! -d "$HOME/.config/i3/scripts" ] && mkdir $HOME/.config/i3/scripts
+for fn in $(ls $LocOfScript/i3scripts/*); do
+	ln -fsv $fn $HOME/.config/i3/scripts/$(basename $fn)
+done
+if [[ "$(hostname)" == "T1" ]]; then
+	if [ -h "/etc/acpi/handler.sh" ] && [ "$(md5sum $LocOfScript/acpi_handler.sh | grep -o "[^ ]*" | head -n 1)" = "$(md5sum /etc/acpi/handler.sh | grep -o "[^ ]*" | head -n 1)" ]; then 
+		echo "File /etc/acpi/handler.sh exists as link and is equal to local one"
+	else
+		echo "Trying to replace /etc/acpi/handler.sh with local one, if it doesn't work try with sudo"
+		ln -fsv $LocOfScript/acpi_handler.sh /etc/acpi/handler.sh
+	fi
+fi
+
+echo "--fusuma"
+ln -fsv $LocOfScript/fusuma.config $HOME/.config/fusuma/config.yml
+
+echo "--dunst"
+ln -fsv $LocOfScript/dunstrc $HOME/.config/dunst/dunstrc
