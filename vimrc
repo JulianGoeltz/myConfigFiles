@@ -13,8 +13,12 @@ Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 "Autocomplete
 """"""" BUILD AFTER INSTALLATION
-Plug 'Valloric/YouCompleteMe'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
+" the following from obreitwi
+let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
+if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
+	Plug 'Valloric/YouCompleteMe'
+	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
+endif
 " not working. Plug 'jeaye/color_coded' " c colour coding
 "Syntax check
 Plug 'vim-syntastic/syntastic'
@@ -68,6 +72,12 @@ Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 "session managment
 Plug 'tpope/vim-obsession'
 " Initialize plugin system
+" Plug 'benmills/vimux'
+" " running commands in other tmux pane
+" Plug 'julienr/vim-cellmode'
+" " like vimux but for ipython
+Plug 'epeli/slimux'
+" maybe this works
 call plug#end()
 
 
@@ -170,3 +180,23 @@ function! DiffPutAll()
 endfunction
 
 command! -range=-1 -nargs=* DPA call DiffPutAll()
+
+" " <<<Vimux
+" " Run the current file with rspec
+" map <Leader>rb :call VimuxRunCommand("clear; rspec " . bufname("%"))<CR>
+" " Prompt for a command to run
+" map <Leader>vp :VimuxPromptCommand<CR>
+" " Run last command executed by VimuxRunCommand
+" map <Leader>vl :VimuxRunLastCommand<CR>
+" " Inspect runner pane
+" map <Leader>vi :VimuxInspectRunner<CR>
+" " Close vim tmux runner opened by VimuxRunCommand
+" map <Leader>vq :VimuxCloseRunner<CR>
+" " Interrupt any command running in the runner pane
+" map <Leader>vx :VimuxInterruptRunner<CR>
+" " Zoom the runner pane (use <bind-key> z to restore runner pane)
+" map <Leader>vz :call VimuxZoomRunner()<CR>
+" " Vimux>>>
+
+let g:slimux_select_from_current_window = 1
+map <Leader>b :SlimuxREPLSendBuffer<CR>
