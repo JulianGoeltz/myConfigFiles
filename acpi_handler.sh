@@ -18,7 +18,8 @@ case "$1" in
 				if [ $? = 0 ]
 				then
 					date +%s > /home/julgoe/.tmp_lidclosingaction_tmstmp
-					# sudo pm-suspend >> /home/julgoe/tmp_acpi.out
+					sudo pm-suspend
+				        #	>> /home/julgoe/tmp_acpi.out
 					exit
 				fi
 				;;

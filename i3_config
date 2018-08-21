@@ -203,7 +203,7 @@ exec_always --no-startup-id "feh -zD5 --bg-max /home/julgoe/Pictures/actualBackg
 exec --no-startup-id compton -bc &
 # for locking: 
 #bindsym $mod+Mod1+l exec "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
-exec_always --no-startup-id xautolock -detectsleep -time 30 -locker "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
+exec --no-startup-id xautolock -detectsleep -time 30 -locker "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
 bindsym $mod+Mod1+l exec "xautolock -locknow"
 
 # autostart
@@ -230,6 +230,6 @@ focus_follows_mouse no
 exec_always fusuma
 
 # dunst notification daemon for /usr/bin/notify-send
-exec_always dunst
+exec dunst
 bindsym $mod+p exec notify-send 'DUNST_COMMAND_PAUSE'
 bindsym $mod+Shift+p exec notify-send 'DUNST_COMMAND_RESUME'

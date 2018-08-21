@@ -21,7 +21,7 @@ Date() {
 
 #define the host
 Host() {
-	echo "%{B$Cfg}%{F$Cbg} on %{F#06989a}$(hostname) %{B$Cbg}%{F#Cfg}"
+	echo "%{B$Cfg}%{F$Cbg} on %{F$CspecialCyan}$(hostname) %{B$Cbg}%{F$Cfg}"
 }
 
 #define spotify shitness
@@ -43,7 +43,7 @@ Volume() {
 		batt=$(bluetoothqc -b)
 		text="$text (QC $batt% battery)"
 	fi
-	echo " %{F$Cfggrey}Vol. $text%{F$Cfg}"
+	echo " %{F$Cfggrey}Vol. $text% %{F$Cfg}"
 }
 
 # print the status line
