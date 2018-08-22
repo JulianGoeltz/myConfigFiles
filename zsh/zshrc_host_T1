@@ -54,7 +54,7 @@ function screenSet {
 
 	if [ -n "$(xrandr | grep 'HDMI2 connected')" ] ; then
 		# HDMI output is connected, i.e. probably in office, enlarge laptop display
-		xrandr --output eDP1 --mode 1600x900 --primary --output HDMI2 --auto --right-of eDP1 
+		xrandr --output eDP1 --mode 1600x900 --output HDMI2 --auto --right-of eDP1 --primary 
 	else
 		# assume no other display connected, use only laptop
 		xrandr --output HDMI2 --off --output eDP1 --auto --primary
@@ -76,4 +76,18 @@ function correctSinkForChangingVolume () {
 		echo $tmpString
 	fi
 }
-alias correctSinkSet="pactl set-default-sink $(correctSinkForChangingVolume)"
+alias correctSinkSet='pactl set-default-sink $(correctSinkForChangingVolume)'
+
+function convertSVGsToeps() {
+	echo "Using the command 'inkscape -f [File] --export-latex -E [NewFile]'"
+	for file in $(ls *.svg); do
+		newFile=${file/.svg/.eps}
+		if [ -f $newFile ]; then
+			echo "> File $file already converted"
+			continue
+		else
+			echo "Converting File $file to $newFile"
+			inkscape -f $file --export-latex -E $newFile
+		fi
+	done
+}

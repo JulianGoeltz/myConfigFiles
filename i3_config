@@ -125,7 +125,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
-mode "resize" {
+mode "resize/move" {
         # These bindings trigger as soon as you enter the resize mode
 
         # Pressing left will shrink the window’s width.
@@ -138,17 +138,21 @@ mode "resize" {
         bindsym k resize shrink height 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        #bindsym Left resize shrink width 10 px or 10 ppt
+        #bindsym Down resize grow height 10 px or 10 ppt
+        #bindsym Up resize shrink height 10 px or 10 ppt
+        #bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left move left
+	bindsym Right move right
+	bindsym Up move up
+	bindsym Down move down
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode "resize/move"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -169,11 +173,14 @@ bar {
 
 
 # bindsym $mod+p exec --no-startup-id "notify-send Hello, i3"
-bindsym $mod+d exec rofi -fuzzy -font "pango:monospace 12" \
+bindsym $mod+d exec rofi \
+	-font "pango:monospace 12" \
 	-opacity 70 \
 	-width 100 -lines 10 \
 	-padding 480 -location 0 \
-	-modi drun -show drun
+	-show run
+	#-fuzzy \
+	#-modi drun -show drun
 
 # set $bg-color #2f343f
 # set $text-color #f3f4f5
@@ -186,9 +193,13 @@ bindsym Shift+XF86MonBrightnessUp "exec xbacklight -set 100; exec /bin/sh ~/.con
 bindsym Shift+XF86MonBrightnessDown "exec xbacklight -set 1; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
 
 # playpause
-bindsym  XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
-bindsym  Shift+XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
-bindsym  Mod1+XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+bindsym XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym Shift+XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
+bindsym Mod1+XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+bindsym XF86HomePage "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym KP_Subtract "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
+bindsym KP_Multiply "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+
 # increase correct volume: if bluetooth connected use that one
 bindsym  XF86AudioLowerVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
 bindsym  XF86AudioRaiseVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
@@ -203,7 +214,7 @@ exec_always --no-startup-id "feh -zD5 --bg-max /home/julgoe/Pictures/actualBackg
 exec --no-startup-id compton -bc &
 # for locking: 
 #bindsym $mod+Mod1+l exec "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
-exec --no-startup-id xautolock -detectsleep -time 30 -locker "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
+exec_always --no-startup-id xautolock -detectsleep -time 30 -locker "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
 bindsym $mod+Mod1+l exec "xautolock -locknow"
 
 # autostart

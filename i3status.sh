@@ -37,13 +37,17 @@ Volume() {
 	# if bluetooth is attached select volume of that one, and also print battery
 	# otherwise jsut first volume
 	correctSink=$(/home/julgoe/.config/i3/scripts/correctSinkForChangingVolume.sh)
-	text=$(pactl list sinks | pcregrep -M "Sink #$correctSink(.|\n)*?Volume.*?$" | grep -oP "Volume: .*?\%" | grep -oP "[0-9]*%")
+	text=$(pactl list sinks | pcregrep -M "Sink #$correctSink(.|\n)*?Volume.*?$")
+       	retval=$(echo $text | grep -oP "Volume: .*?\%" | grep -oP "[0-9]*%")
 
+	if $(echo $text | grep -q "Mute: yes"); then
+		retval=$retval"(Muted)"
+	fi
 	if [ "$correctSink" -gt "0" ]; then
 		batt=$(bluetoothqc -b)
-		text="$text (QC $batt% battery)"
+		retval="$retval (QC $batt% battery)"
 	fi
-	echo " %{F$Cfggrey}Vol. $text% %{F$Cfg}"
+	echo " %{F$Cfggrey}Vol. $retval %{F$Cfg}"
 }
 
 # print the status line
