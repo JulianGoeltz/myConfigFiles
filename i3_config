@@ -158,10 +158,17 @@ bindsym $mod+r mode "resize/move"
 # finds out, if available)
 bar {
         # i3bar_command ~/.config/i3/i3status.sh | lemonbar -p -B "#2e3436" -F "#d3d7cf"
-        status_command ~/.config/i3/i3status.sh | lemonbar -p -B "#2e3436" -F "#d3d7cf"
+        # status_command ~/.config/i3/i3status.sh | lemonbar -p -B "#2e3436" -F "#d3d7cf"
         #status_command ~/.config/i3/i3status.sh
-        tray_output primary
+        # status_command $HOME/.config/i3/conky-i3bar
+        status_command ~/.config/i3/i3status.sh
+	font pango: Awesome 9
+        tray_output eDP1
 	position top
+	colors {
+		background #2e3436
+		statusline #d3d7cf
+	}
 }
 #exec python /home/julgoe/venvs/py2nest/lib/python2.7/site-packages/powerline/bindings/lemonbar/powerline-lemonbar.py –i3
 # bar {
@@ -173,11 +180,20 @@ bar {
 
 
 # bindsym $mod+p exec --no-startup-id "notify-send Hello, i3"
+# bindsym $mod+d exec rofi \
+# 	-font "pango:monospace 12" \
+# 	-opacity 70 \
+# 	-width 100 -lines 10 \
+# 	-padding 480 -location 0 \
+# 	-show run
+# 	#-fuzzy \
+# 	#-modi drun -show drun
 bindsym $mod+d exec rofi \
 	-font "pango:monospace 12" \
 	-opacity 70 \
 	-width 100 -lines 10 \
-	-padding 480 -location 0 \
+	-padding 400 \
+	-location 0 \
 	-show run
 	#-fuzzy \
 	#-modi drun -show drun
@@ -214,10 +230,13 @@ exec_always --no-startup-id "feh -zD5 --bg-max /home/julgoe/Pictures/actualBackg
 exec --no-startup-id compton -bc &
 # for locking: 
 #bindsym $mod+Mod1+l exec "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
-exec_always --no-startup-id xautolock -detectsleep -time 30 -locker "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
+exec --no-startup-id xautolock -detectsleep -time 30 -locker "i3lock -tbefi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
 bindsym $mod+Mod1+l exec "xautolock -locknow"
 
 # autostart
+assign [class="Spotify"]   10
+assign [class="KeePass2"]   10
+assign [class="TelegramDesktop"]  9
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
 exec --no-startup-id i3-msg 'workspace 2; exec gnome-terminal'
 exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
@@ -244,3 +263,15 @@ exec_always fusuma
 exec dunst
 bindsym $mod+p exec notify-send 'DUNST_COMMAND_PAUSE'
 bindsym $mod+Shift+p exec notify-send 'DUNST_COMMAND_RESUME'
+
+# back and forth
+workspace_auto_back_and_forth yes
+bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+q move scratchpad
+bindsym $mod+Escape scratchpad show
+
+# moving workspaces to other output
+bindsym $mod+o move workspace to output right
+
+# maybe use udiskie even in autostart to automaticcaly mount devices
+# udiskie --tray

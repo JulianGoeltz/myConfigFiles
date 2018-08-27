@@ -2,7 +2,7 @@
 	email = goeltz@stud.uni-heidelberg.de
 	name = JulianGoeltz
 [alias]
-	adog = log --all --decorate --oneline --graph
+	adog = log --all --decorate --oneline --graph --color
 	co = checkout
 	st = status
 [core]

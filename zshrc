@@ -57,6 +57,8 @@ alias -s out=less
 alias -g C=" | wc -l"
 alias -g G=" | grep"
 alias -g L=" | less" 
+alias -g T=" | tail"
+alias -g H=" | head"
 
 
 ipy (){
@@ -160,7 +162,7 @@ show_prompt () {
 	    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
 	    (( count = $count + 1 ))
 	done
-	ZSH_THEME_GIT_PROMPT_PREFIX=", $PR_RED"
+	ZSH_THEME_GIT_PROMPT_PREFIX="|$PR_RED"
 	ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_NO_COLOR"
 	ZSH_THEME_GIT_PROMPT_DIRTY="$PR_LIGHT_YELLOW ⚡"
 	ZSH_THEME_GIT_PROMPT_CLEAN=""
@@ -168,17 +170,19 @@ show_prompt () {
 	PR_NO_COLOR="%{$terminfo[sgr0]%}"
 	PROMPT="\
 ┌─[$PR_CYAN%D{%m-%d/%H:%M:%S}$PR_NO_COLOR|$PR_LIGHT_GREEN%n$PR_NO_COLOR@$PR_LIGHT_YELLOW%m$PR_NO_COLOR"
+	PROMPT=$PROMPT'$([ -n "$VIRTUAL_ENV" ] && echo -n "$PR_NO_COLOR|$PR_MAGENTA" && echo -n $(basename $VIRTUAL_ENV))'$PR_NO_COLOR
 	PROMPT=$PROMPT'$(git_prompt_info)'
-	PROMPT=$PROMPT"$PR_NO_COLOR:$PR_BLUE%~$PR_NO_COLOR]
+	PROMPT=$PROMPT"$PR_NO_COLOR|$PR_BLUE%~$PR_NO_COLOR]
 └─☉ "
 	# └─⬧ "
 	# └─⧫ "
 	# ━
 	# └─☉ "
 	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
-	RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)$PR_NO_COLOR "
+	RPROMPT="$PR_YELLOW(%?)$PR_NO_COLOR "
 }
 show_prompt
+VIRTUAL_ENV_DISABLE_PROMPT="true"
 
 # User configuration
 

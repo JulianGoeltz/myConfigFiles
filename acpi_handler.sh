@@ -27,10 +27,11 @@ case "$1" in
 				tmp=$(cat /home/julgoe/.tmp_lidclosingaction_tmstmp)
 				echo "open" > /home/julgoe/.tmp_lidclosingaction_tmstmp
 				if [ ! $tmp = "open" ]; then
-					if [ $(($(date +%s)-$tmp)) -ge $((60*60)) ]; then
+					if [ "$(($(date +%s)-$tmp))" -ge "$((60*60))" ]; then
 						USER=$(ps -C i3 -o user=)
 						if test $USER; then
 						       	DISPLAY=:0.0 su $USER -c "xautolock -locknow"
+							# if it isn't working check whether theres a xautolock running and try to lokc with -locknow in terminal
 						fi
 					fi
 				fi
