@@ -78,6 +78,12 @@ Plug 'tpope/vim-obsession'
 " " like vimux but for ipython
 Plug 'epeli/slimux'
 " maybe this works
+" to have better (patience, histogram=fast patience) diff algorithm
+" use with :EnhancedDiff histogram
+Plug 'chrisbra/vim-diff-enhanced'
+" in case at startup there already exists a swap file offer the option to
+" compare the two with vimdiff
+Plug 'chrisbra/Recover.vim'
 call plug#end()
 
 
