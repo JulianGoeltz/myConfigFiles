@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 # shell script to prepend i3status with more stuff
 
 # define colours:
@@ -25,13 +25,18 @@ Host() {
 }
 
 #define spotify shitness
+json_escape () {
+	# from https://stackoverflow.com/questions/10053678/escaping-characters-in-bash-for-json
+	printf '%s' "$1" | python -c 'import json,sys; print(json.dumps(sys.stdin.read()))'
+}
 Playing() {
 	if [ "$(playerctl status)" = "Playing" ]; then
 		artist=$(playerctl metadata artist)
 		title=$(playerctl metadata title)
-		[ "$(echo $artist | wc -c )" -gt "23" ] && artist="$(echo $artist | head -c 20)..."
-		[ "$(echo $title | wc -c )" -gt "23" ] && title="$(echo $title | head -c 20)..."
-		echo "𝅘𝅥𝅮 $artist - $title"
+		[ "$(echo $artist | wc -c )" -gt "23" ] && artist=$(echo "${artist:0:20}...")
+		[ "$(echo $title | wc -c )" -gt "23" ] && title=$(echo "${title:0:20}...")
+		tmp=$(json_escape "$artist - $title")
+		echo "𝅘𝅥𝅮 ${tmp:1:-1}"
 	fi
 }
 

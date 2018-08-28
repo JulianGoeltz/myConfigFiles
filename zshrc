@@ -53,6 +53,7 @@ alias -s txt=vim
 # dont use this to be able to execute stuff; alias -s py=vim
 alias -s svg=inkview
 alias -s out=less
+alias -s mp4=vlc
 
 alias -g C=" | wc -l"
 alias -g G=" | grep"

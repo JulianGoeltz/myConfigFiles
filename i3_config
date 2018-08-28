@@ -243,6 +243,7 @@ exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
 exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird; exec /usr/bin/telegram'
 exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/spotify; exec /usr/bin/keepass2'
 exec --no-startup-id i3-msg workspace 1
+exec_always --no-startup-id i3-msg 'exec gnome-terminal --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="vim -S"'
 
 # switch to next/prev window
 # bindsym $mod+Left exec i3-msg "workspace $(( ($(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')-1-1)%10+1))"
@@ -261,8 +262,8 @@ exec_always fusuma
 
 # dunst notification daemon for /usr/bin/notify-send
 exec dunst
-bindsym $mod+p exec notify-send 'DUNST_COMMAND_PAUSE'
-bindsym $mod+Shift+p exec notify-send 'DUNST_COMMAND_RESUME'
+bindsym $mod+p exec "notify-send -t 2000 'Turning off notifications'; sleep 2; notify-send 'DUNST_COMMAND_PAUSE'"
+bindsym $mod+Shift+p exec "notify-send 'DUNST_COMMAND_RESUME'; notify-send -t 2000 'Enabled notifications again'"
 
 # back and forth
 workspace_auto_back_and_forth yes
