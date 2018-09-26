@@ -243,7 +243,7 @@ exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
 exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird; exec /usr/bin/telegram'
 exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/spotify; exec /usr/bin/keepass2'
 exec --no-startup-id i3-msg workspace 1
-exec_always --no-startup-id i3-msg 'exec gnome-terminal --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="vim -S"'
+exec --no-startup-id i3-msg 'exec gnome-terminal --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="vim -S"'
 
 # switch to next/prev window
 # bindsym $mod+Left exec i3-msg "workspace $(( ($(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')-1-1)%10+1))"
@@ -257,8 +257,9 @@ bindsym $mod+Right workspace next
 # dont focus on window for each mouse hover
 focus_follows_mouse no
 
-# fusuma
-exec_always fusuma
+# touchpad: fusuma and other
+exec --no-startup-id i3-msg 'exec fusuma'
+exec --no-startup-id i3-msg 'exec synclient ClickFinger3=2; synclient TapButton3=2; synclient HorizTwoFingerScroll=1'
 
 # dunst notification daemon for /usr/bin/notify-send
 exec dunst
@@ -275,4 +276,4 @@ bindsym $mod+Escape scratchpad show
 bindsym $mod+o move workspace to output right
 
 # maybe use udiskie even in autostart to automaticcaly mount devices
-# udiskie --tray
+exec --no-startup-id i3-msg 'exec udiskie --tray'

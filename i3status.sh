@@ -40,6 +40,30 @@ Playing() {
 	fi
 }
 
+# ethernet
+Ethernet() {
+	if [ "$(ifconfig enp0s31f6 | grep -c addr)" -gt 1 ]; then
+		echo -n "Eth: "
+		# string=$(ifconfig enp0s31f6)
+		echo -n $(ethtool enp0s31f6  2>/dev/null| grep Speed | sed -E 's/.*Speed: ([0-9]*Mb\/s).*/\1/')
+		echo
+	fi
+}
+# wifi
+Wifi() {
+	if [ "$(ifconfig wlp4s0 | grep -c addr)" -gt 1 ]; then
+		echo -n "Wifi: "
+		string=$(iwconfig wlp4s0)
+		echo -n $(echo $string | grep ESSID | sed -E 's/.*ESSID:"(.*?)".*/\1/')
+		signalstr=$(echo $string | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
+		# echo -n " at $signalstr"
+		signalstr=$(((100-$signalstr)*2))
+		signalstr=$(($signalstr > 100 ? 100 : $signalstr))
+		signalstr=$(($signalstr < 0 ? 0 : $signalstr))
+		echo -n " at $signalstr%"
+	fi
+}
+
 #define bluetooth shitness
 alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* [LE-]*Bose QC35'|grep -o '\S*:\S*')"
 Volume() {
@@ -89,6 +113,14 @@ while true; do
 	else
 		qc_shown=false
 	fi
+
+	if [ "$(($counter%5))" -eq 0 ]; then
+		ethernet=$(Ethernet)
+		wifi=$(Wifi)
+	fi
+	echo '  { "full_text": "'$ethernet'" }, '
+	echo '  { "full_text": "'$wifi'" }, '
+
 
 	echo '  { "full_text": "<span bgcolor=\"'$Cfg'\"> on </span>", "markup":"pango", "color":"'$Cbg'", "separator":false, "separator_block_width": 0 },'
 	echo '  { "full_text": "<span bgcolor=\"'$Cfg'\" weight=\"bold\">'$(hostname)' </span>", "markup":"pango", "color":"'$CspecialCyan'" },'
