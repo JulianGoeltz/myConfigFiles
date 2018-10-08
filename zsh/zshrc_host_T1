@@ -8,7 +8,7 @@ export ZSH=/home/julgoe/.oh-my-zsh
 # very different
 source $HOME/nest/bin/nest_vars.sh
 source $HOME/neuron/nrnenv
-alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -o '\S* [LE-]*Bose QC35'|grep -o '\S*:\S*')"
+alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')"
 
 alias cdmaster_hel="cd /mnt/hel_fs/"
 

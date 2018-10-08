@@ -51,16 +51,16 @@ Ethernet() {
 }
 # wifi
 Wifi() {
-	if [ "$(ifconfig wlp4s0 | grep -c addr)" -gt 1 ]; then
+	string=$(iwconfig wlp4s0)
+	if [ "$(echo $string | grep -c off/any)" -eq 0 ]; then
 		echo -n "Wifi: "
-		string=$(iwconfig wlp4s0)
 		echo -n $(echo $string | grep ESSID | sed -E 's/.*ESSID:"(.*?)".*/\1/')
 		signalstr=$(echo $string | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
 		# echo -n " at $signalstr"
 		signalstr=$(((100-$signalstr)*2))
 		signalstr=$(($signalstr > 100 ? 100 : $signalstr))
 		signalstr=$(($signalstr < 0 ? 0 : $signalstr))
-		echo -n " at $signalstr%"
+		printf " at%4u%%" $signalstr
 	fi
 }
 

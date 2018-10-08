@@ -60,6 +60,7 @@ alias -g G=" | grep"
 alias -g L=" | less" 
 alias -g T=" | tail"
 alias -g H=" | head"
+alias -g S=" | sort"
 
 
 ipy (){
