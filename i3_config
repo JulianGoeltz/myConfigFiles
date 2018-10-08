@@ -213,6 +213,7 @@ bindsym XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pau
 bindsym Shift+XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
 bindsym Mod1+XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 bindsym XF86HomePage "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym KP_Divide "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
 bindsym KP_Subtract "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
 bindsym KP_Multiply "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 

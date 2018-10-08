@@ -173,8 +173,8 @@ show_prompt () {
 	PROMPT="\
 ┌─[$PR_CYAN%D{%m-%d/%H:%M:%S}$PR_NO_COLOR|$PR_LIGHT_GREEN%n$PR_NO_COLOR@$PR_LIGHT_YELLOW%m$PR_NO_COLOR"
 	PROMPT=$PROMPT'$([ -n "$VIRTUAL_ENV" ] && echo -n "$PR_NO_COLOR|$PR_MAGENTA" && echo -n $(basename $VIRTUAL_ENV))'$PR_NO_COLOR
-	PROMPT=$PROMPT'$(git_prompt_info)'
-	PROMPT=$PROMPT"$PR_NO_COLOR|$PR_BLUE%~$PR_NO_COLOR]
+	PROMPT=$PROMPT'$([ -z "$ZSH_THEME_GIT_DONTDOIT" ] && echo "$(git_prompt_info)")'$PR_NO_COLOR
+	PROMPT=$PROMPT"|$PR_BLUE%~$PR_NO_COLOR]
 └─☉ "
 	# └─⬧ "
 	# └─⧫ "
@@ -182,6 +182,9 @@ show_prompt () {
 	# └─☉ "
 	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
 	RPROMPT="$PR_YELLOW(%?)$PR_NO_COLOR "
+
+	# set this to nozero length if git is very slow for some reason
+	ZSH_THEME_GIT_DONTDOIT=""
 }
 show_prompt
 VIRTUAL_ENV_DISABLE_PROMPT="true"
@@ -214,4 +217,3 @@ VIRTUAL_ENV_DISABLE_PROMPT="true"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-PROMPT="# "
