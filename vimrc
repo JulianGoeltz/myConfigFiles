@@ -210,3 +210,8 @@ map <Leader>b :SlimuxREPLSendBuffer<CR>
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 " from https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work#7078429
 cmap w!! w !sudo tee > /dev/null %
+
+" wrap and textwidth done in filetypes, see vim folder
+" line at 80 (+1 would be after textwidth -> wrap line)
+set colorcolumn=80
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey

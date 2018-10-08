@@ -71,7 +71,7 @@ ipy (){
 	else
 		reload_the_devmisc288=false
 	fi
-	ipython2 -ic 'import numpy as np; import matplotlib.pyplot as plt; from pprint import pprint;'
+	ipython2 -ic "import numpy as np; import matplotlib.pyplot as plt; from pprint import pprint; $1"
 	if $reload_the_devmisc288; then module load developmisc_288; fi
 }
 # only set ipy3 alias if ipython3 exists
@@ -214,3 +214,4 @@ VIRTUAL_ENV_DISABLE_PROMPT="true"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+PROMPT="# "
