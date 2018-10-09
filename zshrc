@@ -8,10 +8,12 @@ bindkey -v
 # The following lines were added by compinstall
 if [[ "$(hostname)" == "T1" ]]; then
 	zstyle :compinstall filename '/home/julgoe/.zshrc'
-elif [[ "$(hostname)" == "helvetica" ]]; then
+elif [[ "$(hostname)" == "helvetica" ]] || [[ "$(hostname)" == "hel" ]]; then
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
 else
 	echo "no known host. what to do?"
+	echo "Opening bash so you can adapt"
+	bash
 	exit
 fi
 
@@ -79,7 +81,7 @@ if hash ipython3 2>/dev/null; then alias ipy3="ipython3 -ic 'import numpy as np;
 
 
 # last thing before end, source the host specific files if existent
-[ -e ~/.zsh/zshrc_host_$(hostname) ] && source ~/.zsh/zshrc_host_$(hostname)
+[ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
 
 
 ######## end
