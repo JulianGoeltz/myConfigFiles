@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/zsh
 
 standardWidth=20
+repeatEvery=10
 delimiterDone="|"
 delimiterNot='-'
 delimiterNot='\xe2\x94\x88'
@@ -11,13 +12,9 @@ delimiterDone='\xe2\x96\x88'
 IFS=$'\n'
 
 while true; do
-	echo -e \\033c
-	date +"%H:%M:%S"
-	squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto
-	if [ "$1" != "" ]; then
-		echo $1
-		eval $1
-	fi
+	startTimestamp=$(date +%s)
+	# first compose longer part, then echo all at once
+	output=""
 	if [ -n "$(find ./ -maxdepth 1 -name '*slurm*.out')" ]; then
 		for file in $(ls *slurm*.out); do
 			# if [ $(du $file | grep -o "^[0-9]*") -ge 200000 ]; then
@@ -32,26 +29,35 @@ while true; do
 			if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
 			        StepNumber=$(echo $StepNumber | grep -o "[0-9]*$" | tail -n 1);
 		        fi
-			counter=$(($FileCount * $standardWidth / $StepNumber))
-			echo -n $file
+			# subtract small number that is added later to circumvent false rounding
+			counter=$(( ($FileCount - 0.1) * $standardWidth / $StepNumber))
+			output=$output$file
 			jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber[0-9]*of[0-9]*" $file)
 			if [ -n "$jobIsSweep" ] ; then
-				echo -n "("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
+				output=$output"("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
 			fi
-			echo -en ":"$delimiterStart
+			output=$output":"$delimiterStart
 			while (( $counter > 0 )); do
-				echo -en $delimiterDone
+				output=$output$delimiterDone
 				counter=$(($counter-1))
 			done
-			counter=$(($(($StepNumber-$FileCount)) * $standardWidth / $StepNumber))
+			counter=$(( ($StepNumber-$FileCount + 0.1) * $standardWidth / $StepNumber))
 			while (( $counter > 0 )); do
-				echo -en $delimiterNot
+				output=$output$delimiterNot
 				counter=$(($counter-1))
 			done
-			echo -e $delimiterEnd
+			output=$output$delimiterEnd"\n"
 		done
 	fi
-	sleep 10
+	echo -e \\033c
+	date +"%H:%M:%S"
+	squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto
+	if [ "$1" != "" ]; then
+		echo $1
+		eval $1
+	fi
+	echo -e $output
+	sleep $(($repeatEvery - ( $(date +%s) - $startTimestamp)))
 	# -p "what should be the repetition per job (everything but a number will quit): " 
 
 	# read -t 5 input

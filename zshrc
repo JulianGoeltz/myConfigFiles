@@ -12,9 +12,8 @@ elif [[ "$(hostname)" == "helvetica" ]] || [[ "$(hostname)" == "hel" ]]; then
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
 else
 	echo "no known host. what to do?"
-	echo "Opening bash so you can adapt"
+	echo "Opening bash so you can adapt. Think about exiting"
 	bash
-	exit
 fi
 
 autoload -Uz compinit

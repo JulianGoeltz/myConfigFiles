@@ -85,7 +85,7 @@ function sendAway () {
 	eval "${slurmCall} --wrap '${currentJob}'"
 }
 
-numOfAllFiles=$(find $relPath -maxdepth 1 -name \*.yaml | wc -l)
+numOfAllFiles=$(find $relPath -name \*.yaml | wc -l)
 echo "Do you really want to process $numOfAllFiles files in the directory $relPath?"
 read "numOfFilesPerJob?How many calls at most in one job: "
 
@@ -94,14 +94,13 @@ case $numOfFilesPerJob in
 	*) echo continue... ;;
 esac
 
-if [ ! -d "$relPath/simulations" ]; then mkdir "$relPath/simulations"; fi
 
 accumulatedFiles=0
 allFiles=0
 alreadyStartedJobs=0
 currentJob=""
 numOfFilesLookedAt=0
-for fn in `find $relPath -maxdepth 1 -name "*.yaml"`; do
+for fn in `find $relPath -name "*.yaml"`; do
 	numOfFilesLookedAt=$(($numOfFilesLookedAt+1))
 	if [ $accumulatedFiles -ge $numOfFilesPerJob ]; then
 		sendAway
@@ -115,6 +114,7 @@ for fn in `find $relPath -maxdepth 1 -name "*.yaml"`; do
 	fnFolder=$(dirname $fn)/simulations
 	fnPure=$(basename "${fn%.*}")
 	[ -n "$(ls $fnFolder/$fnPure* 2>/dev/null)" ] && continue
+	if [ ! -d "$fnFolder" ]; then mkdir "$fnFolder"; fi
 
 	accumulatedFiles=$(($accumulatedFiles+1))
 	allFiles=$(($allFiles+1))
