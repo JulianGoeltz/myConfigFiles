@@ -218,8 +218,10 @@ bindsym KP_Subtract "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
 bindsym KP_Multiply "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 
 # increase correct volume: if bluetooth connected use that one
-bindsym  XF86AudioLowerVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
-bindsym  XF86AudioRaiseVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
+bindsym XF86AudioLowerVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
+bindsym XF86AudioRaiseVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
+bindsym Control+KP_Subtract  "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
+bindsym Control+KP_Add "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
 bindsym XF86AudioMute "exec pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) toggle"
 
 # syncient
@@ -282,3 +284,10 @@ bindsym $mod+o move workspace to output right
 
 # opening nemo for easy folder management
 bindsym $mod+e exec nemo
+
+#always make inkviews floating
+for_window [class="Inkview" instance="inkview"] floating enable
+for_window [title="Figure 1"] floating enable
+
+# bind key to use screenSet, easiest for making screen work after removing from dockingstation
+bindsym $mod+Control+1 "exec /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"

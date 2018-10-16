@@ -50,17 +50,6 @@ function proxySwitch {
 	fi
 }
 
-function screenSet {
-
-	if [ -n "$(xrandr | grep 'HDMI2 connected')" ] ; then
-		# HDMI output is connected, i.e. probably in office, enlarge laptop display
-		xrandr --output eDP1 --mode 1600x900 --output HDMI2 --auto --right-of eDP1 --primary 
-	else
-		# assume no other display connected, use only laptop
-		xrandr --output HDMI2 --off --output eDP1 --auto --primary
-	fi
-}
-
 
 alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
 
