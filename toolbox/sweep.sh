@@ -2,7 +2,9 @@
 
 maxNumberOfJobs=90
 tokenForAnimation="ThisIsASweepedJobWithJobNumber"
-slurmCall='sbatch -p ' # --begin=now+6hours  # if one wants the jobs to start later
+slurmCall='sbatch -p '
+# --begin=now+6hours  # if one wants the jobs to start later
+# --time 5-00:00:00  # timelimit. get defaults with sinfo -o "%.12P %.5a %.10l %.10L %.6D %.6t %N"
 
 programCall=$1
 relPath=$2
@@ -24,23 +26,23 @@ trigger="RESETALLTHEJOBS"
 # first it is checked whether there are no current jobs running, otherwise asks for explicit confirmation
 # for each file checks whether training.svg and volts.svg exist, otherwise deletes _fileHasBeenSend and .hdf5
 if [[ "$1" == "$trigger" ]]; then
-	read "test?you are about to go through the directory $relPath/simulations and delete all .hdf5 and _fileHasBeenSend where no volts.svg and training.svg exist (all where more than one timestamp exist, one will be deleted). Sure to do this (y/n):"
+	read "test?you are about to go through the directory $relPath and its subdirectories and delete all .hdf5 and _fileHasBeenSend where no volts.svg and training.svg exist (all where more than one timestamp exist, one will be deleted). Sure to do this (y/n):"
 	case $test in 
 		'y') echo continue...;;
 		*) exit;;
 	esac
 	if [ -n "$(squeue -u $LOGNAME --noheader)" ]; then
 		squeue -u $LOGNAME
-		read "test?There are still jobs in the queue, are you sure you want to do this?"
+		read "test?There are still jobs in the queue, are you sure you want to do this?(y/n)"
 		case $test in 
 			'y') echo continue...;;
 			*) exit;;
 		esac
 	fi
 
-	numOfAllfHBSFiles=$(find $relPath/simulations -maxdepth 1 -name "*_fileHasBeenSend" | wc -l)
+	numOfAllfHBSFiles=$(find $relPath -name "*_fileHasBeenSend" | wc -l)
 	numOfFilesLookedAt=0
-	for file in $(find $relPath/simulations -maxdepth 1 -name "*_fileHasBeenSend"); do
+	for file in $(find $relPath -name "*_fileHasBeenSend"); do
 		#file=../data/20180712_sweepImp/simulations/taurat0_cuba_x_-l1U_5.0-l1UF_0.0-frobU_0.0-frobUF_0.0-dw_200-l2r_0.0100-learn_0.0050_fileHasBeenSend
 		fnPurish=${file//_fileHasBeenSend}
 		numOfFilesLookedAt=$(($numOfFilesLookedAt+1))
@@ -49,6 +51,7 @@ if [[ "$1" == "$trigger" ]]; then
 		if [ $(ls $fnPurish*.hdf5 2>/dev/null | wc -l) -gt 1 ]; then
 			echo "($numOfFilesLookedAt/$numOfAllfHBSFiles)"$fnPurish
 			tmp=$(ls $fnPurish*.hdf5 | head -n 1)
+			# maybe use tail-n +1 to have all lines except the first one, and delete them?
 			tmp=${tmp//.hdf5}
 			#tmp=$(ls $tmp*)
 			rm -f $tmp*

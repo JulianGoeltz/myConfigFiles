@@ -132,6 +132,7 @@ function diffHdf5 () {
 	eval $diffCommand
 }
 
+alias squeueRepeat="while true; do squeueRepeat.sh; done"
 # function squeueRepeat () {
 # 	while true; do
 # 		echo -e \\033c

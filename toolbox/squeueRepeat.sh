@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# echo single dot to indicate start of process
+echo -n .
+
 standardWidth=20
 repeatEvery=5
 minimumColsForParallel=80
@@ -12,14 +15,28 @@ delimiterDone='\xe2\x96\x88'
 # split on new lines, not spaces. In case we have filenames including spaces
 IFS=$'\n'
 
-while true; do
+sleepNotNegaitve() {
+	sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $1)))" | sort | head -n 1)
+}
+
+#while true; do
 	startTimestamp=$(date +%s)
 	# decide whether to use sequential or parallel, based on terminal size
 	# first compose longer part, then echo all at once
 	output=""
+
+	output_pending=""
+	for linefeed in $(squeue -t pd -p longexp,experiment --noheader -o  "%.8u" --noheader | grep -v jgoeltz | sort | uniq -c ); do
+		output_pending=$output_pending$(echo $linefeed | awk '{print $2": "$1}')"; "
+	done
+	[ -n "$output_pending" ] && output=$output"Pending on experiment:: "${output_pending:0:-2}"\n"
+	count_ownall=$(squeue -u jgoeltz --noheader -o  "%.8u" --noheader | wc -l)
+	count_ownpending=$(squeue -t pd -u jgoeltz --noheader -o  "%.8u" --noheader | wc -l)
+	output=$output"Own jobs count; total: $count_ownall, pending: $count_ownpending\n"
+
 	if [ "$(tput cols)" -gt "$minimumColsForParallel" ]; then
 		# output=$output"with $(tput cols) we use the parallel display\n"
-		for linefeed in $(squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "longexp\|experimen\|goelt\|JOBID" --color=never); do
+		for linefeed in $(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|goelt\|JOBID" --color=never); do
 			if [ -z "$(echo $linefeed | grep jgoeltz)" ]; then
 				output=$output$(echo $linefeed | grep "longexp\|experimen\|goelt\|JOBID" --color=always)"\n"
 
@@ -134,17 +151,19 @@ while true; do
 				output=$output$delimiterEnd"\n"
 			done
 		fi
-		output=$(squeue -o "%.10i %.9P %.8u %.2t %.8M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto)"\n"$output
+		output=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto)"\n"$output
 	fi
-	echo -e \\033c
+	echo -ne \\033c
 	date +"%H:%M:%S"
-	echo -e $output
+	# to get rid of trailing newline, -n and cut ot off last 2 chars (\n)
+	echo -ne ${output:0:-2}
 	if [ "$1" != "" ]; then
 		echo $1
 		eval $1
 	fi
-	sleep $(($repeatEvery - ( $(date +%s) - $startTimestamp)))
-done
+	sleepNotNegaitve $startTimestamp
+	# sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $startTimestamp)))" | sort | head -n 1)
+#done
 
 # redo previous change
 unset IFS

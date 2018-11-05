@@ -84,6 +84,11 @@ Plug 'chrisbra/vim-diff-enhanced'
 " in case at startup there already exists a swap file offer the option to
 " compare the two with vimdiff
 Plug 'chrisbra/Recover.vim'
+" try diffchar to have diff based on chars, not lines. should be more precise
+" for indented stuff, but also slower
+" from docu: You can use :SDChar and :RDChar commands to manually show and reset the highlights on all or some of lines. To toggle the highlights, use :TDChar command.
+" other way is to use :set diffopt+=iwhite
+Plug 'rickhowe/diffchar.vim'
 call plug#end()
 
 

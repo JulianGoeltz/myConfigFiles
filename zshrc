@@ -74,7 +74,7 @@ ipy (){
 	else
 		reload_the_devmisc288=false
 	fi
-	ipython2 -ic "import numpy as np; import matplotlib.pyplot as plt; from pprint import pprint; $1"
+	ipython2 -ic "import numpy as np, matplotlib.pyplot as plt, cPickle as pkl, h5py, os, os.path as osp; from pprint import pprint; $1"
 	if $reload_the_devmisc288; then module load developmisc_288; fi
 }
 # only set ipy3 alias if ipython3 exists
