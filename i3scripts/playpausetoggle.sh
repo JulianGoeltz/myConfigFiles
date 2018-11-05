@@ -5,4 +5,4 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/
 # sudo cp /home/julgoe/tmp/playerctl/playerctl/.libs/libplayerctl-1.0.so* /usr/local/lib/
 
 # playerctl play-pause
-playerctl $1
+playerctl --player=spotify $1

@@ -44,6 +44,8 @@ alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.u
 alias sshhel_fs="sudo sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -o delay_connect,idmap=user,transform_symlinks,identityfile=~/.ssh/id_rsa,allow_other"
 alias sshhel_fs_unmount="sudo fusermount -u -z /mnt/hel_fs"
 
+alias vpn_connect="sudo openconnect vpn-ac.urz.uni-heidelberg.de"
+
 # makes 10s wait period before executing rm -rf *
 setopt rm_star_wait
 

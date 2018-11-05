@@ -30,12 +30,14 @@ json_escape () {
 	printf '%s' "$1" | python -c 'import json,sys; print(json.dumps(sys.stdin.read()))'
 }
 Playing() {
-	if [ "$(playerctl status)" = "Playing" ]; then
-		artist=$(playerctl metadata artist)
-		title=$(playerctl metadata title)
+	if [ "$(playerctl -p spotify status)" = "Playing" ]; then
+		artist=$(playerctl -p spotify metadata artist)
+		title=$(playerctl -p spotify metadata title)
 		[ "$(echo $artist | wc -c )" -gt "23" ] && artist=$(echo "${artist:0:20}...")
 		[ "$(echo $title | wc -c )" -gt "23" ] && title=$(echo "${title:0:20}...")
+		# in order for special chars to be properly escaped use json function above
 		tmp=$(json_escape "$artist - $title")
+		# but this uses quotes, get rid of them
 		echo "𝅘𝅥𝅮 ${tmp:1:-1}"
 	fi
 }
@@ -61,6 +63,13 @@ Wifi() {
 		signalstr=$(($signalstr > 100 ? 100 : $signalstr))
 		signalstr=$(($signalstr < 0 ? 0 : $signalstr))
 		printf " at%4u%%" $signalstr
+	fi
+}
+# vpn
+Vpn() {
+	if $(ifconfig tun0 2>&1 1>/dev/null); then
+		echo -n "VPN:"
+		ps aux | grep openconnect | grep -v grep | grep -o "openconnect .*" | grep -o " .*" | head -n 1
 	fi
 }
 
@@ -117,9 +126,11 @@ while true; do
 	if [ "$(($counter%5))" -eq 0 ]; then
 		ethernet=$(Ethernet)
 		wifi=$(Wifi)
+		vpn=$(Vpn)
 	fi
 	echo '  { "full_text": "'$ethernet'" }, '
 	echo '  { "full_text": "'$wifi'" }, '
+	echo '  { "full_text": "'$vpn'" }, '
 
 
 	echo '  { "full_text": "<span bgcolor=\"'$Cfg'\"> on </span>", "markup":"pango", "color":"'$Cbg'", "separator":false, "separator_block_width": 0 },'

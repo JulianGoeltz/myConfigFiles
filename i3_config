@@ -291,3 +291,9 @@ for_window [title="Figure 1"] floating enable
 
 # bind key to use screenSet, easiest for making screen work after removing from dockingstation
 bindsym $mod+Control+1 "exec /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"
+
+# bind key for kaddl
+bindsym Mod1+F4 exec "notify-send -t 2000 'Hallo Kaddl'"
+
+#bind key for disabling touchpad
+bindsym $mod+t "exec /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"

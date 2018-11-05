@@ -53,6 +53,9 @@ function proxySwitch {
 
 alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
 
+PATH=$PATH:~/pip_files
+export PYTHONPATH=$PYTHONPATH:~/pip_files/
+export PYTHONPATH=$PYTHONPATH:~/pip_files/lib/python3.5/site-packages/
 if [ -x /usr/bin/mint-fortune ]; then
      #/usr/bin/mint-fortune
 fi
