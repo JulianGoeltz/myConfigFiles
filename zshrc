@@ -77,8 +77,12 @@ ipy (){
 	ipython2 -ic "import numpy as np, matplotlib.pyplot as plt, cPickle as pkl, h5py, os, os.path as osp; from pprint import pprint; $1"
 	if $reload_the_devmisc288; then module load developmisc_288; fi
 }
+alias ipy2=ipy
 # only set ipy3 alias if ipython3 exists
-if hash ipython3 2>/dev/null; then alias ipy3="ipython3 -ic 'import numpy as np; import matplotlib.pyplot as plt'"; fi
+ipy3 () {
+	if ! hash ipython3 2>/dev/null; then echo "No python3 install found."; return; fi
+	ipython3 -ic "import numpy as np, matplotlib.pyplot as plt, pickle as pkl, h5py, os, os.path as osp; from pprint import pprint; $1"
+}
 
 
 # last thing before end, source the host specific files if existent

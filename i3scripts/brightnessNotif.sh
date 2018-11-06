@@ -5,7 +5,7 @@ round() {
 }
 
 # xbacklight takes a bit to reflect change (default time 200ms)
-sleep 0.3 
+sleep 0.4
 
 # if larger than 5 round to nearest 10:
 num=$(xbacklight | xargs printf '%.*f' 0)
