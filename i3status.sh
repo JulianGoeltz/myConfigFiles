@@ -67,7 +67,7 @@ Wifi() {
 }
 # vpn
 Vpn() {
-	if $(ifconfig tun0 2>&1 1>/dev/null); then
+	if $(ifconfig tun0 &>/dev/null); then
 		echo -n "VPN:"
 		ps aux | grep openconnect | grep -v grep | grep -o "openconnect .*" | grep -o " .*" | head -n 1
 	fi

@@ -34,6 +34,9 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
 "Git
 Plug 'tpope/vim-fugitive'
+
+" in container on hel, zsh doesnt work
+set shell=/bin/sh
 if system('hostname') =~ "T1"
 	"sign column indication of git changes (THIS BREAKS THE C-xC-o omnicomplete
 	"FUNCTIONALITY, THUS DISABLED)
@@ -47,6 +50,7 @@ if system('hostname') =~ "T1"
 	let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/text/',
 		\ 'path_html':'~/Dropbox/uni/MasterThesis/vimwiki/html/',
 		\ 'template_path': '~/Dropbox/uni/MasterThesis/vimwiki/templates'}]
+	set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"
 	"sign column indication of git changes
 	Plug 'airblade/vim-gitgutter'

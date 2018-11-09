@@ -16,7 +16,7 @@ delimiterDone='\xe2\x96\x88'
 IFS=$'\n'
 
 sleepNotNegaitve() {
-	sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $1)))" | sort | head -n 1)
+	sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $1)))" | sort -g | tail -n 1)
 }
 
 #while true; do
@@ -36,7 +36,8 @@ sleepNotNegaitve() {
 
 	if [ "$(tput cols)" -gt "$minimumColsForParallel" ]; then
 		# output=$output"with $(tput cols) we use the parallel display\n"
-		for linefeed in $(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|goelt\|JOBID" --color=never); do
+		for linefeed in $(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" --sort=u,P,i |
+			grep "longexp\|experimen\|goelt\|JOBID" --color=never); do
 			if [ -z "$(echo $linefeed | grep jgoeltz)" ]; then
 				output=$output$(echo $linefeed | grep "longexp\|experimen\|goelt\|JOBID" --color=always)"\n"
 

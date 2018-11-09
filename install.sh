@@ -78,20 +78,22 @@ done
 echo "--vim"
 checkSimilaritiesAndLink vimrc $HOME/.vimrc
 
-echo "--i3"
-checkSimilaritiesAndLink i3_config $HOME/.config/i3/config
-checkSimilaritiesAndLink i3status.sh $HOME/.config/i3/i3status.sh
-[ ! -d "$HOME/.config/i3/scripts" ] && mkdir $HOME/.config/i3/scripts
-for fn in $(ls $LocOfScript/i3scripts/*); do
-	checkSimilaritiesAndLink i3scripts/$(basename $fn) $HOME/.config/i3/scripts/$(basename $fn)
-done
 if [[ "$(hostname)" == "T1" ]]; then
+	echo "--i3"
+	checkSimilaritiesAndLink i3_config $HOME/.config/i3/config
+	checkSimilaritiesAndLink i3status.sh $HOME/.config/i3/i3status.sh
+	[ ! -d "$HOME/.config/i3/scripts" ] && mkdir $HOME/.config/i3/scripts
+	for fn in $(ls $LocOfScript/i3scripts/*); do
+		checkSimilaritiesAndLink i3scripts/$(basename $fn) $HOME/.config/i3/scripts/$(basename $fn)
+	done
+
+	echo "--acpi&pm"
 	checkSimilaritiesAndLink acpi_handler.sh /etc/acpi/handler.sh sudo
 	checkSimilaritiesAndLink lock /etc/pm/sleep.d/lock sudo
+
+	echo "--fusuma"
+	checkSimilaritiesAndLink fusuma.config $HOME/.config/fusuma/config.yml
+
+	echo "--dunst"
+	checkSimilaritiesAndLink dunstrc $HOME/.config/dunst/dunstrc
 fi
-
-echo "--fusuma"
-checkSimilaritiesAndLink fusuma.config $HOME/.config/fusuma/config.yml
-
-echo "--dunst"
-checkSimilaritiesAndLink dunstrc $HOME/.config/dunst/dunstrc

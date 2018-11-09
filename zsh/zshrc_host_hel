@@ -15,7 +15,7 @@ export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:
 
 #spack_global
 source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
-if [[ -z "$TMUX" ]]; then
+if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 	module load spack_visionary-defaults/2017-12-01
 	module load developmisc_288 # for vim+x
 	read -k1 -t3 "testv?Do you want to load all packages(y/n)?"
@@ -47,17 +47,22 @@ if [[ -z "$TMUX" ]]; then
 fi
 
 echo
-module list
+[ -z $SINGULARITY_APPNAME ] &&  module list
 
 PATH=$PATH:~/pip_files
-export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
-export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
-export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python
-export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python/lib/python2.7/site-packages/
+if $( echo $PYTHONPATH | grep -vq pip_files); then
+	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
+	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
+	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python
+	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python/lib/python2.7/site-packages/
+fi
 
 export MANPATH=/usr/local/share/man:$MANPATH
 
-precmd_functions=($precmd_functions updateEnvTmux)
+if [ -z "$PREEXEC_FUNCTIONS_AMMENDED" ]; then
+	preexec_functions=($preexec_functions updateEnvTmux)
+	PREEXEC_FUNCTIONS_AMMENDED="set"
+fi
 
 function whichLicences () {
 	for jobid in `squeue -p "experiment" -o "%i" | grep -o "[0-9]*"`; do
@@ -145,3 +150,8 @@ alias squeueRepeat="while true; do squeueRepeat.sh; done"
 # 		sleep 5
 # 	done
 # }
+
+# singularity stuff
+# singularity shell --app visionary-defaults /containers/stable/latest
+# or even better 
+alias singularityzsh="singularity exec --app $CONTAINER_APP_NMPM_SOFTWARE /containers/stable/latest zsh"

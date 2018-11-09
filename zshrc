@@ -84,6 +84,19 @@ ipy3 () {
 	ipython3 -ic "import numpy as np, matplotlib.pyplot as plt, pickle as pkl, h5py, os, os.path as osp; from pprint import pprint; $1"
 }
 
+# from oli and his .zshrc
+export TMUX_TMPDIR="$HOME/.tmux_stableSocket"
+alias tmux_reattach_running="/proc/\$(pgrep -u \$USER tmux | head -n 1)/exe detach; /proc/\$(pgrep -u \$USER tmux | head -n 1)/exe attach"
+tmux_resetSocket () {
+	processID=$(ps axo pid,user,comm,args G jgoeltz G -v grep G "tmux: server" G -o "^\s*\S*")
+	if [ "$(echo $processID | wc -l)" -eq 1 ]; then
+		kill -s USR1 $processID
+	else
+		echo "More than one server running, do it manually:"
+		ps axo pid,user,comm,args G jgoeltz G -v grep G "tmux: server"
+	fi
+}
+alias tm="tmux attach"
 
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
@@ -180,6 +193,7 @@ show_prompt () {
 	PROMPT="\
 ┌─[$PR_CYAN%D{%m-%d/%H:%M:%S}$PR_NO_COLOR|$PR_LIGHT_GREEN%n$PR_NO_COLOR@$PR_LIGHT_YELLOW%m$PR_NO_COLOR"
 	PROMPT=$PROMPT'$([ -n "$VIRTUAL_ENV" ] && echo -n "$PR_NO_COLOR|$PR_MAGENTA" && echo -n $(basename $VIRTUAL_ENV))'$PR_NO_COLOR
+	PROMPT=$PROMPT'$([ -n "$SINGULARITY_APPNAME" ] && echo "$PR_NO_COLOR|${PR_MAGENTA}container")'$PR_NO_COLOR
 	PROMPT=$PROMPT'$([ -z "$ZSH_THEME_GIT_DONTDOIT" ] && echo "$(git_prompt_info)")'$PR_NO_COLOR
 	PROMPT=$PROMPT"|$PR_BLUE%~$PR_NO_COLOR]
 └─☉ "
