@@ -3,7 +3,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 setopt appendhistory
-bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 if [[ "$(hostname)" == "T1" ]]; then
@@ -96,7 +95,19 @@ tmux_resetSocket () {
 		ps axo pid,user,comm,args G jgoeltz G -v grep G "tmux: server"
 	fi
 }
-alias tm="tmux attach"
+tm () {
+	tmpTmuxServerPid=$(pgrep -u $USER "tmux: server")
+	if [ "$(echo $tmpTmuxServerPid | wc -l)" -ne 1 ]; then
+		echo "More than one server running, handle manually:"
+		ps axo pid,user,comm,args G $USER G -v grep G "tmux: server"
+		return
+	fi
+	[ -z "$TMUX" ] && /proc/$tmpTmuxServerPid/exe attach
+	if [ -n "$TMUX" -o "$?" -ne "0" ]; then
+		echo "tmux server might have lost socket connection, or similar. Socket is reset, try connection again."
+		kill -s USR1 $tmpTmuxServerPid
+	fi
+}
 
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
@@ -167,6 +178,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+# vim keybindings
+bindkey -v
 
 # ######## PROMPT
 # Old prompt
@@ -174,16 +187,16 @@ source $ZSH/oh-my-zsh.sh
 # PROMPT='%B %{$fg[cyan]%}%c%b%{$reset_color%} $(git_prompt_info)'
 
 # use variables to make designing prompt easier
-show_prompt () {
-	autoload colors zsh/terminfo
-	if [[ "$terminfo[colors]" -ge 8 ]]; then
-	    colors
-	fi
-	for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE ORANGE; do
-	    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-	    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-	    (( count = $count + 1 ))
-	done
+autoload colors zsh/terminfo
+if [[ "$terminfo[colors]" -ge 8 ]]; then
+    colors
+fi
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE ORANGE; do
+    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+    (( count = $count + 1 ))
+done
+define_prompt () {
 	ZSH_THEME_GIT_PROMPT_PREFIX="|$PR_RED"
 	ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_NO_COLOR"
 	ZSH_THEME_GIT_PROMPT_DIRTY="$PR_LIGHT_YELLOW ⚡"
@@ -201,14 +214,26 @@ show_prompt () {
 	# └─⧫ "
 	# ━
 	# └─☉ "
-	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
-	RPROMPT="$PR_YELLOW(%?)$PR_NO_COLOR "
-
-	# set this to nozero length if git is very slow for some reason
-	ZSH_THEME_GIT_DONTDOIT=""
 }
-show_prompt
+define_rprompt () {
+	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
+	RPROMPT="$PR_YELLOW($(printf '%3u' $?))$PR_NO_COLOR "
+	RPROMPT='$([ "$KEYMAP" = "vicmd" ] && echo "${PR_YELLOW}[NORMAL MODE]")'$PR_NO_COLOR$RPROMPT
+}
+define_prompt
+define_rprompt
+# make sure it is redrawn correctly if we change from insert to normal mode
+function zle-line-init zle-keymap-select {
+	define_rprompt
+	zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1  #this is for faster mode switching
+# to only show the venv once
 VIRTUAL_ENV_DISABLE_PROMPT="true"
+# set this to nozero length if git is very slow for some reason
+ZSH_THEME_GIT_DONTDOIT=""
 
 # User configuration
 

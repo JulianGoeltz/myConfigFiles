@@ -6,12 +6,13 @@ export ZSH=/wang/users/jgoeltz/cluster_home/.oh-my-zsh
 
 # ##################################
 # very different
-function module () 
-{ 
-    eval `/wang/environment/software/Modules/3.2.10/Modules/$MODULE_VERSION/bin/modulecmd zsh $*`
-}
-# to have access to new module files, eg the one with vim+x
-export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
+if [ -z $SINGULARITY_APPNAME ]; then
+	source /wang/environment/software/Modules/current/init/zsh
+	# to have access to new module files, eg the one with vim+x
+	export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
+else
+	source /opt/spack/share/spack/setup-env.sh
+fi
 
 #spack_global
 source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
@@ -35,7 +36,8 @@ if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 		spack load py-appdirs
 		# for HW; older version to circumvent segfaults
 		#module load nmpm_software/2018-07-12-1
-		module load nmpm_software/2018-08-05-1
+		#module load nmpm_software/2018-08-05-1
+		module load nmpm_software/current
 
 		#spack_local
 		#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
@@ -154,4 +156,12 @@ alias squeueRepeat="while true; do squeueRepeat.sh; done"
 # singularity stuff
 # singularity shell --app visionary-defaults /containers/stable/latest
 # or even better 
-alias singularityzsh="singularity exec --app $CONTAINER_APP_NMPM_SOFTWARE /containers/stable/latest zsh"
+singularityzsh () {
+	if ! module list 2>&1 | grep -q nmpm_software; then
+		echo "no nmpm module loaded"
+		return
+	fi
+	tmpString='singularity exec --app $CONTAINER_APP_NMPM_SOFTWARE /containers/stable/latest zsh'
+	echo "about to eval '$tmpString'"
+	eval $tmpString
+}
