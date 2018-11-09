@@ -12,4 +12,4 @@ i3lock -nte -i /home/julgoe/Pictures/actualBackgrounds/lock_1820.png \
     --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+86:y+1003" \
     --radius=15 --veriftext="" --wrongtext=""
 # resuming if it wasn't paused beofre locking
-[[ "$(cat ~/.tmp_dunststate)" = "paused" ]] && pkill -u $USER -USR2 dunst
+[[ "$(cat ~/.tmp_dunststate)" = "running" ]] && pkill -u $USER -USR2 dunst
