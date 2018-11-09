@@ -233,8 +233,10 @@ bindsym XF86AudioMute "exec pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/c
 exec --no-startup-id compton -bc &
 # for locking: 
 #bindsym $mod+Mod1+l exec "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
-exec --no-startup-id xautolock -detectsleep -time 30 -locker "i3lock -tbefi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
-bindsym $mod+Mod1+Shift+l exec xautolock -detectsleep -time 30 -locker "i3lock -tbefi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
+# used i3lock is not standard but this one:
+# https://github.com/PandorasFox/i3lock-color
+exec --no-startup-id xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
+bindsym $mod+Mod1+Shift+l exec xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
 bindsym $mod+Mod1+l exec "xautolock -locknow"
 
 # autostart
@@ -266,9 +268,9 @@ exec --no-startup-id i3-msg 'exec fusuma'
 exec_always --no-startup-id i3-msg 'exec synclient ClickFinger3=2; exec synclient TapButton3=2; exec synclient HorizTwoFingerScroll=1'
 
 # dunst notification daemon for /usr/bin/notify-send
-exec dunst
-bindsym $mod+p exec "notify-send -t 2000 'Turning off notifications'; sleep 2; notify-send 'DUNST_COMMAND_PAUSE'"
-bindsym $mod+Shift+p exec "notify-send 'DUNST_COMMAND_RESUME'; notify-send -t 2000 'Enabled notifications again'"
+exec --no-startup-id i3-msg 'exec dunst; exec echo "running" > /home/julgoe/.tmp_dunststate'
+bindsym $mod+p exec "~/.config/i3/scripts/dunstToggle.sh pause"
+bindsym $mod+Shift+p exec "~/.config/i3/scripts/dunstToggle.sh resume"
 
 # back and forth
 workspace_auto_back_and_forth yes
@@ -297,3 +299,6 @@ bindsym Mod1+F4 exec "notify-send -t 2000 'Hallo Kaddl'"
 
 #bind key for disabling touchpad
 bindsym $mod+t "exec /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"
+
+# for easy network managment
+exec --no-startup-id i3-msg 'exec nm-applet'

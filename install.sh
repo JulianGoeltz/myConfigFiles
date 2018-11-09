@@ -5,7 +5,10 @@ LocOfScript=$(dirname $(readlink -f $0))
 
 # define colours for better output
 RED='\033[0;31m'
-GREEN='\033[0;32m'
+# existing and correct, yellow
+ExCorr='\033[0;33m'
+# action correct, green
+ActCorr='\033[0;32m'
 NC='\033[0m'
 checkSimilaritiesAndLink (){
 	orig=$LocOfScript/$1
@@ -14,7 +17,7 @@ checkSimilaritiesAndLink (){
 		if [[ "$(readlink -f $dest)" != "$orig" ]]; then
 			echo -e "${RED}File $dest is a link to $(readlink -f $dest) and not $orig. Delete manually."
 		else
-			echo -e "${GREEN}File $dest is already linked correctly to $orig."
+			echo -e "${ExCorr}File $dest is already linked correctly to $orig."
 		fi
 	elif [ -f $dest ]; then
 		echo -e "${RED}File $dest is a regular file, delete manually."
@@ -22,9 +25,14 @@ checkSimilaritiesAndLink (){
 		if [ -e $dest ]; then
 			echo -e "${RED}File $dest is niether link nor regular file, but still exists. Check manually."
 		else
-			ln -sv $orig $dest
-			if [ "$?" -ne "0" -a "$3" = "sudo" ]; then
-				echo -e "${RED} Tried and failed to replace $dest with link to $orig, try again with sudo."
+			tmpStr=$(ln -sv $orig $dest 2>&1)
+			if [ "$?" -ne "0" ]; then
+				echo -e "${RED}$tmpStr"
+				if [ "$3" = "sudo"  ]; then
+					echo -e "${RED} Tried and failed to replace $dest with link to $orig, try again with sudo."
+				fi
+			else
+				echo -e "${ActCorr}$tmpStr"
 			fi
 		fi
 	fi
@@ -54,7 +62,7 @@ if [[ "$(hostname)" == "T1" ]]; then
 	[ -h $HOME/.ssh/config_prox ] && rm $HOME/.ssh/config_prox
 	cat $HOME/.ssh/config > $HOME/.ssh/config_prox
        	cat $LocOfScript/ssh_config_proxiedgithub >> $HOME/.ssh/config_prox
-	echo -e "${GREEN}Combined ~/.ssh/config with local config_prox${NC}"
+	echo -e "${ActCorr}Combined ~/.ssh/config with local config_prox${NC}"
 elif [[ "$(hostname)" == "helvetica" ]]; then
 	checkSimilaritiesAndLink ssh_config_proxiedgithub $HOME/.ssh/config
 	checkSimilaritiesAndLink ssh_rc $HOME/.ssh/rc
