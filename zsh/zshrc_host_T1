@@ -83,3 +83,7 @@ function convertSVGsToeps() {
 		fi
 	done
 }
+
+
+# autojump 
+source /usr/share/autojump/autojump.sh

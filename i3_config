@@ -289,6 +289,7 @@ bindsym $mod+e exec nemo
 
 #always make inkviews floating
 for_window [class="Inkview" instance="inkview"] floating enable
+for_window [class="vlc"] floating enable
 for_window [title="Figure 1"] floating enable
 
 # bind key to use screenSet, easiest for making screen work after removing from dockingstation
