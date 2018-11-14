@@ -36,6 +36,9 @@ setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share 
 REPORTTIME=10 # print elapsed time when more than 10 seconds
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found # to get info about similar commands
 PATH=$PATH:~/myConfigFiles/toolbox
+# add user's bin directories to path
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
 
 alias sshhel="ssh -A -X -o ConnectTimeout=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
@@ -97,9 +100,12 @@ tmux_resetSocket () {
 }
 tm () {
 	tmpTmuxServerPid=$(pgrep -u $USER "tmux: server")
-	if [ "$(echo $tmpTmuxServerPid | wc -l)" -ne 1 ]; then
+	if [ -z "$tmpTmuxServerPid" ]; then
+		echo "no tmux server running, start it"
+		return
+	elif [ "$(echo $tmpTmuxServerPid | wc -l)" -ne 1 ]; then
 		echo "More than one server running, handle manually:"
-		ps axo pid,user,comm,args G $USER G -v grep G "tmux: server"
+		ps axo pid,user,comm,args | grep $USER | grep -v grep | grep "tmux: server"
 		return
 	fi
 	[ -z "$TMUX" ] && /proc/$tmpTmuxServerPid/exe attach
@@ -108,6 +114,9 @@ tm () {
 		kill -s USR1 $tmpTmuxServerPid
 	fi
 }
+
+# to copy to system clipboard with vi keybinds in zsh
+[ -z "$ZSH_SYSTEM_CLIPBOARD" ] && source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
@@ -200,16 +209,22 @@ define_prompt () {
 	ZSH_THEME_GIT_PROMPT_PREFIX="|$PR_RED"
 	ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_NO_COLOR"
 	ZSH_THEME_GIT_PROMPT_DIRTY="$PR_LIGHT_YELLOW ⚡"
+
 	ZSH_THEME_GIT_PROMPT_CLEAN=""
 	# we have to use double quotes for this one to evaluate the colors
 	PR_NO_COLOR="%{$terminfo[sgr0]%}"
 	PROMPT="\
-┌─[$PR_CYAN%D{%m-%d/%H:%M:%S}$PR_NO_COLOR|$PR_LIGHT_GREEN%n$PR_NO_COLOR@$PR_LIGHT_YELLOW%m$PR_NO_COLOR"
+"
+	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}┌─[")'
+	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] || echo "┌─[")'
+	PROMPT=$PROMPT"${PR_CYAN}%D{%m-%d/%H:%M:%S}$PR_NO_COLOR|$PR_LIGHT_GREEN%n$PR_NO_COLOR@$PR_LIGHT_YELLOW%m$PR_NO_COLOR"
 	PROMPT=$PROMPT'$([ -n "$VIRTUAL_ENV" ] && echo -n "$PR_NO_COLOR|$PR_MAGENTA" && echo -n $(basename $VIRTUAL_ENV))'$PR_NO_COLOR
 	PROMPT=$PROMPT'$([ -n "$SINGULARITY_APPNAME" ] && echo "$PR_NO_COLOR|${PR_MAGENTA}container")'$PR_NO_COLOR
 	PROMPT=$PROMPT'$([ -z "$ZSH_THEME_GIT_DONTDOIT" ] && echo "$(git_prompt_info)")'$PR_NO_COLOR
-	PROMPT=$PROMPT"|$PR_BLUE%~$PR_NO_COLOR]
-└─☉ "
+	PROMPT=$PROMPT"|$PR_BLUE%~$PR_NO_COLOR"
+	# for vi normal mode, make first bit red
+	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}]\n└─⧫${PR_NO_COLOR} ")'
+	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] || echo "]\n└─☉ ")'
 	# └─⬧ "
 	# └─⧫ "
 	# ━
@@ -217,14 +232,16 @@ define_prompt () {
 }
 define_rprompt () {
 	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
-	RPROMPT="$PR_YELLOW($(printf '%3u' $?))$PR_NO_COLOR "
-	RPROMPT='$([ "$KEYMAP" = "vicmd" ] && echo "${PR_YELLOW}[NORMAL MODE]")'$PR_NO_COLOR$RPROMPT
+	#RPROMPT="$PR_YELLOW($(printf '%3u' $?))$PR_NO_COLOR "
+	RPROMPT="$PR_YELLOW$?$PR_NO_COLOR "
+	RPROMPT='$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}[NORMAL MODE]")'$PR_NO_COLOR$RPROMPT
 }
 define_prompt
 define_rprompt
 # make sure it is redrawn correctly if we change from insert to normal mode
 function zle-line-init zle-keymap-select {
 	define_rprompt
+	define_prompt
 	zle reset-prompt
 }
 zle -N zle-line-init

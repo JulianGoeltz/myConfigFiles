@@ -10,15 +10,17 @@ if [ -z $SINGULARITY_APPNAME ]; then
 	source /wang/environment/software/Modules/current/init/zsh
 	# to have access to new module files, eg the one with vim+x
 	export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
+	source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
 else
 	source /opt/spack/share/spack/setup-env.sh
 fi
 
 #spack_global
-source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
 if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 	module load spack_visionary-defaults/2017-12-01
 	module load developmisc_288 # for vim+x
+	#module load dev_tools_py2_701 # for current zsh
+
 	read -k1 -t3 "testv?Do you want to load all packages(y/n)?"
 	if [[ $? -eq 1 || "$testv" == "y" || "$testv" == "z" ]]; then 
 		echo

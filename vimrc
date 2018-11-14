@@ -224,3 +224,6 @@ cmap w!! w !sudo tee > /dev/null %
 " line at 80 (+1 would be after textwidth -> wrap line)
 set colorcolumn=80
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+" better title to distinguish hel and t1
+auto BufEnter * let &titlestring = hostname() . "::" . expand("%:t")
+set title
