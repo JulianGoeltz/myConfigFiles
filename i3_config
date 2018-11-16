@@ -156,11 +156,15 @@ bindsym $mod+r mode "resize/move"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
+# bar {
+#     status_command i3status
+# }
 bar {
         # i3bar_command ~/.config/i3/i3status.sh | lemonbar -p -B "#2e3436" -F "#d3d7cf"
         # status_command ~/.config/i3/i3status.sh | lemonbar -p -B "#2e3436" -F "#d3d7cf"
         #status_command ~/.config/i3/i3status.sh
         # status_command $HOME/.config/i3/conky-i3bar
+	i3bar_command /home/julgoe/.local/bin/i3bar 
         status_command ~/.config/i3/i3status.sh
 	font pango: Awesome 9
         tray_output eDP1
@@ -228,7 +232,7 @@ bindsym XF86AudioMute "exec pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/c
 
 # background
 # preparing image: convert IMG_1820.JPG -resize 1920 test.png; convert test.png -crop 1920x1080+0+0 test.png
-#exec_always --no-startup-id "feh -zD5 --bg-max /home/julgoe/Pictures/actualBackgrounds"
+exec_always --no-startup-id "feh -zD5 --bg-max /home/julgoe/Pictures/actualBackgrounds"
 # and transperency
 exec --no-startup-id compton -bc &
 # for locking: 
@@ -237,17 +241,18 @@ exec --no-startup-id compton -bc &
 # https://github.com/PandorasFox/i3lock-color
 exec --no-startup-id xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
 bindsym $mod+Mod1+Shift+l exec xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
-bindsym $mod+Mod1+l exec "xautolock -locknow"
+bindsym $mod+Mod1+l exec "/home/julgoe/myConfigFiles/toolbox/lock.sh"
 
 # autostart
-assign [class="Spotify"]   10
+# find classes with xprop: WM_CLASS: class, instance; 
+assign [instance="spotify"]   10
 assign [class="KeePass2"]   10
 assign [class="TelegramDesktop"]  9
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
 exec --no-startup-id i3-msg 'workspace 2; exec gnome-terminal'
 exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
 exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird; exec /usr/bin/Telegram'
-exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/spotify; exec /usr/bin/keepass2'
+exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/spotify; exec /usr/bin/keepass2; sleep 0.1'
 exec --no-startup-id i3-msg workspace 1
 exec --no-startup-id i3-msg 'exec gnome-terminal --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="vim -S"'
 

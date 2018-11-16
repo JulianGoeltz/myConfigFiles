@@ -35,9 +35,9 @@ mkcd () { mkdir -p $1; cd $1}
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
 REPORTTIME=10 # print elapsed time when more than 10 seconds
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found # to get info about similar commands
-PATH=$PATH:~/myConfigFiles/toolbox
+[[ $PATH == *"myConfigFiles/toolbox"* ]] || PATH=$PATH:~/myConfigFiles/toolbox
 # add user's bin directories to path
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+[[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 
 alias sshhel="ssh -A -X -o ConnectTimeout=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
@@ -233,15 +233,15 @@ define_prompt () {
 define_rprompt () {
 	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
 	#RPROMPT="$PR_YELLOW($(printf '%3u' $?))$PR_NO_COLOR "
-	RPROMPT="$PR_YELLOW$?$PR_NO_COLOR "
+	RPROMPT="$PR_YELLOW($?)$PR_NO_COLOR "
 	RPROMPT='$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}[NORMAL MODE]")'$PR_NO_COLOR$RPROMPT
 }
 define_prompt
 define_rprompt
 # make sure it is redrawn correctly if we change from insert to normal mode
 function zle-line-init zle-keymap-select {
-	define_rprompt
-	define_prompt
+	#define_rprompt
+	#define_prompt
 	zle reset-prompt
 }
 zle -N zle-line-init

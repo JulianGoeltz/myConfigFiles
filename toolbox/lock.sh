@@ -6,7 +6,7 @@ pkill -u $USER -USR1 dunst
 # previously: 
 # i3lock -tbefi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000
 # -i /home/julgoe/Pictures/actualBackgrounds/lock_1820.png \
-i3lock -nte -B4 \
+/home/julgoe/bin/i3lock -nte -B4 \
     --insidecolor=373445ff --ringcolor=ffffffff --line-uses-inside \
     --keyhlcolor=d23c3dff --bshlcolor=d23c3dff --separatorcolor=00000000 \
     --insidevercolor=000000ff --insidewrongcolor=d23c3dff \
