@@ -18,7 +18,7 @@ fi
 #spack_global
 if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 	module load spack_visionary-defaults/2017-12-01
-	module load developmisc_288 # for vim+x
+	module load developmisc_426 # for vim+x
 	#module load dev_tools_py2_701 # for current zsh
 
 	read -k1 -t3 "testv?Do you want to load all packages(y/n)?"
@@ -26,7 +26,7 @@ if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 		echo
 		echo "Loading modules..."
 		module load waf
-		module load simulation_py2_288
+		module load simulation_py2_696
 		# spack unload nest
 		# spack load nest@2.2
 		spack load nest
@@ -39,7 +39,7 @@ if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 		# for HW; older version to circumvent segfaults
 		#module load nmpm_software/2018-07-12-1
 		#module load nmpm_software/2018-08-05-1
-		module load nmpm_software/current
+		module load nmpm_software/$(readlink /wang/environment/modules/nmpm_software/current)
 
 		#spack_local
 		#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
@@ -127,8 +127,14 @@ function saveplottedtobackup() {
 	done
 }
 function diffHdf5 () {
+	tmp_prefix=""
+	tmp_suffix=""
 	if [ ! -f $1 ]; then
 		dataGroup=$1
+		if [[ "$1" == "input/yaml_evaluated" ]]; then
+			tmp_prefix='echo ${$('
+			tmp_suffix=')//,/\\n}'
+		fi
 		shift
 	else
 		dataGroup='input/yaml_pure'
@@ -136,7 +142,7 @@ function diffHdf5 () {
 	diffCommand="vimdiff "
 	for file in $@; do
 		[ ! -f $file ] && continue
-		diffCommand=$diffCommand" <(h5dump -d $dataGroup $file) "
+		diffCommand=$diffCommand" <($tmp_prefix h5dump -d $dataGroup $file$tmp_suffix) "
 	done
 	eval $diffCommand
 }

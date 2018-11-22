@@ -42,7 +42,7 @@ sleepNotNegaitve() {
 				output=$output$(echo $linefeed | grep "longexp\|experimen\|goelt\|JOBID" --color=always)"\n"
 
 			else
-				output=$output$(echo $linefeed | grep jgoeltz --color=always)
+				output=$output$(echo $linefeed | grep "experimen\|jgoeltz" --color=always)
 				jobid=$(echo $linefeed | grep -oP '^\s*([0-9]*)' | grep -o '[0-9]*')
 				file=$(find ./ -maxdepth 1 -name "*slurm-$jobid.out")
 				if [ -n "$file" ]; then

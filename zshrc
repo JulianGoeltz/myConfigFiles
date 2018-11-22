@@ -72,14 +72,12 @@ alias -g S=" | sort"
 
 ipy (){
 	# determine if devmisc is loaded as a module on hel
-	if [ -n "$(module list 2>&1 | grep developmisc_288)" -a $? -eq 0 ]; then
-		module unload developmisc_288
-		reload_the_devmisc288=true
-	else
-		reload_the_devmisc288=false
+	loadedDevmisc=$(module list 2>&1 | grep -o "developmisc.*")
+	if [ $? -eq 0 -a -n "$loadedDevmisc" ]; then
+		module unload $loadedDevmisc
 	fi
 	ipython2 -ic "import numpy as np, matplotlib.pyplot as plt, cPickle as pkl, h5py, os, os.path as osp; from pprint import pprint; $1"
-	if $reload_the_devmisc288; then module load developmisc_288; fi
+	if -n $loadedDevmisc; then module load $loadedDevmisc; fi
 }
 alias ipy2=ipy
 # only set ipy3 alias if ipython3 exists
