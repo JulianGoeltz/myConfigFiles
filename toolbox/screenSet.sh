@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -gt 0 ]; then
+if [ $# -gt 1 ]; then
 	# set up three monitor setup
 	notify-send -t 3000 "setting xrandr in office special"
 	xbacklight -set 100
@@ -8,6 +8,11 @@ if [ $# -gt 0 ]; then
 	xrandr --output eDP1 --off
 	xrandr --output eDP1 --mode 1920x1080 --left-of DP2-3
 	xrandr --output DP2-2 --mode 1920x1080 --right-of DP2-3
+	exit
+elif [ $# -gt 0 ]; then
+	xrandr --output eDP1 --auto --primary
+	xrandr --output DP2-2 --off
+	xrandr --output DP2-3 --off
 	exit
 fi
 

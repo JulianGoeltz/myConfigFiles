@@ -75,6 +75,7 @@ bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle global
 
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+s layout stacking
@@ -239,9 +240,10 @@ exec --no-startup-id compton -bc &
 #bindsym $mod+Mod1+l exec "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
 # used i3lock is not standard but this one:
 # https://github.com/PandorasFox/i3lock-color
-exec --no-startup-id xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
-bindsym $mod+Mod1+Shift+l exec xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
+# exec --no-startup-id xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
+# bindsym $mod+Mod1+Shift+l exec xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
 bindsym $mod+Mod1+l exec "/home/julgoe/myConfigFiles/toolbox/lock.sh"
+bindsym $mod+Mod1+Shift+l exec "/home/julgoe/myConfigFiles/toolbox/lockAlt.sh"
 
 # autostart
 # find classes with xprop: WM_CLASS: class, instance; 
@@ -254,7 +256,7 @@ exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
 exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird; exec /usr/bin/Telegram'
 exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/spotify; exec /usr/bin/keepass2; sleep 0.1'
 exec --no-startup-id i3-msg workspace 1
-exec --no-startup-id i3-msg 'exec gnome-terminal --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="vim -S"'
+exec --no-startup-id i3-msg 'exec gnome-terminal --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -ic \' vim -S; zsh\'"'
 
 # switch to next/prev window
 # bindsym $mod+Left exec i3-msg "workspace $(( ($(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')-1-1)%10+1))"
@@ -295,6 +297,7 @@ bindsym $mod+e exec nemo
 #always make inkviews floating
 for_window [class="Inkview" instance="inkview"] floating enable
 for_window [class="vlc"] floating enable
+for_window [class="Xviewer"] floating enable
 for_window [title="Figure 1"] floating enable
 
 # bind key to use screenSet, easiest for making screen work after removing from dockingstation

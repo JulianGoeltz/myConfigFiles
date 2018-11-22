@@ -10,7 +10,7 @@ export ZSH=/home/julgoe/.oh-my-zsh
 [[ $PATH == *"/home/julgoe/nest/bin"* ]] || source $HOME/neuron/nrnenv
 alias bluetoothqc="~/based-connect-master/based-connect $(echo 'quit' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')"
 
-alias cdmaster_hel="cd /mnt/hel_fs/"
+alias cdmaster_hel="cd ~/mntHel/"
 
 if [[ $PATH != *"pip_files"* ]]; then
 	PATH=$PATH:~/pip_files
