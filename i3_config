@@ -253,7 +253,7 @@ assign [class="TelegramDesktop"]  9
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
 exec --no-startup-id i3-msg 'workspace 2; exec gnome-terminal'
 exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
-exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird; exec /usr/bin/Telegram'
+exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird; exec ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/Telegram'
 exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/spotify; exec /usr/bin/keepass2; sleep 0.1'
 exec --no-startup-id i3-msg workspace 1
 exec --no-startup-id i3-msg 'exec gnome-terminal --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -ic \' vim -S; zsh\'"'
@@ -311,3 +311,6 @@ bindsym $mod+t "exec /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"
 
 # for easy network managment
 exec --no-startup-id i3-msg 'exec nm-applet'
+
+# proxied telegram
+bindsym Mod1+t exec "/bin/bash ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/Telegram"
