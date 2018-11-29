@@ -5,6 +5,7 @@ tokenForAnimation="ThisIsASweepedJobWithJobNumber"
 slurmCall='sbatch -p '
 # --begin=now+6hours  # if one wants the jobs to start later
 # --time 5-00:00:00  # timelimit. get defaults with sinfo -o "%.12P %.5a %.10l %.10L %.6D %.6t %N"
+# -nice 100 # to have low priority st jobs that one sends later start first
 
 programCall=$1
 relPath=$2

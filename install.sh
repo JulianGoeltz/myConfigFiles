@@ -43,7 +43,8 @@ checkSimilaritiesAndLink (){
 echo "--ZSH"
 checkSimilaritiesAndLink zshrc $HOME/.zshrc
 [ ! -d "$HOME/.zsh" ] && mkdir $HOME/.zsh
-for fn in $(ls $LocOfScript/zsh/zshrc_host*); do
+# -d to not list contents of folders
+for fn in $(ls -d $LocOfScript/zsh/*); do
 	checkSimilaritiesAndLink zsh/$(basename $fn) $HOME/.zsh/$(basename $fn)
 done
 

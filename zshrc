@@ -4,7 +4,9 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 setopt appendhistory
 # End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
+# add custom completion scripts
+fpath=(~/.zsh/completion $fpath)
+# define filename for compinstall based on host
 if [[ "$(hostname)" == "T1" ]]; then
 	zstyle :compinstall filename '/home/julgoe/.zshrc'
 elif [[ "$(hostname)" == "helvetica" ]] || [[ "$(hostname)" == "hel" ]]; then
@@ -15,6 +17,7 @@ else
 	bash
 fi
 
+# The following lines were added by compinstall
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -77,7 +80,7 @@ ipy (){
 		module unload $loadedDevmisc
 	fi
 	ipython2 -ic "import numpy as np, matplotlib.pyplot as plt, cPickle as pkl, h5py, os, os.path as osp; from pprint import pprint; $1"
-	if -n $loadedDevmisc; then module load $loadedDevmisc; fi
+	if [ -n "$loadedDevmisc" ] ; then module load $loadedDevmisc; fi
 }
 alias ipy2=ipy
 # only set ipy3 alias if ipython3 exists
