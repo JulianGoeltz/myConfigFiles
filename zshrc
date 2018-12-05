@@ -123,7 +123,7 @@ tm () {
 
 # to copy to system clipboard with vi keybinds in zsh
 [ -z "$ZSH_SYSTEM_CLIPBOARD" ] && \
-	-e "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh" && \
+	[ -e "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh" ] && \
 	source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
 # last thing before end, source the host specific files if existent
