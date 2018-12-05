@@ -64,9 +64,15 @@ endif
 
 
 "Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+if system('hostname') =~ "T1" || system('hostname') =~ "helvetica"
+	python from powerline.vim import setup as powerline_setup
+	python powerline_setup()
+	python del powerline_setup
+elseif system('hostname') =~ "localhost"
+	python3 from powerline.vim import setup as powerline_setup
+	python3 powerline_setup()
+	python3 del powerline_setup
+endif
 "Latex 
 Plug 'lervag/vimtex'
 "Diff parts of one file (maps defined below)
@@ -133,7 +139,8 @@ nnoremap gP P
 
 "python with virtualenv support
 "may result in problems if py != py2/3 with execfile
-py << EOF
+if system('hostname') =~ "T1"
+	py << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
@@ -141,6 +148,7 @@ if 'VIRTUAL_ENV' in os.environ:
   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
   execfile(activate_this, dict(__file__=activate_this))
 EOF
+endif
 
 "easier navigations with split windows
 nnoremap <C-J> <C-W><C-J>
