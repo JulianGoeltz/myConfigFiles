@@ -1,0 +1,9 @@
+# ##################################
+# same but different
+#alias cdmaster="cd ~/MasterThesis/"
+# Path to your oh-my-zsh installation.
+export ZSH=/data/data/com.termux/files/home/.oh-my-zsh
+
+# ##################################
+# very different
+
