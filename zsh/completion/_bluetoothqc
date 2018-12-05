@@ -1,0 +1,29 @@
+#compdef bluetoothqc
+_bluetoothqc() {
+	_arguments \
+	  "(-c --noise-cancelling)"{-c,--noise-cancelling}"[change noise cancelling level]:noise cancelling:(high low off)" \
+	  "(-n --name)"{-n,--name}"[change name]:Change name of the device:" \
+	  "(-d --device-status)"{-d,--device-status}"[Print status]:Print status:" \
+	  "(-a --paired-devices)"{-a,--paired-devices}"[show paired devices]:show paired devices:" \
+	  "--disconnect-device[Disconnect device with given address]:disconnect device:->devices" \
+	  "--connect-device[Attempt to connect to device with given address]:connect to device:->devices" \
+	  && return 0
+
+	case $state in
+		devices)
+		        local -a addresses names
+		        # in order to split on new lines not spaces
+		        IFS=$'\n'
+		        for line in $(bluetoothqc --paired-devices | tail -n +2); do
+		                addresses=($addresses "$(echo $line | grep -oP "^.{2}[0-9A-F:]*" | tail -c +3)")
+		                names=($names $line)
+		        done
+			unset IFS
+			# command adapted from some other
+		        _wanted -V addresses expl addresses compadd -d names -a addresses && ret=0
+			return
+			;;
+	esac
+	return
+}
+_bluetoothqc "$@"

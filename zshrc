@@ -11,6 +11,9 @@ if [[ "$(hostname)" == "T1" ]]; then
 	zstyle :compinstall filename '/home/julgoe/.zshrc'
 elif [[ "$(hostname)" == "helvetica" ]] || [[ "$(hostname)" == "hel" ]]; then
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
+elif echo $HOME | grep -q termux; then
+	echo "Welcome to termux!"
+	zstyle :compinstall filename '/data/data/com.termux/files/home/.zshrc'
 else
 	echo "no known host. what to do?"
 	echo "Opening bash so you can adapt. Think about exiting"
