@@ -1,0 +1,21 @@
+#compdef waf
+_waf() {
+	_arguments \
+	  "::command:(setup configure build install)" \
+	  "--project[project]:Project:->project" \
+	  "--gerrit-changes[# of CS]:Changeset:" \
+	  "--gerrit-username[exact username if it is different then $USER]:gerrit username:" \
+	  "--repo-db-url[for external users]:URL of repo db:" \
+	  && return 0
+	# '*::command: _normal'
+	# '*::args:->command' "$common[@]" && ret=0
+	case $state in
+		project)
+			compadd "$@" \
+				marocco cake halbe redman bitter sthal meta-nmpm_software pyhmf
+			return
+			;;
+	esac
+	return
+}
+_waf "$@"

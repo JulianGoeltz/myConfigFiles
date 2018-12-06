@@ -105,15 +105,16 @@ tmux_resetSocket () {
 	fi
 }
 tm () {
-	tmpTmuxServerPid=$(pgrep -u $USER "tmux: server")
+	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep "tmux: server")
 	if [ -z "$tmpTmuxServerPid" ]; then
 		echo "no tmux server running, start it"
 		return
 	elif [ "$(echo $tmpTmuxServerPid | wc -l)" -ne 1 ]; then
 		echo "More than one server running, handle manually:"
-		ps axo pid,user,comm,args | grep $USER | grep -v grep | grep "tmux: server"
+		echo $tmpTmuxServerPid
 		return
 	fi
+	tmpTmuxServerPid=$(echo $tmpTmuxServerPid | grep -o "^\s*[0-9]*" | grep -o "[0-9]*")
 	[ -z "$TMUX" ] && /proc/$tmpTmuxServerPid/exe attach
 	if [ -n "$TMUX" -o "$?" -ne "0" ]; then
 		echo "tmux server might have lost socket connection, or similar. Socket is reset, try connection again."

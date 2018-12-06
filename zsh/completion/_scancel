@@ -1,0 +1,29 @@
+#compdef scancel
+_scancel() {
+	_arguments \
+	  "-u[jobs associated with a user]:user:($USER)" \
+	  "*::args:->runningJobs" && return 0
+	# '*::command: _normal'
+	# '*::args:->command' "$common[@]" && ret=0
+	# shift 1 words
+	# (( CURRENT-- ))
+	case $state in
+		runningJobs)
+		        local -a jobid desc
+			jobid=( )
+			desc=( )
+		        # in order to split on new lines not spaces
+		        IFS=$'\n'
+		        for line in $(squeue --noheader -u $USER -o "%i %P %j %t %M"); do
+				jobid=($jobid "$( echo $line | grep -o '^\s*[0-9]*' | grep -o '[0-9]*')")
+		                desc=($desc "$line")
+		        done
+			unset IFS
+			# command adapted from some other
+		        _wanted -V jobid expl jobid compadd -d desc -a jobid && ret=0
+			return
+			;;
+	esac
+	return
+}
+_scancel "$@"
