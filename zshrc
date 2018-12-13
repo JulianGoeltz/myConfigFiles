@@ -122,9 +122,14 @@ tm () {
 	fi
 }
 
+# in order to see filenames before looking at files
+iv () { ls $@; inkview $(ls $@)}
+
 # to copy to system clipboard with vi keybinds in zsh
+# check that ZSH_SYSTEM_CLIPBOARD is not empty, the file exist and we are not in a singularity shell
 [ -z "$ZSH_SYSTEM_CLIPBOARD" ] && \
 	[ -e "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh" ] && \
+	[ -z $SINGULARITY_APPNAME ] && \
 	source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
 # last thing before end, source the host specific files if existent

@@ -50,8 +50,7 @@ if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 	fi
 fi
 
-echo
-[ -z $SINGULARITY_APPNAME ] &&  module list
+module list
 
 PATH=$PATH:~/pip_files
 if $( echo $PYTHONPATH | grep -vq pip_files); then
@@ -173,3 +172,7 @@ singularityzsh () {
 	echo "about to eval '$tmpString'"
 	eval $tmpString
 }
+alias singularityemrun='singularity exec --app visionary-wafer /containers/stable/latest zsh -c ". /opt/spack/share/spack/setup-env.sh; spack load emscripten; module list; cd $BASEDIR_NMPM_SOFTWARE/lib/webvisu; emrun --no_browser main.html"'
+
+# because of nest bug, load patched nest
+alias spacky="module purge; module load spack_visionary-defaults/2017-12-01; . /wang/users/wv385/cluster_home/spack_failure/spack3/share/spack/setup-env.sh; spack load -r nest; module list"

@@ -4,6 +4,7 @@ _sbatch() {
 	  "(-p --partition)"{-p,--partition}"[partition]:partition:(experiment longexp short simulation)" \
 	  "(-t --time)"{-t,--time}"[timelimit]:timelimit:" \
 	  "--begin[delayed start]:delayed start:" \
+	  "--wmod[Wafer number]:Wafer number:(33 22)" \
 	  "--nice[niceness]:niceness:" \
 	  "--wrap[wrap]:wrap function:" \
 	  "*::args:->command" && return 0

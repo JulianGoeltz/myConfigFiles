@@ -2,12 +2,8 @@
 
 maxNumberOfJobs=90
 tokenForAnimation="ThisIsASweepedJobWithJobNumber"
-slurmCall='sbatch -p '
-# --begin=now+6hours  # if one wants the jobs to start later
-# --time 5-00:00:00  # timelimit. get defaults with sinfo -o "%.12P %.5a %.10l %.10L %.6D %.6t %N"
-# -nice 100 # to have low priority st jobs that one sends later start first
 
-programCall=$1
+programCall=$3
 relPath=$2
 
 # this is st no errors are shown for the filename generation
@@ -15,9 +11,11 @@ set -3
 
 # explanation
 if [ $# -eq 0 ]; then
-	echo "This is a file to use sbatch for every file in a folder. The program (with routine) is the first argument, the folder is the second argument, e.g:"
-	echo 'sweep.sh "python train.py xor_yccp_adjusted" ../data/20180712_sweepImp'
-	echo "Unless there's a third argument, the used partition is 'simulation', otherwise 'experiment' with licences for the wafer given as this argument (and, possibly, hicann given as argument four) will be used"
+	echo "This is a file to use sbatch for every file in a folder. The slurm call is the first argument (including niceness, wmod etc if wanted). The program (with routine) is the third argument, the folder is the second argument, e.g:"
+	echo 'sweep.sh "sbatch -p simulation --nice 100 --begin=now+6hours --time 5-0:0:0" ../data/20180712_sweepImp "python train.py xor_yccp_adjusted"'
+	# --begin=now+6hours  # if one wants the jobs to start later
+	# --time 5-00:00:00  # timelimit. get defaults with sinfo -o "%.12P %.5a %.10l %.10L %.6D %.6t %N"
+	# -nice 100 # to have low priority st jobs that one sends later start first
 	echo "No more than $maxNumberOfJobs jobs (change in the .sh file) will be launched, in the execution you are asked how many file per job"
 	exit
 fi
@@ -32,8 +30,8 @@ if [[ "$1" == "$trigger" ]]; then
 		'y') echo continue...;;
 		*) exit;;
 	esac
-	if [ -n "$(squeue -u $LOGNAME --noheader)" ]; then
-		squeue -u $LOGNAME
+	if [ -n "$(squeue -u $USER --noheader)" ]; then
+		squeue -u $USER
 		read "test?There are still jobs in the queue, are you sure you want to do this?(y/n)"
 		case $test in 
 			'y') echo continue...;;
@@ -74,15 +72,8 @@ if [[ "$1" == "$trigger" ]]; then
 	exit
 fi
 
-# if third argument 
-if [ $# -gt 3 ]; then
-	slurmCall=$slurmCall'experiment --wmod '$3' --hicann '$4' '
-elif [ $# -gt 2 ]; then
-	slurmCall=$slurmCall'experiment --wmod '$3' '
-else
-	slurmCall=$slurmCall'simulation '
-        # --time=0:22:0'
-fi
+# defining slurm call
+slurmCall=$1
 
 function sendAway () {
 	# eval or, for debug, echo

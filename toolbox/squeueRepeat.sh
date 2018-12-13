@@ -51,10 +51,10 @@ sleepNotNegaitve() {
 					#         echo $file is too large, skipping
 					# 	continue
 					# fi
-					StepNumber=$(grep -oP "Numer_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
+					StepNumber=$(grep -oP "Number_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
 					FileCount=$(grep step -c $file)
 					[ $? -ne 0 ] && output=$output"\n" && continue
-					if [ -z "$StepNumber" ] ; then StepNumber=100; fi
+					if [ -z "$StepNumber" ] ; then StepNumber=200; fi
 					if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
 						StepNumber=$(echo $StepNumber | grep -o "[0-9]*$" | tail -n 1);
 					fi
@@ -88,7 +88,7 @@ sleepNotNegaitve() {
 				#         echo $file is too large, skipping
 				# 	continue
 				# fi
-				StepNumber=$(grep -oP "Numer_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
+				StepNumber=$(grep -oP "Number_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
 				FileCount=$(grep step -c $file)
 				[ $? -ne 0 ] && continue
 				if [ -z "$StepNumber" ] ; then StepNumber=100; fi
@@ -102,7 +102,21 @@ sleepNotNegaitve() {
 				if [ -n "$jobIsSweep" ] ; then
 					output=$output"("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
 				fi
-				output=$output":"$delimiterStart
+				output=$output":"
+				# how long has it been
+				notedTime=$(date -d "${$(grep -io "It is.*" $file):6:99}" +%s)
+				if [ -n "$notedTime" ] ; then
+					duration=$(($(date +%s) - $notedTime))
+					echo $duration
+					tmpOut=" "
+					[ $duration -gt  $((24*60*60)) ] && tmpOut="$tmpOut$(($duration/24/60/60))-"
+					[ $duration -gt  3600 ] && tmpOut="$tmpOut$(($duration/60/60%24)):"
+					tmpOut="$tmpOut$(($duration/60%60))"
+					tmpOut="$tmpOut:$(printf '%02d' $(($duration%60)))"
+					output=$output$tmpOut
+
+				fi
+				output=$output$delimiterStart
 				while (( $counter > 0 )); do
 					output=$output$delimiterDone
 					counter=$(($counter-1))
