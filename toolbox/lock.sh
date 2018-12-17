@@ -10,7 +10,7 @@ pkill -u $USER -USR1 dunst
     --insidecolor=373445ff --ringcolor=ffffffff --line-uses-inside \
     --keyhlcolor=d23c3dff --bshlcolor=d23c3dff --separatorcolor=00000000 \
     --insidevercolor=000000ff --insidewrongcolor=d23c3dff \
-    --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+86:y+1003" \
-    --radius=15 --veriftext="" --wrongtext=""
+    --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+86:y+86" \
+    --radius=15 --veriftext="" --wrongtext="" --noinputtext=""
 # resuming if it wasn't paused beofre locking
 [[ "$(cat ~/.tmp_dunststate)" = "running" ]] && pkill -u $USER -USR2 dunst

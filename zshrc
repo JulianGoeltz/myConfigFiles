@@ -53,6 +53,7 @@ alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.u
 # alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other,IdentityFile=/home/julgoe/.ssh/id_rsa"
 alias sshhel_fs="sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis ~/mntHel -o delay_connect,idmap=user,transform_symlinks"
 alias sshhel_fs_unmount="fusermount -u -z ~/mntHel"
+alias sshhel_visu="sshhel -L 6931:localhost:6931"
 
 alias vpn_connect="sudo openconnect vpn-ac.urz.uni-heidelberg.de"
 
@@ -124,6 +125,10 @@ tm () {
 
 # in order to see filenames before looking at files
 iv () { ls $@; inkview $(ls $@)}
+
+# after lost ssh session, often on focus of zsh/terminal, prompt is redrawn
+# with redraw there's a loss of lines, for this disable this feature:
+printf "\e[?1004l"
 
 # to copy to system clipboard with vi keybinds in zsh
 # check that ZSH_SYSTEM_CLIPBOARD is not empty, the file exist and we are not in a singularity shell
