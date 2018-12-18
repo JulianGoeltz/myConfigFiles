@@ -6,6 +6,7 @@ _bluetoothqc() {
 	  "(-d --device-status)"{-d,--device-status}"[Print status]:Print status:" \
 	  "(-a --paired-devices)"{-a,--paired-devices}"[show paired devices]:show paired devices:" \
 	  "--disconnect-device[Disconnect device with given address]:disconnect device:->devices" \
+	  "-b[Battery status]:battery status:" \
 	  "--connect-device[Attempt to connect to device with given address]:connect to device:->devices" \
 	  && return 0
 

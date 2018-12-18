@@ -126,6 +126,28 @@ tm () {
 # in order to see filenames before looking at files
 iv () { la $@; inkview $(ls $@)}
 
+# easy diff of hdf5 datasets,from zsh/..hel
+function diffHdf5 () {
+	tmp_prefix=""
+	tmp_suffix=""
+	if [ ! -f $1 ]; then
+		dataGroup=$1
+		if [[ "$1" == "input/yaml_evaluated" ]]; then
+			tmp_prefix='echo ${$('
+			tmp_suffix=')//,/\\n}'
+		fi
+		shift
+	else
+		dataGroup='input/yaml_pure'
+	fi
+	diffCommand="vimdiff "
+	for file in $@; do
+		[ ! -f $file ] && continue
+		diffCommand=$diffCommand" <($tmp_prefix h5dump -d $dataGroup $file$tmp_suffix) "
+	done
+	eval $diffCommand
+}
+
 # after lost ssh session, often on focus of zsh/terminal, prompt is redrawn
 # with redraw there's a loss of lines, for this disable this feature:
 printf "\e[?1004l"

@@ -1,22 +1,29 @@
-#! /bin/sh
+#!/bin/sh
 
+# as of ubuntu 15 (i think), pm is not used anymore, but systemd is
+# thus this file must be in /lib/systemd/system-sleep
+# everything can be done here, no need for acpi or pm stuff
+
+# this will lock the computer if it has been sleeping for longer than 1h
 logger "$0 $1 $2 $3 $4 lock file"
 case "$1" in
-	suspend)
-		date +%s > /home/julgoe/.tmp_lidclosingaction_tmstmp
+	pre)
+		date +%s > /home/julgoe/.tmp_lidclosingaction_tmstmp &
 		;;
-	resume)
+	post)
 		tmp=$(cat /home/julgoe/.tmp_lidclosingaction_tmstmp)
 		echo "open" > /home/julgoe/.tmp_lidclosingaction_tmstmp
 		if [ ! $tmp = "open" ]; then
 			if [ "$(($(date +%s)-$tmp))" -ge "$((60*60))" ]; then
 				USER=$(ps -C i3 -o user=)
 				if test $USER; then
-					DISPLAY=:0.0 su $USER -c "xautolock -locknow"
+					DISPLAY=:0.0 su $USER -c /home/julgoe/myConfigFiles/toolbox/lock.sh
+					#"xautolock -locknow"
 					# if it isn't working check whether theres a xautolock running and try to lokc with -locknow in terminal
 				fi
 			fi
 		fi
+		;;
 esac
 
 

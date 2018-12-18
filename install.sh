@@ -13,26 +13,57 @@ NC='\033[0m'
 checkSimilaritiesAndLink (){
 	orig=$LocOfScript/$1
 	dest=$2
+	# check if given dest is a link
 	if [ -L $dest ]; then
 		if [[ "$(readlink -f $dest)" != "$orig" ]]; then
 			echo -e "${RED}File $dest is a link to $(readlink -f $dest) and not $orig. Delete manually."
 		else
 			echo -e "${ExCorr}File $dest is already linked correctly to $orig."
 		fi
+	# check if given dest is a file
 	elif [ -f $dest ]; then
-		echo -e "${RED}File $dest is a regular file, delete manually."
+		if [ "$4" = "nolink"  ]; then
+			if diff $orig $dest >/dev/null; then
+				echo -e "${ExCorr}File contents of $orig and $dest are the same."
+			else
+				tmpStr=$(cp $orig $dest 2>&1)
+				if [ "$?" -ne "0" ]; then
+					echo -e "${RED}$tmpStr"
+					if [ "$3" = "sudo"  ]; then
+						echo -e "${RED} Tried and failed to replace $dest with copy of $orig, try again with sudo BUT CHECK DIFFS BEFORE!!"
+					fi
+				else
+					echo -e "${ActCorr} Replaced $dest with $orig."
+				fi
+			fi
+		else
+			echo -e "${RED}File $dest is a regular file, delete manually."
+		fi
+	# do the linking
 	else
 		if [ -e $dest ]; then
 			echo -e "${RED}File $dest is niether link nor regular file, but still exists. Check manually."
 		else
-			tmpStr=$(ln -sv $orig $dest 2>&1)
-			if [ "$?" -ne "0" ]; then
-				echo -e "${RED}$tmpStr"
-				if [ "$3" = "sudo"  ]; then
-					echo -e "${RED} Tried and failed to replace $dest with link to $orig, try again with sudo."
+			if [ "$4" = "nolink"  ]; then
+				tmpStr=$(cp $orig $dest 2>&1)
+				if [ "$?" -ne "0" ]; then
+					echo -e "${RED}$tmpStr"
+					if [ "$3" = "sudo"  ]; then
+						echo -e "${RED} Tried and failed to make a copy of $orig at $dest, try again with sudo."
+					fi
+				else
+					echo -e "${ActCorr}Made a copy of $orig at $dest."
 				fi
 			else
-				echo -e "${ActCorr}$tmpStr"
+				tmpStr=$(ln -sv $orig $dest 2>&1)
+				if [ "$?" -ne "0" ]; then
+					echo -e "${RED}$tmpStr"
+					if [ "$3" = "sudo"  ]; then
+						echo -e "${RED} Tried and failed to replace $dest with link to $orig, try again with sudo."
+					fi
+				else
+					echo -e "${ActCorr}$tmpStr"
+				fi
 			fi
 		fi
 	fi
@@ -89,8 +120,7 @@ if [[ "$(hostname)" == "T1" ]]; then
 	done
 
 	echo "--acpi&pm"
-	checkSimilaritiesAndLink acpi_handler.sh /etc/acpi/handler.sh sudo
-	checkSimilaritiesAndLink lock /etc/pm/sleep.d/lock sudo
+	checkSimilaritiesAndLink lock /lib/systemd/system-sleep/10lock sudo nolink
 
 	echo "--fusuma"
 	checkSimilaritiesAndLink fusuma.config $HOME/.config/fusuma/config.yml

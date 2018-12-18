@@ -125,26 +125,6 @@ function saveplottedtobackup() {
 		fi
 	done
 }
-function diffHdf5 () {
-	tmp_prefix=""
-	tmp_suffix=""
-	if [ ! -f $1 ]; then
-		dataGroup=$1
-		if [[ "$1" == "input/yaml_evaluated" ]]; then
-			tmp_prefix='echo ${$('
-			tmp_suffix=')//,/\\n}'
-		fi
-		shift
-	else
-		dataGroup='input/yaml_pure'
-	fi
-	diffCommand="vimdiff "
-	for file in $@; do
-		[ ! -f $file ] && continue
-		diffCommand=$diffCommand" <($tmp_prefix h5dump -d $dataGroup $file$tmp_suffix) "
-	done
-	eval $diffCommand
-}
 
 alias squeueRepeat="cd ~/MasterThesis/model-tempodrom/code; while true; do squeueRepeat.sh; done"
 # function squeueRepeat () {
