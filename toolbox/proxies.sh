@@ -16,7 +16,7 @@ if [ $# -eq 0 ]; then
 	fi
 fi
 if [[ "$arg" == "set" ]]; then
-	echo "Setting proxy for (current) shell, git and apt"
+	echo "Setting proxy for (current) shell, git, spotify and apt"
 	export ftp_proxy=http://proxy.kip.uni-heidelberg.de:2121
 	export http_proxy=http://proxy.kip.uni-heidelberg.de:8080
 	export https_proxy=https://proxy.kip.uni-heidelberg.de:8080
@@ -34,8 +34,27 @@ if [[ "$arg" == "set" ]]; then
 	sed -i -e 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "'$escaped_https'";/g' /tmp/aptconfInplaceReplace
 	cat /tmp/aptconfInplaceReplace > /etc/apt/apt.conf
 	rm /tmp/aptconfInplaceReplace
+
+	# spotify
+	if [[ $# -gt 0 ]]; then
+		( if grep "network.proxy.mode=1" ~/.config/spotify/prefs -q; then
+			spotifyRunning=false
+			if ps aux | grep -v grep | grep -q spotify; then
+				spotifyRunning=true
+				spotifyPlaying=$(playerctl -p spotify status)
+				killall spotify
+				sleep 1
+			fi
+			sed -i 's/network.proxy.mode=1/network.proxy.mode=2/g' ~/.config/spotify/prefs
+			if $spotifyRunning; then
+				i3-msg exec /usr/bin/spotify >/dev/null
+				sleep 1
+				[ $spotifyPlaying == "Playing" ] && playerctl -p spotify play
+			fi
+		fi & )
+	fi
 elif [[ "$arg" == "unset" ]]; then
-	echo "Removing proxy from (current) shell, git, apt."
+	echo "Removing proxy from (current) shell, git, spotify and apt."
 	export ftp_proxy=
 	export http_proxy=
 	export https_proxy=
@@ -47,7 +66,28 @@ elif [[ "$arg" == "unset" ]]; then
 	sed -i 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "";/g' /tmp/aptconfInplaceReplace
 	cat /tmp/aptconfInplaceReplace > /etc/apt/apt.conf
 	rm /tmp/aptconfInplaceReplace
+
+	# spotify
+	if [[ $# -gt 0 ]]; then
+		( if grep "network.proxy.mode=2" ~/.config/spotify/prefs -q; then
+			spotifyRunning=false
+			if ps aux | grep -v grep | grep -q spotify; then
+				spotifyRunning=true
+				spotifyPlaying=$(playerctl -p spotify status)
+				killall spotify
+				sleep 1
+			fi
+			sed -i 's/network.proxy.mode=2/network.proxy.mode=1/g' ~/.config/spotify/prefs
+			if $spotifyRunning; then
+				i3-msg exec /usr/bin/spotify >/dev/null
+				sleep 1
+				[ $spotifyPlaying == "Playing" ] && playerctl -p spotify play
+			fi
+		fi & )
+	fi
 elif [ "$arg" == "proxify" -a $# -gt 1 ]; then
+	# to execute a command in a proxified environment
+	# used for Telegram in i3_config
 	cmd=$2
 	shift 2
 	source $0

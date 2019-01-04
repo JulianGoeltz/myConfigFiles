@@ -6,6 +6,8 @@ export ZSH=/home/julgoe/.oh-my-zsh
 
 # ##################################
 # very different
+
+# proxy definition. has to be sourced or env of shell is not changed
 alias proxies="source proxies.sh"
 proxies
 

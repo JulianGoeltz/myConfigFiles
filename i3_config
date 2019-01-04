@@ -247,14 +247,16 @@ bindsym $mod+Mod1+Shift+l exec "/home/julgoe/myConfigFiles/toolbox/lockAlt.sh"
 
 # autostart
 # find classes with xprop: WM_CLASS: class, instance; 
-assign [instance="spotify"]   10
-assign [class="KeePass2"]   10
-assign [class="TelegramDesktop"]  9
+for_window [class="Spotify"] move to workspace 10
+assign [class="KeePass2"] 10
+assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
 exec --no-startup-id i3-msg 'workspace 2; exec gnome-terminal'
-exec --no-startup-id i3-msg 'workspace 3; exec /usr/bin/firefox'
-exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird; exec ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/Telegram'
-exec --no-startup-id i3-msg 'workspace 10; exec /usr/bin/spotify; exec /usr/bin/keepass2; sleep 0.1'
+exec --no-startup-id i3-msg 'workspace 8; exec /usr/bin/firefox'
+exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird'
+exec --no-startup-id i3-msg 'exec ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/Telegram'
+exec --no-startup-id i3-msg 'exec /usr/bin/keepass2'
+exec --no-startup-id i3-msg 'exec /usr/bin/spotify'
 exec --no-startup-id i3-msg workspace 1
 exec --no-startup-id i3-msg "exec gnome-terminal --working-directory=\"/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text\" --command=\"zsh -c ' vim -S && zsh'\""
 
@@ -303,6 +305,7 @@ for_window [class="Xplayer"] floating enable
 for_window [title="Figure *"] floating enable
 for_window [class="Eom"] floating enable
 for_window [class="Eog"] floating enable
+for_window [class="feh"] floating enable
 
 # bind key to use screenSet, easiest for making screen work after removing from dockingstation
 bindsym $mod+Control+1 "exec /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"
