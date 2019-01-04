@@ -124,7 +124,7 @@ tm () {
 }
 
 # in order to see filenames before looking at files
-iv () { ls $@; inkview $(ls $@)}
+iv () { la $@; inkview $(ls $@)}
 
 # after lost ssh session, often on focus of zsh/terminal, prompt is redrawn
 # with redraw there's a loss of lines, for this disable this feature:
@@ -252,7 +252,7 @@ define_prompt () {
 define_rprompt () {
 	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
 	#RPROMPT="$PR_YELLOW($(printf '%3u' $?))$PR_NO_COLOR "
-	RPROMPT="$PR_YELLOW($?)$PR_NO_COLOR "
+	RPROMPT="$PR_YELLOW(%?)$PR_NO_COLOR "
 	RPROMPT='$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}[NORMAL MODE]")'$PR_NO_COLOR$RPROMPT
 }
 define_prompt

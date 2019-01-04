@@ -1,7 +1,7 @@
 #compdef plot.py
 _plot() {
 	_arguments \
-	  "1::command:(animate_training plot plot_weightEvolution evaluate_training plot_seedsweep plot_seedsweep_sweep produce_training_eval_data)" \
+	  "1::command:(animate_training plot plot_featureMatrix plot_weightEvolutionDetailed plot_weightEvolution evaluate_training plot_seedsweep plot_seedsweep_sweep produce_training_eval_data)" \
 	  "2::hdf5 to use:->files" && return 0
 	# '*::command: _normal'
 	# '*::args:->command' "$common[@]" && ret=0

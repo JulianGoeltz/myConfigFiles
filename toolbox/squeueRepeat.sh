@@ -19,6 +19,16 @@ sleepNotNegaitve() {
 	sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $1)))" | sort -g | tail -n 1)
 }
 
+durationPrint() {
+	duration=$1
+	tmpOut=""
+	[ $duration -gt  $((24*60*60)) ] && tmpOut="$tmpOut$(($duration/24/60/60))-"
+	[ $duration -gt  3600 ] && tmpOut="$tmpOut$(($duration/60/60%24)):"
+	tmpOut="$tmpOut$(($duration/60%60))"
+	tmpOut="$tmpOut:$(printf '%02d' $(($duration%60)))"
+	echo $tmpOut
+}
+
 #while true; do
 	startTimestamp=$(date +%s)
 	# decide whether to use sequential or parallel, based on terminal size
@@ -76,6 +86,11 @@ sleepNotNegaitve() {
 					if [ -n "$jobIsSweep" ] ; then
 						output=$output" ("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
 					fi
+					timeSinceTouch=$(($startTimestamp - $(stat -c %Y $file)))
+					if [ $timeSinceTouch -gt 60 ]; then
+						output="${output} not changed for $(durationPrint $timeSinceTouch)"
+					fi
+					
 				fi
 				output=$output"\n"
 
@@ -108,12 +123,7 @@ sleepNotNegaitve() {
 				if [ -n "$notedTime" ] ; then
 					duration=$(($(date +%s) - $notedTime))
 					echo $duration
-					tmpOut=" "
-					[ $duration -gt  $((24*60*60)) ] && tmpOut="$tmpOut$(($duration/24/60/60))-"
-					[ $duration -gt  3600 ] && tmpOut="$tmpOut$(($duration/60/60%24)):"
-					tmpOut="$tmpOut$(($duration/60%60))"
-					tmpOut="$tmpOut:$(printf '%02d' $(($duration%60)))"
-					output=$output$tmpOut
+					output="$output $(durationPrint $duration)"
 
 				fi
 				output=$output$delimiterStart
@@ -126,7 +136,12 @@ sleepNotNegaitve() {
 					output=$output$delimiterNot
 					counter=$(($counter-1))
 				done
-				output=$output$delimiterEnd"\n"
+				output=$output$delimiterEnd
+				timeSinceTouch=$(($startTimestamp - $(stat -c %Y $file)))
+				if [ $timeSinceTouch -gt 60 ]; then
+					output="${output} not changed for $(durationPrint $timeSinceTouch)"
+				fi
+				output=$output"\n"
 			done
 		fi
 

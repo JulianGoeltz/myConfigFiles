@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-maxNumberOfJobs=90
+maxNumberOfJobs=200
 tokenForAnimation="ThisIsASweepedJobWithJobNumber"
 
 programCall=$3

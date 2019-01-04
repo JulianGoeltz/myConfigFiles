@@ -1,0 +1,10 @@
+#compdef sim_vs_calc.py
+_sim_vs_calc() {
+	_arguments \
+	  "1::command:(find_heuristic_val plot_both)" && return 0
+	# '*::command: _normal'
+	# '*::args:->command' "$common[@]" && ret=0
+	return
+}
+_sim_vs_calc "$@"
+

@@ -8,7 +8,7 @@ import itertools as it
 from docopt import docopt
 import re
 import os.path as osp
-from pprint import pprint
+from pprint import pprint, pformat as pf
 
 __doc__ = \
 """
@@ -47,7 +47,11 @@ __version__ = "0.0.3"
 
 # _matcher = re.compile("([^-/]+?)_(\d+\.?\d*(?:e(?:\+|-|)\d+)?|[A-Za-z]+)(?:-|$|/|\.)")
 # in case the file is has suffix like dw_100-l2r_0.0010-learn_0.0050_training.svg
-_matcher = re.compile("([^-/]+?)_(\d+\.?\d*(?:e(?:\+|-|)\d+)?|[A-Za-z]+)(?:-|_|$|/)")
+# _matcher = re.compile("([^-/]+?)_(\d+\.?\d*(?:e(?:\+|-|)\d+)?|[A-Za-z]+)(?:-|_|$|/)")
+# make the key greedy in case it includes undercores, and also negative numbers
+# _matcher = re.compile("([^-/]+)_([-0-9]+\.?\d*(?:e(?:\+|-|)\d+)?|[A-Za-z]+)(?:-|_|$|/)")
+# problem with combinations of digits-_
+_matcher = re.compile("([^-/]+)_([-0-9]\d*\.?\d*(?:e(?:\+|-|)\d+)?|[A-Za-z]+)(?:-|_|$|/)")
 
 
 def parse_filenames_for_numbers(filenames):
@@ -58,6 +62,8 @@ def parse_filenames_for_numbers(filenames):
             try:
                 v = float(v)
             except ValueError:
+                # print("####Error with value '{}' of key {} in filename {}".format(
+                #     v, k, fn))
                 v = hash(v)
             fn_nums[k] = v
     return retval
@@ -74,7 +80,7 @@ def sorted_filename(filenames, first=[], last=[],
     fn_to_nums = parse_filenames_for_numbers(filenames)
 
     if verbose:
-        print(fn_to_nums)
+        pprint(fn_to_nums)
 
     print("There are {} files ".format(len(fn_to_nums)), file=sys.stderr)
 
@@ -86,7 +92,7 @@ def sorted_filename(filenames, first=[], last=[],
         key_set.update(fnk.iterkeys())
 
     assert len(key_set) == min(num_numbers),\
-        "Key values are not the same accross filenames" 
+        "Key values are not the same accross filenames: {}".format(pf(key_set))
 
     assert len(set(first).union(last)) == len(first+last),\
         "Duplicates found in first and last."
@@ -119,6 +125,7 @@ def sorted_filename(filenames, first=[], last=[],
         if verbose:
             print(">> Filenames after sorting by:", order[i])
             pprint(filenames)
+    print(pf(filenames), file=sys.stderr)
 
     return filenames
 
