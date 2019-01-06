@@ -10,6 +10,10 @@ ExCorr='\033[0;33m'
 # action correct, green
 ActCorr='\033[0;32m'
 NC='\033[0m'
+
+# if something goes wrong, change this variable
+allWentThrough=true
+
 checkSimilaritiesAndLink (){
 	orig=$LocOfScript/$1
 	dest=$2
@@ -17,6 +21,7 @@ checkSimilaritiesAndLink (){
 	if [ -L $dest ]; then
 		if [[ "$(readlink -f $dest)" != "$orig" ]]; then
 			echo -e "${RED}File $dest is a link to $(readlink -f $dest) and not $orig. Delete manually."
+			allWentThrough=false
 		else
 			echo -e "${ExCorr}File $dest is already linked correctly to $orig."
 		fi
@@ -32,17 +37,20 @@ checkSimilaritiesAndLink (){
 					if [ "$3" = "sudo"  ]; then
 						echo -e "${RED} Tried and failed to replace $dest with copy of $orig, try again with sudo BUT CHECK DIFFS BEFORE!!"
 					fi
+					allWentThrough=false
 				else
 					echo -e "${ActCorr} Replaced $dest with $orig."
 				fi
 			fi
 		else
 			echo -e "${RED}File $dest is a regular file, delete manually."
+			allWentThrough=false
 		fi
 	# do the linking
 	else
 		if [ -e $dest ]; then
 			echo -e "${RED}File $dest is niether link nor regular file, but still exists. Check manually."
+			allWentThrough=false
 		else
 			if [ "$4" = "nolink"  ]; then
 				tmpStr=$(cp $orig $dest 2>&1)
@@ -51,6 +59,7 @@ checkSimilaritiesAndLink (){
 					if [ "$3" = "sudo"  ]; then
 						echo -e "${RED} Tried and failed to make a copy of $orig at $dest, try again with sudo."
 					fi
+					allWentThrough=false
 				else
 					echo -e "${ActCorr}Made a copy of $orig at $dest."
 				fi
@@ -61,6 +70,7 @@ checkSimilaritiesAndLink (){
 					if [ "$3" = "sudo"  ]; then
 						echo -e "${RED} Tried and failed to replace $dest with link to $orig, try again with sudo."
 					fi
+					allWentThrough=false
 				else
 					echo -e "${ActCorr}$tmpStr"
 				fi
@@ -111,6 +121,9 @@ echo "--vim"
 checkSimilaritiesAndLink vimrc $HOME/.vimrc
 
 if [[ "$(hostname)" == "T1" ]]; then
+	echo "--this repo"
+	checkSimilaritiesAndLink ensureUpdates_pre-commit $LocOfScript/.git/hooks/pre-commit
+
 	echo "--i3"
 	checkSimilaritiesAndLink i3_config $HOME/.config/i3/config
 	checkSimilaritiesAndLink i3status.sh $HOME/.config/i3/i3status.sh
@@ -120,11 +133,19 @@ if [[ "$(hostname)" == "T1" ]]; then
 	done
 
 	echo "--acpi&pm"
-	checkSimilaritiesAndLink lock /lib/systemd/system-sleep/10lock sudo nolink
+	checkSimilaritiesAndLink sudos/lock /lib/systemd/system-sleep/10lock sudo nolink
+
+	echo "--new i3"
+	checkSimilaritiesAndLink sudos/i3_new.desktop /usr/share/xsessions/i3_new.desktop sudo nolink
 
 	echo "--fusuma"
 	checkSimilaritiesAndLink fusuma.config $HOME/.config/fusuma/config.yml
 
 	echo "--dunst"
 	checkSimilaritiesAndLink dunstrc $HOME/.config/dunst/dunstrc
+fi
+
+if ! $allWentThrough; then
+	echo "There were some errors. check."
+	exit 1
 fi

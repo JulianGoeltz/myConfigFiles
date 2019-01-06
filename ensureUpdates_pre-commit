@@ -1,0 +1,30 @@
+#!/bin/bash
+
+LocOfScript=$(dirname $(readlink -f $0))
+
+# check whether install script runs through
+tmpString=$($LocOfScript/install.sh)
+if [[ $? -ne 0 ]]; then
+	echo "##### There is a problem with the install script, the versions in the repo and on your computer are not identical"
+	echo -e $tmpString
+	echo "(If you think everything is correct, commit with '--no-verify')"
+	exit 1
+fi
+
+# check whether new packages have been installed
+tmpString=$(diff $LocOfScript/listOfPackages.txt <(apt-mark showmanual))
+if [[ $? -ne 0 ]]; then
+	echo "The saved list of installed packages and the current installed packages differ like this:"
+	echo $tmpString
+	echo "(If you think everything is correct, commit with '--no-verify')"
+	exit 1
+fi
+
+# check whether new pips have been installed
+tmpString=$(diff $LocOfScript/listOfPipPackages.txt <(pip list))
+if [[ $? -ne 0 ]]; then
+	echo "The saved list of installed pip packages and the current installed pip packages differ like this:"
+	echo $tmpString
+	echo "(If you think everything is correct, commit with '--no-verify')"
+	exit 1
+fi

@@ -124,7 +124,8 @@ tm () {
 }
 
 # in order to see filenames before looking at files
-iv () { la $@; inkview $(ls $@)}
+iv () { ls -lAh $@; inkview $(ls $@)}
+fe () { ls -lAh $@; feh $(ls $@)}
 
 # easy diff of hdf5 datasets,from zsh/..hel
 function diffHdf5 () {

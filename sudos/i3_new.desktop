@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=i3 (new)
+Comment=very improved dynamic tiling window manager
+Exec=/home/julgoe/.local/bin/i3
+TryExec=/home/julgoe/.local/bin/i3
+Type=Application

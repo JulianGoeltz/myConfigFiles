@@ -228,6 +228,7 @@ bindsym XF86AudioRaiseVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/
 bindsym Control+KP_Subtract  "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
 bindsym Control+KP_Add "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
 bindsym XF86AudioMute "exec pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) toggle"
+bindsym $mod+m "exec /bin/sh ~/.config/i3/scripts/muteAll.sh"
 
 # syncient
 
@@ -247,7 +248,7 @@ bindsym $mod+Mod1+Shift+l exec "/home/julgoe/myConfigFiles/toolbox/lockAlt.sh"
 
 # autostart
 # find classes with xprop: WM_CLASS: class, instance; 
-for_window [class="Spotify"] move to workspace 10
+for_window [class="Spotify"] move --no-auto-back-and-forth to workspace 10
 assign [class="KeePass2"] 10
 assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
@@ -258,7 +259,10 @@ exec --no-startup-id i3-msg 'exec ~/myConfigFiles/toolbox/proxies.sh proxify /us
 exec --no-startup-id i3-msg 'exec /usr/bin/keepass2'
 exec --no-startup-id i3-msg 'exec /usr/bin/spotify'
 exec --no-startup-id i3-msg workspace 1
-exec --no-startup-id i3-msg "exec gnome-terminal --working-directory=\"/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text\" --command=\"zsh -c ' vim -S && zsh'\""
+exec --no-startup-id exec gnome-terminal --geometry=160x50 --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -c ' vim index.wiki && zsh'"
+bindsym $mod+Shift+v exec gnome-terminal --geometry=160x50 --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -c ' vim index.wiki && zsh'"
+for_window [ title="T1::index.wiki" ] move scratchpad
+
 
 # switch to next/prev window
 # bindsym $mod+Left exec i3-msg "workspace $(( ($(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')-1-1)%10+1))"
