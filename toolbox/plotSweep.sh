@@ -12,6 +12,7 @@ fi
 
 [ ! -f "plot.py" ] && echo "Execute this command in a 'code' subfolder, needs 'plot.py' to work" && exit
 
+count=0
 for fold in $@; do
 	echo $fold
 	[ ! -d $fold ] && echo "    is not an existing folder" && continue
@@ -37,7 +38,9 @@ for fold in $@; do
 		continue
 	fi
 
-	sbatch -p simulation --wrap "./plot.py plot_seedsweep $fold/simulations/*hdf5"
+	sbatch -p short --wrap "./plot.py plot_seedsweep $fold/simulations/*hdf5"
 	# ./plot.py plot_seedsweep $fold/simulations/*hdf5
 	# echo "    ./plot.py plot_seedsweep $fold/simulations/*hdf5"
+	count=$(($count+1))
 done
+echo "Started $count plottings"

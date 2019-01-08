@@ -15,6 +15,9 @@ delimiterDone='\xe2\x96\x88'
 # split on new lines, not spaces. In case we have filenames including spaces
 IFS=$'\n'
 
+echo $@ | grep -qP "(\s|^)(-v|--verbose)(\s|$|v)" && verbose=true || verbose=false
+echo $@ | grep -qP "(\s|^)(-vv)(\s|$)" && vverbose=true || vverbose=false
+
 sleepNotNegaitve() {
 	sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $1)))" | sort -g | tail -n 1)
 }
@@ -34,6 +37,8 @@ durationPrint() {
 	# decide whether to use sequential or parallel, based on terminal size
 	# first compose longer part, then echo all at once
 	output=""
+	$verbose && output="Verbose Output\n"
+	$vverbose && output="Even very verbose Output\n"
 
 	output_pending=""
 	for linefeed in $(squeue -t pd -p longexp,experiment --noheader -o  "%.8u" --noheader | grep -v jgoeltz | sort | uniq -c ); do
@@ -45,15 +50,45 @@ durationPrint() {
 	output=$output"Own jobs count; total: $count_ownall, pending: $count_ownpending\n"
 
 	if [ "$(tput cols)" -gt "$minimumColsForParallel" ]; then
+		remCols=$(($(tput cols) - 80))
 		# output=$output"with $(tput cols) we use the parallel display\n"
-		for linefeed in $(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" --sort=u,P,i |
-			grep "longexp\|experimen\|goelt\|JOBID" --color=never); do
+		if $vverbose; then
+			# also show pending
+			allLines=$(squeue -o "%.10i %.9P %.8u %.2t %.10M" --sort=-p,u,i |
+				grep "longexp\|experimen\|goelt\|JOBID" --color=never)
+		else
+			allLines=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" --sort=-p,u,i |
+				grep "longexp\|experimen\|goelt\|JOBID" --color=never)
+		fi
+		allLinesNum=$(echo $allLines | wc -l)
+		for linefeed in $(echo $allLines); do
 			if [ -z "$(echo $linefeed | grep jgoeltz)" ]; then
 				output=$output$(echo $linefeed | grep "longexp\|experimen\|goelt\|JOBID" --color=always)"\n"
-
 			else
 				output=$output$(echo $linefeed | grep "experimen\|jgoeltz" --color=always)
 				jobid=$(echo $linefeed | grep -oP '^\s*([0-9]*)' | grep -o '[0-9]*')
+
+				# find the file worked on (only do for small job numbers, otherwise its a hassle
+				if [[ "$allLinesNum" -lt 8 ]] || $verbose; then
+					tmpString=$(scontrol show job $jobid -dd | pcregrep -M "BatchScript=(.|\n)*" | grep -oP "\S*\.(yaml|hdf5)\S*")
+					# check whether we found something
+					if [ -n $tmpString ]; then
+						if [[ "$(echo $tmpString | wc -l)" -eq 1 ]]; then
+							if echo $tmpString | grep -q yaml; then
+								tmpString=$(basename $(dirname $tmpString))
+							else
+								tmpString=$(basename $tmpString)
+							fi
+						elif $vverbose; then
+							tmpString="$(echo $tmpString | wc -l) files"
+						else
+							tmpString=""
+						fi
+						output=$output" ${tmpString:0:$remCols}"
+					fi
+				fi
+
+				# look how far we are
 				file=$(find ./ -maxdepth 1 -name "*slurm-$jobid.out")
 				if [ -n "$file" ]; then
 					# if [ $(du $file | grep -o "^[0-9]*") -ge 200000 ]; then
@@ -92,6 +127,7 @@ durationPrint() {
 					fi
 					
 				fi
+
 				output=$output"\n"
 
 			fi
@@ -187,11 +223,11 @@ durationPrint() {
 	date +"%H:%M:%S"
 	# to get rid of trailing newline, -n and cut ot off last 2 chars (\n)
 	echo -ne ${output:0:-2}
-	if [ "$1" != "" ]; then
-		echo $1
-		eval $1
-	fi
-	sleepNotNegaitve $startTimestamp
+	# if [ "$1" != "" ]; then
+	# 	echo $1
+	# 	eval $1
+	# fi
+	$verbose || sleepNotNegaitve $startTimestamp
 	# sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $startTimestamp)))" | sort | head -n 1)
 #done
 

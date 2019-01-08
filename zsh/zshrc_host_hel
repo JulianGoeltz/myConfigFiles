@@ -67,13 +67,6 @@ if [ -z "$PREEXEC_FUNCTIONS_AMMENDED" ]; then
 	PREEXEC_FUNCTIONS_AMMENDED="set"
 fi
 
-function whichLicences () {
-	for jobid in `squeue -p "experiment" -o "%i" | grep -o "[0-9]*"`; do
-		echo -n "Job $jobid "$(squeue -o "%i(%T) from %u" | grep $jobid | grep -o "([^=]*")" has "
-		scontrol show jobid $jobid | grep -o --color=never "Licenses=[WFB,0-9]*"                                         
-	 done
-}
-
 function updateEnvEverywhere () {
 	for _pane in `tmux list-panes -a -F '#{pane_id}'`
 	do
