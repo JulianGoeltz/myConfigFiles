@@ -21,17 +21,23 @@ if [ $# -eq 0 ]; then
 fi
 
 trigger="RESETALLTHEJOBS"
+trigger2="useHDF5"
 # remove the '_fileHasBeenSend' and '.hdf5' files, if the third argument is $trigger
 # first it is checked whether there are no current jobs running, otherwise asks for explicit confirmation
 # for each file checks whether training.svg and volts.svg exist, otherwise deletes _fileHasBeenSend and .hdf5
 if [[ "$1" == "$trigger" ]]; then
+	if [[ "$3" == "$trigger2" ]]; then
+		identifyingBit=".hdf5"
+	else
+		identifyingBit="_fileHasBeenSend"
+	fi
 	read "test?you are about to go through the directory $relPath and its subdirectories and delete all .hdf5 and _fileHasBeenSend where no volts.svg and training.svg exist (all where more than one timestamp exist, one will be deleted). Sure to do this (y/n):"
 	case $test in 
 		'y') echo continue...;;
 		*) exit;;
 	esac
 	if [ -n "$(squeue -u $USER --noheader)" ]; then
-		squeue -u $USER
+		squeueRepeat.sh -vv
 		read "test?There are still jobs in the queue, are you sure you want to do this?(y/n)"
 		case $test in 
 			'y') echo continue...;;
@@ -39,11 +45,11 @@ if [[ "$1" == "$trigger" ]]; then
 		esac
 	fi
 
-	numOfAllfHBSFiles=$(find $relPath -name "*_fileHasBeenSend" | wc -l)
+	numOfAllfHBSFiles=$(find $relPath -name "*$identifyingBit" | wc -l)
 	numOfFilesLookedAt=0
-	for file in $(find $relPath -name "*_fileHasBeenSend"); do
+	for file in $(find $relPath -name "*$identifyingBit"); do
 		#file=../data/20180712_sweepImp/simulations/taurat0_cuba_x_-l1U_5.0-l1UF_0.0-frobU_0.0-frobUF_0.0-dw_200-l2r_0.0100-learn_0.0050_fileHasBeenSend
-		fnPurish=${file//_fileHasBeenSend}
+		fnPurish=${file//$identifyingBit}
 		numOfFilesLookedAt=$(($numOfFilesLookedAt+1))
 		#echo $fnPurish
 
@@ -80,8 +86,28 @@ function sendAway () {
 	eval "${slurmCall} --wrap '${currentJob}'"
 }
 
-numOfAllFiles=$(find $relPath -name \*.yaml | wc -l)
-echo "Do you really want to process $numOfAllFiles files in the directory $relPath?"
+
+accumulatedFiles=0
+allFiles=0
+alreadyStartedJobs=0
+currentJob=""
+numOfFilesLookedAt=0
+
+if [[ "$4" == "$trigger2" ]]; then
+	identifyingBit=".hdf5"
+	subFolderSour=$5
+	[ -z $subFolderSour ] && subFolderSour="simulations"
+	tmpInt=${subFolderSour:11}
+	[ -z $tmpInt ] && tmpInt=2 || tmpInt=$(($tmpInt+1))
+	subFolderDest="../simulations$tmpInt"
+else
+	identifyingBit=".yaml"
+	subFolderSour=""
+	subFolderDest="simulations"
+fi
+
+numOfAllFiles=$(ls $relPath/**/$subFolderSour/*$identifyingBit | wc -l)
+echo "Do you really want to process $numOfAllFiles files with termination $identifyingBit in the subdirectories '$subFolderSour' of $relPath?"
 read "numOfFilesPerJob?How many calls at most in one job: "
 
 case $numOfFilesPerJob in
@@ -89,13 +115,7 @@ case $numOfFilesPerJob in
 	*) echo continue... ;;
 esac
 
-
-accumulatedFiles=0
-allFiles=0
-alreadyStartedJobs=0
-currentJob=""
-numOfFilesLookedAt=0
-for fn in `find $relPath -name "*.yaml"`; do
+for fn in $(ls $relPath/**/$subFolderSour/*$identifyingBit); do
 	numOfFilesLookedAt=$(($numOfFilesLookedAt+1))
 	if [ $accumulatedFiles -ge $numOfFilesPerJob ]; then
 		sendAway
@@ -106,10 +126,10 @@ for fn in `find $relPath -name "*.yaml"`; do
 	[ $alreadyStartedJobs -ge $maxNumberOfJobs ] && break;
 	echo "($numOfFilesLookedAt/$numOfAllFiles)$alreadyStartedJobs:$accumulatedFiles, current file $fn"
 	# check whether file already processed
-	fnFolder=$(dirname $fn)/simulations
+	fnFolder=$(dirname $fn)/$subFolderDest
 	fnPure=$(basename "${fn%.*}")
 	[ -n "$(ls $fnFolder/$fnPure* 2>/dev/null)" ] && continue
-	if [ ! -d "$fnFolder" ]; then mkdir "$fnFolder"; fi
+	[ ! -d "$fnFolder" ] && mkdir "$fnFolder"
 
 	accumulatedFiles=$(($accumulatedFiles+1))
 	allFiles=$(($allFiles+1))
@@ -117,7 +137,7 @@ for fn in `find $relPath -name "*.yaml"`; do
 	currentJob=$currentJob"echo "$tokenForAnimation$accumulatedFiles"of"$numOfFilesPerJob";"
 	#actual job
 	currentJob=$currentJob$programCall" "$fn";"
-	touch $fnFolder/$fnPure"_fileHasBeenSend"
+	touch "$fnFolder/${fnPure}_fileHasBeenSend"
 done
 # run the remaining jobs if there are any
 if [ $accumulatedFiles -gt 0 ]; then

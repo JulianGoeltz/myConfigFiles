@@ -106,6 +106,16 @@ tmux_resetSocket () {
 	fi
 }
 tm () {
+	# from http://patorjk.com/software/taag/#p=display&f=Big&t=You%20should%20be%20writing!!!%20
+	cat ~/myConfigFiles/tmp_art
+	read "test?Are you sure wou want to do this? please dont. reason? "
+	case $test in
+		"this is an exception")
+			;;
+		*)
+			return
+			;;
+	esac
 	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep "tmux: server")
 	if [ -z "$tmpTmuxServerPid" ]; then
 		echo "no tmux server running, start it"

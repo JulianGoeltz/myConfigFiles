@@ -1,10 +1,7 @@
 #!/bin/zsh
 
-# echo single dot to indicate start of process
-echo -n .
-
 standardWidth=20
-repeatEvery=5
+repeatEvery=30
 minimumColsForParallel=80
 delimiterDone="|"
 delimiterNot='-'
@@ -15,8 +12,27 @@ delimiterDone='\xe2\x96\x88'
 # split on new lines, not spaces. In case we have filenames including spaces
 IFS=$'\n'
 
+# treat arguments
+if [ "$1" = "cat" ]; then
+	# check if file is too old
+	timeSinceTouch=$(($(date +%s) - $(stat -c %Y ~/.tmp_squeueRepeat)))
+	if [ $timeSinceTouch -gt 60 ]; then
+		echo "No new squeueRepeat"
+	else
+		echo -ne \\033c
+		date +"%H:%M:%S"
+		cat ~/.tmp_squeueRepeat
+	fi
+	sleep $repeatEvery
+	exit
+fi
+
 echo $@ | grep -qP "(\s|^)(-v|--verbose)(\s|$|v)" && verbose=true || verbose=false
 echo $@ | grep -qP "(\s|^)(-vv)(\s|$)" && vverbose=true || vverbose=false
+echo $@ | grep -qP "(\s|^)(work)(\s|$)" && argWorking=true || argWorking=false
+
+# echo single dot to indicate start of process
+echo -n .
 
 sleepNotNegaitve() {
 	sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $1)))" | sort -g | tail -n 1)
@@ -37,8 +53,8 @@ durationPrint() {
 	# decide whether to use sequential or parallel, based on terminal size
 	# first compose longer part, then echo all at once
 	output=""
-	$verbose && output="Verbose Output\n"
-	$vverbose && output="Even very verbose Output\n"
+	$verbose && output=$output"Verbose Output\n"
+	$vverbose && output=$output"Even very verbose Output\n"
 
 	output_pending=""
 	for linefeed in $(squeue -t pd -p longexp,experiment --noheader -o  "%.8u" --noheader | grep -v jgoeltz | sort | uniq -c ); do
@@ -219,7 +235,7 @@ durationPrint() {
 		fi
 		output=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto)"\n"$output
 	fi
-	echo -ne \\033c
+	$verbose || $argWorking || echo -ne \\033c
 	date +"%H:%M:%S"
 	# to get rid of trailing newline, -n and cut ot off last 2 chars (\n)
 	echo -ne ${output:0:-2}
