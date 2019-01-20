@@ -37,7 +37,7 @@ indicate_hidden = yes
 
 # Alignment of message text.
 # Possible values are "left", "center" and "right".
-alignment = center
+alignment = left
 
 # The frequency with wich text that is longer than the notification
 # window allows bounces back and forth.
@@ -84,7 +84,7 @@ shrink = no
 # The transparency of the window.  Range: [0; 100].
 # This option will only work if a compositing windowmanager is
 # present (e.g. xcompmgr, compiz, etc.).
-transparency = 5
+transparency = 25
 
 # Don't remove messages, if the user is idle (no mouse or keyboard input)
 # for longer than idle_threshold seconds.
@@ -115,7 +115,7 @@ sticky_history = yes
 history_length = 15
 
 # Display indicators for URLs (U) and actions (A).
-show_indicators = no
+show_indicators = yes
 
 # The height of a single line.  If the height is smaller than the
 # font height, it will get raised to the font height.
@@ -125,13 +125,13 @@ line_height = 3
 # Draw a line of "separatpr_height" pixel height between two
 # notifications.
 # Set to 0 to disable.
-separator_height = 2
+separator_height = 0
 
 # Padding between text and separator.
-padding = 6
+padding = 10
 
 # Horizontal padding.
-horizontal_padding = 6
+horizontal_padding = 10
 
 # Define a color for the separator.
 # possible values are:
@@ -153,13 +153,16 @@ dmenu = /usr/bin/dmenu -p dunst:
 browser = /usr/bin/firefox -new-tab
 
 # Align icons left/right/off
-icon_position = off
-max_icon_size = 80
+icon_position = left
+max_icon_size = 30
 
 # Paths to default icons.
-icon_folders = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
+#icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+icon_path = /usr/share/icons/Mint-X/status/48/
+#:/usr/share/icons/Mint-X/status/scalable
+#icon_folders = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
 
-frame_width = 3
+frame_width = 0
 frame_color = "#8EC07C"
 
 [shortcuts]
@@ -238,6 +241,11 @@ timeout = 8
 #    # This notification will not be displayed
 #    summary = "foobar"
 #    format = ""
+
+[removeIcon]
+	icon = "dialog-information"
+	new_icon = ""
+
 
 #[signed_on]
 #    appname = Pidgin

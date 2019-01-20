@@ -78,9 +78,9 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+f fullscreen toggle global
 
 # change container layout (stacked, tabbed, toggle split)
-#bindsym $mod+s layout stacking
-#bindsym $mod+w layout tabbed
-#bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+# bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -208,10 +208,10 @@ bindsym $mod+d exec rofi \
 # bindsym $mod+Shift+a exec rofi -show run -lines 21 -eh 1.3 -opacity "50" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$text-color" -hlfg "$bg-color" -font "System San Francisco Display 10"
 
 # brightness
-bindsym XF86MonBrightnessUp "exec xbacklight +20; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
-bindsym XF86MonBrightnessDown "exec xbacklight -20; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
-bindsym Shift+XF86MonBrightnessUp "exec xbacklight -set 100; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
-bindsym Shift+XF86MonBrightnessDown "exec xbacklight -set 1; exec /bin/sh ~/.config/i3/scripts/brightnessNotif.sh"
+bindsym XF86MonBrightnessUp "exec /bin/sh ~/.config/i3/scripts/changeBrightness.sh up"
+bindsym XF86MonBrightnessDown "exec /bin/sh ~/.config/i3/scripts/changeBrightness.sh down"
+bindsym Shift+XF86MonBrightnessUp "exec /bin/bash ~/.config/i3/scripts/changeBrightness.sh high"
+bindsym Shift+XF86MonBrightnessDown "exec /bin/sh ~/.config/i3/scripts/changeBrightness.sh low"
 
 # playpause
 bindsym XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
@@ -315,7 +315,7 @@ for_window [class="feh"] floating enable
 bindsym $mod+Control+1 "exec /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"
 
 # bind key for kaddl
-bindsym Mod1+F4 exec "notify-send -t 2000 'Hallo Kaddl'"
+bindsym Mod1+F4 exec "notify-send -t 2000 'Hallo Kaddl ❤❤❤'"
 
 #bind key for disabling touchpad
 bindsym $mod+t "exec /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"

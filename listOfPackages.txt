@@ -502,6 +502,7 @@ gvfs-common
 gvfs-daemons
 gvfs-fuse
 gvfs-libs
+gvncviewer
 gzip
 hardening-includes
 hddtemp
@@ -718,6 +719,7 @@ libcolamd2.9.1
 libcolord2
 libcolorhug2
 libcomerr2
+libconfig-dev
 libcpufreq0
 libcrack2
 libcroco3
@@ -801,6 +803,7 @@ libev-dev
 libevdev2
 libevdocument3-4
 libevent-2.0-5
+libevent-dev
 libevview3-3
 libexempi3
 libexif12
@@ -1021,6 +1024,7 @@ libisl15
 libitm1
 libiw30
 libjack-jackd2-0
+libjansson-dev
 libjasper1
 libjavascriptcoregtk-1.0-0
 libjavascriptcoregtk-3.0-0
@@ -1172,6 +1176,7 @@ libnm0
 libnma-common
 libnma0
 libnotify-bin
+libnotify-dev
 libnotify4
 libnpth0
 libnspr4
@@ -1268,6 +1273,7 @@ libpurple0
 libpwquality-common
 libpwquality1
 libpython-all-dev
+libpython-dev
 libpython-stdlib
 libpython2.7
 libpython2.7-dev
@@ -1326,6 +1332,7 @@ librasqal3
 libraw1394-11
 libraw15
 librdf0
+libreadline-dev
 libreadline5
 libreadline6
 libreadline6-dev
@@ -2198,6 +2205,8 @@ virtualbox-guest-x11
 virtualbox-qt
 virtualenv
 vlock
+vnc4server
+vnstat
 wamerican
 watershed
 wbritish
@@ -2220,6 +2229,7 @@ x11-utils
 x11-xfs-utils
 x11-xkb-utils
 x11-xserver-utils
+x11vnc
 xapps-common
 xauth
 xautolock
@@ -2276,6 +2286,7 @@ xserver-xorg-video-radeon
 xserver-xorg-video-vesa
 xserver-xorg-video-vmware
 xterm
+xtightvncviewer
 xutils-dev
 xviewer
 xviewer-plugins

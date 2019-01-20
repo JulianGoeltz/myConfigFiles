@@ -49,7 +49,7 @@ if [[ "$arg" == "set" ]]; then
 			if $spotifyRunning; then
 				i3-msg exec /usr/bin/spotify >/dev/null
 				sleep 1
-				[ $spotifyPlaying == "Playing" ] && playerctl -p spotify play
+				[[ $spotifyPlaying == "Playing" ]] && playerctl -p spotify play
 			fi
 		fi & )
 	fi
@@ -81,7 +81,7 @@ elif [[ "$arg" == "unset" ]]; then
 			if $spotifyRunning; then
 				i3-msg exec /usr/bin/spotify >/dev/null
 				sleep 1
-				[ $spotifyPlaying == "Playing" ] && playerctl -p spotify play
+				[[ $spotifyPlaying == "Playing" ]] && playerctl -p spotify play
 			fi
 		fi & )
 	fi

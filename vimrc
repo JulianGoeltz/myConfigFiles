@@ -235,3 +235,9 @@ highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 " better title to distinguish hel and t1
 auto BufEnter * let &titlestring = hostname() . "::" . expand("%:t")
 set title
+
+" no more unnerving errors with vimtex
+let g:syntastic_quiet_messages = { "regex": [
+        \ '\mpossible unwanted space at "{"',
+	\ 'Command terminated with space.',
+        \ ] }

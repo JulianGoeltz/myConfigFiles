@@ -19,7 +19,7 @@ STATUS=$(cat $POWERSUPPLY)
 
 if [ $BATTERY_LEVEL -le $TOO_LOW -a $STATUS = $NOT_CHARGING ]
 then
-    /usr/bin/notify-send -u critical -i "$ICON" -t 3000 "Battery low" "Battery level is ${BATTERY_LEVEL}%!"
+    dunstify -u critical -i "$ICON" -r 4444 -t 3000 "Battery low" "Battery level is ${BATTERY_LEVEL}%!"
 fi
 
 exit 0
