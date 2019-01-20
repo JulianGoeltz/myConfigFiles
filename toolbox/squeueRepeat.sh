@@ -2,6 +2,7 @@
 
 standardWidth=20
 repeatEvery=30
+fileSave=~/.tmp_squeueRepeat
 minimumColsForParallel=80
 delimiterDone="|"
 delimiterNot='-'
@@ -13,25 +14,25 @@ delimiterDone='\xe2\x96\x88'
 IFS=$'\n'
 
 # treat arguments
-if [ "$1" = "cat" ]; then
-	# check if file is too old
-	timeSinceTouch=$(($(date +%s) - $(stat -c %Y ~/.tmp_squeueRepeat)))
-	if [ $timeSinceTouch -gt 60 ]; then
-		echo "No new squeueRepeat"
-	else
-		echo -ne \\033c
-		date +"%H:%M:%S"
-		cat ~/.tmp_squeueRepeat
-	fi
-	sleep $repeatEvery
-	exit
-fi
-
 echo $@ | grep -qP "(\s|^)(-v|--verbose)(\s|$|v)" && verbose=true || verbose=false
 echo $@ | grep -qP "(\s|^)(-vv)(\s|$)" && vverbose=true || vverbose=false
 echo $@ | grep -qP "(\s|^)(work)(\s|$)" && argWorking=true || argWorking=false
 
+# check if file is too old
+timeSinceTouch=$(($(date +%s) - $(stat -c %Y $fileSave)))
+if ! $verbose ; then
+	#if either the file is not old, or already being processed, just output the current one
+	if [ $timeSinceTouch -lt 60 -o "$(tail -c1 $fileSave)" = "." ]; then
+		echo -ne \\033c
+		date +"%H:%M:%S"
+		cat $fileSave
+		sleep $repeatEvery
+		exit
+	fi
+fi
+
 # echo single dot to indicate start of process
+$argWorking && echo -n . >> $fileSave
 echo -n .
 
 sleepNotNegaitve() {
@@ -235,9 +236,11 @@ durationPrint() {
 		fi
 		output=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto)"\n"$output
 	fi
-	$verbose || $argWorking || echo -ne \\033c
+	$verbose || echo -ne \\033c
+	$argWorking && date +"%H:%M:%S" > $fileSave
 	date +"%H:%M:%S"
 	# to get rid of trailing newline, -n and cut ot off last 2 chars (\n)
+	$argWorking && echo -ne ${output:0:-2} >> $fileSave
 	echo -ne ${output:0:-2}
 	# if [ "$1" != "" ]; then
 	# 	echo $1

@@ -12,7 +12,7 @@ for job in `squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" $@`; 
 	job_time=$(echo $job | awk '{print $3;}')
 	job_status=$(echo $job | awk '{print $4;}')
 	tmpString=$(scontrol show jobid $job_id -dd)
-	job_name=$(echo $tmpString | pcregrep -M "BatchScript=(.|\n)*" | grep -oP "\S*\.(yaml|hdf5)\S*")
+	job_name=$(echo $tmpString | /wang/environment/software/jessie/spack/20180129_live/views/developmisc_426/bin/pcregrep -M "BatchScript=(.|\n)*" | grep -oP "\S*\.(yaml|hdf5)\S*")
 	if [ -n "$job_name" ]; then
 		if [[ "$(echo $job_name | wc -l)" -eq 1 ]]; then
 			if echo $job_name | grep -q yaml; then

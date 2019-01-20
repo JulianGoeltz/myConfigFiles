@@ -119,8 +119,8 @@ function saveplottedtobackup() {
 	done
 }
 
-alias squeueRepeat="while true; do squeueRepeat.sh cat; done"
-alias squeueRepeatWork="cd ~/MasterThesis/model-tempodrom/code; while true; do squeueRepeat.sh work | tee ~/.tmp_squeueRepeat ; done"
+alias squeueRepeat="while true; do squeueRepeat.sh work; done"
+#alias squeueRepeatWork="cd ~/MasterThesis/model-tempodrom/code; while true; do squeueRepeat.sh work | tee ~/.tmp_squeueRepeat ; done"
 # function squeueRepeat () {
 # 	while true; do
 # 		echo -e \\033c
