@@ -119,6 +119,10 @@ done
 
 echo "--vim"
 checkSimilaritiesAndLink vimrc $HOME/.vimrc
+[ ! -d "$HOME/.vim/after/ftplugin" ] && mkdir -p $HOME/.vim/after/ftplugin
+for fn in $(ls $LocOfScript/vim/after/ftplugin/*); do
+	checkSimilaritiesAndLink vim/after/ftplugin/$(basename $fn) $HOME/.vim/after/ftplugin/$(basename $fn)
+done
 
 if [[ "$(hostname)" == "T1" ]]; then
 	echo "--this repo"

@@ -9,7 +9,10 @@ set backspace=indent,eol,start	" more powerful backspacing
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
+" python folding
 Plug 'tmhedberg/SimpylFold'
+" fast folding, also only on demand calculation
+Plug 'Konfekt/FastFold'
 Plug 'vim-scripts/indentpython.vim'
 "Autocomplete
 """"""" BUILD AFTER INSTALLATION
@@ -45,6 +48,7 @@ if system('hostname') =~ "T1"
 	"set omnifunc=syntaxcomplete#Complete
 	
 	"for forward search in latex with zathura
+	let g:vimtex_view_general_viewer='zathura'
 	let g:vimtex_view_method = 'zathura'
 
 	let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/text/',
@@ -241,3 +245,15 @@ let g:syntastic_quiet_messages = { "regex": [
         \ '\mpossible unwanted space at "{"',
 	\ 'Command terminated with space.',
         \ ] }
+
+" ycm for tex files, works beautifully
+if !exists('g:ycm_semantic_triggers')
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+
+" open Gstatus with small height
+nnoremap <silent> <Leader>gs :Gstatus<CR>:20wincmd_<CR>
+
+" remove colorbar for vimwiki
+autocmd FileType vimwiki set colorcolumn=0

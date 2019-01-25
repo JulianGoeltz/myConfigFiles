@@ -4,7 +4,8 @@ arg=$1
 # in order to ssh through proxy
 # ssh git@github.com -o "ProxyCommand=connect -5S proxy.kip.uni-heidelberg.de:1080 %h %p"
 if [ $# -eq 0 ]; then
-	tmp_len=$(wget -qO- http://www.kip.uni-heidelberg.de/proxy 2>/dev/null | wc -c)
+	# if stopped due to timeout, it unsets
+	tmp_len=$(wget --timeout=1 -qO- http://www.kip.uni-heidelberg.de/proxy 2>/dev/null | wc -c)
 	if [ $? -ne 0 ]; then
 		echo "Problem calling kip proxy with wget, do manually with set/unset"
 		return
@@ -16,7 +17,7 @@ if [ $# -eq 0 ]; then
 	fi
 fi
 if [[ "$arg" == "set" ]]; then
-	echo "Setting proxy for (current) shell, git, spotify and apt"
+	echo -n "Setting proxy for (current) shell, git, apt"
 	export ftp_proxy=http://proxy.kip.uni-heidelberg.de:2121
 	export http_proxy=http://proxy.kip.uni-heidelberg.de:8080
 	export https_proxy=https://proxy.kip.uni-heidelberg.de:8080
@@ -37,6 +38,7 @@ if [[ "$arg" == "set" ]]; then
 
 	# spotify
 	if [[ $# -gt 0 ]]; then
+		echo ", spotify"
 		( if grep "network.proxy.mode=1" ~/.config/spotify/prefs -q; then
 			spotifyRunning=false
 			if ps aux | grep -v grep | grep -q spotify; then
@@ -52,9 +54,11 @@ if [[ "$arg" == "set" ]]; then
 				[[ $spotifyPlaying == "Playing" ]] && playerctl -p spotify play
 			fi
 		fi & )
+	else
+		echo
 	fi
 elif [[ "$arg" == "unset" ]]; then
-	echo "Removing proxy from (current) shell, git, spotify and apt."
+	echo -n "Removing proxy from (current) shell, git, apt"
 	export ftp_proxy=
 	export http_proxy=
 	export https_proxy=
@@ -69,6 +73,7 @@ elif [[ "$arg" == "unset" ]]; then
 
 	# spotify
 	if [[ $# -gt 0 ]]; then
+		echo ", spotify"
 		( if grep "network.proxy.mode=2" ~/.config/spotify/prefs -q; then
 			spotifyRunning=false
 			if ps aux | grep -v grep | grep -q spotify; then
@@ -84,6 +89,8 @@ elif [[ "$arg" == "unset" ]]; then
 				[[ $spotifyPlaying == "Playing" ]] && playerctl -p spotify play
 			fi
 		fi & )
+	else
+		echo
 	fi
 elif [ "$arg" == "proxify" -a $# -gt 1 ]; then
 	# to execute a command in a proxified environment
