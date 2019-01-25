@@ -105,17 +105,12 @@ tmux_resetSocket () {
 		ps axo pid,user,comm,args G jgoeltz G -v grep G "tmux: server"
 	fi
 }
+
+# from http://patorjk.com/software/taag/#p=display&f=Big&t=You%20should%20be%20writing!!!%20
+cat ~/myConfigFiles/tmp_art
+cat ~/myConfigFiles/tmp_art
+cat ~/myConfigFiles/tmp_art
 tm () {
-	# from http://patorjk.com/software/taag/#p=display&f=Big&t=You%20should%20be%20writing!!!%20
-	cat ~/myConfigFiles/tmp_art
-	read "test?Are you sure wou want to do this? please dont. reason? "
-	case $test in
-		"this is an exception")
-			;;
-		*)
-			return
-			;;
-	esac
 	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep "tmux: server")
 	if [ -z "$tmpTmuxServerPid" ]; then
 		echo "no tmux server running, start it"
@@ -131,6 +126,17 @@ tm () {
 		echo "tmux server might have lost socket connection, or similar. Socket is reset, try connection again."
 		kill -s USR1 $tmpTmuxServerPid
 	fi
+}
+tmux_tree () {
+	for s in `tmux list-sessions -F '#{session_name}'` ; do
+	  echo -e "\ntmux session name: $s\n--------------------"
+	  for w in `tmux list-windows -F '#I' -t "$s"`; do
+	    echo -e "\ntmux window index: $w\n-----"
+	    for p in `tmux list-panes -F '#{pane_pid}' -t "$s:$w"` ; do
+	      pstree -p -a -A $p
+	    done
+	  done
+	done
 }
 
 # in order to see filenames before looking at files
@@ -241,6 +247,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 # vim keybindings
 bindkey -v
+alias la="ls -lAh --color=always"
 
 # ######## PROMPT
 # Old prompt
