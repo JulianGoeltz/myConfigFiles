@@ -4,22 +4,24 @@
 ## $ crontab -e
 ## */5 * * * * /home/julgoe/myConfigFiles/checkLowBattery
 
-
 POWERSUPPLY="/sys/class/power_supply/AC/online" # could be different on your system!
 TOO_LOW=20 # how low is too low?
 NOT_CHARGING="0"
 ICON="/usr/share/icons/Mint-X/status/96/notification-battery-low.svg" # eye candy
 
-export DISPLAY=:0
+# get the correct dbus
+tmpStr=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$(pidof i3)/environ)
+export DBUS_SESSION_BUS_ADDRESS=${tmpStr:25:200}
+export LC_NUMERIC=en_US.UTF-8
 
 # BATTERY_LEVEL=$(acpi -b | grep -P -o '[0-9]+(?=%)')
 BATTERY_LEVEL=$(acpi -b | grep  -o '[0-9]*%' | grep -o '[0-9]*' | awk 'BEGIN{num=0}{ SUM += $1; num+=1} END { print SUM/num }')
 COMPARING_FLOATS=$(echo $BATTERY_LEVEL'<'$TOO_LOW | bc -l)
 STATUS=$(cat $POWERSUPPLY)
 
-if [ $BATTERY_LEVEL -le $TOO_LOW -a $STATUS = $NOT_CHARGING ]
+if [ $COMPARING_FLOATS -eq 1 -a $STATUS == $NOT_CHARGING ]
 then
-    dunstify -u critical -i "$ICON" -r 4444 -t 3000 "Battery low" "Battery level is ${BATTERY_LEVEL}%!"
+	/home/julgoe/.local/bin/dunstify -u critical -i "$ICON" -r 4444 -t 30000 "Battery low" "Battery level is $(printf %.0f $( echo $BATTERY_LEVEL))%!"
 fi
 
 exit 0

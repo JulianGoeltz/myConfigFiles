@@ -5,7 +5,11 @@ arg=$1
 # ssh git@github.com -o "ProxyCommand=connect -5S proxy.kip.uni-heidelberg.de:1080 %h %p"
 if [ $# -eq 0 ]; then
 	# if stopped due to timeout, it unsets
-	tmp_len=$(wget --timeout=1 -qO- http://www.kip.uni-heidelberg.de/proxy 2>/dev/null | wc -c)
+	tmp_len=$(wget --no-proxy --timeout=1 -qO- http://www.kip.uni-heidelberg.de/proxy 2>/dev/null | wc -c)
+	if [ -z "$DISPLAY" ]; then
+		echo "Not setting proxies on TTY"
+		return
+	fi
 	if [ $? -ne 0 ]; then
 		echo "Problem calling kip proxy with wget, do manually with set/unset"
 		return
@@ -30,11 +34,12 @@ if [[ "$arg" == "set" ]]; then
 	# (temporaruly writes to a /tmp file, this way no sudo is necessary)
 	escaped_http=${http_proxy/\/\//\\\/\\\/}
 	escaped_https=${https_proxy/\/\//\\\/\\\/}
-	cp /etc/apt/apt.conf /tmp/aptconfInplaceReplace
-	sed -i -e 's/Acquire::http::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::http::Proxy "'$escaped_http'";/g' /tmp/aptconfInplaceReplace
-	sed -i -e 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "'$escaped_https'";/g' /tmp/aptconfInplaceReplace
-	cat /tmp/aptconfInplaceReplace > /etc/apt/apt.conf
-	rm /tmp/aptconfInplaceReplace
+	tmpFilename=/tmp/aptconfInplaceReplace$$
+	cp /etc/apt/apt.conf $tmpFilename
+	sed -i -e 's/Acquire::http::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::http::Proxy "'$escaped_http'";/g' $tmpFilename
+	sed -i -e 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "'$escaped_https'";/g' $tmpFilename
+	cat $tmpFilename > /etc/apt/apt.conf
+	rm $tmpFilename
 
 	# spotify
 	if [[ $# -gt 0 ]]; then
@@ -65,11 +70,12 @@ elif [[ "$arg" == "unset" ]]; then
 
 	unset GIT_SSH_COMMAND
 
-	cp /etc/apt/apt.conf /tmp/aptconfInplaceReplace
-	sed -i 's/Acquire::http::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::http::Proxy "";/g' /tmp/aptconfInplaceReplace
-	sed -i 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "";/g' /tmp/aptconfInplaceReplace
-	cat /tmp/aptconfInplaceReplace > /etc/apt/apt.conf
-	rm /tmp/aptconfInplaceReplace
+	tmpFilename=/tmp/aptconfInplaceReplace$$
+	cp /etc/apt/apt.conf $tmpFilename
+	sed -i 's/Acquire::http::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::http::Proxy "";/g' $tmpFilename
+	sed -i 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "";/g' $tmpFilename
+	cat $tmpFilename > /etc/apt/apt.conf
+	rm $tmpFilename
 
 	# spotify
 	if [[ $# -gt 0 ]]; then

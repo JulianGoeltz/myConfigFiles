@@ -128,6 +128,6 @@ wcwidth                            0.1.7
 wicd                               1.7.4                 
 wxPython                           3.0.2.0               
 wxPython-common                    3.0.2.0               
-yccp                               0.3.0                 
+yccp                               0.5.0                 
 yum-metadata-parser                1.1.4                 
 zope.interface                     4.1.3                 

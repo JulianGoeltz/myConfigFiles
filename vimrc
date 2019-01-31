@@ -117,6 +117,7 @@ colorscheme default
 set background=dark
 set cursorline
 hi CursorLine cterm=NONE ctermbg=8
+hi CursorLineNr ctermbg=1
 "let g:solarized_termcolors=16
 
 let g:SimpylFold_docstring_preview=1

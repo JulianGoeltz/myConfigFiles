@@ -30,9 +30,10 @@ json_escape () {
 	printf '%s' "$1" | python -c 'import json,sys; print(json.dumps(sys.stdin.read()))'
 }
 Playing() {
-	if [ "$(playerctl -p spotify status)" = "Playing" ]; then
-		artist=$(playerctl -p spotify metadata artist)
-		title=$(playerctl -p spotify metadata title)
+	player=$1
+	if [ "$(playerctl -p $player status)" = "Playing" ]; then
+		artist=$(playerctl -p $player metadata artist)
+		title=$(playerctl -p $player metadata title)
 		[ "$(echo $artist | wc -c )" -gt "23" ] && artist=$(echo "${artist:0:20}...")
 		[ "$(echo $title | wc -c )" -gt "23" ] && title=$(echo "${title:0:20}...")
 		# in order for special chars to be properly escaped use json function above
@@ -109,7 +110,8 @@ while true; do
 	#echo "%{B$Cbg}%{F$Cfg}%{c}$(Playing) %{r}$(Host)|$(Battery)|$(Date)"
 	echo "["
 	# echo '  { "full_text": "lalala", "color":"#ffffff" },'
-	echo '  { "full_text": "'$(Playing)'"},'
+	echo '  { "full_text": "'$(Playing spotify)'"},'
+	echo '  { "full_text": "'$(Playing vlc)'"},'
 
 	echo '  { "full_text": "'$(Volume 0)'", "color":"'$Cfggrey'"},'
 	correctSink=$(/home/julgoe/.config/i3/scripts/correctSinkForChangingVolume.sh)

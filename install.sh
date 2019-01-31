@@ -116,6 +116,7 @@ checkSimilaritiesAndLink tmux.conf $HOME/.tmux.conf
 for fn in $(ls $LocOfScript/tmux/tmux.conf_*); do
 	checkSimilaritiesAndLink tmux/$(basename $fn) $HOME/.tmux/$(basename $fn)
 done
+checkSimilaritiesAndLink tmux/tmux_T1_status.sh $HOME/.tmux/tmux_T1_status.sh
 
 echo "--vim"
 checkSimilaritiesAndLink vimrc $HOME/.vimrc
@@ -136,11 +137,17 @@ if [[ "$(hostname)" == "T1" ]]; then
 		checkSimilaritiesAndLink i3scripts/$(basename $fn) $HOME/.config/i3/scripts/$(basename $fn)
 	done
 
+	echo "--xinit"
+	checkSimilaritiesAndLink xinitrc $HOME/.xinitrc
+
+	echo "----sudos"
+
 	echo "--acpi&pm"
 	checkSimilaritiesAndLink sudos/lock /lib/systemd/system-sleep/10lock sudo nolink
 
-	echo "--new i3"
-	checkSimilaritiesAndLink sudos/i3_new.desktop /usr/share/xsessions/i3_new.desktop sudo nolink
+	# not used anymore because lightdm not used anymore
+	# echo "--new i3"
+	# checkSimilaritiesAndLink sudos/i3_new.desktop /usr/share/xsessions/i3_new.desktop sudo nolink
 
 	echo "--fusuma"
 	checkSimilaritiesAndLink fusuma.config $HOME/.config/fusuma/config.yml

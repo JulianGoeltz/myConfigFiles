@@ -111,7 +111,7 @@ cat ~/myConfigFiles/tmp_art
 cat ~/myConfigFiles/tmp_art
 cat ~/myConfigFiles/tmp_art
 tm () {
-	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep "tmux: server")
+	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep -P "(tmux: server|tmux -f /home/julgoe)")
 	if [ -z "$tmpTmuxServerPid" ]; then
 		echo "no tmux server running, start it"
 		return
@@ -174,6 +174,7 @@ printf "\e[?1004l"
 [ -z "$ZSH_SYSTEM_CLIPBOARD" ] && \
 	[ -e "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh" ] && \
 	[ -z $SINGULARITY_APPNAME ] && \
+	[ -n "$DISPLAY" ] && \
 	source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
 # last thing before end, source the host specific files if existent

@@ -7,6 +7,11 @@ export ZSH=/home/julgoe/.oh-my-zsh
 # ##################################
 # very different
 
+# alias for staring chromium in fullscreen
+alias startxChromium="startx <( echo 'chromium-browser --window-size=1920,1080 --window-position=0,0')"
+alias startxZathura="startx ~/myConfigFiles/toolbox/startx.sh"
+alias startxx="ssh-agent startx"
+
 # proxy definition. has to be sourced or env of shell is not changed
 alias proxies="source proxies.sh"
 proxies
@@ -48,6 +53,7 @@ function correctSinkForChangingVolume () {
 	fi
 }
 alias correctSinkSet='pactl set-default-sink $(correctSinkForChangingVolume)'
+alias bluetoothBoom='echo "connect 08:DF:1F:86:0B:30\nquit" | bluetoothctl'
 
 function convertSVGsToeps() {
 	echo "Using the command 'inkscape -f [File] --export-latex -E [NewFile]'"

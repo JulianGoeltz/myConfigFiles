@@ -69,6 +69,7 @@ ca-certificates
 caribou
 casper
 cgmanager
+checkinstall
 cheese
 chromium-browser
 chromium-codecs-ffmpeg
@@ -1083,6 +1084,7 @@ liblzma5
 liblzo2-2
 libmagic-dev
 libmagic1
+libmagick++-dev
 libmagickcore-6.q16-2
 libmagickwand-6.q16-2
 libmailtools-perl
@@ -1615,6 +1617,7 @@ libxt6
 libxtables11
 libxtst-dev
 libxtst6
+libxv-dev
 libxv1
 libxvmc1
 libxxf86dga1
@@ -2087,6 +2090,7 @@ sessioninstaller
 sgml-base
 sgml-data
 shared-mime-info
+shtool
 shutter
 signon-keyring-extension
 signon-plugin-oauth2
