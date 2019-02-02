@@ -37,7 +37,7 @@ ethernet=$(Ethernet)
 wifi=$(Wifi)
 # vpn=$(Vpn)
 echo -n "#[fg=white,bg=black]"
-if [ -n " $ethernet" ]; then
+if [ -n "$ethernet" ]; then
        	echo -n "$ethernet |"
 elif [ -n "$wifi" ]; then
        	echo -n " $wifi |"

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# in case one is in tty without x:
+# $ su
+# $ cd /sys/class/backlight/intel-backlight
+# $ echo # > brightness
+# # the number # can be 0-100
 case $1 in
 	'up') 
 		xbacklight +20
