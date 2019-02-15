@@ -1,7 +1,8 @@
 #!/bin/zsh
 
 standardWidth=20
-repeatEvery=30
+repeatEvery=10
+redoAfter=$(($repeatEvery + 20))
 fileSave=~/.tmp_squeueRepeat
 minimumColsForParallel=80
 delimiterDone="|"
@@ -22,12 +23,17 @@ echo $@ | grep -qP "(\s|^)(work)(\s|$)" && argWorking=true || argWorking=false
 timeSinceTouch=$(($(date +%s) - $(stat -c %Y $fileSave)))
 if ! $verbose ; then
 	#if either the file is not old, or already being processed, just output the current one
-	if [ $timeSinceTouch -lt 60 -o "$(tail -c1 $fileSave)" = "." ]; then
-		echo -ne \\033c
-		date +"%H:%M:%S"
-		cat $fileSave
-		sleep $repeatEvery
-		exit
+	if [ $timeSinceTouch -lt $repeatEvery ]; then
+		if [ "$(tail -c1 $fileSave)" = "." ]; then
+			# only if it didnt take too long since last change
+			if [ $timeSinceTouch -lt $redoAfter ]; then
+				echo -ne \\033c
+				date +"%H:%M:%S"
+				cat $fileSave
+				sleep $repeatEvery
+				exit
+			fi
+		fi
 	fi
 fi
 
@@ -114,7 +120,7 @@ durationPrint() {
 					# 	continue
 					# fi
 					StepNumber=$(grep -oP "Number_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
-					FileCount=$(grep step -c $file)
+					FileCount=$(grep ", steps " -c $file)
 					[ $? -ne 0 ] && output=$output"\n" && continue
 					if [ -z "$StepNumber" ] ; then StepNumber=200; fi
 					if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then

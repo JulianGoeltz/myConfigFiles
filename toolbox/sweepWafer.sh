@@ -30,6 +30,7 @@ for wafer in $(echo $waferString | grep -oP "\S*"); do
 			sbatch -p experiment \
 				--time 1-0:0:0 \
 				--wmod $wafer \
+				--mem 10g \
 				--hicann 271,239,203,204,299,322,323,301 \
 				--fpga 12,24,28,29,30,31 \
 				--wrap "run_nmpm_software ./train.py train_yccp $file"

@@ -13,3 +13,6 @@ setlocal fileformat=unix
 
 "setlocal foldmethod=indent
 setlocal foldlevel=0
+
+" to force vertical splits
+setlocal diffopt+=vertical
