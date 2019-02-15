@@ -145,6 +145,7 @@ debianutils
 desktop-file-utils
 dh-python
 dialog
+diction
 dictionaries-common
 diffpdf
 diffstat
@@ -609,6 +610,7 @@ libasan2
 libasn1-8-heimdal
 libasound2
 libasound2-data
+libasound2-dev
 libasound2-plugins
 libaspell15
 libasprintf-dev
@@ -636,6 +638,8 @@ libavahi-common3
 libavahi-core7
 libavahi-glib1
 libavc1394-0
+libavcodec-dev
+libavcodec-extra
 libavcodec-ffmpeg-extra56
 libbabeltrace-ctf1
 libbabeltrace1
@@ -2103,6 +2107,7 @@ simple-scan
 sl
 slick-greeter
 smbclient
+snapd
 sni-qt
 socat
 sound-theme-freedesktop

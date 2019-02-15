@@ -46,4 +46,5 @@ fi
 # echo -n "#[fg=black,bg=white] on #[fg=cyan]$(hostname) #[fg=white,bg=black]| "
 echo -n " Batt: $(acpi -b | grep  -o '[0-9]*%' | head -n1) & $(acpi -b | grep  -o '[0-9]*%'| tail -n1) "
 echo -n "#[fg=green]$(acpi -b |grep -o "Charging")#[fg=red]$(acpi -b |grep -o "Discharging") "
-echo -n "#[fg=white]| $(date +'%a %d %b %R')"
+echo -n "#[fg=white]| $(date +'%a %d %b %R ')"
+# seconds show with %S

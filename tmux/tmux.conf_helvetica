@@ -1,3 +1,8 @@
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
+
+
 # source "/wang/users/jgoeltz/cluster_home/pip_files/powerline/bindings/tmux/powerline.conf"
 if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "python3 ~/pip_build/powerline-status/powerline_status-2.6.data/scripts/powerline-config tmux setup"'
 # because others didnt work, try like this (if script gets deleted, it is also in my toolbox)

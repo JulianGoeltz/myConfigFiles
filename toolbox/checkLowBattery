@@ -21,7 +21,11 @@ STATUS=$(cat $POWERSUPPLY)
 
 if [ $COMPARING_FLOATS -eq 1 -a $STATUS == $NOT_CHARGING ]
 then
-	/home/julgoe/.local/bin/dunstify -u critical -i "$ICON" -r 4444 -t 30000 "Battery low" "Battery level is $(printf %.0f $( echo $BATTERY_LEVEL))%!"
+	# if dunst is asleep, activate
+	if [ "$(cat ~/.tmp_dunststate)" = 'paused' ]; then
+		/home/julgoe/myConfigFiles/i3scripts/dunstToggle.sh resume
+	fi
+	/home/julgoe/.local/bin/dunstify -u critical -i "$ICON" -r 4444 -t 60000 "Battery low" "Battery level is $(printf %.0f $( echo $BATTERY_LEVEL))%!"
 fi
 
 exit 0

@@ -9,7 +9,7 @@ export ZSH=/home/julgoe/.oh-my-zsh
 
 # if on tty, change colour scheme a bit
 if [ "$TERM" = "linux" ]; then
-	echo -en "\e]P0111111" #black # originally 232323
+	echo -en "\e]P0000000" #black # originally 232323 # in between it was 111111
 	echo -en "\e]P82B2B2B" #darkgrey
 	echo -en "\e]P1D75F5F" #darkred
 	echo -en "\e]P9E33636" #red
@@ -32,6 +32,9 @@ fi
 alias startxChromium="startx <( echo 'chromium-browser --window-size=1920,1080 --window-position=0,0')"
 alias startxZathura="startx ~/myConfigFiles/toolbox/startx.sh"
 alias startxx="ssh-agent startx"
+alias startxzsh="startx <(echo \"xterm -e 'xterm -geometry 200x60 -bg black -fg white -fa monospace -fs 10'\")"
+# for correct sized term emulator:
+# xterm -geometry 200x60 -bg black -fg white -fa monospace -fs 10
 
 # proxy definition. has to be sourced or env of shell is not changed
 alias proxies="source proxies.sh"
@@ -90,3 +93,10 @@ function convertSVGsToeps() {
 		fi
 	done
 }
+
+
+# to connect to WiFi on TTY, look in man nmcli for 'wifi connect'.
+# especially difference wifi connect and con ... up
+
+# alias to send current style status to Katja
+alias sendCurrentState='cd /home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/;latexmk -pdf -bibtex; pdftotext main.pdf main.txt; style main.txt > main.style.txt; telegram-cli -W -e "send_text Julian_Göltz main.style.txt"'
