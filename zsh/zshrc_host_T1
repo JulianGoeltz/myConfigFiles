@@ -99,4 +99,13 @@ function convertSVGsToeps() {
 # especially difference wifi connect and con ... up
 
 # alias to send current style status to Katja
-alias sendCurrentState='cd /home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/;latexmk -pdf -bibtex; pdftotext main.pdf main.txt; style main.txt > main.style.txt; telegram-cli -W -e "send_text Julian_Göltz main.style.txt"'
+sendCurrentState () {
+	cd /home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/
+	detex -e easylist,align,figure,wrapfigure,equation main.tex > main.txt
+	style main.txt > main.style.txt
+	if [ $# -gt 0 ]; then
+		telegram-cli -W -e "send_text Julian_Göltz main.style.txt"
+	fi
+	echo -n "Done, now return to "
+	cd -
+}

@@ -79,7 +79,7 @@ pbr                                5.1.2
 pexpect                            4.0.1                 
 pickleshare                        0.7.4                 
 Pillow                             3.1.2                 
-pip                                18.1                  
+pip                                19.0.2                
 piston-mini-client                 0.7.5                 
 powerline-status                   2.6                   
 prompt-toolkit                     1.0.15                
