@@ -116,7 +116,10 @@ while true; do
 	echo '  { "full_text": "'$(Volume 0)'", "color":"'$Cfggrey'"},'
 	correctSink=$(/home/julgoe/.config/i3/scripts/correctSinkForChangingVolume.sh)
 	if [ "$correctSink" -ne 0 ]; then
-		if ! $qc_shown || [ "$(($counter%100))" -eq 0 ]; then
+		# boombox is sink != 0 too but cant communicate with bluetoothqc
+		if ! $qc_shown || [ "$(($counter%100))" -eq 0 ] && 
+			pactl list sinks G -q "Description:.*35";
+		then
 			qc_battery=$(bluetoothqc -b)
 		fi
 		echo '  { "full_text": "'$(Volume $correctSink $qc_battery)'", "color":"'$Cfggrey'"},'

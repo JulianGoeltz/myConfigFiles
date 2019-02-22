@@ -20,10 +20,8 @@ elif [[ $1 == "receiving" ]]; then
 	# wait until dunst is up an running
 	sleep 10
 	/usr/bin/notify-send "starting slurmNotifs"
-	echo something
 	tmpFun () {
 		while IFS= read -r line; do
-			notify-send "reading line $line"
 			if [[ $line == "slurmDone" ]]; then
 				/home/julgoe/.local/bin/dunstify -r 6666 -t 3000 "Slurm jobs on hel finished"
 			fi
