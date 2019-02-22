@@ -4,10 +4,10 @@
 
 
 if [[ $1 == "sending" ]]; then
-	tmpFile=~/.tmp_slurmJobs
+	tmpFile=/wang/users/jgoeltz/cluster_home/.tmp_slurmJobs
 
 	oldState=$(cat $tmpFile)
-	state=$(squeue -u jgoeltz -o "%t" --noheader)
+	state=$(/usr/local/bin/squeue -u jgoeltz -o "%t" --noheader)
 	if [ -z $state ]; then
 		if [[ $oldState == "running" ]]; then
 			echo slurmDone | nc 127.0.0.1 1234
@@ -17,9 +17,19 @@ if [[ $1 == "sending" ]]; then
 		echo running > $tmpFile
 	fi
 elif [[ $1 == "receiving" ]]; then
-	while IFS= read -r line; do
-		if [[ $line == "slurmDone" ]]; then
-			dunstify -r 6666 -t 3000 "Slurm jobs on hel finished"
-		fi
-	done
+	# wait until dunst is up an running
+	sleep 10
+	/usr/bin/notify-send "starting slurmNotifs"
+	echo something
+	tmpFun () {
+		while IFS= read -r line; do
+			notify-send "reading line $line"
+			if [[ $line == "slurmDone" ]]; then
+				/home/julgoe/.local/bin/dunstify -r 6666 -t 3000 "Slurm jobs on hel finished"
+			fi
+		done
+	}
+	nc -k -l 1234  | tmpFun
+else
+	echo "must give argument sending/receiving"
 fi

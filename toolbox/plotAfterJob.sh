@@ -15,23 +15,42 @@ fi
 file=$1
 jobid=$(h5dump -d input/environment $file | grep SLURM_JOB_ID | grep -o "[0-9]*")
 echo "Depending on jobid $jobid"
-jobExist=$(scontrol show jobid $jobid 2>&1 >/dev/null)
+scontrol show jobid $jobid &>/dev/null
+jobExist=$?
+# echo $jobExist
+# if [ $jobExist == 0 ]; then
+# 	echo exists
+# else
+# 	echo doesnt\ exist
+# fi
+# exit
 
 for method in \
-	   plot_training plot_volts plot_featureMatrix  plot_raster plot_weightHist plot_weightEvolutionIndividual plot_weightEvolution \
+	   plot_training plot_featureMatrix  plot_raster plot_weightHist plot_weightEvolutionIndividual plot_weightEvolution \
 	   ; do
 	echo "submitting $method"
-	if $jobExist; then
-		sbatch -p simulation --depend=afterok:$jobid --wrap "./plot.py $method $file"
+	if [ $jobExist == 0 ]; then
+		echo -n "with depends, "
+		sbatch -p short --depend=afterok:$jobid --wrap "./plot.py $method $file"
 	else
-		sbatch -p simulation --wrap "./plot.py $method $file"
+		echo -n "without depends, "
+		sbatch -p short --wrap "./plot.py $method $file"
 	fi
-	
 done
+# plotting volts need potentially more ram
+method=plot_volts
+echo "submitting $method"
+if [ $jobExist == 0 ]; then
+	echo -n "with depends, "
+	sbatch -p short --mem 10g --depend=afterok:$jobid --wrap "./plot.py $method $file"
+else
+	echo -n "without depends, "
+	sbatch -p short --mem 10g --wrap "./plot.py $method $file"
+fi
 
 if [ $# -gt 1 ]; then
 	echo "also animating"
-	if $jobExist; then
+	if [ $jobExist == 0 ]; then
 		sbatch -p simulation --depend=afterok:$jobid --wrap "./plot.py animate_training $file"
 	else
 		sbatch -p simulation --wrap "./plot.py animate_training $file"
