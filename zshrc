@@ -52,8 +52,11 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 alias sshhel="ssh -A -X -o ConnectTimeout=60 -o ServerAliveInterval=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de -R 1234:127.0.0.1:1234"
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 # alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other,IdentityFile=/home/julgoe/.ssh/id_rsa"
-alias sshhel_fs="sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis ~/mntHel -o delay_connect,idmap=user,transform_symlinks"
-alias sshhel_fs_unmount="fusermount -u -z ~/mntHel"
+sshhel_fs_helper(){
+	sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
+}
+alias sshhel_fs="sshhel_fs_helper MasterThesis ~/mntHel; sshhel_fs_helper /loh/users/jgoeltz ~/mntHel_loh"
+alias sshhel_fs_unmount="fusermount -u -z ~/mntHel; fusermount -u -z ~/mntHel_loh"
 alias sshhel_visu="sshhel -L 6931:localhost:6931"
 
 alias vpn_connect="sudo openconnect vpn-ac.urz.uni-heidelberg.de"
@@ -181,7 +184,6 @@ printf "\e[?1004l"
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
 
-
 ######## end
 
 
@@ -282,7 +284,7 @@ define_prompt () {
 	PROMPT=$PROMPT'$([ -n "$VIRTUAL_ENV" ] && echo -n "$PR_NO_COLOR|$PR_MAGENTA" && echo -n $(basename $VIRTUAL_ENV))'$PR_NO_COLOR
 	PROMPT=$PROMPT'$([ -n "$SINGULARITY_APPNAME" ] && echo "$PR_NO_COLOR|${PR_MAGENTA}container")'$PR_NO_COLOR
 	PROMPT=$PROMPT'$([ -z "$ZSH_THEME_GIT_DONTDOIT" ] && echo "$(git_prompt_info)")'$PR_NO_COLOR
-	PROMPT=$PROMPT"|$PR_BLUE%~$PR_NO_COLOR"
+	PROMPT=$PROMPT"|%(1j.$PR_YELLOW%j$PR_NO_COLOR|.)$PR_BLUE%~$PR_NO_COLOR"
 	# for vi normal mode, make first bit red
 	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}]\n└─⧫${PR_NO_COLOR} ")'
 	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] || echo "]\n└─☉ ")'

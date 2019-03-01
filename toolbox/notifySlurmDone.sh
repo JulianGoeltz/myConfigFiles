@@ -18,7 +18,7 @@ if [[ $1 == "sending" ]]; then
 	fi
 elif [[ $1 == "receiving" ]]; then
 	# wait until dunst is up an running
-	sleep 10
+	# sleep 10
 	/usr/bin/notify-send "starting slurmNotifs"
 	tmpFun () {
 		while IFS= read -r line; do
@@ -27,6 +27,12 @@ elif [[ $1 == "receiving" ]]; then
 			fi
 		done
 	}
+	
+	# first check whether nc is already instantiated, if so kill it
+	tmp=$(ps axo pid,user,comm,args | grep -v grep | grep "nc -k -l 1234")
+	if [ "$(echo $tmp | wc -l)" -ne 0 ]; then
+		kill $(echo $tmp | grep -o "^\s*[0-9]*")
+	fi
 	nc -k -l 1234  | tmpFun
 else
 	echo "must give argument sending/receiving"

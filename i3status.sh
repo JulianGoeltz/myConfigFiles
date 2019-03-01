@@ -96,6 +96,13 @@ Volume() {
 	echo "$retval" 
 }
 
+# see whether there is a pdflatex instance running
+Pdfcompiling() {
+	if pidof pdflatex >/dev/null; then
+		echo "Pdf is compiling"
+	fi
+}
+
 # Send the header so that i3bar knows we want to use JSON:
 echo '{"version":1}'
 # Begin the endless array.
@@ -110,6 +117,7 @@ while true; do
 	#echo "%{B$Cbg}%{F$Cfg}%{c}$(Playing) %{r}$(Host)|$(Battery)|$(Date)"
 	echo "["
 	# echo '  { "full_text": "lalala", "color":"#ffffff" },'
+	echo '  { "full_text": "'$(Pdfcompiling)'"},'
 	echo '  { "full_text": "'$(Playing spotify)'"},'
 	echo '  { "full_text": "'$(Playing vlc)'"},'
 
@@ -117,10 +125,13 @@ while true; do
 	correctSink=$(/home/julgoe/.config/i3/scripts/correctSinkForChangingVolume.sh)
 	if [ "$correctSink" -ne 0 ]; then
 		# boombox is sink != 0 too but cant communicate with bluetoothqc
-		if ! $qc_shown || [ "$(($counter%100))" -eq 0 ] && 
-			pactl list sinks G -q "Description:.*35";
-		then
-			qc_battery=$(bluetoothqc -b)
+		if pactl list sinks | grep -q "Description:.*35"; then
+			if ! $qc_shown || [ "$(($counter%100))" -eq 0 ] && 
+			then
+				qc_battery=$(bluetoothqc -b)
+			fi
+		else
+			qc_battery=""
 		fi
 		echo '  { "full_text": "'$(Volume $correctSink $qc_battery)'", "color":"'$Cfggrey'"},'
 		qc_shown=true

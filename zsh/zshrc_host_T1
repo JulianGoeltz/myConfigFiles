@@ -7,6 +7,9 @@ export ZSH=/home/julgoe/.oh-my-zsh
 # ##################################
 # very different
 
+# to connect to terminal server from urz
+alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/julgoe/Dropbox/printing"
+
 # if on tty, change colour scheme a bit
 if [ "$TERM" = "linux" ]; then
 	echo -en "\e]P0000000" #black # originally 232323 # in between it was 111111
