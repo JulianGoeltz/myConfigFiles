@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/zsh
 
 if [ $# -eq 0 ]; then
 echo "go through folders given as arguments, and process all the .hdf5 files in
 the simulations subfolder with 
       ./plot.py plot_seedsweep [list of hdf5s]
 IF:
-   * for each yaml there is a hdf5, training.svg and volts.svg
+   * for each yaml there is a readonly hdf5
    * no plot_sweep*.svg file in that folder already"
 exit;
 fi
@@ -46,11 +46,9 @@ for fold in $@; do
 
 	gothrough=true
 	for yaml in $(ls $fold/*.yaml); do
-		base=$(basename ${yaml::-5})
+		base=$(basename ${yaml:0:-5})
 		# echo "$yaml -> $base"
-		if [[ "$(ls $fold/$subFolder/$base*.hdf5 2>/dev/null | wc -l)" -ne 1 ]] ||
-		   [[ "$(ls $fold/$subFolder/$base*training.svg 2>/dev/null | wc -l)" -ne 1 ]] ||
-		   [[ "$(ls $fold/$subFolder/$base*volts.svg 2>/dev/null | wc -l)" -ne 1 ]]; then
+		if [[ "$(find $fold/$subFolder -name ${base}_\*.hdf5 -perm a=r | wc -l)" -ne 1 ]]; then
 			# echo doesnt\ exist
 			gothrough=false
 		fi
@@ -61,7 +59,7 @@ for fold in $@; do
 	fi
 
 	sbatch -p short --wrap "./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
-	# ./plot.py plot_seedsweep $fold/$subFolder/*hdf5
+	# nohup ./plot.py plot_seedsweep $fold/$subFolder/*hdf5 &
 	# echo "    ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
 	count=$(($count+1))
 done

@@ -164,7 +164,11 @@ function diffHdf5 () {
 	diffCommand="vimdiff "
 	for file in $@; do
 		[ ! -f $file ] && continue
-		diffCommand=$diffCommand" <($tmp_prefix h5dump -d $dataGroup $file$tmp_suffix) "
+		if [[ "$file[-5,-1]" == ".hdf5" ]]; then
+			diffCommand=$diffCommand" <($tmp_prefix h5dump -d $dataGroup $file$tmp_suffix) "
+		elif [[ "$file[-5,-1]" == ".yaml" ]]; then
+			diffCommand=$diffCommand" <(echo 'file $file'; cat $file | sed 's/^/           /' ) "
+		fi
 	done
 	eval $diffCommand
 }

@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-maxNumberOfJobs=200
+maxNumberOfJobs=100
 tokenForAnimation="ThisIsASweepedJobWithJobNumber"
 
 programCall=$3
@@ -26,12 +26,8 @@ trigger2="useHDF5"
 # first it is checked whether there are no current jobs running, otherwise asks for explicit confirmation
 # for each file checks whether training.svg and volts.svg exist, otherwise deletes _fileHasBeenSend and .hdf5
 if [[ "$1" == "$trigger" ]]; then
-	if [[ "$3" == "$trigger2" ]]; then
-		identifyingBit=".hdf5"
-	else
-		identifyingBit="_fileHasBeenSend"
-	fi
-	read "test?you are about to go through the directory $relPath and its subdirectories and delete all .hdf5 and _fileHasBeenSend where no volts.svg and training.svg exist (all where more than one timestamp exist, one will be deleted). Sure to do this (y/n):"
+	echo "(tip: to delete all _fileHasBeenSend where no hdf5 exists yet, simply do 'rm **/*_fileHasBeenSend'"
+	read "test?you are about to go through the directory $relPath and its subdirectories and delete all .hdf5 and _fileHasBeenSend where hdf5 is not readonly (all where more than one timestamp exist, one will be deleted). Sure to do this (y/n):"
 	case $test in 
 		'y') echo continue...;;
 		*) exit;;
@@ -45,33 +41,26 @@ if [[ "$1" == "$trigger" ]]; then
 		esac
 	fi
 
-	numOfAllfHBSFiles=$(find $relPath -name "*$identifyingBit" | wc -l)
+	numOfAllfHBSFiles=$(find $relPath -name "*.hdf5" -perm 644 | wc -l)
 	numOfFilesLookedAt=0
-	for file in $(find $relPath -name "*$identifyingBit"); do
+	for file in $(find $relPath -name "*.hdf5" -perm 644); do
 		#file=../data/20180712_sweepImp/simulations/taurat0_cuba_x_-l1U_5.0-l1UF_0.0-frobU_0.0-frobUF_0.0-dw_200-l2r_0.0100-learn_0.0050_fileHasBeenSend
-		fnPurish=${file//$identifyingBit}
+		fnPurish=${file:0:-20}
 		numOfFilesLookedAt=$(($numOfFilesLookedAt+1))
 		#echo $fnPurish
 
-		if [ $(ls $fnPurish*.hdf5 2>/dev/null | wc -l) -gt 1 ]; then
-			echo "($numOfFilesLookedAt/$numOfAllfHBSFiles)"$fnPurish
-			tmp=$(ls $fnPurish*.hdf5 | head -n 1)
-			# maybe use tail-n +1 to have all lines except the first one, and delete them?
-			tmp=${tmp//.hdf5}
-			#tmp=$(ls $tmp*)
-			rm -f $tmp*
-		fi
-		if [ -z "$(ls $fnPurish*_training.svg 2>/dev/null)" ] || [ -z "$(ls $fnPurish*_volts.svg 2>/dev/null)" ]; then
-			if [ -n "$(ls $fnPurish*.hdf5 2>/dev/null)" ]; then
-				tmp=$(find $fnPurish*.hdf5)
-				echo "($numOfFilesLookedAt/$numOfAllfHBSFiles)"$tmp
-				rm $tmp
-			fi
-			echo "($numOfFilesLookedAt/$numOfAllfHBSFiles)"$file
-			rm $file
-		fi
-		# echo `find $relPath/simulations -maxdepth 1 -name "$fnPure*"`
-		#training.svg"`
+		# here check whether more than one exists, and if so delete
+		# if [ $(ls $fnPurish*.hdf5 2>/dev/null | wc -l) -gt 1 ]; then
+		# 	echo "($numOfFilesLookedAt/$numOfAllfHBSFiles)"$fnPurish
+		# 	tmp=$(ls $fnPurish*.hdf5 | head -n 1)
+		# 	# maybe use tail-n +1 to have all lines except the first one, and delete them?
+		# 	tmp=${tmp//.hdf5}
+		# 	#tmp=$(ls $tmp*)
+		# 	rm -f $tmp*
+		# fi
+
+		rm $fnPurish*
+		echo "($numOfFilesLookedAt/$numOfAllfHBSFiles)"$fnPurish
 
 	done
 
@@ -128,7 +117,7 @@ for fn in $(ls $relPath/**/$subFolderSour/*$identifyingBit); do
 	# check whether file already processed
 	fnFolder=$(dirname $fn)/$subFolderDest
 	fnPure=$(basename "${fn%.*}")
-	[ -n "$(ls $fnFolder/$fnPure* 2>/dev/null)" ] && continue
+	[ -n "$(ls $fnFolder/${fnPure}_* 2>/dev/null)" ] && continue
 	[ ! -d "$fnFolder" ] && mkdir "$fnFolder"
 
 	accumulatedFiles=$(($accumulatedFiles+1))

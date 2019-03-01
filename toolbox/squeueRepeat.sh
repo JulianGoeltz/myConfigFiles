@@ -3,7 +3,13 @@
 standardWidth=20
 repeatEvery=10
 redoAfter=$(($repeatEvery + 20))
-fileSave=~/.tmp_squeueRepeat
+if [[ "$(which squeue)" == "/usr/local/bin/squeue" ]]; then
+	fileSave=~/.tmp_squeueRepeat_old
+	clusterName="old cluster"
+else
+	fileSave=~/.tmp_squeueRepeat_new
+	clusterName="new cluster"
+fi
 minimumColsForParallel=80
 delimiterDone="|"
 delimiterNot='-'
@@ -28,7 +34,7 @@ if ! $verbose ; then
 			# only if it didnt take too long since last change
 			if [ $timeSinceTouch -lt $redoAfter ]; then
 				echo -ne \\033c
-				date +"%H:%M:%S"
+				echo -n "Printed $(date +'%H:%M:%S')"
 				cat $fileSave
 				sleep $repeatEvery
 				exit
@@ -70,7 +76,8 @@ durationPrint() {
 	[ -n "$output_pending" ] && output=$output"Pending on experiment:: "${output_pending:0:-2}"\n"
 	count_ownall=$(squeue -u jgoeltz --noheader -o  "%.8u" --noheader | wc -l)
 	count_ownpending=$(squeue -t pd -u jgoeltz --noheader -o  "%.8u" --noheader | wc -l)
-	output=$output"Own jobs count; total: $count_ownall, pending: $count_ownpending\n"
+	count_all=$(squeue --noheader -o  "%.8u" | wc -l)
+	output=$output"Own jobs count; total: $count_ownall, pending: $count_ownpending; all: $count_all\n"
 
 	if [ "$(tput cols)" -gt "$minimumColsForParallel" ]; then
 		remCols=$(($(tput cols) - 80))
@@ -98,9 +105,9 @@ durationPrint() {
 					if [ -n $tmpString ]; then
 						if [[ "$(echo $tmpString | wc -l)" -eq 1 ]]; then
 							if echo $tmpString | grep -q yaml; then
-								tmpString=$(basename $(dirname $tmpString))
+								tmpString=$(basename "$(dirname $tmpString)")
 							else
-								tmpString=$(basename $tmpString)
+								tmpString=$(basename "$tmpString")
 							fi
 						elif $vverbose; then
 							tmpString="$(echo $tmpString | wc -l) files"
@@ -120,7 +127,7 @@ durationPrint() {
 					# 	continue
 					# fi
 					StepNumber=$(grep -oP "Number_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
-					FileCount=$(grep ", steps " -c $file)
+					FileCount=$(grep " steps " -c $file)
 					[ $? -ne 0 ] && output=$output"\n" && continue
 					if [ -z "$StepNumber" ] ; then StepNumber=200; fi
 					if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
@@ -243,10 +250,9 @@ durationPrint() {
 		output=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto)"\n"$output
 	fi
 	$verbose || echo -ne \\033c
-	$argWorking && date +"%H:%M:%S" > $fileSave
-	date +"%H:%M:%S"
+	$argWorking && echo -ne ", created $(date +'%H:%M:%S') on $clusterName\n${output:0:-2}" > $fileSave
+	echo "Created $(date +'%H:%M:%S') on $clusterName"
 	# to get rid of trailing newline, -n and cut ot off last 2 chars (\n)
-	$argWorking && echo -ne ${output:0:-2} >> $fileSave
 	echo -ne ${output:0:-2}
 	# if [ "$1" != "" ]; then
 	# 	echo $1

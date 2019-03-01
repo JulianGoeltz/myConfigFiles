@@ -8,10 +8,13 @@ if [[ $1 == "sending" ]]; then
 
 	oldState=$(cat $tmpFile)
 	state=$(/usr/local/bin/squeue -u jgoeltz -o "%t" --noheader)
-	if [ -z $state ]; then
-		if [[ $oldState == "running" ]]; then
+	if [ -z "$state" ]; then
+		if [[ $oldState == "running" ]] && 
+			nc -z 127.0.0.1 1234  ; then
 			echo slurmDone | nc 127.0.0.1 1234
 			echo noJobs > $tmpFile
+			# could send mail with
+			# echo "The jobs you have send are now done." | mail -s "All Jobs Done" jgoeltz
 		fi
 	else
 		echo running > $tmpFile
