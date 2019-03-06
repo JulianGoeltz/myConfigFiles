@@ -25,7 +25,9 @@ else
 	subFolderSet=false
 fi
 
-count=0
+countSubmit=0
+countDone=0
+countNotfinished=0
 for fold in $@; do
 	[ ! -d $fold ] && continue
 	# && echo "    is not an existing folder" 
@@ -39,8 +41,9 @@ for fold in $@; do
 		exit
 	fi
 
-	if [[ $(ls $fold/plot_sweep_* 2>/dev/null | wc -l) -ne 0 ]]; then
+	if [[ $(find $fold -name 'plot_sweep_*' 2>/dev/null | wc -l) -ne 0 ]]; then
 		echo "    plot_sweep already exists."
+		countDone=$(($countDone+1))
 		continue
 	fi
 
@@ -48,19 +51,22 @@ for fold in $@; do
 	for yaml in $(ls $fold/*.yaml); do
 		base=$(basename ${yaml:0:-5})
 		# echo "$yaml -> $base"
-		if [[ "$(find $fold/$subFolder -name ${base}_\*.hdf5 -perm a=r | wc -l)" -ne 1 ]]; then
+		if [[ "$(find $fold/$subFolder -name ${base}_\*.hdf5 -perm a=r  2>/dev/null | wc -l)" -ne 1 ]]; then
 			# echo doesnt\ exist
 			gothrough=false
 		fi
 	done
 	if ! $gothrough; then
 		echo "    didn't train all yamls yet"
+		countNotfinished=$(($countNotfinished+1))
 		continue
 	fi
 
-	sbatch -p short --wrap "./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
+	# filetype=.png can be used
+	sbatch -p short --wrap " ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
 	# nohup ./plot.py plot_seedsweep $fold/$subFolder/*hdf5 &
+	# ./plot.py plot_seedsweep $fold/$subFolder/*hdf5
 	# echo "    ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
-	count=$(($count+1))
+	countSubmit=$(($countSubmit+1))
 done
-echo "Started $count plottings"
+echo "Started $countSubmit plottings ($countNotfinished not finished, $countDone already done)"
