@@ -29,7 +29,8 @@ if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 		module load simulation_py2_696
 		# spack unload nest
 		# spack load nest@2.2
-		spack load nest
+		# spack load nest # because that one is broken for rho=1
+		# get a working one with spacky
 		spack load py-pynn@0.7
 		spack load py-matplotlib
 		spack load py-setuptools@35

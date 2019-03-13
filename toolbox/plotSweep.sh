@@ -47,6 +47,12 @@ for fold in $@; do
 		continue
 	fi
 
+	# check if more than one yaml file
+	if [[ "$(ls $fold/*.yaml | wc -l)" -lt 2 ]]; then
+		echo "    only plot sweeps for more than one yaml"
+		continue
+	fi
+
 	gothrough=true
 	for yaml in $(ls $fold/*.yaml); do
 		base=$(basename ${yaml:0:-5})
@@ -63,8 +69,8 @@ for fold in $@; do
 	fi
 
 	# filetype=.png can be used
-	sbatch -p short --wrap " ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
-	# nohup ./plot.py plot_seedsweep $fold/$subFolder/*hdf5 &
+	# sbatch -p short --wrap " ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
+	nohup ./plot.py plot_seedsweep $fold/$subFolder/*hdf5 &
 	# ./plot.py plot_seedsweep $fold/$subFolder/*hdf5
 	# echo "    ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
 	countSubmit=$(($countSubmit+1))
