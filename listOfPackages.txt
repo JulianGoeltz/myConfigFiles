@@ -66,6 +66,7 @@ busybox-initramfs
 busybox-static
 bzip2
 ca-certificates
+cabal-install
 caribou
 casper
 cgmanager
@@ -182,6 +183,7 @@ eject
 emacsen-common
 enchant
 enigmail
+environment-modules
 eog
 espeak
 espeak-data
@@ -339,6 +341,7 @@ geoclue-ubuntu-geoip
 geoip-database
 gettext
 gettext-base
+gfortran
 ghostscript
 ghostscript-x
 gimp
@@ -1242,6 +1245,7 @@ libpci3
 libpciaccess0
 libpcre16-3
 libpcre3
+libpcre3-dev
 libpcsclite1
 libpeas-1.0-0
 libpeas-1.0-0-python2loader
@@ -2085,6 +2089,7 @@ samba-common
 samba-common-bin
 samba-libs
 sane-utils
+scons
 scrollkeeper
 scrot
 seahorse
@@ -2094,6 +2099,7 @@ session-migration
 sessioninstaller
 sgml-base
 sgml-data
+sgt-puzzles
 shared-mime-info
 shellcheck
 shtool
@@ -2223,7 +2229,6 @@ wbritish
 wget
 whiptail
 whois
-wicd
 wine
 wine-mono0.0.8
 winetricks

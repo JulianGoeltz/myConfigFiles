@@ -129,6 +129,9 @@ for fn in $(ls $LocOfScript/vim/after/syntax/*); do
 	checkSimilaritiesAndLink vim/after/syntax/$(basename $fn) $HOME/.vim/after/syntax/$(basename $fn)
 done
 
+echo "--latexmk"
+checkSimilaritiesAndLink latexmkrc $HOME/.latexmkrc
+
 if [[ "$(hostname)" == "T1" ]]; then
 	echo "--this repo"
 	checkSimilaritiesAndLink ensureUpdates_pre-commit $LocOfScript/.git/hooks/pre-commit

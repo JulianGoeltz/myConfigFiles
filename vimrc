@@ -54,7 +54,7 @@ if system('hostname') =~ "T1"
 	let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/text/',
 		\ 'path_html':'~/Dropbox/uni/MasterThesis/vimwiki/html/',
 		\ 'template_path': '~/Dropbox/uni/MasterThesis/vimwiki/templates'}]
-	set shell=/bin/zsh
+	"set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"
 	"sign column indication of git changes
 	Plug 'airblade/vim-gitgutter'
@@ -258,3 +258,37 @@ nnoremap <silent> <Leader>gs :Gstatus<CR>:20wincmd_<CR>
 
 " remove colorbar for vimwiki
 autocmd FileType vimwiki set colorcolumn=0
+
+" all but jobname are defualt, see :help vimtex_compiler_latexmk
+let g:vimtex_compiler_latexmk = {
+    \ 'backend' : 'jobs',
+    \ 'background' : 1,
+    \ 'build_dir' : '',
+    \ 'callback' : 1,
+    \ 'continuous' : 1,
+    \ 'executable' : 'latexmk',
+    \ 'options' : [
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-jobname=tmp.main',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \}
+" dont open it automatically
+let g:vimtex_view_automatic = 0
+"let g:vimtex_quickfix_method = 'pplatex'
+let g:vimtex_quickfix_latexlog = {
+  \ 'overfull' : 0,
+  \ 'underfull' : 0,
+  \ 'packages' : {
+  \   'hyperref' : 0,
+  \ },
+  \}
+
+"" scroll and advance the cursor
+"map <c-j> j<c-e>
+"map <c-k> k<c-y>
+
+" ROT13 the buffer
+map <F5> ggg?G``

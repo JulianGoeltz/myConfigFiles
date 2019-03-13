@@ -35,7 +35,7 @@ alias vi=vim
 
 
 alias sourcezsh="source ~/.zshrc"
-mkcd () { mkdir -p $1; cd $1}
+mkcd () { mkdir -p $1 && cd $1}
 
 
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
@@ -79,6 +79,7 @@ alias -g L=" | less"
 alias -g T=" | tail"
 alias -g H=" | head"
 alias -g S=" | sort"
+alias -g N=" && notify-send 'Command succeeded' || notify-send 'Command failed'"
 
 
 ipy (){
@@ -146,6 +147,7 @@ tmux_tree () {
 # in order to see filenames before looking at files
 iv () { ls -lAh $@; inkview $(ls $@)}
 fe () { ls -lAh $@; feh $(ls $@)}
+eo () { ls -lAh $@; eog $(ls $@)}
 
 # easy diff of hdf5 datasets,from zsh/..hel
 function diffHdf5 () {

@@ -6,6 +6,12 @@ export ZSH=/home/julgoe/.oh-my-zsh
 
 # ##################################
 # very different
+module () {
+    eval `/usr/bin/modulecmd bash $*`
+}
+. /home/julgoe/git/spack/share/spack/setup-env.sh
+spack load python@2.7.16
+spack load vim
 
 # to connect to terminal server from urz
 alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/julgoe/Dropbox/printing"
@@ -112,3 +118,34 @@ sendCurrentState () {
 	echo -n "Done, now return to "
 	cd -
 }
+
+# send notifications for lang tasks
+# from: https://superuser.com/questions/553564/is-there-a-way-to-make-zsh-run-a-command-after-reporttime
+if [[ -x `which notify-send` ]]; then
+    notify-preexec-hook() {
+        zsh_notifier_cmd="$1"
+        zsh_notifier_time="`date +%s`"
+    }
+
+    notify-precmd-hook() {
+    	returnCode=$?
+        local time_taken
+
+        if [[ "${zsh_notifier_cmd}" != "" ]]; then
+            time_taken=$(( `date +%s` - ${zsh_notifier_time} ))
+            if (( $time_taken > $REPORTTIME )) &&
+		    ! echo $zsh_notifier_cmd | grep -qP "(^vim|^fg|^less|^ssh|^iv |^inkview)" ; then
+                notify-send "task finished" \
+			"'$zsh_notifier_cmd' return $returnCode exited after $time_taken seconds"
+            fi
+        fi
+        zsh_notifier_cmd=
+    }
+	[[ -z $preexec_functions ]] && preexec_functions=()
+	preexec_functions=($preexec_functions notify-preexec-hook)
+
+	[[ -z $precmd_functions ]] && precmd_functions=()
+	precmd_functions=($precmd_functions notify-precmd-hook)
+fi
+
+alias spacky="module purge; spack load -r python@2.7.16; spack load -r vim; spack load -r nest; spack load -r py-h5py; spack load -r py-scipy; spack load -r py-matplotlib; spack load -r py-decorator; spack load -r py-pexpect; spack load -r py-simplegeneric; spack load -r py-pip; module list"

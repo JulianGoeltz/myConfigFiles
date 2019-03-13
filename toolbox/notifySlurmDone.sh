@@ -36,7 +36,8 @@ elif [[ $1 == "receiving" ]]; then
 	if [ "$(echo $tmp | wc -l)" -ne 0 ]; then
 		kill $(echo $tmp | grep -o "^\s*[0-9]*")
 	fi
-	nc -k -l 1234  | tmpFun
+	# important to only be listening from localhost, otherwise anyone can send
+	nc -k -l localhost 1234  | tmpFun
 else
 	echo "must give argument sending/receiving"
 fi
