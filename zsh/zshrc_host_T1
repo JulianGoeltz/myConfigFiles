@@ -6,6 +6,10 @@ export ZSH=/home/julgoe/.oh-my-zsh
 
 # ##################################
 # very different
+
+# disable caps lock and use as additional ctrl 
+setxkbmap -option ctrl:nocaps
+
 module () {
     eval `/usr/bin/modulecmd bash $*`
 }
@@ -78,14 +82,17 @@ if [ -x /usr/bin/mint-fortune ]; then
 fi
 
 function correctSinkForChangingVolume () {
-	tmpString=$(pactl list sinks | grep --context=2 bluez | grep -P "Sink #[0-9]*" | grep -oP "[0-9]*")
-	if [ -z $tmpString ] ; then
-		echo 0
-	else
-		echo $tmpString
-	fi
+	tmpString=$(pactl list short sinks | grep bluez | awk '{print $1}')
+	[ -z $tmpString ]  && echo 0 || echo $tmpString
 }
-alias correctSinkSet='pactl set-default-sink $(correctSinkForChangingVolume)'
+function correctSinkSet () {
+	cs=$(correctSinkForChangingVolume)
+	echo "Changing the inputs to sink ${cs}."
+	pactl set-default-sink $cs
+	for inputid in $(pactl list short sink-inputs | awk '{print $1}'); do
+		pactl move-sink-input $inputid $cs
+	done
+}
 alias bluetoothBoom='echo "connect 08:DF:1F:86:0B:30\nquit" | bluetoothctl'
 
 function convertSVGsToeps() {
@@ -134,7 +141,7 @@ if [[ -x `which notify-send` ]]; then
         if [[ "${zsh_notifier_cmd}" != "" ]]; then
             time_taken=$(( `date +%s` - ${zsh_notifier_time} ))
             if (( $time_taken > $REPORTTIME )) &&
-		    ! echo $zsh_notifier_cmd | grep -qP "(^vim|^fg|^less|^ssh|^iv |^inkview)" ; then
+		    ! echo $zsh_notifier_cmd | grep -qP "(^vim|^nvim|^fg|^less|^ssh|^iv |^inkview|^man)" ; then
                 notify-send "task finished" \
 			"'$zsh_notifier_cmd' return $returnCode exited after $time_taken seconds"
             fi
@@ -149,3 +156,47 @@ if [[ -x `which notify-send` ]]; then
 fi
 
 alias spacky="module purge; spack load -r python@2.7.16; spack load -r vim; spack load -r nest; spack load -r py-h5py; spack load -r py-scipy; spack load -r py-matplotlib; spack load -r py-decorator; spack load -r py-pexpect; spack load -r py-simplegeneric; spack load -r py-pip; module list"
+
+# alias spacky="module purge; source ~/myConfigFiles/zsh/zshrc_host_T1_spackenv; module list"
+# spacky_generate() {
+# cat <<EOF | /bin/sh >$HOME/myConfigFiles/zsh/zshrc_host_T1_spackenv
+# FIND='spack module loads --dependencies '
+# 
+# \$FIND python@2.7.16
+# \$FIND vim
+# \$FIND nest
+# \$FIND py-h5py
+# \$FIND py-scipy
+# \$FIND py-matplotlib
+# \$FIND py-decorator
+# \$FIND py-pexpect
+# \$FIND py-simplegeneric
+# \$FIND py-pip
+# EOF
+# }
+
+
+# copying files to my homepage to make them available
+copyToWeb (){
+	randNo=$RANDOM$RANDOM$RANDOM
+	ssh ssh.strato.de "mkdir -p juliangoeltzde/secretSharing/${randNo}"
+	for file in $@; do 
+		if [ ! -f "$file" ] ; then
+			echo "File ${file} does not exist."
+			continue
+		fi
+		scp -r "$file" ssh.strato.de:juliangoeltzde/secretSharing/$randNo/ && \
+		echo "File is available at http://julian-goeltz.de/secretSharing/$randNo/$file"
+	done
+}
+
+
+# Printing
+# infos on https://printer.kip.uni-heidelberg.de/jobs/
+# have to put the printserver in  ~/.cups/client.conf the following
+# ServerName printer.kip.uni-heidelberg.de
+alias lp_1="lp -U jgoeltz -o fit-to-page -o sides=one-sided -o media=A4 -d"
+alias lp_2="lp -U jgoeltz -o fit-to-page -o sides=two-sided-long-edge -o media=A4 -d"
+
+# quick grepping
+alias grepp="grep -rn --include=\*tex "

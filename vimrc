@@ -8,6 +8,11 @@ set nocompatible	" Use Vim defaults instead of 100% vi compatibility
 set backspace=indent,eol,start	" more powerful backspacing
 call plug#begin('~/.vim/plugged')
 
+" for xterm. do later
+set t_Co=8
+"set termguicolors
+colorscheme desert
+
 " Make sure you use single quotes
 " python folding
 Plug 'tmhedberg/SimpylFold'
@@ -15,11 +20,20 @@ Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'vim-scripts/indentpython.vim'
 "Autocomplete
-""""""" BUILD AFTER INSTALLATION
-" the following from obreitwi
+" feature of vim-plug: compile automatically
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+
 let g:ycm_requirements_met = v:version >= 704 || (v:version == 703 && has('patch584'))
 if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
-	Plug 'Valloric/YouCompleteMe'
+	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
 endif
 " not working. Plug 'jeaye/color_coded' " c colour coding
@@ -66,17 +80,17 @@ elseif system('hostname') =~ "helvetica"
 	let g:vimtex_view_method = 'mupdf' "zathura'
 endif
 
-
-"Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
-if system('hostname') =~ "T1" || system('hostname') =~ "helvetica"
-	python from powerline.vim import setup as powerline_setup
-	python powerline_setup()
-	python del powerline_setup
-elseif system('hostname') =~ "localhost"
-	python3 from powerline.vim import setup as powerline_setup
-	python3 powerline_setup()
-	python3 del powerline_setup
-endif
+Plug 'vim-airline/vim-airline'
+""Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
+"if system('hostname') =~ "T1" || system('hostname') =~ "helvetica"
+"	python3 from powerline.vim import setup as powerline_setup
+"	python3 powerline_setup()
+"	python3 del powerline_setup
+"elseif system('hostname') =~ "localhost"
+"	python3 from powerline.vim import setup as powerline_setup
+"	python3 powerline_setup()
+"	python3 del powerline_setup
+"endif
 "Latex 
 Plug 'lervag/vimtex'
 "Diff parts of one file (maps defined below)
@@ -245,6 +259,9 @@ set title
 let g:syntastic_quiet_messages = { "regex": [
         \ '\mpossible unwanted space at "{"',
 	\ 'Command terminated with space.',
+	\ "You should perhaps use ..max. instead.",
+	\ 'Vertical rules in tables are ugly.',
+	\ 'Use .toprule, midrule, or .bottomrule from booktabs.',
         \ ] }
 
 " ycm for tex files, works beautifully
@@ -285,6 +302,7 @@ let g:vimtex_quickfix_latexlog = {
   \   'hyperref' : 0,
   \ },
   \}
+map <localleader>ls :VimtexCompileSS<CR>
 
 "" scroll and advance the cursor
 "map <c-j> j<c-e>
@@ -292,3 +310,9 @@ let g:vimtex_quickfix_latexlog = {
 
 " ROT13 the buffer
 map <F5> ggg?G``
+
+" return to normal mode by typing jk
+imap jk <ESC>
+
+" default tex flavour
+let g:tex_flavor = 'tex'

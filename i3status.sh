@@ -10,8 +10,11 @@ CspecialCyan="#06989a"
 #Define the battery
 Battery() {
         BATPERC=$(acpi --battery | cut -d, -f2)
-	BATPERC="Batt: $(acpi -b | grep  -o "[0-9]*%" | head -n1) & $(acpi -b | grep  -o "[0-9]*%"| tail -n1) $(acpi -b |grep -o "Charging")$(acpi -b |grep -o "Discharging")"
-        echo " $BATPERC "
+	# BATPERC="Batt: $(acpi -b | grep  -o "[0-9]*%" | head -n1) & $(acpi -b | grep  -o "[0-9]*%"| tail -n1) $(acpi -b |grep -o "Charging")$(acpi -b |grep -o "Discharging")"
+        # echo " $BATPERC "
+	# $(acpi -b | grep  -o "[0-9]*%" | head -n1)
+	# $(acpi -b | grep  -o "[0-9]*%"| tail -n1)
+	echo '🔋  '$BATPERC
 }
 
 #define the date
@@ -118,8 +121,14 @@ while true; do
 	echo "["
 	# echo '  { "full_text": "lalala", "color":"#ffffff" },'
 	echo '  { "full_text": "'$(Pdfcompiling)'"},'
-	echo '  { "full_text": "'$(Playing spotify)'"},'
-	echo '  { "full_text": "'$(Playing vlc)'"},'
+	if [ "$(($counter%5))" -eq 0 ]; then
+		playing_spotify=$(Playing spotify)
+		playing_spotifyd=$(Playing spotifyd)
+		playing_vlc=$(Playing vlc)
+	fi
+	echo '  { "full_text": "'$playing_spotify'"},'
+	echo '  { "full_text": "'$playing_spotifyd'"},'
+	echo '  { "full_text": "'$playing_vlc'"},'
 
 	echo '  { "full_text": "'$(Volume 0)'", "color":"'$Cfggrey'"},'
 	correctSink=$(/home/julgoe/.config/i3/scripts/correctSinkForChangingVolume.sh)
@@ -152,12 +161,11 @@ while true; do
 	echo '  { "full_text": "<span bgcolor=\"'$Cfg'\"> on </span>", "markup":"pango", "color":"'$Cbg'", "separator":false, "separator_block_width": 0 },'
 	echo '  { "full_text": "<span bgcolor=\"'$Cfg'\" weight=\"bold\">'$(hostname)' </span>", "markup":"pango", "color":"'$CspecialCyan'" },'
 
-	# echo '  { "full_text": "'$(Battery)'", "color":"#ffffff"},'
-	echo '  { "full_text": "🔋  '$(acpi -b | grep  -o "[0-9]*%" | head -n1)' & '$(acpi -b | grep  -o "[0-9]*%"| tail -n1)'", "separator":false, "separator_block_width": 0},'
+	# echo '  { "full_text": "🔋  '$(acpi -b | grep  -o "[0-9]*%" | head -n1)' & '$(acpi -b | grep  -o "[0-9]*%"| tail -n1)'", "separator":false, "separator_block_width": 0},'
+	echo '  { "full_text": "'$(Battery)'", "separator":false, "separator_block_width": 0},'
 	echo '  { "full_text": " '$(acpi -b |grep -o "Charging")'", "color":"#00ff00", "separator":false, "separator_block_width": 0},'
 	echo '  { "full_text": " '$(acpi -b |grep -o "Discharging")'", "color":"#ff0000", "separator":false, "separator_block_width": 0},'
 	echo '  { "full_text": " "},'
-	#BATPERC="<b>Batt: $(acpi -b | grep  -o "[0-9]*%" | head -n1) & $(acpi -b | grep  -o "[0-9]*%"| tail -n1) $(acpi -b |grep -o "Charging")$(acpi -b |grep -o "Discharging")</b>"
 
 	echo '  { "full_text": "'$(Date)'" }'
 	echo "],"

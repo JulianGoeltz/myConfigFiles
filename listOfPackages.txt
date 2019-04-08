@@ -12,6 +12,7 @@ adwaita-icon-theme-full
 alsa-base
 alsa-utils
 anacron
+apache2
 apg
 app-install-data
 apparmor
@@ -67,6 +68,7 @@ busybox-static
 bzip2
 ca-certificates
 cabal-install
+cargo
 caribou
 casper
 cgmanager
@@ -324,6 +326,8 @@ gcc
 gcc-5
 gcc-5-base
 gcc-6-base
+gcj-jdk
+gcj-jre
 gconf-editor
 gconf-service
 gconf-service-backend
@@ -490,6 +494,7 @@ gstreamer1.0-nice
 gstreamer1.0-plugins-base
 gstreamer1.0-plugins-base-apps
 gstreamer1.0-plugins-good
+gstreamer1.0-plugins-ugly
 gstreamer1.0-pulseaudio
 gstreamer1.0-tools
 gstreamer1.0-x
@@ -597,6 +602,8 @@ libacl1
 libamd2.4.1
 libao-common
 libao4
+libapache2-mod-fastcgi
+libapache2-mod-php7.0
 libapparmor-perl
 libapparmor1
 libappindicator0.1-cil
@@ -823,6 +830,7 @@ libexttextcat-data
 libfakeroot
 libfarstream-0.2-5
 libfdisk1
+libffi-dev
 libffi6
 libfftw3-double3
 libfftw3-single3
@@ -1694,6 +1702,7 @@ mate-panel
 mate-panel-common
 mate-polkit
 mate-polkit-common
+maven
 mawk
 mc
 mdf2iso
@@ -1763,6 +1772,8 @@ mtpfs
 mtr-tiny
 muffin-common
 multiarch-support
+mupdf
+mysql-server
 mythes-en-us
 nano
 nautilus-data
@@ -1801,9 +1812,13 @@ nux-tools
 nvidia-prime-applet
 obex-data-server
 octave
+okular
 onboard
 oneconf-common
 openconnect
+openjdk-8-jdk
+openjdk-8-jre
+openjdk-8-source
 openmpi-bin
 openoffice.org-hyphenation
 openprinting-ppds
@@ -1826,6 +1841,16 @@ perl
 perl-base
 perl-modules-5.22
 perl-tk
+php7.0
+php7.0-gd
+php7.0-mbstring
+php7.0-mysql
+php7.2
+php7.2-fpm
+php7.2-gd
+php7.2-mbstring
+php7.2-mysql
+phpmyadmin
 pidgin
 pidgin-data
 pidgin-libnotify
@@ -1906,6 +1931,7 @@ python-gnomekeyring
 python-gobject
 python-gobject-2
 python-gpgme
+python-gst-1.0
 python-gtk2
 python-gtksourceview2
 python-h5py
@@ -2084,7 +2110,8 @@ ruby-power-assert
 ruby-test-unit
 ruby2.3
 rubygems-integration
-rxvt-unicode
+rustc
+rxvt-unicode-256color
 samba-common
 samba-common-bin
 samba-libs

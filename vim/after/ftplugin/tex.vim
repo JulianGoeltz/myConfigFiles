@@ -21,11 +21,11 @@ function! MoveAfterSuccess(status)
 	" status=1, and 1 is truthy in vim
 	if a:status
 		"silent execute '! ' . b:vimtex['root'] . '/afterCompletion.sh ' . b:vimtex['root']
-		silent !/home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/afterCompletion.sh 1
+		silent !/home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/afterCompletion.sh 1&
 		redraw!
 		call vimtex#log#warning("Compilation completed!")
 	else
-		silent !/home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/afterCompletion.sh 0
+		silent !/home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/afterCompletion.sh 0&
 		redraw!
 		call vimtex#log#warning("Compilation failed!")
 	endif
@@ -33,3 +33,6 @@ endfunction
 call add(g:vimtex_compiler_callback_hooks, 'MoveAfterSuccess')
 " to first do the moving, to not overdraw the output
 call reverse(g:vimtex_compiler_callback_hooks)
+
+" to break at word boundary not mid word
+setlocal linebreak

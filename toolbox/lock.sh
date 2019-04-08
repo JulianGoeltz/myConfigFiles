@@ -1,6 +1,13 @@
 #!/bin/bash
 # inspired by https://www.reddit.com/r/unixporn/comments/7df2wz/i3lock_minimal_lockscreen_pretty_indicator/
 
+# first check whether any other ttys are running
+if [ "$(ps axo pid,tty | grep -oP "tty[0-9]" | sort | uniq -d | wc -l )" -ne 1 ]; then
+	pkill -u $USER -USR2 dunst
+	notify-send "There is more than one TTY logged in. Lock out of them!"
+	exit
+fi
+
 # pausing dunst to not show notifs on lock screen
 pkill -u $USER -USR1 dunst
 # previously: 

@@ -190,6 +190,10 @@ printf "\e[?1004l"
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
 
+# to have more vim not vi like bindings:
+#bindkey  '^H' backward-delete-char
+#bindkey  '^?' delete-char
+
 ######## end
 
 
