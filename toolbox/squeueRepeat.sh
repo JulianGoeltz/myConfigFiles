@@ -3,13 +3,8 @@
 standardWidth=20
 repeatEvery=10
 redoAfter=$(($repeatEvery + 20))
-if [[ "$(which squeue)" == "/usr/local/bin/squeue" ]]; then
-	fileSave=~/.tmp_squeueRepeat_old
-	clusterName="old cluster"
-else
-	fileSave=~/.tmp_squeueRepeat_new
-	clusterName="new cluster"
-fi
+fileSave=~/.tmp_squeueRepeat_new
+clusterName="new cluster"
 minimumColsForParallel=80
 delimiterDone="|"
 delimiterNot='-'

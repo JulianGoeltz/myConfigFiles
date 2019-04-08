@@ -7,7 +7,7 @@ if [[ $1 == "sending" ]]; then
 	tmpFile=/wang/users/jgoeltz/cluster_home/.tmp_slurmJobs
 
 	oldState=$(cat $tmpFile)
-	state=$(/usr/local/bin/squeue -u jgoeltz -o "%t" --noheader)
+	state=$(/usr/local/bin/squeue -u jgoeltz -o "%t" --noheader 2>/dev/null)
 	if [ -z "$state" ]; then
 		if [[ $oldState == "running" ]] && 
 			nc -z 127.0.0.1 1234  ; then

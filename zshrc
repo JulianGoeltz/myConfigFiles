@@ -112,9 +112,9 @@ tmux_resetSocket () {
 }
 
 # from http://patorjk.com/software/taag/#p=display&f=Big&t=You%20should%20be%20writing!!!%20
-cat ~/myConfigFiles/tmp_art
-cat ~/myConfigFiles/tmp_art
-cat ~/myConfigFiles/tmp_art
+# cat ~/myConfigFiles/tmp_art
+# cat ~/myConfigFiles/tmp_art
+# cat ~/myConfigFiles/tmp_art
 tm () {
 	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep -P "(tmux: server|tmux -f /home/julgoe)")
 	if [ -z "$tmpTmuxServerPid" ]; then
