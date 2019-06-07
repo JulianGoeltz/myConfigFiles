@@ -53,7 +53,8 @@ fi
 
 module list
 
-PATH=$PATH:~/pip_files
+export PATH=$PATH:~/pip_files
+export PATH=$PATH:~/tmpbuild
 if $( echo $PYTHONPATH | grep -vq pip_files); then
 	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
 	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
