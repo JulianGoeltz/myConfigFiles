@@ -187,6 +187,11 @@ printf "\e[?1004l"
 	[ -n "$DISPLAY" ] && \
 	source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
+function replaceGerrit() {
+	read "foobar?enter>" ;
+	echo ${foobar//gerrit.bioai.eu/brainscales-r.kip.uni-heidelberg.de}
+}
+
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
 
