@@ -20,13 +20,13 @@ let g:tex_comment_nospell= 1
 function! MoveAfterSuccess(status)
 	" status=1, and 1 is truthy in vim
 	if a:status
-		"silent execute '! ' . b:vimtex['root'] . '/afterCompletion.sh ' . b:vimtex['root']
-		silent !/home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/afterCompletion.sh 1&
-		redraw!
+		""silent execute '! ' . b:vimtex['root'] . '/afterCompletion.sh ' . b:vimtex['root']
+		"silent !/home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/afterCompletion.sh 1&
+		"redraw!
 		call vimtex#log#warning("Compilation completed!")
 	else
-		silent !/home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/afterCompletion.sh 0&
-		redraw!
+		"silent !/home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/afterCompletion.sh 0&
+		"redraw!
 		call vimtex#log#warning("Compilation failed!")
 	endif
 endfunction

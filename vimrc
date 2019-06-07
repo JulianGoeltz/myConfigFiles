@@ -290,10 +290,10 @@ let g:vimtex_compiler_latexmk = {
     \   '-verbose',
     \   '-file-line-error',
     \   '-synctex=1',
-    \   '-jobname=tmp.main',
     \   '-interaction=nonstopmode',
     \ ],
     \}
+"    \   '-jobname=tmp.main', " but should be done in local .latexmkrc
 " dont open it automatically
 let g:vimtex_view_automatic = 0
 "let g:vimtex_quickfix_method = 'pplatex'
