@@ -5,7 +5,7 @@
 ## */5 * * * * /home/julgoe/myConfigFiles/checkLowBattery
 
 POWERSUPPLY="/sys/class/power_supply/AC/online" # could be different on your system!
-TOO_LOW=20 # how low is too low?
+TOO_LOW=10 # how low is too low?
 NOT_CHARGING="0"
 ICON="/usr/share/icons/Mint-X/status/96/notification-battery-low.svg" # eye candy
 
