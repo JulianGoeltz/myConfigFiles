@@ -103,6 +103,7 @@ command-not-found-data
 compiz
 compiz-plugins-extra
 compizconfig-settings-manager
+composer
 compton
 conky
 connect-proxy
@@ -426,6 +427,7 @@ gir1.2-xplayer-1.0
 gir1.2-xplayer-plparser-1.0
 gist
 git
+git-review
 gitk
 gkbd-capplet
 gksu
@@ -1327,6 +1329,7 @@ libqt5libqgtk2
 libqt5network5
 libqt5opengl5
 libqt5printsupport5
+libqt5qml-graphicaleffects
 libqt5qml5
 libqt5quick5
 libqt5sql5
@@ -1837,6 +1840,7 @@ pavucontrol
 pciutils
 pcmciautils
 pcregrep
+pdf-presenter-console
 perl
 perl-base
 perl-modules-5.22
@@ -2075,10 +2079,22 @@ python3.5-dev
 python3.5-minimal
 q4wine
 qdbus
+qml-module-qt-labs-folderlistmodel
+qml-module-qt-labs-settings
+qml-module-qtgraphicaleffects
+qml-module-qtquick-controls
+qml-module-qtquick-dialogs
+qmlscene
 qpdf
 qt-at-spi
+qt5-default
+qt5-qmake
 qtchooser
 qtcore4-l10n
+qtdeclarative5-dev
+qtdeclarative5-localstorage-plugin
+qtdeclarative5-qtquick2-plugin
+qtdeclarative5-window-plugin
 r-base-core
 radeontool
 rake
@@ -2344,4 +2360,5 @@ zenity-common
 zip
 zlib1g
 zlib1g-dev
+zoom
 zsh

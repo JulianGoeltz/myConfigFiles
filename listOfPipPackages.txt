@@ -40,6 +40,7 @@ jupyter                  1.0.0
 jupyter-client           5.1.0                 
 jupyter-console          5.2.0                 
 jupyter-core             4.4.0                 
+kiwisolver               1.1.0                 
 lazyarray                0.3.2                 
 louis                    2.6.4                 
 lxml                     3.5.0                 
@@ -56,7 +57,7 @@ neo                      0.5.2
 neovim                   0.3.1                 
 NEURON                   7.4                   
 notebook                 5.2.1                 
-numpy                    1.13.3                
+numpy                    1.16.4                
 oauthlib                 1.0.3                 
 onboard                  1.2.0                 
 oneconf                  0.3.9                 
@@ -87,13 +88,13 @@ Pykka                    1.2.1
 PyNEST                   2.14.0                
 PyNN                     0.9.1                 
 pynvim                   0.3.2                 
-pyparsing                2.2.0                 
+pyparsing                2.4.0                 
 pypng                    0.0.18                
 PyQRCode                 1.2.1                 
 pysvg                    0.2.2                 
 pyte                     0.8.0                 
-python-apt               1.1.0b1+ubuntu0.16.4.2
-python-dateutil          2.6.1                 
+python-apt               1.1.0b1+ubuntu0.16.4.4
+python-dateutil          2.8.0                 
 python-debian            0.1.27                
 python-telegram-bot      11.1.0                
 python-xapp              1.0.0                 
@@ -109,9 +110,9 @@ requests                 2.9.1
 scipy                    1.0.0                 
 sessioninstaller         0.0.0                 
 setproctitle             1.1.8                 
-setuptools               36.6.0                
+setuptools               41.0.1                
 simplegeneric            0.8.1                 
-six                      1.10.0                
+six                      1.12.0                
 system-service           0.3                   
 terminado                0.6                   
 testpath                 0.3.1                 

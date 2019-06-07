@@ -318,3 +318,7 @@ imap jk <ESC>
 
 " default tex flavour
 let g:tex_flavor = 'tex'
+
+" for security disable modeline
+" https://github.com/numirias/security/blob/master/doc/2019-06-04_ace-vim-neovim.md
+set nomodeline
