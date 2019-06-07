@@ -185,8 +185,10 @@ copyToWeb (){
 			echo "File ${file} does not exist."
 			continue
 		fi
+		fileUrl=http://julian-goeltz.de/secretSharing/$randNo/$file
 		scp -r "$file" ssh.strato.de:juliangoeltzde/secretSharing/$randNo/ && \
-		echo "File is available at http://julian-goeltz.de/secretSharing/$randNo/$file"
+			echo "File is available at $fileUrl" && \
+			( telegram-cli -W -e "msg Julian_Göltz $fileUrl" >/dev/null)
 	done
 }
 
