@@ -117,6 +117,8 @@ Plug 'chrisbra/Recover.vim'
 " from docu: You can use :SDChar and :RDChar commands to manually show and reset the highlights on all or some of lines. To toggle the highlights, use :TDChar command.
 " other way is to use :set diffopt+=iwhite
 Plug 'rickhowe/diffchar.vim'
+" for psr-2 style in php scripts
+Plug 'stephpy/vim-php-cs-fixer'
 call plug#end()
 
 
