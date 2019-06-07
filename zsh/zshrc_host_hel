@@ -76,13 +76,13 @@ function updateEnvEverywhere () {
 	done
 }
 function updateEnvTmux () {
-	[ -n "$TMUX" ] && [ -n "$(tmux -V | grep -oP '2.')" ] && updateEnv
+	[ -n "$TMUX" ] && updateEnv
 }
 function updateEnv () {
-	# uses the current ssh agent and display to allow ssh forwarding and X11 forwarding
+	# uses the current (from the environment where tmux attach was done) ssh agent and display to allow ssh forwarding and X11 forwarding
 	# -> pushing and pulling in git and display use
-	eval $(tmux show-environment -s | grep SSH_AUTH_SOCK)
-	eval $(tmux show-environment -s | grep DISPLAY)
+	eval "export $(tmux show-environment | grep SSH_AUTH_SOCK)"
+	eval "export $(tmux show-environment | grep DISPLAY)"
 }
 
 function saveplottedtobackup() {
