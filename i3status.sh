@@ -102,7 +102,10 @@ Volume() {
 # see whether there is a pdflatex instance running
 Pdfcompiling() {
 	if pidof pdflatex >/dev/null; then
-		echo "Pdf is compiling"
+		echo "pdflatex running"
+	fi
+	if pidof lualatex >/dev/null; then
+		echo "lualatex running"
 	fi
 }
 
@@ -120,12 +123,16 @@ while true; do
 	#echo "%{B$Cbg}%{F$Cfg}%{c}$(Playing) %{r}$(Host)|$(Battery)|$(Date)"
 	echo "["
 	# echo '  { "full_text": "lalala", "color":"#ffffff" },'
-	echo '  { "full_text": "'$(Pdfcompiling)'"},'
 	if [ "$(($counter%5))" -eq 0 ]; then
 		playing_spotify=$(Playing spotify)
 		playing_spotifyd=$(Playing spotifyd)
 		playing_vlc=$(Playing vlc)
+
+		pdfcompiling=$(Pdfcompiling)
 	fi
+
+	echo '  { "full_text": "'$pdfcompiling'"},'
+
 	echo '  { "full_text": "'$playing_spotify'"},'
 	echo '  { "full_text": "'$playing_spotifyd'"},'
 	echo '  { "full_text": "'$playing_vlc'"},'
