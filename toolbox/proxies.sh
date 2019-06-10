@@ -35,6 +35,11 @@ if [[ "$arg" == "set" ]]; then
 	escaped_http=${http_proxy/\/\//\\\/\\\/}
 	escaped_https=${https_proxy/\/\//\\\/\\\/}
 	tmpFilename=/tmp/aptconfInplaceReplace$$
+	# if config doesnt have proxy part insert it
+	if ! grep -q Proxy /etc/apt/apt.conf ; then
+		echo 'Acquire::http::Proxy "";' >> /etc/apt/apt.conf
+		echo 'Acquire::https::Proxy "";' >> /etc/apt/apt.conf
+	fi
 	cp /etc/apt/apt.conf $tmpFilename
 	sed -i -e 's/Acquire::http::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::http::Proxy "'$escaped_http'";/g' $tmpFilename
 	sed -i -e 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "'$escaped_https'";/g' $tmpFilename
@@ -71,6 +76,11 @@ elif [[ "$arg" == "unset" ]]; then
 	unset GIT_SSH_COMMAND
 
 	tmpFilename=/tmp/aptconfInplaceReplace$$
+	# if config doesnt have proxy part insert it
+	if ! grep -q Proxy /etc/apt/apt.conf ; then
+		echo 'Acquire::http::Proxy "";' >> /etc/apt/apt.conf
+		echo 'Acquire::https::Proxy "";' >> /etc/apt/apt.conf
+	fi
 	cp /etc/apt/apt.conf $tmpFilename
 	sed -i 's/Acquire::http::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::http::Proxy "";/g' $tmpFilename
 	sed -i 's/Acquire::https::Proxy "[a-zA-Z0-9:/.-]*";/Acquire::https::Proxy "";/g' $tmpFilename
