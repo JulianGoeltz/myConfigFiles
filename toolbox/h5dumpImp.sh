@@ -1,14 +1,9 @@
-#!/bin/zsh
+#!/bin/bash
 
 # get string from hdf5 file (and nothing but string)
 
 filehdf5=$1
 fileyaml=${filehdf5:0:-4}yaml
-if [ $# -gt 1 ]; then
-	skipMeta="True"
-else
-	skipMeta="False"
-fi
 tmp=$(python - <<-EOF
 import h5py, os, os.path as osp, yccp
 if osp.isfile('$filehdf5') and osp.splitext('$filehdf5')[1] == '.hdf5':
@@ -31,8 +26,8 @@ print(yccp.dump(tmp))
 EOF
 )
 if [[ "$2" == "yaml" ]]; then
-	echo $tmp > $fileyaml
+	echo "$tmp" > "$fileyaml"
 else
-	echo $tmp
+	echo "$tmp"
 fi
 

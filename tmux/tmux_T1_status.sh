@@ -6,29 +6,29 @@ Ethernet() {
 	if [ "$(ifconfig enp0s31f6 | grep -c addr)" -gt 1 ]; then
 		echo -n "Eth: "
 		# string=$(ifconfig enp0s31f6)
-		echo -n $(ethtool enp0s31f6  2>/dev/null| grep Speed | sed -E 's/.*Speed: ([0-9]*Mb\/s).*/\1/')
+		echo -n "$(ethtool enp0s31f6  2>/dev/null| grep Speed | sed -E 's/.*Speed: ([0-9]*Mb\/s).*/\1/')"
 		echo
 	fi
 }
 # wifi
 Wifi() {
 	string=$(iwconfig wlp4s0)
-	if [ "$(echo $string | grep -c off/any)" -eq 0 ]; then
+	if [ "$(echo "$string" | grep -c off/any)" -eq 0 ]; then
 		echo -n "Wifi: "
-		echo -n $(echo $string | grep ESSID | sed -E 's/.*ESSID:"(.*?)".*/\1/')
-		signalstr=$(echo $string | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
+		echo -n "$(echo "$string" | grep ESSID | sed -E 's/.*ESSID:"(.*?)".*/\1/')"
+		signalstr=$(echo "$string" | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
 		# echo -n " at $signalstr"
-		signalstr=$(((100-$signalstr)*2))
-		signalstr=$(($signalstr > 100 ? 100 : $signalstr))
-		signalstr=$(($signalstr < 0 ? 0 : $signalstr))
+		signalstr=$(((100-signalstr)*2))
+		signalstr=$((signalstr > 100 ? 100 : signalstr))
+		signalstr=$((signalstr < 0 ? 0 : signalstr))
 		printf " at%4u%%" $signalstr
 	fi
 }
 # vpn
 Vpn() {
-	if $(ifconfig tun0 &>/dev/null); then
+	if ifconfig tun0 &>/dev/null; then
 		echo -n "VPN:"
-		ps aux | grep openconnect | grep -v grep | grep -o "openconnect .*" | grep -o " .*" | head -n 1
+		ps --no-headers -o command "$(pgrep openconnect)" | awk '{print $2}'
 	fi
 }
 

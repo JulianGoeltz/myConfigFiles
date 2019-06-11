@@ -8,11 +8,11 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/
 
 # first direct to spotify, then vlc or general
 if playerctl -l | grep -q spotifyd; then
-	playerctl --player=spotifyd $1
+	playerctl --player=spotifyd "$1"
 elif playerctl -l | grep -q spotify; then
-	playerctl --player=spotify $1
+	playerctl --player=spotify "$1"
 elif playerctl -l | grep -q vlc; then
-	playerctl --player=vlc $1
+	playerctl --player=vlc "$1"
 else
-	playerctl -a $1
+	playerctl -a "$1"
 fi

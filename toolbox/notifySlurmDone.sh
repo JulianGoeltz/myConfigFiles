@@ -2,6 +2,7 @@
 # if slurm done on hel, and connection over ssh exists
 # i want to get a notification
 
+port=1234
 
 if [[ $1 == "sending" ]]; then
 	tmpFile=/wang/users/jgoeltz/cluster_home/.tmp_slurmJobs
@@ -10,8 +11,8 @@ if [[ $1 == "sending" ]]; then
 	state=$(/usr/local/bin/squeue -u jgoeltz -o "%t" --noheader 2>/dev/null)
 	if [ -z "$state" ]; then
 		if [[ $oldState == "running" ]] && 
-			nc -z 127.0.0.1 1234  ; then
-			echo slurmDone | nc 127.0.0.1 1234
+			nc -z 127.0.0.1 "$port"  ; then
+			echo slurmDone | nc 127.0.0.1 "$port"
 			echo noJobs > $tmpFile
 			# could send mail with
 			# echo "The jobs you have send are now done." | mail -s "All Jobs Done" jgoeltz
@@ -31,13 +32,14 @@ elif [[ $1 == "receiving" ]]; then
 		done
 	}
 	
+	exact_call="nc -k -l localhost $port"
 	# first check whether nc is already instantiated, if so kill it
-	tmp=$(ps axo pid,user,comm,args | grep -v grep | grep "nc -k -l 1234")
-	if [ "$(echo $tmp | wc -l)" -ne 0 ]; then
-		kill $(echo $tmp | grep -o "^\s*[0-9]*")
+	tmp=$(pgrep -u julgoe -f "$exact_call")
+	if [ "$(echo "$tmp" | wc -l)" -ne 0 ]; then
+		kill "$tmp"
 	fi
 	# important to only be listening from localhost, otherwise anyone can send
-	nc -k -l localhost 1234  | tmpFun
+	eval "$exact_call"  | tmpFun
 else
 	echo "must give argument sending/receiving"
 fi

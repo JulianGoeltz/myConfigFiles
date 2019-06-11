@@ -33,7 +33,7 @@ if [ "$num" -gt 0 -a "$num" -lt 5 ]; then
 	num=1
 else
 	#num=$(($(round $num 10)*10))
-	num=$(($num / 5))
+	num=$((num / 5))
 fi
 
 bar=$(seq -s "─" 0 $num | sed 's/[0-9]//g')

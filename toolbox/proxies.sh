@@ -14,7 +14,7 @@ if [ $# -eq 0 ]; then
 		echo "Problem calling kip proxy with wget, do manually with set/unset"
 		return
 	fi
-	if [ $tmp_len -gt 200 ]; then
+	if [ "$tmp_len" -gt 200 ]; then
 		arg="set"
 	else
 		arg="unset"
@@ -51,7 +51,7 @@ if [[ "$arg" == "set" ]]; then
 		echo ", spotify"
 		( if grep "network.proxy.mode=1" ~/.config/spotify/prefs -q; then
 			spotifyRunning=false
-			if ps aux | grep -v grep | grep -q spotify; then
+			if pgrep -c spotify; then
 				spotifyRunning=true
 				spotifyPlaying=$(playerctl -p spotify status)
 				killall spotify
@@ -92,7 +92,7 @@ elif [[ "$arg" == "unset" ]]; then
 		echo ", spotify"
 		( if grep "network.proxy.mode=2" ~/.config/spotify/prefs -q; then
 			spotifyRunning=false
-			if ps aux | grep -v grep | grep -q spotify; then
+			if pgrep -c spotify; then
 				spotifyRunning=true
 				spotifyPlaying=$(playerctl -p spotify status)
 				killall spotify
@@ -113,7 +113,7 @@ elif [ "$arg" == "proxify" -a $# -gt 1 ]; then
 	# used for Telegram in i3_config
 	cmd=$2
 	shift 2
-	source $0
+	source "$0"
 	$cmd
 else
 	echo "argument has to be set or unset, not $1"
