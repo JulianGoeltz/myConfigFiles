@@ -55,9 +55,10 @@ Plug 'tpope/vim-fugitive'
 " in container on hel, zsh doesnt work
 set shell=/bin/sh
 if system('hostname') =~ "T1"
-	"sign column indication of git changes (THIS BREAKS THE C-xC-o omnicomplete
-	"FUNCTIONALITY, THUS DISABLED)
-	"Plug 'airblade/vim-gitgutter'
+	"sign column indication of git changes 
+	" ~~(THIS BREAKS THE C-xC-o omnicomplete FUNCTIONALITY, THUS DISABLED)~
+	" works now
+	Plug 'airblade/vim-gitgutter'
 	"omnicomplete
 	"set omnifunc=syntaxcomplete#Complete
 	
