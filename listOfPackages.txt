@@ -49,6 +49,7 @@ biber
 bind9-host
 binfmt-support
 binutils
+binutils-dev
 bison
 blender
 blueman
@@ -145,6 +146,7 @@ dcraw
 dctrl-tools
 debconf
 debconf-i18n
+debhelper
 debianutils
 desktop-file-utils
 dh-python
@@ -173,7 +175,6 @@ doxygen
 dpkg
 dpkg-dev
 dpkg-repack
-dropbox
 duplicity
 dvd+rw-tools
 dvipng
@@ -663,6 +664,7 @@ libblas3
 libblkid1
 libbluetooth-dev
 libbluetooth3
+libboost-all-dev
 libboost-date-time1.58.0
 libboost-filesystem1.58.0
 libboost-iostreams1.58.0
@@ -737,6 +739,7 @@ libcolord2
 libcolorhug2
 libcomerr2
 libconfig-dev
+libcppunit-dev
 libcpufreq0
 libcrack2
 libcroco3
@@ -826,6 +829,7 @@ libexempi3
 libexif12
 libexiv2-14
 libexpat1
+libexpat1-dev
 libexporter-tiny-perl
 libexttextcat-2.0-0
 libexttextcat-data
@@ -883,6 +887,7 @@ libgconf2.0-cil
 libgcr-3-common
 libgcr-base-3-1
 libgcr-ui-3-1
+libgcrypt11-dev
 libgcrypt20
 libgcrypt20-dev
 libgd3
