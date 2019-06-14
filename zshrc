@@ -177,7 +177,7 @@ function diffHdf5 () {
 
 # after lost ssh session, often on focus of zsh/terminal, prompt is redrawn
 # with redraw there's a loss of lines, for this disable this feature:
-printf "\e[?1004l"
+alias stoplinesdisappearing='printf "\e[?1004l"'
 
 # to copy to system clipboard with vi keybinds in zsh
 # check that ZSH_SYSTEM_CLIPBOARD is not empty, the file exist and we are not in a singularity shell
