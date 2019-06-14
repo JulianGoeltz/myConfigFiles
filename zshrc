@@ -32,6 +32,10 @@ export EDITOR=vim
 export VISUAL=vim
 export LESS=-Ri  #r: display colours; i: smartcase search;
 alias vi=vim
+# if nvim is available use it instead
+if type nvim 2>&1 >/dev/null ; then
+	alias vim=nvim
+fi
 
 
 alias sourcezsh="source ~/.zshrc"

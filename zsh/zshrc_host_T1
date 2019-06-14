@@ -16,6 +16,7 @@ module () {
 . /home/julgoe/git/spack/share/spack/setup-env.sh
 spack load python@2.7.16
 spack load vim
+spack load neovim
 
 # to connect to terminal server from urz
 alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/julgoe/Dropbox/printing"

@@ -128,6 +128,8 @@ done
 for fn in "$LocOfScript"/vim/after/syntax/*; do
 	checkSimilaritiesAndLink vim/after/syntax/"$(basename "$fn")" "$HOME"/.vim/after/syntax/"$(basename "$fn")"
 done
+echo "--neovim"
+checkSimilaritiesAndLink neovim_init.vim "$HOME/.config/nvim/init.vim"
 
 echo "--latexmk"
 checkSimilaritiesAndLink latexmkrc "$HOME/.latexmkrc"
