@@ -259,9 +259,9 @@ exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
 exec --no-startup-id i3-msg 'exec /usr/bin/keepass2'
 # exec --no-startup-id i3-msg 'exec /usr/bin/spotify'
 exec --no-startup-id i3-msg workspace 1
-exec --no-startup-id exec gnome-terminal --geometry=160x50 --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -c ' vim index.wiki && zsh'"
-bindsym $mod+Shift+v exec gnome-terminal --geometry=160x50 --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -c ' vim index.wiki && zsh'"
-for_window [ title="T1::index.wiki" ] move scratchpad
+exec --no-startup-id exec gnome-terminal --geometry=160x50 --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -c ' tmux && zsh'"
+bindsym $mod+Shift+v exec gnome-terminal --geometry=160x50 --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -c ' tmux && zsh'"
+for_window [ title="julgoe::T1" ] move scratchpad
 
 
 # switch to next/prev window
