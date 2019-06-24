@@ -2,6 +2,8 @@
 # if slurm done on hel, and connection over ssh exists
 # i want to get a notification
 
+# set -euo pipefail
+
 port=1234
 
 if [[ $1 == "sending" ]]; then

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 # get string from hdf5 file (and nothing but string)
 
 filehdf5=$1

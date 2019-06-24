@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+# set -euo pipefail
+
 if [ $# -eq 0 ]; then
 echo "go through folders given as arguments, and process all the .hdf5 files in
 the simulations subfolder with 

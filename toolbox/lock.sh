@@ -1,6 +1,8 @@
 #!/bin/bash
 # inspired by https://www.reddit.com/r/unixporn/comments/7df2wz/i3lock_minimal_lockscreen_pretty_indicator/
 
+# set -euo pipefail
+
 # first check whether any other ttys are running
 if [ "$(who | grep -oP "tty[0-9]" | sort | uniq | wc -l )" -ne 1 ]; then
 	pkill -u "$USER" -USR2 dunst

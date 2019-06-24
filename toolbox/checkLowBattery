@@ -4,6 +4,8 @@
 ## $ crontab -e
 ## */5 * * * * /home/julgoe/myConfigFiles/checkLowBattery
 
+# set -euo pipefail
+
 POWERSUPPLY="/sys/class/power_supply/AC/online" # could be different on your system!
 TOO_LOW=10 # how low is too low?
 NOT_CHARGING="0"

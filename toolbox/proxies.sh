@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 arg=$1
 # in order to ssh through proxy
 # ssh git@github.com -o "ProxyCommand=connect -5S proxy.kip.uni-heidelberg.de:1080 %h %p"

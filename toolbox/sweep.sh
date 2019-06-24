@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+# set -euo pipefail
+
 maxNumberOfJobs=100
 tokenForAnimation="ThisIsASweepedJobWithJobNumber"
 startingCall="" # in case some code should be executed once at very beginning of each job

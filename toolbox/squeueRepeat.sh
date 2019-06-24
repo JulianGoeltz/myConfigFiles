@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+# set -euo pipefail
+
 standardWidth=20
 repeatEvery=10
 redoAfter=$(($repeatEvery + 20))

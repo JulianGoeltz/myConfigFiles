@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 if [ $# -eq 0 ]; then
 	echo "first argument is string of wafers, separated by whitespaces"
 	echo "if second argument is not an existing file it is taken as the rep number"

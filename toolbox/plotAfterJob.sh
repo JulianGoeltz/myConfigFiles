@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 if [ $# -eq 0 ]; then
 echo "plot all stuff after it finishes
 ./plot.py [some methods, one after another] [hdf5]

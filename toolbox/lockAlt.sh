@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 # pausing dunst to not show notifs on lock screen
 pkill -u "$USER" -USR1 dunst
 

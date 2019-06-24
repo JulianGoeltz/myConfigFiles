@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 
 if ! ChangeId=$(git show HEAD --summary | grep "Change-Id:" | awk '{print $2}') \
 	|| [ -z "$ChangeId" ]; then

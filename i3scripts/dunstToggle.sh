@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 
 if [ "$1" = "pause" -a "$(cat ~/.tmp_dunststate)" = 'running' ]; then
 	dunstify -r 2222 -t 2000 'Turning off notifications'

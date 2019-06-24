@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 functionCall='sbatch -p ' # --begin=now+6hours  # if one wants the jobs to start later
 # if third argument 
 if [ $# -gt 3 ]; then

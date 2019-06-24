@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 # the following comes from i3 status
 # ethernet
 Ethernet() {

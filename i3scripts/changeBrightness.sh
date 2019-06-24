@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 # in case one is in tty without x:
 # $ su
 # $ cd /sys/class/backlight/intel-backlight

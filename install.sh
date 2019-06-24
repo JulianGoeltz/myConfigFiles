@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set -euo pipefail
+
 echo "This script will try to link the files, but not replace existing files (no -f force). If there are problems, remove the existing files by hand. This way it is safer."
 LocOfScript=$(dirname "$(readlink -f "$0")")
 
