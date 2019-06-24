@@ -4,6 +4,7 @@ standardWidth=20
 repeatEvery=10
 redoAfter=$(($repeatEvery + 20))
 fileSave=~/.tmp_squeueRepeat_new
+fileTmpScontrol=~/.tmp_scontrol.sh
 clusterName="new cluster"
 minimumColsForParallel=80
 delimiterDone="|"
@@ -95,7 +96,8 @@ durationPrint() {
 
 				# find the file worked on (only do for small job numbers, otherwise its a hassle
 				if [[ "$allLinesNum" -lt 8 ]] || $verbose; then
-					tmpString=$(scontrol show job $jobid -dd | pcregrep -M "BatchScript=(.|\n)*" | grep -oP "\S*\.(yaml|hdf5)\S*")
+					scontrol write batch_script $jobid $fileTmpScontrol >/dev/null
+					tmpString=$([ -f $fileTmpScontrol ] && grep -oP "\S*\.(yaml|hdf5)\S*" $fileTmpScontrol)
 					# check whether we found something
 					if [ -n $tmpString ]; then
 						if [[ "$(echo $tmpString | wc -l)" -eq 1 ]]; then

@@ -116,7 +116,7 @@ tmux_resetSocket () {
 # cat ~/myConfigFiles/tmp_art
 # cat ~/myConfigFiles/tmp_art
 tm () {
-	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep -P "(tmux: server|tmux -f /home/julgoe)")
+	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep -P "(tmux: server|tmux -f /)")
 	if [ -z "$tmpTmuxServerPid" ]; then
 		echo "no tmux server running, start it"
 		return
