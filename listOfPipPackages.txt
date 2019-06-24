@@ -93,7 +93,7 @@ pypng                    0.0.18
 PyQRCode                 1.2.1                 
 pysvg                    0.2.2                 
 pyte                     0.8.0                 
-python-apt               1.1.0b1+ubuntu0.16.4.4
+python-apt               1.1.0b1+ubuntu0.16.4.5
 python-dateutil          2.8.0                 
 python-debian            0.1.27                
 python-telegram-bot      11.1.0                
