@@ -87,6 +87,7 @@ function updateEnv () {
 
 function saveplottedtobackup() {
 	for file in $@; do
+		# preprocessing
 		if [ ! -f "$file" ] ; then
 			echo "$file is not a file, skipping"
 			continue
@@ -98,21 +99,21 @@ function saveplottedtobackup() {
 			madeFileWriteableFirst=true
 		fi
 
-		# copy to wang folder if not already done and make readonly
-		if [ -f "/wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$(basename $file)" ] ; then
-			echo "File $file already exists in /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/, not copying"
-		else
-			cp $file "/wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$(basename $file)"
-			chmod 444 "/wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/$(basename $file)"
-		fi
+		function tmp_saveplottedtobackup() {
+			# copy to folder if not already done and make readonly
+			if [ -f "${1}$(basename 2))" ] ; then
+				echo "File $2 already exists in $1, not copying"
+			else
+				cp $2 "$1$(basename $2)"
+				chmod 444 "$1$(basename $2)"
+			fi
+		}
 
-		# copy to loh folder if not already done and make readonly
-		if [ -f "/loh/users/jgoeltz/data_tempodrom_backupPlotted/$(basename $file)" ] ; then
-			echo "File $file already exists in /loh/users/jgoeltz/data_tempodrom_backupPlotted/, not copying"
-		else
-			cp $file "/loh/users/jgoeltz/data_tempodrom_backupPlotted/$(basename $file)"
-			chmod 444 "/loh/users/jgoeltz/data_tempodrom_backupPlotted/$(basename $file)"
-		fi
+		# tmp_saveplottedtobackup /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/ $file
+		# tmp_saveplottedtobackup /loh/users/jgoeltz/data_tempodrom_backupPlotted/ $file
+
+		tmp_saveplottedtobackup /wang/users/jgoeltz/cluster_home/MasterThesis/data_hiwi_backup/ $file
+		tmp_saveplottedtobackup /loh/users/jgoeltz/data_hiwi_backup/ $file
 
 		# make readonly again
 		if $madeFileWriteableFirst; then
@@ -144,7 +145,7 @@ singularityzsh () {
 		echo "no nmpm module loaded"
 		return
 	fi
-	tmpString='singularity exec --app $CONTAINER_APP_NMPM_SOFTWARE /containers/stable/latest zsh'
+	tmpString='singularity exec --app $CONTAINER_APP_NMPM_SOFTWARE $CONTAINER_IMAGE_NMPM_SOFTWARE zsh'
 	echo "about to eval '$tmpString'"
 	eval $tmpString
 }

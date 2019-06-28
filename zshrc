@@ -198,6 +198,7 @@ function replaceGerrit() {
 # if nvim is available use it instead
 if type nvim 2>&1 >/dev/null ; then
 	alias vim=nvim
+	alias vimdiff="nvim -d "
 fi
 
 # to have more vim not vi like bindings:
