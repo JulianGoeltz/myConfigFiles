@@ -7,8 +7,16 @@ echo "plot all stuff after it finishes
 ./plot.py [some methods, one after another] [hdf5]
 
 argument is hdf5, then jobid is found by itself
-if second argument is given, than also animating"
+for more arguments, the script is called for each one"
 exit;
+fi
+
+# if more then one argument, process each one the same way
+if [ $# -gt 1 ]; then
+	for f in "$@"; do
+		$0 "$f"
+	done
+	exit
 fi
 
 # check whether a plot.py exists in current folder
@@ -20,6 +28,8 @@ if ! type h5dump >/dev/null 2>&1; then
 fi
 
 file=$1
+[ ! -f "$file" ] && echo "File $file doesn't exist" && exit
+
 jobid=$(h5dump -d input/environment "$file" | grep SLURM_JOB_ID | grep -o "[0-9]*")
 echo "Depending on jobid $jobid"
 scontrol show jobid "$jobid" &>/dev/null
@@ -55,11 +65,11 @@ else
 	sbatch -p short --mem 10g --wrap "run_nmpm_software ./plot.py $method $file"
 fi
 
-if [ $# -gt 1 ]; then
-	echo "also animating"
-	if [ $jobExist == 0 ]; then
-		sbatch -p simulation --depend=afterok:"$jobid" --wrap "run_nmpm_software ./plot.py animate_training $file"
-	else
-		sbatch -p simulation --wrap "run_nmpm_software ./plot.py animate_training $file"
-	fi
-fi
+# if [ $# -gt 1 ]; then
+# 	echo "also animating"
+# 	if [ $jobExist == 0 ]; then
+# 		sbatch -p simulation --depend=afterok:"$jobid" --wrap "run_nmpm_software ./plot.py animate_training $file"
+# 	else
+# 		sbatch -p simulation --wrap "run_nmpm_software ./plot.py animate_training $file"
+# 	fi
+# fi
