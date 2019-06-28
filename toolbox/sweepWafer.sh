@@ -30,9 +30,10 @@ for wafer in $(echo "$waferString" | grep -oP "\S*"); do
 			# containerPath=/containers/stable/latest
 			# containerPath=/containers/stable/2019-01-11_1.img
 			echo -n "        "
-			sbatch -p experiment \
+			OMP_NUM_THREADS=48 sbatch -p experiment \
 				--time 1-0:0:0 \
 				--wmod "$wafer" \
+				-c8 \
 				--mem 10g \
 				--hicann 271,239,203,204,299,322,323,301 \
 				--fpga 12,24,28,29,30,31 \
