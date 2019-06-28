@@ -327,3 +327,13 @@ set nomodeline
 " to jump to next error/warning
 map ]l :lnext
 map [l :lprevious
+
+" update the env variables (for inside tmux)
+function! UpdateEnvironment()
+	echo $DISPLAY
+	let $DISPLAY = system('tmux show-environment | grep -oP "DISPLAY=\K.*"')
+	echo $DISPLAY
+	echo $SSH_AUTH_SOCK
+	let $SSH_AUTH_SOCK = system('tmux show-environment | grep -oP "SSH_AUTH_SOCK=\K.*"')
+	echo $SSH_AUTH_SOCK
+endfunction
