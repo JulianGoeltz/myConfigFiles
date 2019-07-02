@@ -3,27 +3,45 @@
 # set -euo pipefail
 
 if [ $# -eq 0 ]; then
-echo "plot all stuff after it finishes
-./plot.py [some methods, one after another] [hdf5]
+	cat <<-EOF 
+		plot all stuff after it finishes
+		./plot.py [some methods, one after another] [hdf5]
 
-argument is hdf5, then jobid is found by itself
-for more arguments, the script is called for each one"
-exit;
+		argument is hdf5, then jobid is found by itself
+		for more arguments, the script is called for each one
+		EOF
+	exit;
+fi
+
+plot_methods="plot_training 
+plot_featureMatrix 
+plot_raster
+plot_volts
+"
+# plot_weightHist
+# plot_weightEvolutionIndividual
+# plot_weightEvolution
+
+# check whether a plot.py exists in current folder
+if [ ! -f "plot.py" ]; then
+	echo "Execute this command in a 'code' subfolder, needs 'plot.py' to work"
+	exit
+fi
+# check whether h5dump is available
+if ! type h5dump >/dev/null 2>&1; then
+	echo "h5dump needs to be available. try 'spack load hdf5'"
+	exit
 fi
 
 # if more then one argument, process each one the same way
 if [ $# -gt 1 ]; then
+	echo "using plotting methods $plot_methods on all files "
 	for f in "$@"; do
-		$0 "$f"
+		echo "$f"
+		# parallelise this bit to make it faster
+		$0 "$f" >/dev/null &
 	done
-	exit
-fi
-
-# check whether a plot.py exists in current folder
-[ ! -f "plot.py" ] && echo "Execute this command in a 'code' subfolder, needs 'plot.py' to work" && exit
-# check whether h5dump is available
-if ! type h5dump >/dev/null 2>&1; then
-	echo "h5dump needs to be available. try 'spack load hdf5'"
+	echo
 	exit
 fi
 
@@ -42,28 +60,24 @@ jobExist=$?
 # fi
 # exit
 
-for method in \
-	   plot_training plot_featureMatrix  plot_raster plot_weightHist plot_weightEvolutionIndividual plot_weightEvolution \
-	   ; do
+for method in $plot_methods; do
 	echo "submitting $method"
+
+	# plotting volts need potentially more ram
+	if [ "$method" == "plot_volts" ]; then
+		memoption="--mem 10g"
+	else
+		memoption=""
+	fi
+
 	if [ $jobExist == 0 ]; then
 		echo -n "with depends, "
-		sbatch -p short --depend=afterok:"$jobid" --wrap "run_nmpm_software ./plot.py $method $file"
+		sbatch -p short $memoption --depend=afterok:"$jobid" --wrap "run_nmpm_software ./plot.py $method $file"
 	else
 		echo -n "without depends, "
-		sbatch -p short --wrap "run_nmpm_software ./plot.py $method $file"
+		sbatch -p short $memoption --wrap "run_nmpm_software ./plot.py $method $file"
 	fi
 done
-# plotting volts need potentially more ram
-method=plot_volts
-echo "submitting $method"
-if [ $jobExist == 0 ]; then
-	echo -n "with depends, "
-	sbatch -p short --mem 10g --depend=afterok:"$jobid" --wrap "run_nmpm_software ./plot.py $method $file"
-else
-	echo -n "without depends, "
-	sbatch -p short --mem 10g --wrap "run_nmpm_software ./plot.py $method $file"
-fi
 
 # if [ $# -gt 1 ]; then
 # 	echo "also animating"
