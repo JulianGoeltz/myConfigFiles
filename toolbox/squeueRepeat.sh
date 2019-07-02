@@ -68,7 +68,7 @@ durationPrint() {
 	$vverbose && output=$output"Even very verbose Output\n"
 
 	output_pending=""
-	for linefeed in $(squeue -t pd -p longexp,experiment --noheader -o  "%.8u" --noheader | grep -v jgoeltz | sort | uniq -c ); do
+	for linefeed in $(squeue -t pd -p longexp,experiment,calib --noheader -o  "%.8u" --noheader | grep -v jgoeltz | sort | uniq -c ); do
 		output_pending=$output_pending$(echo $linefeed | awk '{print $2": "$1}')"; "
 	done
 	[ -n "$output_pending" ] && output=$output"Pending on experiment:: "${output_pending:0:-2}"\n"
@@ -83,17 +83,17 @@ durationPrint() {
 		if $vverbose; then
 			# also show pending
 			allLines=$(squeue -o "%.10i %.9P %.8u %.2t %.10M" --sort=-p,u,i |
-				grep "longexp\|experimen\|goelt\|JOBID" --color=never)
+				grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=never)
 		else
 			allLines=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" --sort=-p,u,i |
-				grep "longexp\|experimen\|goelt\|JOBID" --color=never)
+				grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=never)
 		fi
 		allLinesNum=$(echo $allLines | wc -l)
 		for linefeed in $(echo $allLines); do
 			if [ -z "$(echo $linefeed | grep jgoeltz)" ]; then
-				output=$output$(echo $linefeed | grep "longexp\|experimen\|goelt\|JOBID" --color=always)"\n"
+				output=$output$(echo $linefeed | grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=always)"\n"
 			else
-				output=$output$(echo $linefeed | grep "experimen\|jgoeltz" --color=always)
+				output=$output$(echo $linefeed | grep "experimen\|calib\|jgoeltz" --color=always)
 				jobid=$(echo $linefeed | grep -oP '^\s*([0-9]*)' | grep -o '[0-9]*')
 
 				# find the file worked on (only do for small job numbers, otherwise its a hassle
@@ -246,7 +246,7 @@ durationPrint() {
 				output=$output$delimiterEnd"\n"
 			done
 		fi
-		output=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|goelt\|JOBID" --color=auto)"\n"$output
+		output=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=auto)"\n"$output
 	fi
 	$verbose || echo -ne \\033c
 	$argWorking && echo -ne ", created $(date +'%H:%M:%S') on $clusterName\n${output:0:-2}" > $fileSave
