@@ -17,16 +17,12 @@ fi
 
 #spack_global
 if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
-	module load spack_visionary-defaults/2017-12-01
-	module load developmisc_426 # for vim+x
-	#module load dev_tools_py2_701 # for current zsh
 
 	read -k1 -t3 "testv?Do you want to load all packages(y/n)?"
 	if [[ $? -eq 1 || "$testv" == "y" || "$testv" == "z" ]]; then 
 		echo
 		echo "Loading modules..."
 		module load waf
-		module load simulation_py2_696
 		# spack unload nest
 		# spack load nest@2.2
 		# spack load nest # because that one is broken for rho=1
@@ -35,8 +31,10 @@ if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 		spack load py-matplotlib
 		spack load py-setuptools@35
 		spack load py-packaging
-		spack load py-flake8
+		spack load --dependencies py-flake8
 		spack load py-appdirs
+		spack load --dependencies git
+		spack load hdf5
 		# for HW; older version to circumvent segfaults
 		#module load nmpm_software/2018-07-12-1
 		#module load nmpm_software/2018-08-05-1
@@ -64,11 +62,12 @@ fi
 
 export MANPATH=/usr/local/share/man:$MANPATH
 
+
+
 if [ -z "$PREEXEC_FUNCTIONS_AMMENDED" ]; then
 	preexec_functions=($preexec_functions updateEnvTmux)
 	PREEXEC_FUNCTIONS_AMMENDED="set"
 fi
-
 function updateEnvEverywhere () {
 	for _pane in `tmux list-panes -a -F '#{pane_id}'`
 	do
