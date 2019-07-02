@@ -53,13 +53,13 @@ if [[ "$arg" == "set" ]]; then
 		echo ", spotify"
 		( if grep "network.proxy.mode=1" ~/.config/spotify/prefs -q; then
 			spotifyRunning=false
-			if pgrep -c spotify; then
+			if pgrep -c spotify >/dev/null; then
 				spotifyRunning=true
 				spotifyPlaying=$(playerctl -p spotify status)
 				killall spotify
 				sleep 1
 			fi
-			sed -i 's/network.proxy.mode=1/network.proxy.mode=2/g' ~/.config/spotify/prefs
+			sed -i 's/network.proxy.mode=1/network.proxy.mode=3/g' ~/.config/spotify/prefs
 			if $spotifyRunning; then
 				i3-msg exec /usr/bin/spotify >/dev/null
 				sleep 1
@@ -92,15 +92,15 @@ elif [[ "$arg" == "unset" ]]; then
 	# spotify
 	if [[ $# -gt 0 ]]; then
 		echo ", spotify"
-		( if grep "network.proxy.mode=2" ~/.config/spotify/prefs -q; then
+		( if grep "network.proxy.mode=3" ~/.config/spotify/prefs -q; then
 			spotifyRunning=false
-			if pgrep -c spotify; then
+			if pgrep -c spotify >/dev/null; then
 				spotifyRunning=true
 				spotifyPlaying=$(playerctl -p spotify status)
 				killall spotify
 				sleep 1
 			fi
-			sed -i 's/network.proxy.mode=2/network.proxy.mode=1/g' ~/.config/spotify/prefs
+			sed -i 's/network.proxy.mode=3/network.proxy.mode=1/g' ~/.config/spotify/prefs
 			if $spotifyRunning; then
 				i3-msg exec /usr/bin/spotify >/dev/null
 				sleep 1
