@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -euo pipefail
+set -euo pipefail
 
 if [ $# -eq 0 ]; then
 	echo "first argument is string of wafers, separated by whitespaces"
@@ -34,16 +34,19 @@ for wafer in $(echo "$waferString" | grep -oP "\S*"); do
 		while [ $tmpInt -gt 0 ]; do
 			# containerPath=/containers/stable/latest
 			# containerPath=/containers/stable/2019-01-11_1.img
-			echo -n "        "
-			OMP_NUM_THREADS=48 sbatch -p experiment \
-				--time 1-0:0:0 \
-				--wmod "$wafer" \
-				-c8 \
-				--mem 10g \
-				--hicann 271,239,203,204,299,322,323,301 \
-				--fpga 12,24,28,29,30,31 \
-				--wrap "run_nmpm_software ./train.py train_yccp $file"
-			tmpInt=$((tmpInt - 1))
+			output=$(OMP_NUM_THREADS=48 sbatch -p experiment \
+					--time 1-0:0:0 \
+					--wmod "$wafer" \
+					-c8 \
+					--mem 10g \
+					--hicann 271,239,203,204,299,322,323,301 \
+					--fpga 12,24,28,29,30,31 \
+					--wrap "run_nmpm_software ./train.py train_yccp $file"
+			)
+			jobid=$(echo "$output" | grep -oP "\d*")
+			echo "        submitted $jobid"
+			plotAfterJob.sh "$jobid" >/dev/null &
+			((tmpInt--))
 		done
 	done
 done

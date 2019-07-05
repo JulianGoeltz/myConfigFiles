@@ -72,8 +72,8 @@ durationPrint() {
 		output_pending=$output_pending$(echo $linefeed | awk '{print $2": "$1}')"; "
 	done
 	[ -n "$output_pending" ] && output=$output"Pending on experiment:: "${output_pending:0:-2}"\n"
-	count_ownall=$(squeue -u jgoeltz --noheader -o  "%.8u" --noheader | wc -l)
-	count_ownpending=$(squeue -t pd -u jgoeltz --noheader -o  "%.8u" --noheader | wc -l)
+	count_ownall=$(squeue -u jgoeltz --noheader -o  "%.8u %.10r" --noheader | grep -v Dependency | wc -l)
+	count_ownpending=$(squeue -t pd -u jgoeltz --noheader -o  "%.8u %.10r" --noheader | grep -v Dependency | wc -l)
 	count_all=$(squeue --noheader -o  "%.8u" | wc -l)
 	output=$output"Own jobs count; total: $count_ownall, pending: $count_ownpending; all: $count_all\n"
 

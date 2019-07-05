@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# set -euo pipefail
+set -euo pipefail
 
 if [ $# -eq 0 ]; then
 	cat <<-EOF 
@@ -45,20 +45,22 @@ if [ $# -gt 1 ]; then
 	exit
 fi
 
-file=$1
-[ ! -f "$file" ] && echo "File $file doesn't exist" && exit
+if [ -f "$1" ]; then 
+	file=$1
+	jobid=$(h5dump -d input/environment "$file" | grep SLURM_JOB_ID | grep -o "[0-9]*")
+	echo "Depending on jobid $jobid"
+else
+	jobid=$1
+	file=$jobid
+fi
 
-jobid=$(h5dump -d input/environment "$file" | grep SLURM_JOB_ID | grep -o "[0-9]*")
-echo "Depending on jobid $jobid"
 scontrol show jobid "$jobid" &>/dev/null
 jobExist=$?
 # echo $jobExist
-# if [ $jobExist == 0 ]; then
-# 	echo exists
-# else
-# 	echo doesnt\ exist
-# fi
-# exit
+if [ $jobExist -ne 0 ]; then
+	echo "File $file doesn't exist and is no jobid either"
+	exit
+fi
 
 for method in $plot_methods; do
 	echo "submitting $method"
