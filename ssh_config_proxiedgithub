@@ -1,2 +1,6 @@
+Host gitviz.kip.uni-heidelberg.de
+    User git
+    IdentityFile ~/.ssh/gitviz.id_rsa
+
 host github*
   ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
