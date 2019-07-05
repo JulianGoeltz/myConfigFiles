@@ -14,6 +14,7 @@ jobsPending=""
 IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
 for jobinfo in $(scontrol show -o job); do
+	echo $jobinfo | grep -vqP "Partition=(exp|longexp|calib)" && continue
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
 
 	job_status=$(echo "$jobinfo" | grep -oP "JobState=\K\S*")
