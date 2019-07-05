@@ -13,16 +13,18 @@ export ZSH=/home/julgoe/.oh-my-zsh
 module () {
     eval `/usr/bin/modulecmd bash $*`
 }
-. /home/julgoe/git/spack/share/spack/setup-env.sh
-spack load python@2.7.16
-spack load vim
-spack load neovim
 
 # to connect to terminal server from urz
 alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/julgoe/Dropbox/printing"
 
 # if on tty, change colour scheme a bit
+. /home/julgoe/git/spack/share/spack/setup-env.sh
 if [ "$TERM" = "linux" ]; then
+	#load the spack stuff in tty, gets passed on
+	spack load python@2.7.16
+	spack load vim
+	spack load neovim
+
 	echo -en "\e]P0000000" #black # originally 232323 # in between it was 111111
 	echo -en "\e]P82B2B2B" #darkgrey
 	echo -en "\e]P1D75F5F" #darkred
@@ -52,7 +54,7 @@ alias startxzsh="startx <(echo \"xterm -e 'xterm -geometry 200x60 -bg black -fg 
 
 # proxy definition. has to be sourced or env of shell is not changed
 alias proxies="source proxies.sh"
-proxies
+# proxies
 
 [[ $PATH == *"/home/julgoe/nest/bin"* ]] || source $HOME/nest/bin/nest_vars.sh
 [[ $PATH == *"/home/julgoe/nest/bin"* ]] || source $HOME/neuron/nrnenv
@@ -156,7 +158,7 @@ if [[ -x `which notify-send` ]]; then
 	precmd_functions=($precmd_functions notify-precmd-hook)
 fi
 
-alias spacky="module purge; spack load -r python@2.7.16; spack load -r vim; spack load -r nest; spack load -r py-h5py; spack load -r py-scipy; spack load -r py-matplotlib; spack load -r py-decorator; spack load -r py-pexpect; spack load -r py-simplegeneric; spack load -r py-pip; module list"
+alias spacky="module purge; spack load -r python@2.7.16; spack load -r vim; spack load -r nest; spack load -r py-h5py; spack load -r py-scipy; spack load -r py-matplotlib; spack load -r py-decorator; spack load -r py-pexpect; spack load -r py-simplegeneric; spack load -r py-pip; spack load neovim; module list"
 
 # alias spacky="module purge; source ~/myConfigFiles/zsh/zshrc_host_T1_spackenv; module list"
 # spacky_generate() {

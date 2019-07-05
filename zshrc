@@ -1,11 +1,12 @@
+#to profile this, afterwards do 'zprof'
+# zmodload zsh/zprof
+
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 setopt appendhistory
 # End of lines configured by zsh-newuser-install
-# add custom completion scripts
-fpath=(~/.zsh/completion $fpath)
 # define filename for compinstall based on host
 if [[ "$(hostname)" == "T1" ]]; then
 	zstyle :compinstall filename '/home/julgoe/.zshrc'
@@ -20,10 +21,11 @@ else
 	bash
 fi
 
-# The following lines were added by compinstall
+# add custom completion scripts
+fpath=(~/.zsh/completion $fpath)
+
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
 
 
 ######## Own stuff
@@ -192,6 +194,9 @@ function replaceGerrit() {
 	echo ${foobar//gerrit.bioai.eu/brainscales-r.kip.uni-heidelberg.de}
 }
 
+# shift tab working as expected
+bindkey "$terminfo[kcbt]" reverse-menu-complete
+
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
 
@@ -265,14 +270,15 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git tmux # thefuck
-)
+# plugins=(
+#   git tmux # thefuck
+# )
 
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
 # vim keybindings
 bindkey -v
 alias la="ls -lAh --color=always"
+alias ls="ls --color=always"
 
 # ######## PROMPT
 # Old prompt
@@ -298,43 +304,96 @@ define_prompt () {
 	# we have to use double quotes for this one to evaluate the colors
 	PR_NO_COLOR="%{$terminfo[sgr0]%}"
 	PROMPT="\
-"
-	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}┌─[")'
-	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] || echo "┌─[")'
+┌─["
 	PROMPT=$PROMPT"${PR_CYAN}%D{%m-%d/%H:%M:%S}$PR_NO_COLOR|$PR_LIGHT_GREEN%n$PR_NO_COLOR@$PR_LIGHT_YELLOW%m$PR_NO_COLOR"
-	PROMPT=$PROMPT'$([ -n "$VIRTUAL_ENV" ] && echo -n "$PR_NO_COLOR|$PR_MAGENTA" && echo -n $(basename $VIRTUAL_ENV))'$PR_NO_COLOR
+	PROMPT=$PROMPT'`[ -n "$VIRTUAL_ENV" ] && echo -n "$PR_NO_COLOR|$PR_MAGENTA" && echo -n $(basename $VIRTUAL_ENV)`'$PR_NO_COLOR
 	PROMPT=$PROMPT'$([ -n "$SINGULARITY_APPNAME" ] && echo "$PR_NO_COLOR|${PR_MAGENTA}container")'$PR_NO_COLOR
-	PROMPT=$PROMPT'$([ -z "$ZSH_THEME_GIT_DONTDOIT" ] && echo "$(git_prompt_info)")'$PR_NO_COLOR
+	PROMPT=$PROMPT'$(git_prompt_info)'$PR_NO_COLOR
 	PROMPT=$PROMPT"|%(1j.$PR_YELLOW%j$PR_NO_COLOR|.)$PR_BLUE%~$PR_NO_COLOR"
 	# for vi normal mode, make first bit red
-	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}]\n└─⧫${PR_NO_COLOR} ")'
-	PROMPT=$PROMPT'$([ "$KEYMAP" = "vicmd" ] || echo "]\n└─☉ ")'
+	PROMPT=$PROMPT"]
+└─☉ "
 	# └─⬧ "
 	# └─⧫ "
 	# ━
 	# └─☉ "
 }
 define_rprompt () {
-	#RPROMPT="$PR_MAGENTA\$VENV$PR_YELLOW(%?)${PR_GREEN}[%!]$PR_NO_COLOR "
-	#RPROMPT="$PR_YELLOW($(printf '%3u' $?))$PR_NO_COLOR "
 	RPROMPT="$PR_YELLOW(%?)$PR_NO_COLOR "
-	RPROMPT='$([ "$KEYMAP" = "vicmd" ] && echo "${PR_RED}[NORMAL MODE]")'$PR_NO_COLOR$RPROMPT
 }
 define_prompt
 define_rprompt
-# make sure it is redrawn correctly if we change from insert to normal mode
-function zle-line-init zle-keymap-select {
-	#define_rprompt
-	#define_prompt
-	zle reset-prompt
+setopt promptsubst
+
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
 }
+
+# Use beam shape cursor on startup.
+echo -ne '\e[5 q'
+
 zle -N zle-line-init
 zle -N zle-keymap-select
 export KEYTIMEOUT=1  #this is for faster mode switching
 # to only show the venv once
 VIRTUAL_ENV_DISABLE_PROMPT="true"
 # set this to nozero length if git is very slow for some reason
-ZSH_THEME_GIT_DONTDOIT=""
+ZSH_PROMPT_GIT_DONTDOIT=""
+
+git_prompt_info() {
+	# in sshfs'd folders dont query git
+	[ -n "$ZSH_PROMPT_GIT_DONTDOIT" ] && return 0
+
+	# in git folder?
+	if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+		return 0
+	fi
+
+	local git_status_dirty git_branch
+	# dirty status
+	if $(git diff --quiet HEAD) ; then
+		git_status_dirty=''
+	else
+		git_status_dirty='*'
+	fi
+
+	# branch name
+	git_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+	if [ "${#git_branch}" -ge 24 ]; then
+		git_branch="${git_branch:0:21}..."
+	fi
+	if [ "${git_branch}" = "HEAD" ]; then
+		git_branch="$(git rev-parse --short HEAD)"
+	fi
+
+	# output
+	echo "|$PR_RED${git_branch}$PR_LIGHT_GREEN${git_status_dirty}"
+}
+
+# highlight items in completion
+zstyle ':completion:*' menu select
+# cd without 'cd'
+setopt  autocd autopushd
+
+# fuzzy completion
+# from https://unix.stackexchange.com/questions/330481/zsh-tab-completions-not-working-as-desired-for-partial-paths
+zstyle ':completion:*:*:*:*:globbed-files' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+zstyle ':completion:*:*:*:*:local-directories' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+zstyle ':completion:*:*:*:*:directories' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+
+# coloured completion
+eval "$(dircolors)"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 
 # User configuration
 
