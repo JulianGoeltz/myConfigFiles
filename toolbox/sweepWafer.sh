@@ -10,10 +10,10 @@ if [ $# -eq 0 ]; then
 	exit
 fi
 
-if ! module list 2>&1 >/dev/null | grep -q slurm-singularity ; then 
-	echo "Do 'module load slurm-singularity/...' to start plotting scripts from within."
-	exit
-fi
+# if ! module list 2>&1 >/dev/null | grep -q slurm-singularity ; then 
+# 	echo "Do 'module load slurm-singularity/...' to start plotting scripts from within."
+# 	exit
+# fi
 
 waferString=$1
 shift

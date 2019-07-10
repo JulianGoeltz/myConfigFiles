@@ -152,3 +152,6 @@ alias singularityemrun='singularity exec --app visionary-wafer /containers/stabl
 
 # because of nest bug, load patched nest
 alias spacky="module purge; module load spack_visionary-defaults/2017-12-01; . /wang/users/wv385/cluster_home/spack_failure/spack3/share/spack/setup-env.sh; spack load -r nest; module list"
+
+# delete plotAfterJob.sh's after job failed
+alias scancel_neversatisfied="squeue -u jgoeltz | grep DependencyNeverSatisfied | awk '{print $1;}' | xargs scancel"

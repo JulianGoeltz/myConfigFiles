@@ -54,10 +54,13 @@ else
 	file=$jobid
 fi
 
-scontrol show jobid "$jobid" &>/dev/null
-jobExist=$?
-# echo $jobExist
-if [ $jobExist -ne 0 ]; then
+if scontrol show jobid "$jobid" &>/dev/null ; then
+	jobExist=true
+else
+	jobExist=false
+fi
+
+if ! { $jobExist || [ -f "$1" ] ; }; then
 	echo "File $file doesn't exist and is no jobid either"
 	exit
 fi
@@ -72,7 +75,7 @@ for method in $plot_methods; do
 		memoption=""
 	fi
 
-	if [ $jobExist == 0 ]; then
+	if $jobExist; then
 		echo -n "with depends, "
 		sbatch -p short $memoption --depend=afterok:"$jobid" --wrap "run_nmpm_software ./plot.py $method $file"
 	else
