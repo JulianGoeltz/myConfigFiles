@@ -118,7 +118,7 @@ tmux_resetSocket () {
 # cat ~/myConfigFiles/tmp_art
 # cat ~/myConfigFiles/tmp_art
 tm () {
-	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep -P "(tmux: server|tmux -f /)")
+	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep -P "(tmux: server|tmux)")
 	if [ -z "$tmpTmuxServerPid" ]; then
 		echo "no tmux server running, start it"
 		return
@@ -278,7 +278,8 @@ HIST_STAMPS="yyyy-mm-dd"
 # vim keybindings
 bindkey -v
 alias la="ls -lAh --color=always"
-alias ls="ls --color=always"
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
 
 # ######## PROMPT
 # Old prompt
@@ -325,7 +326,7 @@ define_prompt
 define_rprompt
 setopt promptsubst
 
-function zle-keymap-select {
+function zle-line-init zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
     echo -ne '\e[1 q'
@@ -386,13 +387,20 @@ setopt  autocd autopushd
 
 # fuzzy completion
 # from https://unix.stackexchange.com/questions/330481/zsh-tab-completions-not-working-as-desired-for-partial-paths
-zstyle ':completion:*:*:*:*:globbed-files' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
-zstyle ':completion:*:*:*:*:local-directories' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
-zstyle ':completion:*:*:*:*:directories' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+#zstyle ':completion:*:*:*:*:globbed-files' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+#zstyle ':completion:*:*:*:*:local-directories' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+#zstyle ':completion:*:*:*:*:directories' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+#zstyle ':completion:*:*:*:*:commands' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
+#explanation https://superuser.com/questions/1092033/how-can-i-make-zsh-tab-completion-fix-capitalization-errors-for-directorys-and
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
 
 # coloured completion
 eval "$(dircolors)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# complete all own processes
+zstyle ':completion:*:processes' command 'ps -u $USER -o pid,user,comm'
 
 
 # User configuration
