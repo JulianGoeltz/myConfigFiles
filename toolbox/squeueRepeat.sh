@@ -59,6 +59,32 @@ durationPrint() {
 	echo $tmpOut
 }
 
+fileProgressBar() {
+	file=$1
+	[ ! -f $file ] && return
+
+	StepNumber=$(grep -oP "Number_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
+	FileCount=$(grep " steps " -c $file)
+	[ $? -ne 0 ] && return
+	if [ -z "$StepNumber" ] ; then StepNumber=200; fi
+	if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
+		StepNumber=$(echo $StepNumber | grep -o "[0-9]*$" | tail -n 1);
+	fi
+	# subtract small number that is added later to circumvent false rounding
+	counter=$(( ($FileCount - 0.1) * $standardWidth / $StepNumber))
+	tmp_output=" "$delimiterStart
+	while (( $counter > 0 )); do
+		tmp_output=$tmp_output$delimiterDone
+		counter=$(($counter-1))
+	done
+	counter=$(( ($StepNumber-$FileCount + 0.1) * $standardWidth / $StepNumber))
+	while (( $counter > 0 )); do
+		tmp_output=$tmp_output$delimiterNot
+		counter=$(($counter-1))
+	done
+	echo "$tmp_output$delimiterEnd"
+}
+
 #while true; do
 	startTimestamp=$(date +%s)
 	# decide whether to use sequential or parallel, based on terminal size
@@ -125,27 +151,7 @@ durationPrint() {
 					#         echo $file is too large, skipping
 					# 	continue
 					# fi
-					StepNumber=$(grep -oP "Number_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
-					FileCount=$(grep " steps " -c $file)
-					[ $? -ne 0 ] && output=$output"\n" && continue
-					if [ -z "$StepNumber" ] ; then StepNumber=200; fi
-					if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
-						StepNumber=$(echo $StepNumber | grep -o "[0-9]*$" | tail -n 1);
-					fi
-					# subtract small number that is added later to circumvent false rounding
-					counter=$(( ($FileCount - 0.1) * $standardWidth / $StepNumber))
-					# output=$output$file
-					output=$output" "$delimiterStart
-					while (( $counter > 0 )); do
-						output=$output$delimiterDone
-						counter=$(($counter-1))
-					done
-					counter=$(( ($StepNumber-$FileCount + 0.1) * $standardWidth / $StepNumber))
-					while (( $counter > 0 )); do
-						output=$output$delimiterNot
-						counter=$(($counter-1))
-					done
-					output=$output$delimiterEnd
+					output=$output$(fileProgressBar $file)
 					jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber[0-9]*of[0-9]*" $file)
 					if [ -n "$jobIsSweep" ] ; then
 						output=$output" ("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
@@ -191,22 +197,21 @@ durationPrint() {
 					output="$output $(durationPrint $duration)"
 
 				fi
-				output=$output$delimiterStart
-				while (( $counter > 0 )); do
-					output=$output$delimiterDone
-					counter=$(($counter-1))
-				done
-				counter=$(( ($StepNumber-$FileCount + 0.1) * $standardWidth / $StepNumber))
-				while (( $counter > 0 )); do
-					output=$output$delimiterNot
-					counter=$(($counter-1))
-				done
-				output=$output$delimiterEnd
+
+				output=$output$(fileProgressBar $file)
+
 				timeSinceTouch=$(($startTimestamp - $(stat -c %Y $file)))
 				if [ $timeSinceTouch -gt 60 ]; then
 					output="${output} not changed for $(durationPrint $timeSinceTouch)"
 				fi
 				output=$output"\n"
+			done
+		fi
+		if [ -n "$(find /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/* -name 'jenkins-log.txt')" ]; then
+			for f in  /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/*/jenkins-log.txt; do
+				# we can get the build number from the first star
+				buildNr=$(echo $f | grep -oP "(?<=p_jg_TimeToFirstSpike.).*?(?=\.x)" | base64 --decode | grep -oP "(?<=p_jg_TimeToFirstSpike#)[0-9]*")
+				output=$output"jenkins TtFS(#${buildNr}): $(fileProgressBar $f)\n"
 			done
 		fi
 

@@ -337,3 +337,6 @@ function! UpdateEnvironment()
 	let $SSH_AUTH_SOCK = system('tmux show-environment | grep -oP "SSH_AUTH_SOCK=\K.*"')
 	echo $SSH_AUTH_SOCK
 endfunction
+
+" all Jenkinsfile|s are groovy
+au BufNewFile,BufRead Jenkinsfile setf groovy

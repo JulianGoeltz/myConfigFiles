@@ -155,3 +155,6 @@ alias spacky="module purge; module load spack_visionary-defaults/2017-12-01; . /
 
 # delete plotAfterJob.sh's after job failed
 alias scancel_neversatisfied="squeue -u jgoeltz | grep DependencyNeverSatisfied | awk '{print $1;}' | xargs scancel"
+
+# to cd to current jenkins workspace if a p_jg_TimeToFirstSpike is running
+alias cdjenk="cd; cd /jenkins/jenlib_workspaces_f9/p_jg_T*x/"
