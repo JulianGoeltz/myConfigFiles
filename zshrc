@@ -332,13 +332,13 @@ setopt promptsubst
 function zle-line-init zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
-
+    # in tty otherwise q is left  in prompt
+    [ "$TERM" = "linux" ] || echo -ne '\e[1 q'
   elif [[ ${KEYMAP} == main ]] ||
        [[ ${KEYMAP} == viins ]] ||
        [[ ${KEYMAP} = '' ]] ||
        [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
+    [ "$TERM" = "linux" ] || echo -ne '\e[5 q'
   fi
 }
 
