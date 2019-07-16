@@ -197,6 +197,9 @@ function replaceGerrit() {
 # shift tab working as expected
 bindkey "$terminfo[kcbt]" reverse-menu-complete
 
+# if 'cd file' cd to the directory of that file
+function cd () { [ -d "$1" ] && builtin cd "$1" || builtin cd "$(dirname "$1")"}   
+
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
 
