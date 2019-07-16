@@ -5,7 +5,7 @@
 if [ $# -eq 0 ]; then
 echo "go through folders given as arguments, and process all the .hdf5 files in
 the simulations subfolder with 
-      ./plot.py plot_seedsweep [list of hdf5s]
+      run_nmpm_software ./plot.py plot_seedsweep [list of hdf5s]
 IF:
    * for each yaml there is a readonly hdf5
    * no plot_sweep*.svg file in that folder already
@@ -44,7 +44,6 @@ for fold in "$@"; do
 		echo "Folder $fold has more than one simulations# subfolder:"
 		ls "$fold/simulations"* -d
 		echo "you have to specify which one you want to use (as first argument) "
-		exit
 	fi
 
 	if [[ $(find "$fold" -name 'plot_sweep_*' 2>/dev/null | wc -l) -ne 0 ]]; then
@@ -60,7 +59,7 @@ for fold in "$@"; do
 	fi
 
 	gothrough=true
-	for yaml in find $fold/*.yaml; do
+	for yaml in $(find $fold -name "*.yaml"); do
 		base=$(basename "${yaml:0:-5}")
 		# echo "$yaml -> $base"
 		if [[ "$(find "$fold/$subFolder" -name "${base}_"\*.hdf5 -perm a=r  2>/dev/null | wc -l)" -ne 1 ]]; then
@@ -75,10 +74,12 @@ for fold in "$@"; do
 	fi
 
 	# filetype=.png can be used
-	# sbatch -p short --wrap " ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
-	nohup run_nmpm_software ./plot.py plot_seedsweep "$fold/$subFolder/"*hdf5 &
+	sbatch -p short --wrap "run_nmpm_software ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"&
+	# nohup run_nmpm_software ./plot.py plot_seedsweep "$fold/$subFolder/"*hdf5 &
 	# ./plot.py plot_seedsweep $fold/$subFolder/*hdf5
 	# echo "    ./plot.py plot_seedsweep $fold/$subFolder/*hdf5"
 	((countSubmit++))
 done
+# wait until all jobs are done in case it is only the sbatches
+wait
 echo "Started $countSubmit plottings ($countNotfinished not finished, $countDone already done)"

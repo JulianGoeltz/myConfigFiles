@@ -24,6 +24,7 @@ if [ $# -eq 0 ]; then
 fi
 
 trigger="RESETALLTHEJOBS"
+# trigger2 to start from hdf5 files instead of yaml files. see below
 trigger2="useHDF5"
 # remove the '_fileHasBeenSend' and '.hdf5' files, if the third argument is $trigger
 # first it is checked whether there are no current jobs running, otherwise asks for explicit confirmation

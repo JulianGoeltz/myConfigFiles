@@ -1,0 +1,34 @@
+#compdef h5dump
+_h5dump() {
+	_arguments \
+	  "-d[which internal path]:which internal path:" \
+	  "-o[list of internal paths]:list of internal paths:" \
+	  ":File:->files" \
+	  && return 0
+	# '*::command: _normal'
+	# '*::args:->command' "$common[@]" && ret=0
+	case $state in
+		files)
+			_files -g "*.hdf5"
+			return
+			;;
+	esac
+	return
+}
+_h5dump "$@"
+#compdef h5dump
+# _h5dump() {
+# 	_arguments \
+# 	  "1::command:(train_yccp)" \
+# 	  "2::yaml to use:->files" && return 0
+# 	# '*::command: _normal'
+# 	# '*::args:->command' "$common[@]" && ret=0
+# 	case $state in
+# 		files)
+# 			_files -g "*.yaml"
+# 			;;
+# 	esac
+# 	return
+# }
+# _h5dump "$@"
+

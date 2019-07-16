@@ -1,9 +1,9 @@
 #compdef singularity
 _singularity() {
 	_arguments \
-	  ":command:(exec shell)" \
+	  ":command:(exec shell apps)" \
 	  ":--app:(--app)" \
-	  ":app:(visionary-wafer)" \
+	  ":app:(visionary-wafer visionary-simulation)" \
 	  ":container image to use:->files" \
 	  "*:::args:->comd" && return 0
 	# '*::command: _normal'
