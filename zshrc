@@ -22,7 +22,7 @@ else
 fi
 
 # add custom completion scripts
-fpath=(~/.zsh/completion $fpath)
+fpath=(~/.zsh/completion/ $fpath)
 
 autoload -Uz compinit
 compinit
@@ -395,7 +395,11 @@ setopt  autocd autopushd
 #zstyle ':completion:*:*:*:*:directories' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
 #zstyle ':completion:*:*:*:*:commands' matcher 'r:|?=** m:{a-z\-}={A-Z\_}'
 #explanation https://superuser.com/questions/1092033/how-can-i-make-zsh-tab-completion-fix-capitalization-errors-for-directorys-and
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# the patterns are handeled after each other until one finds matches
+# first pattern allows lowercase to be match uppercase as well
+# second ADDS (due to +) uppercase matching lowercase
+# last one matches if given string appears somewhere in the matches, not only at beginning
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' '+m:{A-Z}={a-z}' 'm:{a-zA-Z}={A-Za-z} l:|=* r:|=*'
 
 
 # coloured completion
