@@ -17,10 +17,10 @@ plot_methods="plot_training
 plot_featureMatrix 
 plot_raster
 plot_volts
+plot_weightHist
+plot_weightEvolutionIndividual
+plot_weightEvolution
 "
-# plot_weightHist
-# plot_weightEvolutionIndividual
-# plot_weightEvolution
 
 # check whether a plot.py exists in current folder
 if [ ! -f "plot.py" ]; then
@@ -56,8 +56,16 @@ fi
 
 if scontrol show jobid "$jobid" &>/dev/null ; then
 	jobExist=true
+	# when sharing FGs, some files can already be done, aka readonly
+	# in this case start plotting immediately
+	if [ "$(stat --format '%a' "$1")" == "444" ]; then
+		dependOnJob=false
+	else
+		dependOnJob=true
+	fi
 else
 	jobExist=false
+	dependOnJob=false
 fi
 
 if ! { $jobExist || [ -f "$1" ] ; }; then
@@ -75,7 +83,7 @@ for method in $plot_methods; do
 		memoption=""
 	fi
 
-	if $jobExist; then
+	if $dependOnJob; then
 		echo -n "with depends, "
 		sbatch -p short $memoption --depend=afterok:"$jobid" --wrap "run_nmpm_software ./plot.py $method $file"
 	else
