@@ -4,3 +4,5 @@ Host gitviz.kip.uni-heidelberg.de
 
 host github*
   ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
+host ssh.strato*
+  ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p

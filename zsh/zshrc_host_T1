@@ -182,16 +182,19 @@ alias spacky="module purge; spack load -r python@2.7.16; spack load -r vim; spac
 # copying files to my homepage to make them available
 copyToWeb (){
 	randNo=$RANDOM$RANDOM$RANDOM
-	ssh ssh.strato.de "mkdir -p juliangoeltzde/secretSharing/${randNo}"
+	tmpConfig="$(echo ${GIT_SSH_COMMAND:-} | grep -oP "\-F [^ ]*" | awk '{print $2}')"
+	[ -z "$tmpConfig" ] && tmpConfig=~/.ssh/config || tmpConfig=~/.ssh/config_prox
+	echo "Using config file $tmpConfig"
+	ssh -F $tmpConfig ssh.strato.de "mkdir -p juliangoeltzde/sharing/${randNo}"
 	for file in $@; do 
 		if [ ! -f "$file" ] ; then
 			echo "File ${file} does not exist."
 			continue
 		fi
-		fileUrl=http://julian-goeltz.de/secretSharing/$randNo/$file
-		scp -r "$file" ssh.strato.de:juliangoeltzde/secretSharing/$randNo/ && \
+		fileUrl=http://julian-goeltz.de/sharing/$randNo/$file
+		scp -F $tmpConfig -r "$file" ssh.strato.de:juliangoeltzde/sharing/$randNo/ && \
 			echo "File is available at $fileUrl" && \
-			( telegram-cli -W -e "msg Julian_Göltz $fileUrl" >/dev/null)
+			( telegram-cli -W -e "msg Julian_Göltz $file\ $fileUrl" >/dev/null)
 	done
 }
 
