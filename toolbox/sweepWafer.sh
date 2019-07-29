@@ -15,6 +15,12 @@ fi
 # 	exit
 # fi
 
+# define licences wafer-specific
+hicann_wafer=(
+	[33]="271,239,272,240,299,322,323,301"
+	[37]="271,239,299,322,323,301"
+	)
+
 waferString=$1
 shift
 if [ ! -f "$1" ]; then
@@ -34,13 +40,13 @@ for wafer in $(echo "$waferString" | grep -oP "\S*"); do
 		while [ $tmpInt -gt 0 ]; do
 			# containerPath=/containers/stable/latest
 			# containerPath=/containers/stable/2019-01-11_1.img
+			# exclude nodes with `-x HBPHost9 \`
 			output=$(OMP_NUM_THREADS=48 sbatch -p experiment \
 					--time 1-0:0:0 \
 					--wmod "$wafer" \
 					-c8 \
 					--mem 10g \
-					--hicann 271,239,203,204,299,322,323,301 \
-					--fpga 12,24,28,29,30,31 \
+					--hicann "${hicann_wafer[$wafer]}" \
 					--wrap "run_nmpm_software ./train.py train_yccp $file"
 			)
 			jobid=$(echo "$output" | grep -oP "\d*")
