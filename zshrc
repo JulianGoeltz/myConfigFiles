@@ -198,7 +198,7 @@ function replaceGerrit() {
 bindkey "$terminfo[kcbt]" reverse-menu-complete
 
 # if 'cd file' cd to the directory of that file
-function cd () { [ -d "$1" ] && builtin cd "$1" || builtin cd "$(dirname "$1")"}   
+function cd () { ! [ -f "$1" ] && builtin cd $1 || builtin cd "$(dirname "$1")"}
 
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
@@ -364,7 +364,7 @@ git_prompt_info() {
 
 	local git_status_dirty git_branch
 	# dirty status
-	if $(git diff --quiet HEAD) ; then
+	if [ -z "$(git status --porcelain)" ] ; then
 		git_status_dirty=''
 	else
 		git_status_dirty='*'

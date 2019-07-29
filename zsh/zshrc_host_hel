@@ -33,7 +33,8 @@ if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 		spack load py-packaging
 		spack load --dependencies py-flake8
 		spack load py-appdirs
-		spack load --dependencies git
+		# spack load --dependencies git # /u/b/git is 2.1.4, spack version is 2.14.1 but gives constant errors
+		# spack load --dependencies py-git-review  # needed for review
 		spack load hdf5
 		# for HW; older version to circumvent segfaults
 		#module load nmpm_software/2018-07-12-1
@@ -154,7 +155,7 @@ alias singularityemrun='singularity exec --app visionary-wafer /containers/stabl
 alias spacky="module purge; module load spack_visionary-defaults/2017-12-01; . /wang/users/wv385/cluster_home/spack_failure/spack3/share/spack/setup-env.sh; spack load -r nest; module list"
 
 # delete plotAfterJob.sh's after job failed
-alias scancel_neversatisfied="squeue -u jgoeltz | grep DependencyNeverSatisfied | awk '{print $1;}' | xargs scancel"
+alias scancel_neversatisfied="squeue -u jgoeltz | grep DependencyNeverSatisfied | awk '{print \$1;}' | xargs scancel"
 
 # to cd to current jenkins workspace if a p_jg_TimeToFirstSpike is running
 alias cdjenk="cd; cd /jenkins/jenlib_workspaces_f9/p_jg_T*x/"

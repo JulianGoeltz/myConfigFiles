@@ -6,8 +6,10 @@
 	co = checkout
 	st = status
 [core]
-	pager = less -FRSX
+	pager = less -RSX
 	editor = nvim
 [gitreview]
 	username = goeltz
 [http]
+[push]
+	default = simple

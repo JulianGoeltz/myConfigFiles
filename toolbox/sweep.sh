@@ -116,7 +116,7 @@ for fn in $(find "$relPath"/**/"$subFolderSour"/*"$identifyingBit"); do
 		currentJob=$startingCall
 		((alreadyStartedJobs++))
 	fi
-	[ $alreadyStartedJobs -ge $maxNumberOfJobs ] && break;
+	[ $alreadyStartedJobs -ge $maxNumberOfJobs ] && echo "maxNumberOfJobs $maxNumberOfJobs reached" && break;
 	echo "($numOfFilesLookedAt/$numOfAllFiles)$alreadyStartedJobs:$accumulatedFiles, current file $fn"
 	# check whether file already processed
 	fnFolder=$(dirname "$fn")/"$subFolderDest"
