@@ -124,7 +124,7 @@ fileProgressBar() {
 
 				# find the file worked on (only do for small job numbers, otherwise its a hassle
 				if [[ "$allLinesNum" -lt 8 ]] || $verbose; then
-					scontrol write batch_script $jobid $fileTmpScontrol >/dev/null
+					scontrol write batch_script $jobid $fileTmpScontrol >/dev/null 2>&1
 					tmpString=$([ -f $fileTmpScontrol ] && grep -oP "\S*\.(yaml|hdf5)\S*" $fileTmpScontrol)
 					# check whether we found something
 					if [ -n $tmpString ]; then
@@ -207,12 +207,13 @@ fileProgressBar() {
 				output=$output"\n"
 			done
 		fi
-		if [ -n "$(find /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/* -name 'jenkins-log.txt')" ]; then
-			for f in  /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/*/jenkins-log.txt; do
-				# we can get the build number from the first star
-				buildNr=$(echo $f | grep -oP "(?<=p_jg_TimeToFirstSpike.).*?(?=\.x)" | base64 --decode | grep -oP "(?<=p_jg_TimeToFirstSpike#)[0-9]*")
-				output=$output"jenkins TtFS(#${buildNr}): $(fileProgressBar $f)\n"
-			done
+		if [ -n "$(find /jenkins/jenlib_workspaces_f9/ -maxdepth 1 -name 'p_jg_TimeToFirstSpike*' 2>/dev/null)" ] &&
+			[ -n "$(find /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/ -name 'jenkins-log.txt' 2>/dev/null)" ]; then
+				for f in  /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/*/jenkins-log.txt; do
+					# we can get the build number from the first star
+					buildNr=$(echo $f | grep -oP "(?<=p_jg_TimeToFirstSpike.).*?(?=\.x)" | base64 --decode 2>/dev/null | grep -oP "(?<=p_jg_TimeToFirstSpike#)[0-9]*")
+					output=$output"jenkins TtFS(#${buildNr}): $(fileProgressBar $f)\n"
+				done
 		fi
 
 	else
