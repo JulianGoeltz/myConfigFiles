@@ -27,9 +27,12 @@ fpath=(~/.zsh/completion/ $fpath)
 autoload -Uz compinit
 compinit
 
+# setting the locale
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 
 ######## Own stuff
-export LC_COLLATE=en_US.UTF-8
 export EDITOR=vim
 export VISUAL=vim
 export LESS=-Ri  #r: display colours; i: smartcase search;

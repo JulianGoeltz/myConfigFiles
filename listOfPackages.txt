@@ -74,6 +74,7 @@ caribou
 casper
 cgmanager
 checkinstall
+checkstyle
 cheese
 chromium-browser
 chromium-codecs-ffmpeg
@@ -764,6 +765,8 @@ libdb5.3
 libdbus-1-3
 libdbus-1-dev
 libdbus-glib-1-2
+libdbus-glib-1-dev
+libdbus-glib1.0-cil-dev
 libdbus-glib2.0-cil
 libdbus2.0-cil
 libdbusmenu-glib4
@@ -1278,6 +1281,7 @@ libpng12-dev
 libpolkit-agent-1-0
 libpolkit-backend-1-0
 libpolkit-gobject-1-0
+libpolkit-gobject-1-dev
 libpoppler-glib8
 libpoppler58
 libpopt0
@@ -2263,9 +2267,6 @@ vim-runtime
 vim-tiny
 vino
 virtualbox
-virtualbox-guest-dkms
-virtualbox-guest-utils
-virtualbox-guest-x11
 virtualbox-qt
 virtualenv
 vlock
