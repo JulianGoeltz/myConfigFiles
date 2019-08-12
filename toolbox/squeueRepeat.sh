@@ -103,156 +103,115 @@ fileProgressBar() {
 	count_all=$(squeue --noheader -o  "%.8u" | wc -l)
 	output=$output"Own jobs count; total: $count_ownall, pending: $count_ownpending; all: $count_all\n"
 
-	if [ "$(tput cols)" -gt "$minimumColsForParallel" ]; then
-		remCols=$(($(tput cols) - 80))
-		# output=$output"with $(tput cols) we use the parallel display\n"
-		if $vverbose; then
-			# also show pending
-			allLines=$(squeue -o "%.10i %.9P %.8u %.2t %.10M" --sort=-p,u,i |
-				grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=never)
+	remCols=$(($(tput cols) - 80))
+	if $vverbose; then
+		# also show pending
+		allLines=$(squeue -o "%.10i %.9P %.8u %.2t %.10M" --sort=-p,u,i |
+			grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=never)
+	else
+		allLines=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" --sort=-p,u,i |
+			grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=never)
+	fi
+	allLinesNum=$(echo $allLines | wc -l)
+	for linefeed in $(echo $allLines); do
+		if [ -z "$(echo $linefeed | grep jgoeltz)" ]; then
+			output=$output$(echo $linefeed | grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=always)"\n"
 		else
-			allLines=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" --sort=-p,u,i |
-				grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=never)
-		fi
-		allLinesNum=$(echo $allLines | wc -l)
-		for linefeed in $(echo $allLines); do
-			if [ -z "$(echo $linefeed | grep jgoeltz)" ]; then
-				output=$output$(echo $linefeed | grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=always)"\n"
-			else
-				output=$output$(echo $linefeed | grep "experimen\|calib\|jgoeltz" --color=always)
-				jobid=$(echo $linefeed | grep -oP '^\s*([0-9]*)' | grep -o '[0-9]*')
+			output=$output$(echo $linefeed | grep "experimen\|calib\|jgoeltz" --color=always)
+			jobid=$(echo $linefeed | grep -oP '^\s*([0-9]*)' | grep -o '[0-9]*')
 
-				# find the file worked on (only do for small job numbers, otherwise its a hassle
-				if [[ "$allLinesNum" -lt 8 ]] || $verbose; then
-					scontrol write batch_script $jobid $fileTmpScontrol >/dev/null 2>&1
-					tmpString=$([ -f $fileTmpScontrol ] && grep -oP "\S*\.(yaml|hdf5)\S*" $fileTmpScontrol)
-					# check whether we found something
-					if [ -n $tmpString ]; then
-						if [[ "$(echo $tmpString | wc -l)" -eq 1 ]]; then
-							if echo $tmpString | grep -q yaml; then
-								tmpString=$(basename "$(dirname $tmpString)")
-							else
-								tmpString=$(basename "$tmpString")
-							fi
-						elif $vverbose; then
-							tmpString="$(echo $tmpString | wc -l) files"
+			# find the file worked on (only do for small job numbers, otherwise its a hassle
+			if [[ "$allLinesNum" -lt 8 ]] || $verbose; then
+				scontrol write batch_script $jobid $fileTmpScontrol >/dev/null 2>&1
+				tmpString=$([ -f $fileTmpScontrol ] && grep -oP "\S*\.(yaml|hdf5)\S*" $fileTmpScontrol)
+				# check whether we found something
+				if [ -n $tmpString ]; then
+					if [[ "$(echo $tmpString | wc -l)" -eq 1 ]]; then
+						if echo $tmpString | grep -q yaml; then
+							tmpString=$(basename "$(dirname $tmpString)")
 						else
-							tmpString=""
+							tmpString=$(basename "$tmpString")
 						fi
-						output=$output" ${tmpString:0:$remCols}"
+					elif $vverbose; then
+						tmpString="$(echo $tmpString | wc -l) files"
+					else
+						tmpString=""
 					fi
+					output=$output" ${tmpString:0:$remCols}"
 				fi
-
-				# look how far we are
-				file=$(find ./ -maxdepth 1 -name "*slurm-$jobid.out")
-				if [ -n "$file" ]; then
-					# if [ $(du $file | grep -o "^[0-9]*") -ge 200000 ]; then
-					# 	#this means the file is very large and it will take too long to search through
-					#         echo $file is too large, skipping
-					# 	continue
-					# fi
-					output=$output$(fileProgressBar $file)
-					jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber[0-9]*of[0-9]*" $file)
-					if [ -n "$jobIsSweep" ] ; then
-						output=$output" ("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
-					fi
-					timeSinceTouch=$(($startTimestamp - $(stat -c %Y $file)))
-					if [ $timeSinceTouch -gt 60 ]; then
-						output="${output} not changed for $(durationPrint $timeSinceTouch)"
-					fi
-					
-				fi
-
-				output=$output"\n"
-
 			fi
-		done
-		if [ -n "$(find ./ -maxdepth 1 -name 'noslurm*.out')" ]; then
-			for file in $(ls noslurm*.out); do
+
+			# look how far we are
+			file=$(find ./ -maxdepth 1 -name "*slurm-$jobid.out")
+			if [ -n "$file" ]; then
 				# if [ $(du $file | grep -o "^[0-9]*") -ge 200000 ]; then
 				# 	#this means the file is very large and it will take too long to search through
 				#         echo $file is too large, skipping
 				# 	continue
 				# fi
-				StepNumber=$(grep -oP "Number_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
-				FileCount=$(grep step -c $file)
-				[ $? -ne 0 ] && continue
-				if [ -z "$StepNumber" ] ; then StepNumber=100; fi
-				if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
-					StepNumber=$(echo $StepNumber | grep -o "[0-9]*$" | tail -n 1);
-				fi
-				# subtract small number that is added later to circumvent false rounding
-				counter=$(( ($FileCount - 0.1) * $standardWidth / $StepNumber))
-				output=$output$file
-				jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber[0-9]*of[0-9]*" $file)
-				if [ -n "$jobIsSweep" ] ; then
-					output=$output"("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
-				fi
-				output=$output":"
-				# how long has it been
-				notedTime=$(date -d "${$(grep -io "It is.*" $file):6:99}" +%s)
-				if [ -n "$notedTime" ] ; then
-					duration=$(($(date +%s) - $notedTime))
-					echo $duration
-					output="$output $(durationPrint $duration)"
-
-				fi
-
 				output=$output$(fileProgressBar $file)
-
+				jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber\K.*" $file)
+				if [ -n "$jobIsSweep" ] ; then
+					output=$output" ($jobIsSweep)"
+				fi
 				timeSinceTouch=$(($startTimestamp - $(stat -c %Y $file)))
 				if [ $timeSinceTouch -gt 60 ]; then
 					output="${output} not changed for $(durationPrint $timeSinceTouch)"
 				fi
-				output=$output"\n"
-			done
-		fi
-		if [ -n "$(find /jenkins/jenlib_workspaces_f9/ -maxdepth 1 -name 'p_jg_TimeToFirstSpike*' 2>/dev/null)" ] &&
-			[ -n "$(find /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/ -name 'jenkins-log.txt' 2>/dev/null)" ]; then
-				for f in  /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/*/jenkins-log.txt; do
-					# we can get the build number from the first star
-					buildNr=$(echo $f | grep -oP "(?<=p_jg_TimeToFirstSpike.).*?(?=\.x)" | base64 --decode 2>/dev/null | grep -oP "(?<=p_jg_TimeToFirstSpike#)[0-9]*")
-					output=$output"jenkins TtFS(#${buildNr}): $(fileProgressBar $f)\n"
-				done
-		fi
+				
+			fi
 
-	else
-		# output=$output"with $(tput cols) we use the sequential display\n"
-		if [ -n "$(find ./ -maxdepth 1 -name '*slurm*.out')" ]; then
-			for file in $(ls *slurm*.out); do
-				# if [ $(du $file | grep -o "^[0-9]*") -ge 200000 ]; then
-				# 	#this means the file is very large and it will take too long to search through
-				#         echo $file is too large, skipping
-				# 	continue
-				# fi
-				StepNumber=$(grep -oP "Numer_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
-				FileCount=$(grep step -c $file)
-				[ $? -ne 0 ] && continue
-				if [ -z "$StepNumber" ] ; then StepNumber=100; fi
-				if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
-					StepNumber=$(echo $StepNumber | grep -o "[0-9]*$" | tail -n 1);
-				fi
-				# subtract small number that is added later to circumvent false rounding
-				counter=$(( ($FileCount - 0.1) * $standardWidth / $StepNumber))
-				output=$output$file
-				jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber[0-9]*of[0-9]*" $file)
-				if [ -n "$jobIsSweep" ] ; then
-					output=$output"("$(echo $jobIsSweep | grep -oP "[0-9]*of[0-9]*" | tail -n 1)")"
-				fi
-				output=$output":"$delimiterStart
-				while (( $counter > 0 )); do
-					output=$output$delimiterDone
-					counter=$(($counter-1))
-				done
-				counter=$(( ($StepNumber-$FileCount + 0.1) * $standardWidth / $StepNumber))
-				while (( $counter > 0 )); do
-					output=$output$delimiterNot
-					counter=$(($counter-1))
-				done
-				output=$output$delimiterEnd"\n"
-			done
+			output=$output"\n"
+
 		fi
-		output=$(squeue -t R -o "%.10i %.9P %.8u %.2t %.10M" | grep "longexp\|experimen\|calib\|goelt\|JOBID" --color=auto)"\n"$output
+	done
+	if [ -n "$(find ./ -maxdepth 1 -name 'noslurm*.out')" ]; then
+		for file in $(ls noslurm*.out); do
+			# if [ $(du $file | grep -o "^[0-9]*") -ge 200000 ]; then
+			# 	#this means the file is very large and it will take too long to search through
+			#         echo $file is too large, skipping
+			# 	continue
+			# fi
+			StepNumber=$(grep -oP "Number_of_steps is [0-9]*" $file | grep -oP "[0-9]*")
+			FileCount=$(grep step -c $file)
+			[ $? -ne 0 ] && continue
+			if [ -z "$StepNumber" ] ; then StepNumber=100; fi
+			if [ "$(echo $StepNumber | wc -w)" -gt 1 ] ; then
+				StepNumber=$(echo $StepNumber | grep -o "[0-9]*$" | tail -n 1);
+			fi
+			# subtract small number that is added later to circumvent false rounding
+			counter=$(( ($FileCount - 0.1) * $standardWidth / $StepNumber))
+			output=$output$file
+			jobIsSweep=$(grep -oP "ThisIsASweepedJobWithJobNumber\K.*" $file)
+			if [ -n "$jobIsSweep" ] ; then
+				output=$output" ($jobIsSweep)"
+			fi
+			output=$output":"
+			# how long has it been
+			notedTime=$(date -d "${$(grep -io "It is.*" $file):6:99}" +%s)
+			if [ -n "$notedTime" ] ; then
+				duration=$(($(date +%s) - $notedTime))
+				echo $duration
+				output="$output $(durationPrint $duration)"
+
+			fi
+
+			output=$output$(fileProgressBar $file)
+
+			timeSinceTouch=$(($startTimestamp - $(stat -c %Y $file)))
+			if [ $timeSinceTouch -gt 60 ]; then
+				output="${output} not changed for $(durationPrint $timeSinceTouch)"
+			fi
+			output=$output"\n"
+		done
+	fi
+	if [ -n "$(find /jenkins/jenlib_workspaces_f9/ -maxdepth 1 -name 'p_jg_TimeToFirstSpike*' 2>/dev/null)" ] &&
+		[ -n "$(find /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/ -name 'jenkins-log.txt' 2>/dev/null)" ]; then
+			for f in  /jenkins/jenlib_workspaces_f9/p_jg_TimeToFirstSpike*/code__tmp/*/jenkins-log.txt; do
+				# we can get the build number from the first star
+				buildNr=$(echo $f | grep -oP "(?<=p_jg_TimeToFirstSpike.).*?(?=\.x)" | base64 --decode 2>/dev/null | grep -oP "(?<=p_jg_TimeToFirstSpike#)[0-9]*")
+				output=$output"jenkins TtFS(#${buildNr}): $(fileProgressBar $f)\n"
+			done
 	fi
 	$verbose || echo -ne \\033c
 	$argWorking && echo -ne ", created $(date +'%H:%M:%S') on $clusterName\n${output:0:-2}" > $fileSave
@@ -263,7 +222,7 @@ fileProgressBar() {
 	# 	echo $1
 	# 	eval $1
 	# fi
-	$verbose || sleepNotNegaitve $startTimestamp
+	$argWorking && sleepNotNegaitve $startTimestamp
 	# sleep $( echo "0\n$(($repeatEvery - ( $(date +%s) - $startTimestamp)))" | sort | head -n 1)
 #done
 
