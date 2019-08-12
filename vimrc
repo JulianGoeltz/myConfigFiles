@@ -66,9 +66,9 @@ if system('hostname') =~ "T1"
 	let g:vimtex_view_general_viewer='zathura'
 	let g:vimtex_view_method = 'zathura'
 
-	let g:vimwiki_list = [{'path':'~/Dropbox/uni/MasterThesis/vimwiki/text/',
-		\ 'path_html':'~/Dropbox/uni/MasterThesis/vimwiki/html/',
-		\ 'template_path': '~/Dropbox/uni/MasterThesis/vimwiki/templates'}]
+	let g:vimwiki_list = [{'path':'/home/julgoe/Documents/vimwiki/text/',
+		\ 'path_html':'/home/julgoe/Documents/vimwiki/html/',
+		\ 'template_path': '/home/julgoe/Documents/vimwiki/templates'}]
 	"set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"
 	"sign column indication of git changes
