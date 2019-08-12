@@ -78,7 +78,7 @@ for method in $plot_methods; do
 
 	# plotting volts need potentially more ram
 	if [ "$method" == "plot_volts" ]; then
-		memoption="--mem 10g"
+		memoption="--mem 25g"
 	else
 		memoption=""
 	fi
