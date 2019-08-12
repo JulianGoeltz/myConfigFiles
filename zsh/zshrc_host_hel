@@ -160,8 +160,8 @@ alias scancel_neversatisfied="squeue -u jgoeltz | grep DependencyNeverSatisfied 
 # to cd to current jenkins workspace if a p_jg_TimeToFirstSpike is running
 alias cdjenk="cd; cd /jenkins/jenlib_workspaces_f9/p_jg_T*x/"
 
-# kill all tmux clients
 function tmux_killall () {
+	# kill all tmux clients
 	echo "before"
 	tmux list-clients
 	for cl in $(tmux list-clients | awk '{print $2}'); do
@@ -169,4 +169,26 @@ function tmux_killall () {
 	done
 	echo "after"
 	tmux list-clients
+	# in all sessions set DISPLAY and SS_AUTH_SOCK
+	IFS=$'\n'
+	for sess in $(tmux list-sessions | grep -oP "^[^:]*"); do
+		tmux setenv -t "$sess" DISPLAY $DISPLAY
+		tmux setenv -t "$sess" SSH_AUTH_SOCK $SSH_AUTH_SOCK
+	done
+	unset IFS
+}
+
+# sweep over FG values, and plot all where there is no plot.pkl
+function plot_fgsweeps() {
+for f in ../data/simulations/*xml.gz; do 
+	# find out last modified one
+	latestTS=$(stat -c %Y $(ls -t $(find $(dirname $f) -perm 444 -name "${$(basename $f):0:-10}*hdf5") | head -n 1))
+	[ -f "${f:0:-7}_plot.pkl" ] && \
+		[ "$latestTS" -lt "$(stat -c %Y "${f:0:-7}_plot.pkl")" ] && \
+		continue
+	echo "         do ${f:0:-7}"
+	run_nmpm_software ./plot.py plot_seedsweep   ${f:0:-10}*hdf5 && \
+	mv ../data/plot_sweep_.pkl ${f:0:-7}_plot.pkl && \
+	mv ../data/plot_sweep_.svg ${f:0:-7}_plot.svg
+done
 }
