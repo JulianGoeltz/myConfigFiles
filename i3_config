@@ -30,7 +30,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec xterm
 #bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
@@ -251,16 +251,12 @@ bindsym $mod+Mod1+Shift+l exec "/home/julgoe/myConfigFiles/toolbox/lockAlt.sh"
 for_window [class="Spotify"] move --no-auto-back-and-forth to workspace 10
 assign [class="KeePass2"] 10
 assign [class="TelegramDesktop"] 9
-exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
-# exec --no-startup-id i3-msg 'workspace 2; exec gnome-terminal'
-# exec --no-startup-id i3-msg 'workspace 8; exec /usr/bin/firefox'
-# exec --no-startup-id i3-msg 'workspace 9; exec /usr/bin/thunderbird'
-# exec --no-startup-id i3-msg 'exec ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/Telegram'
+exec --no-startup-id i3-msg 'workspace 1; exec xterm'
 exec --no-startup-id i3-msg 'exec /usr/bin/keepass2'
-# exec --no-startup-id i3-msg 'exec /usr/bin/spotify'
 exec --no-startup-id i3-msg workspace 1
-exec --no-startup-id exec gnome-terminal --geometry=160x50 --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -c ' tmux && zsh'"
-bindsym $mod+Shift+v exec gnome-terminal --geometry=160x50 --working-directory="/home/julgoe/Dropbox/uni/MasterThesis/vimwiki/text" --command="zsh -c ' tmux && zsh'"
+exec --no-startup-id exec xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
+
+bindsym $mod+Shift+v exec xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
 for_window [ title="julgoe::T1" ] move scratchpad
 
 

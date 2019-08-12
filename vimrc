@@ -9,9 +9,9 @@ set backspace=indent,eol,start	" more powerful backspacing
 call plug#begin('~/.vim/plugged')
 
 " for xterm. do later
-set t_Co=8
+"set t_Co=8
 "set termguicolors
-colorscheme desert
+"colorscheme default
 
 " Make sure you use single quotes
 " python folding
@@ -82,6 +82,7 @@ elseif system('hostname') =~ "helvetica"
 endif
 
 Plug 'vim-airline/vim-airline'
+let g:airline_powerline_fonts = 1
 ""Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
 "if system('hostname') =~ "T1" || system('hostname') =~ "helvetica"
 "	python3 from powerline.vim import setup as powerline_setup
@@ -130,7 +131,6 @@ set encoding=utf-8
 
 "use solarized colorscheme
 syntax enable
-colorscheme default
 set background=dark
 set cursorline
 hi CursorLine cterm=NONE ctermbg=8
@@ -312,7 +312,7 @@ map <localleader>ls :VimtexCompileSS<CR>
 "map <c-k> k<c-y>
 
 " ROT13 the buffer
-map <F5> ggg?G``
+map <F6> ggg?G``
 
 " return to normal mode by typing jk
 imap jk <ESC>
@@ -340,3 +340,12 @@ endfunction
 
 " all Jenkinsfile|s are groovy
 au BufNewFile,BufRead Jenkinsfile setf groovy
+
+" have at very end to not be overwritten
+colorscheme default
+set background=light
+" hide symbols that cant be displayed
+let g:airline_symbols = {'linenr' : ''}
+
+" toggle dark light background with F5
+call togglebg#map("<F5>")

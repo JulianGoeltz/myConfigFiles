@@ -136,6 +136,9 @@ checkSimilaritiesAndLink neovim_init.vim "$HOME/.config/nvim/init.vim"
 echo "--latexmk"
 checkSimilaritiesAndLink latexmkrc "$HOME/.latexmkrc"
 
+echo "--Xdefaults"
+checkSimilaritiesAndLink Xdefaults "$HOME/.Xdefaults"
+
 if [[ "$(hostname)" == "T1" ]]; then
 	echo "--this repo"
 	checkSimilaritiesAndLink ensureUpdates_pre-commit "$LocOfScript/.git/hooks/pre-commit"
