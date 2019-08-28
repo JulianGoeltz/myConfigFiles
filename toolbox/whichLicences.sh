@@ -11,11 +11,15 @@ fileTmpScontrol=~/.tmp_scontrol2.sh
 jobsRunning=""
 jobsPending=""
 
+echo "skipping W24"
+
 IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
 for jobinfo in $(scontrol show -o job); do
 	echo $jobinfo | grep -vqP "Partition=(exp|longexp|calib)" && continue
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
+
+	echo $jobinfo | grep -q W24 && continue
 
 	job_status=$(echo "$jobinfo" | grep -oP "JobState=\K\S*")
 	# only include running/pending jobs
@@ -28,22 +32,26 @@ for jobinfo in $(scontrol show -o job); do
 	if echo "$job_user" | grep -q "$USER" ; then
 		job_user="${RED}${job_user}${NC}"
 
-		scontrol write batch_script "$job_id" $fileTmpScontrol >/dev/null
-		job_name=$([ -f $fileTmpScontrol ] && grep -oP "\S*\.(yaml|hdf5)\S*" $fileTmpScontrol)
-		if [ -n "$job_name" ]; then
-			if [[ "$(echo "$job_name" | wc -l)" -eq 1 ]]; then
-				if echo "$job_name" | grep -q yaml; then
-					job_name=", $(basename "$(dirname "$job_name")")/$(basename "$job_name")"
+		if echo $jobinfo | grep -q "JobName=wrap" ; then
+			scontrol write batch_script "$job_id" $fileTmpScontrol >/dev/null
+			job_name=$([ -f $fileTmpScontrol ] && grep -oP "\S*\.(yaml|hdf5)\S*" $fileTmpScontrol)
+			if [ -n "$job_name" ]; then
+				if [[ "$(echo "$job_name" | wc -l)" -eq 1 ]]; then
+					if echo "$job_name" | grep -q yaml; then
+						job_name=", $(basename "$(dirname "$job_name")")/$(basename "$job_name")"
+					else
+						job_name=", $(basename "$job_name")"
+					fi
+				elif [[ "$(echo "$job_name" | wc -l)" -eq 0 ]]; then
+					job_name=""
 				else
-					job_name=", $(basename "$job_name")"
+					job_name=", $(echo $job_name | wc -l) files"
 				fi
-			elif [[ "$(echo "$job_name" | wc -l)" -eq 0 ]]; then
-				job_name=""
 			else
-				job_name=", $(echo $job_name | wc -l) files"
+				job_name=""
 			fi
 		else
-			job_name=""
+			job_name=", srun"
 		fi
 	else
 		job_user="${ORANGY}${job_user}${NC}"
