@@ -3,12 +3,22 @@
 
 set -euo pipefail
 
-find . -size 0 -delete -name "*slurm-*.out"
+[ -z "$(find . -name "*slurm-*.out")" ] && \
+	echo "No *slurm-*.out files" && \
+	exit
 
-grep no\ voltages\ saved slurm* --files-with-matches | xargs rm
+[ -n "$(find . -size 0 -name "*slurm-*.out")" ] && \
+	echo clearing\ empty\ files && \
+	find . -size 0 -delete -name "*slurm-*.out"
 
-grep -iP "(stepd|error)" slurm*
+if [[ "${1:-}" =~ "volt" ]] ; then
+	echo clearing\ volts
+	grep no\ voltages\ saved --files-with-matches -- *slurm-*.out | xargs rm
+elif [[ "${1:-}" =~ "mem" ]] ; then
+	echo clearing\ memory
+	grep exceeded\ memory\ limit --files-with-matches -- *slurm-*.out | xargs rm
+else
+	grep -iP "(stepd|error)" -- *slurm-*.out
+fi
 
-grep -P "(error|file exists)" $(grep "file exists" --files-with-matches )
-
-grep "L1 locking fail" slurm*
+ls -lAh -- *slurm-*.out
