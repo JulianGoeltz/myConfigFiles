@@ -186,9 +186,30 @@ for f in ../data/simulations/*xml.gz; do
 	[ -f "${f:0:-7}_plot.pkl" ] && \
 		[ "$latestTS" -lt "$(stat -c %Y "${f:0:-7}_plot.pkl")" ] && \
 		continue
+	# # only send files when there is more than one
+	# [ "$(ls "${f:0:-10}*hdf5" | wc -l)" -lt 2 ] && continue
 	echo "         do ${f:0:-7}"
 	run_nmpm_software ./plot.py plot_seedsweep   ${f:0:-10}*hdf5 && \
-	mv ../data/plot_sweep_.pkl ${f:0:-7}_plot.pkl && \
-	mv ../data/plot_sweep_.svg ${f:0:-7}_plot.svg
+		mv ../data/plot_sweep_.pkl ${f:0:-7}_plot.pkl && \
+		mv ../data/plot_sweep_.svg ${f:0:-7}_plot.svg
 done
+}
+
+# for the sweeps over different files
+function plot_wafersweeps() {
+for i in doub equal mosta; do
+	for j in W30 W33 W37; do
+		for k in ../data/20190816_three* ; do
+			echo "        do $i $j"
+			run_nmpm_software ./plot.py plot_seedsweep $k/simulations/*$i*$j*hdf5 && \
+				mv $k/plot_sweep_.pkl $k/${i}_${j}_sweep.pkl && \
+				mv $k/plot_sweep_.svg $k/${i}_${j}_sweep.svg
+		done
+	done
+done
+}
+
+# use sacct to display all infos
+function sacct_full () {
+	less -S -f <(sacct -j $1  --format=$(sacct -e | tr '\n' ' ' | sed 's/\s\+/,/g')) 
 }
