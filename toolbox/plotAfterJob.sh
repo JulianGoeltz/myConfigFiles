@@ -36,7 +36,10 @@ fi
 # if more then one argument, process each one the same way
 if [ $# -gt 1 ]; then
 	echo "using plotting methods $plot_methods on all files "
+	# prevent doubling, but only for multiple files. if called on single file, it doesn't care
+	echo "(if _featureMatrix already exists, file is skipped to prevent doubling)"
 	for f in "$@"; do
+		[ -f "${f:0:-5}_featureMatrix.svg" ] && continue
 		echo "$f"
 		# parallelise this bit to make it faster
 		$0 "$f" >/dev/null &
@@ -58,7 +61,7 @@ if scontrol show jobid "$jobid" &>/dev/null ; then
 	jobExist=true
 	# when sharing FGs, some files can already be done, aka readonly
 	# in this case start plotting immediately
-	if [ "$(stat --format '%a' "$1")" == "444" ]; then
+	if [ -f "$file" ] && [ "$(stat --format '%a' "$file")" == "444" ]; then
 		dependOnJob=false
 	else
 		dependOnJob=true
@@ -78,7 +81,7 @@ for method in $plot_methods; do
 
 	# plotting volts need potentially more ram
 	if [ "$method" == "plot_volts" ]; then
-		memoption="--mem 25g"
+		memoption="--mem 30g"
 	else
 		memoption=""
 	fi
