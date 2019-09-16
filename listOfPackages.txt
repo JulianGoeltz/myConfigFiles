@@ -315,6 +315,7 @@ fonts-wqy-microhei
 foomatic-db-compressed-ppds
 fortune-mod
 fortunes-min
+fping
 fprint-demo
 fprintd
 freerdp-x11
@@ -593,6 +594,7 @@ kmod
 kpartx
 kpartx-boot
 krb5-locales
+lame
 language-pack-en
 language-pack-en-base
 language-pack-gnome-en
@@ -1442,6 +1444,7 @@ libsoup-gnome2.4-1
 libsoup2.4-1
 libsox-fmt-alsa
 libsox-fmt-base
+libsox-fmt-mp3
 libsox2
 libspectre1
 libspeechd2
@@ -2277,6 +2280,7 @@ virtualenv
 vlock
 vnc4server
 vnstat
+vorbis-tools
 wamerican
 watershed
 wbritish

@@ -5,7 +5,7 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
-setopt appendhistory
+setopt INC_APPEND_HISTORY
 # End of lines configured by zsh-newuser-install
 # define filename for compinstall based on host
 if [[ "$(hostname)" == "T1" ]]; then
@@ -385,7 +385,7 @@ git_prompt_info() {
 		git_branch="${git_branch:0:21}..."
 	fi
 	if [ "${git_branch}" = "HEAD" ]; then
-		git_branch="$(git rev-parse --short HEAD)"
+		git_branch="$(git rev-parse --short HEAD 2>/dev/null || echo "NoBranchYet")"
 	fi
 
 	# output

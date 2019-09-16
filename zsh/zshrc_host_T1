@@ -210,4 +210,4 @@ alias lp_2="lp -U jgoeltz -o fit-to-page -o sides=two-sided-long-edge -o media=A
 alias grepp="grep -rn --include=\*tex "
 
 # displaying queue on hel easily
-alias squeueRepeat='while true; do sshhel -t zsh -i -c "squeueRepeat"; sleep 10;done'
+alias squeueRepeat='while true; do sshhel -t zsh -i -c "squeueRepeat" && sleep 10;done'
