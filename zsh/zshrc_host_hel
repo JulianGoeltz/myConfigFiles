@@ -10,44 +10,19 @@ if [ -z $SINGULARITY_APPNAME ]; then
 	source /wang/environment/software/Modules/current/init/zsh
 	# to have access to new module files, eg the one with vim+x
 	export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
-	source /wang/environment/software/jessie/spack/2017-12-01/share/spack/setup-env.sh
 else
 	source /opt/spack/share/spack/setup-env.sh
 fi
 
 #spack_global
 if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
+	module load waf
+	module load nmpm_software/$(readlink /wang/environment/modules/nmpm_software/current)
 
-	read -k1 -t3 "testv?Do you want to load all packages(y/n)?"
-	if [[ $? -eq 1 || "$testv" == "y" || "$testv" == "z" ]]; then 
-		echo
-		echo "Loading modules..."
-		module load waf
-		# spack unload nest
-		# spack load nest@2.2
-		# spack load nest # because that one is broken for rho=1
-		# get a working one with spacky
-		spack load py-pynn@0.7
-		spack load py-matplotlib
-		spack load py-setuptools@35
-		spack load py-packaging
-		spack load --dependencies py-flake8
-		spack load py-appdirs
-		# spack load --dependencies git # /u/b/git is 2.1.4, spack version is 2.14.1 but gives constant errors
-		# spack load --dependencies py-git-review  # needed for review
-		spack load hdf5
-		# for HW; older version to circumvent segfaults
-		#module load nmpm_software/2018-07-12-1
-		#module load nmpm_software/2018-08-05-1
-		module load nmpm_software/$(readlink /wang/environment/modules/nmpm_software/current)
+	module load slurm-singularity/current
+	export SINGULARITYENV_PREPEND_PATH=$SINGULARITYENV_PREPEND_PATH:$HOME/myConfigFiles/toolbox
+	export SINGULARITY_SHELL=/wang/users/jgoeltz/cluster_home/.local/bin/zsh
 
-		#spack_local
-		#source /wang/users/jgoeltz/cluster_home/spack/share/spack/setup-env.sh
-		#module list
-		#module purge
-		#module list
-		#module load nmpm_software/2018-02-01-1
-	fi
 fi
 
 module list

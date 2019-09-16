@@ -27,14 +27,14 @@ if [ ! -f "plot.py" ]; then
 	echo "Execute this command in a 'code' subfolder, needs 'plot.py' to work"
 	exit
 fi
-# check whether h5dump is available
-if ! type h5dump >/dev/null 2>&1; then
-	echo "h5dump needs to be available. try 'spack load hdf5'"
-	exit
-fi
 
 # if more then one argument, process each one the same way
 if [ $# -gt 1 ]; then
+	# check whether h5dump is available
+	if ! run_nmpm_software which h5dump >/dev/null 2>&1; then
+		echo "h5dump needs to be available. try 'spack load hdf5' or loading a proper nmpm_software module"
+		exit
+	fi
 	echo "using plotting methods $plot_methods on all files "
 	# prevent doubling, but only for multiple files. if called on single file, it doesn't care
 	echo "(if _featureMatrix already exists, file is skipped to prevent doubling)"
@@ -49,8 +49,13 @@ if [ $# -gt 1 ]; then
 fi
 
 if [ -f "$1" ]; then 
+	# check whether h5dump is available
+	if ! run_nmpm_software which h5dump >/dev/null 2>&1; then
+		echo "h5dump needs to be available. try 'spack load hdf5' or loading a proper nmpm_software module"
+		exit
+	fi
 	file=$1
-	jobid=$(h5dump -d input/environment "$file" | grep SLURM_JOB_ID | grep -o "[0-9]*")
+	jobid=$(run_nmpm_software h5dump -d input/environment "$file" | grep SLURM_JOB_ID | grep -o "[0-9]*")
 	echo "Depending on jobid $jobid"
 else
 	jobid=$1
@@ -81,7 +86,7 @@ for method in $plot_methods; do
 
 	# plotting volts need potentially more ram
 	if [ "$method" == "plot_volts" ]; then
-		memoption="--mem 30g"
+		memoption="--mem 30g --time 1:0:0"
 	else
 		memoption=""
 	fi
