@@ -10,6 +10,8 @@ ignore =
     E401,
     # W503: line break before binary operator
     W503,
+    # W504: line break after binary operator
+    W504,
     # E701: multiple statements on one line (colon)
     E701,
     ## just for now: ignore local variable define but unused
