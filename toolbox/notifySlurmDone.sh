@@ -2,9 +2,10 @@
 # if slurm done on hel, and connection over ssh exists
 # i want to get a notification
 
-# set -euo pipefail
+set -euo pipefail
 
 port=1234
+codeword=slurmDone
 
 if [[ $1 == "sending" ]]; then
 	tmpFile=/wang/users/jgoeltz/cluster_home/.tmp_slurmJobs
@@ -14,8 +15,8 @@ if [[ $1 == "sending" ]]; then
 	if [ -z "$state" ]; then
 		if [[ $oldState == "running" ]] && 
 			nc -z 127.0.0.1 "$port"  ; then
-			echo slurmDone | nc 127.0.0.1 "$port"
 			echo noJobs > $tmpFile
+			echo $codeword | nc -N 127.0.0.1 "$port"
 			# could send mail with
 			# echo "The jobs you have send are now done." | mail -s "All Jobs Done" jgoeltz
 		fi
@@ -28,7 +29,7 @@ elif [[ $1 == "receiving" ]]; then
 	/usr/bin/notify-send "starting slurmNotifs"
 	tmpFun () {
 		while IFS= read -r line; do
-			if [[ $line == "slurmDone" ]]; then
+			if [[ $line == "$codeword" ]]; then
 				/home/julgoe/.local/bin/dunstify -r 6666 -t 3000 "Slurm jobs on hel finished"
 			fi
 		done
@@ -36,9 +37,8 @@ elif [[ $1 == "receiving" ]]; then
 	
 	exact_call="nc -k -l localhost $port"
 	# first check whether nc is already instantiated, if so kill it
-	tmp=$(pgrep -u julgoe -f "$exact_call")
-	if [ "$(echo "$tmp" | wc -l)" -ne 0 ]; then
-		kill "$tmp"
+	if pgrep -u julgoe -f "$exact_call" >/dev/null ; then
+		kill "$(pgrep -u julgoe -f "$exact_call")"
 	fi
 	# important to only be listening from localhost, otherwise anyone can send
 	eval "$exact_call"  | tmpFun
