@@ -24,9 +24,6 @@ fi
 # add custom completion scripts
 fpath=(~/.zsh/completion/ $fpath)
 
-autoload -Uz compinit
-compinit
-
 # setting the locale
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -154,32 +151,6 @@ iv () { ls -lAh $@; inkview $(ls $@)}
 fe () { ls -lAh $@; feh $(ls $@)}
 eo () { ls -lAh $@; eog $(ls $@)}
 
-# easy diff of hdf5 datasets,from zsh/..hel
-function diffHdf5 () {
-	tmp_prefix=""
-	tmp_suffix=""
-	if [ ! -f $1 ]; then
-		dataGroup=$1
-		if [[ "$1" == "input/yaml_evaluated" ]]; then
-			tmp_prefix='echo ${$('
-			tmp_suffix=')//,/\\n}'
-		fi
-		shift
-	else
-		dataGroup='input/yaml_pure'
-	fi
-	diffCommand="vimdiff "
-	for file in $@; do
-		[ ! -f $file ] && continue
-		if [[ "$file[-5,-1]" == ".hdf5" ]]; then
-			diffCommand=$diffCommand" <($tmp_prefix h5dump -d $dataGroup $file$tmp_suffix) "
-		elif [[ "$file[-5,-1]" == ".yaml" ]]; then
-			diffCommand=$diffCommand" <(echo 'file $file'; cat $file | sed 's/^/           /' ) "
-		fi
-	done
-	eval $diffCommand
-}
-
 # after lost ssh session, often on focus of zsh/terminal, prompt is redrawn
 # with redraw there's a loss of lines, for this disable this feature:
 alias stoplinesdisappearing='printf "\e[?1004l"'
@@ -211,6 +182,10 @@ TRAPINT() {
 
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
+
+# register all completion functions in fpath (from above and the host specific scripts)
+autoload -Uz compinit
+compinit
 
 # if nvim is available use it instead
 if type nvim 2>&1 >/dev/null ; then

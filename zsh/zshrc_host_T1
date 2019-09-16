@@ -1,8 +1,6 @@
 # ##################################
 # same but different
 alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
-# Path to your oh-my-zsh installation.
-export ZSH=/home/julgoe/.oh-my-zsh
 
 # ##################################
 # very different
