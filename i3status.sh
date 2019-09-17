@@ -7,10 +7,16 @@ Cbg="#2e3436"
 Cfggrey="#b3b7af"
 CspecialCyan="#06989a"
 
+#emojis (easily searched on https://emojipedia.org/)
+emojiHeadphone=🎧
+emojiBattery=🔋
+emojiVolume=🔊
+emojiMute=🔇
+
 #Define the battery
 Battery() {
         BATPERC=$(acpi --battery | cut -d, -f2 | tr -d '\n')
-	echo '🔋  '"$BATPERC"
+	echo "$emojiBattery $BATPERC"
 }
 
 #define the date
@@ -81,12 +87,16 @@ Volume() {
        	retval=$(echo "$text" | grep -oP "Volume: .*?\%" | grep -oP "[0-9]*%")
 
 	if echo "$text" | grep -q "Mute: yes"; then
-		retval="🔇  $retval"
+		retval="$emojiMute $retval"
 	else
-		retval="🔊  $retval"
+		retval="$emojiVolume $retval"
+	fi
+	if [ "$correctSink" -eq "0" ] &&
+		pactl list sinks | grep -q "Active Port: analog-output-headphones"; then
+		retval="$retval $emojiHeadphone"
 	fi
 	if [ -n "$2" ]; then
-		retval="$retval (QC 🔋 $2%)"
+		retval="$retval (QC $emojiBattery $2%)"
 	fi
 	echo "$retval" 
 }
