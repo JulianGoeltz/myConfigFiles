@@ -274,7 +274,7 @@ endif
 let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
 
 " open Gstatus with small height
-nnoremap <silent> <Leader>gs :Gstatus<CR>:20wincmd_<CR>
+nnoremap <silent> <Leader>gs :G<CR>:20wincmd_<CR>
 
 " remove colorbar for vimwiki
 autocmd FileType vimwiki set colorcolumn=0
