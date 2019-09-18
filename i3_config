@@ -165,7 +165,7 @@ bar {
         # status_command ~/.config/i3/i3status.sh | lemonbar -p -B "#2e3436" -F "#d3d7cf"
         #status_command ~/.config/i3/i3status.sh
         # status_command $HOME/.config/i3/conky-i3bar
-	i3bar_command /home/julgoe/.local/bin/i3bar 
+	i3bar_command /usr/bin/i3bar 
         status_command ~/.config/i3/i3status.sh
 	font pango: Awesome 9
         tray_output eDP1
@@ -273,6 +273,8 @@ bindsym $mod+Right workspace next
 focus_follows_mouse no
 
 # touchpad: fusuma and other
+# sudo gem install --install-dir=/usr/local --no-user-install fusuma
+# or better yay fusuma
 exec --no-startup-id i3-msg 'exec fusuma'
 exec_always --no-startup-id i3-msg 'exec synclient ClickFinger3=2; exec synclient TapButton3=2; exec synclient HorizTwoFingerScroll=1'
 

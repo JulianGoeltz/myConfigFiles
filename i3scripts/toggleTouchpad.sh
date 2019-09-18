@@ -2,8 +2,11 @@
 
 # set -euo pipefail
 
-if synclient | grep -q "TouchpadOff\s*=\s*0"; then
-	synclient TouchpadOff=1
+# get name with `xinput list`
+name="VirtualBox mouse integration"
+xinput list --long "$name" | grep "disabled"
+if xinput list --long "$name" | grep -q "disabled"; then
+	xinput enable "$name"
 else
-	synclient TouchpadOff=0
+	xinput disable "$name"
 fi

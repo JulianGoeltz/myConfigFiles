@@ -19,9 +19,9 @@ alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:sh
 . /home/julgoe/git/spack/share/spack/setup-env.sh
 if [ "$TERM" = "linux" ]; then
 	#load the spack stuff in tty, gets passed on
-	spack load python@2.7.16
-	spack load vim
-	spack load neovim
+	#spack load python@2.7.16
+	#spack load vim
+	#spack load neovim
 
 	echo -en "\e]P0000000" #black # originally 232323 # in between it was 111111
 	echo -en "\e]P82B2B2B" #darkgrey
@@ -54,12 +54,9 @@ alias startxzsh="startx <(echo \"xterm -e 'xterm -geometry 200x60 -bg black -fg 
 alias proxies="source proxies.sh"
 # proxies
 
-[[ $PATH == *"/home/julgoe/nest/bin"* ]] || source $HOME/nest/bin/nest_vars.sh
-[[ $PATH == *"/home/julgoe/nest/bin"* ]] || source $HOME/neuron/nrnenv
-
 bluetoothqc() {
 	address=$(echo 'quit' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')
-	~/based-connect-master/based-connect $address $@
+	based-connect $address $@
 }
 
 alias cdmaster_hel="cd ~/mntHel/;ZSH_PROMPT_GIT_DONTDOIT='dont'"
@@ -71,7 +68,8 @@ if [[ $PATH != *"pip_files"* ]]; then
 fi
 
 # autojump 
-source /usr/share/autojump/autojump.sh
+[ -f /usr/share/autojump/autojump.sh ] && source /usr/share/autojump/autojump.sh
+[ -f /etc/profile.d/autojump.sh ] && source /etc/profile.d/autojump.zsh
 
 eval $(thefuck --alias) # for corrcet bindings
 

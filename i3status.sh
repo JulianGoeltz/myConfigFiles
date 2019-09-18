@@ -59,7 +59,7 @@ Ethernet() {
 # wifi
 Wifi() {
 	string=$(iwconfig wlp4s0)
-	if [ "$(echo "$string" | grep -c off/any)" -eq 0 ]; then
+	if [ "$?" -eq 0 ] && [ "$(echo "$string" | grep -c off/any)" -eq 0 ]; then
 		echo -n "Wifi: "
 		echo -n "$(echo "$string" | grep ESSID | sed -E 's/.*ESSID:"(.*?)".*/\1/')"
 		signalstr=$(echo "$string" | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
@@ -112,7 +112,7 @@ Pdfcompiling() {
 }
 
 #define bluetooth shitness
-alias bluetoothqc='~/based-connect-master/based-connect $(echo "quit" | bluetoothctl | grep -o "\S* [LE-]*Bose QC35" | grep -o "\S*:\S*")'
+alias bluetoothqc='based-connect $(echo "quit" | bluetoothctl | grep -o "\S* [LE-]*Bose QC35" | grep -o "\S*:\S*")'
 
 # Send the header so that i3bar knows we want to use JSON:
 echo '{"version":1}'
