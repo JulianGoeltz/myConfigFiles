@@ -54,9 +54,6 @@ alias startxzsh="startx <(echo \"xterm -e 'xterm -geometry 200x60 -bg black -fg 
 alias proxies="source proxies.sh"
 # proxies
 
-[[ $PATH == *"/home/julgoe/nest/bin"* ]] || source $HOME/nest/bin/nest_vars.sh
-[[ $PATH == *"/home/julgoe/nest/bin"* ]] || source $HOME/neuron/nrnenv
-
 bluetoothqc() {
 	address=$(echo 'quit' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')
 	~/based-connect-master/based-connect $address $@

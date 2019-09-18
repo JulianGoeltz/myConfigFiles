@@ -159,19 +159,6 @@ nnoremap p gp
 nnoremap gP P
 "noremap gP P
 
-"python with virtualenv support
-"may result in problems if py != py2/3 with execfile
-if system('hostname') =~ "T1"
-	py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-endif
-
 "easier navigations with split windows
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
