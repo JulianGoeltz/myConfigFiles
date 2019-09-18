@@ -11,6 +11,7 @@ if [ -z $SINGULARITY_APPNAME ]; then
 	# to have access to new module files, eg the one with vim+x
 	export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
 else
+	source /opt/init/modules.sh
 	source /opt/spack/share/spack/setup-env.sh
 fi
 

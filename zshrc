@@ -295,7 +295,7 @@ define_prompt () {
 ┌─["
 	PROMPT=$PROMPT"${PR_CYAN}%D{%m-%d/%H:%M:%S}$PR_NO_COLOR|$PR_LIGHT_GREEN%n$PR_NO_COLOR@$PR_LIGHT_YELLOW%m$PR_NO_COLOR"
 	PROMPT=$PROMPT'`[ -n "$VIRTUAL_ENV" ] && echo -n "$PR_NO_COLOR|$PR_MAGENTA" && echo -n $(basename $VIRTUAL_ENV)`'$PR_NO_COLOR
-	PROMPT=$PROMPT'$([ -n "$SINGULARITY_APPNAME" ] && echo "$PR_NO_COLOR|${PR_MAGENTA}container")'$PR_NO_COLOR
+	PROMPT=$PROMPT'$([ -n "$SINGULARITY_APPNAME" ] && echo "$PR_NO_COLOR|${PR_MAGENTA}$SINGULARITY_APPNAME")'$PR_NO_COLOR
 	PROMPT=$PROMPT'$(git_prompt_info)'$PR_NO_COLOR
 	PROMPT=$PROMPT"|%(1j.$PR_YELLOW%j$PR_NO_COLOR|.)$PR_BLUE%~$PR_NO_COLOR"
 	# for vi normal mode, make first bit red
