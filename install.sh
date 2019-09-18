@@ -19,6 +19,10 @@ allWentThrough=true
 checkSimilaritiesAndLink (){
 	orig=$LocOfScript/$1
 	dest=$2
+	# check if folder structure exists
+	if ! [ -d "$(dirname "$dest")" ]; then
+		mkdir -p "$(dirname "$dest")"
+	fi
 	# check if given dest is a link
 	if [ -L "$dest" ]; then
 		if [[ "$(readlink -f "$dest")" != "$orig" ]]; then
