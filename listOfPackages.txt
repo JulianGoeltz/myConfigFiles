@@ -94,6 +94,7 @@ sysfsutils
 systemd
 systemd-sysvcompat
 tar
+telegram-cli-git
 telegram-desktop
 texinfo
 thunderbird

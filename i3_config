@@ -322,7 +322,7 @@ bindsym $mod+t "exec /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"
 exec --no-startup-id i3-msg 'exec nm-applet'
 
 # proxied telegram
-bindsym Mod1+t exec "/bin/bash ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/Telegram"
+bindsym Mod1+t exec "/bin/bash ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/telegram-desktop"
 
 # netcat listening for slurmDone calls
 exec --no-startup-id i3-msg "exec ~/myConfigFiles/toolbox/notifySlurmDone.sh receiving"
