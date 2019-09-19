@@ -14,11 +14,11 @@ Ethernet() {
 }
 # wifi
 Wifi() {
-	string=$(iwconfig wlp4s0)
+	string=$(iw dev wlp4s0 link)
 	if [ "$(echo "$string" | grep -c off/any)" -eq 0 ]; then
 		echo -n "Wifi: "
-		echo -n "$(echo "$string" | grep ESSID | sed -E 's/.*ESSID:"(.*?)".*/\1/')"
-		signalstr=$(echo "$string" | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
+		echo -n "$(echo "$string" | grep -oP "SSID: \K.*")"
+		signalstr=$(echo "$string" | grep "Signal level" | sed -E 's/.*Signal level=-([2-9]*) dBm.*/\1/')
 		# echo -n " at $signalstr"
 		signalstr=$(((100-signalstr)*2))
 		signalstr=$((signalstr > 100 ? 100 : signalstr))

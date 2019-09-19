@@ -15,14 +15,24 @@ if [[ $? -ne 0 ]]; then
 	everythingOK=false
 fi
 
+# check current crontabList
+tmpString=$(diff "$LocOfScript/crontabList" <(crontab -l))
+if [[ $? -ne 0 ]]; then
+	echo "The saved list of cronjobs differ like this:"
+	echo "$tmpString"
+	echo "(If you think everything is correct, commit with '--no-verify')"
+	everythingOK=false
+	crontab -l > "$LocOfScript/crontabList"
+fi
+
 # check whether new packages have been installed
-tmpString=$(diff "$LocOfScript/listOfPackages.txt" <(apt-mark showmanual))
+tmpString=$(diff "$LocOfScript/listOfPackages.txt" <(pacman -Qqe))
 if [[ $? -ne 0 ]]; then
 	echo "The saved list of installed packages and the current installed packages differ like this:"
 	echo "$tmpString"
 	echo "(If you think everything is correct, commit with '--no-verify')"
 	everythingOK=false
-	apt-mark showmanual > "$LocOfScript/listOfPackages.txt"
+	pacman -Qqe > "$LocOfScript/listOfPackages.txt"
 fi
 
 # check whether new pips have been installed

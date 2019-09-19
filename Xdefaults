@@ -1,3 +1,23 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! ROFI config
+rofi.lines: 10
+rofi.eh: 2
+rofi.padding: 200
+rofi.fullscreen: true
+rofi.bw: 0
+rofi.separator-style: none
+rofi.hide-scrollbar: true
+
+!                  'background', 'border', 'separator'
+rofi.color-window: argb:c82d303b, #7c8389, #1d1f21
+! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
+rofi.color-normal: argb:031d1f21, #f3f4f5, argb:031d1f21, argb:031d1f21, #9575cd 
+rofi.color-urgent: argb:031d1f21, #f3f4f5, argb:bc303541, argb:031d1f21, #9575cd
+rofi.color-active: argb:031d1f21, #f3f4f5, argb:031d1f21, argb:031d1f21, #9575cd 
+rofi.font: System San Francisco Display 18
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! XTERM and everything else config
 !selecting a line copies to clipboard, middle click inserts
 *selectToClipboard: true
 
@@ -73,3 +93,8 @@ XTerm.vt100.saveLines: 4096
 !! white dark/light
 *color7:                S_base2
 *color15:               S_base3
+
+
+XTerm*VT100.cutNewLine: false
+XTerm*VT100.cutToBeginningOfLine: false
+XTerm*VT100.charClass: 33:48,35:48,37:48,42:48,45-47:48,64:48,95:48,126:48

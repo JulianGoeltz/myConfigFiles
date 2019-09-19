@@ -9,7 +9,7 @@
 POWERSUPPLY="/sys/class/power_supply/AC/online" # could be different on your system!
 TOO_LOW=10 # how low is too low?
 NOT_CHARGING="0"
-ICON="/usr/share/icons/Mint-X/status/96/notification-battery-low.svg" # eye candy
+ICON="/usr/share/icons/Adwaita/scalable/legacy/battery-caution-charging-symbolic.svg" # eye candy
 
 # get the correct dbus
 tmpStr=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/"$(pidof i3)"/environ)
@@ -27,7 +27,7 @@ then
 	if [ "$(cat ~/.tmp_dunststate)" = 'paused' ]; then
 		/home/julgoe/myConfigFiles/i3scripts/dunstToggle.sh resume
 	fi
-	/home/julgoe/.local/bin/dunstify -u critical -i "$ICON" -r 4444 -t 60000 "Battery low" "Battery level is $(printf %.0f "$BATTERY_LEVEL")%!"
+	dunstify -u critical -i "$ICON" -r 4444 -t 60000 "Battery low" "Battery level is $(printf %.0f "$BATTERY_LEVEL")%!"
 fi
 
 exit 0
