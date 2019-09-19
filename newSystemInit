@@ -19,6 +19,19 @@ git clone https://github.com/kutsan/zsh-system-clipboard ~/.zsh/plugins/zsh-syst
 infocmp $TERM |  sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti
 tic $TERM.ti
 
+# bluetooth power on on startup: https://wiki.archlinux.org/index.php/Bluetooth#Auto_power-on_after_boot
+# in /etc/bluetooth/main.conf; in [Policy]: AutoEnable=true
+
+# pulseaudio stuff https://wiki.archlinux.org/index.php/Bluetooth#Audio
+# in etc/pulse/system.pa; 
+#load-module module-bluetooth-policy
+#load-module module-bluetooth-discover
+
+# acpi events https://wiki.archlinux.org/index.php/Power_management#ACPI_events
+# in /etc/systemd/logind.conf do (afterwards restart)
+# HandleLidSwitch=ignore
+# HandlePowerKey=suspend
+
 
 # not needed last time
 # # make i3lock-color unlockable: needs pam.d file:

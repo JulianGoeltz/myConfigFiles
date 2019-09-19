@@ -327,3 +327,9 @@ bindsym Mod1+t exec "/bin/bash ~/myConfigFiles/toolbox/proxies.sh proxify /usr/b
 
 # netcat listening for slurmDone calls
 exec --no-startup-id i3-msg "exec ~/myConfigFiles/toolbox/notifySlurmDone.sh receiving"
+
+# enable tapping 
+exec --no-startup-id i3-msg "exec xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Enabled'"
+
+# disable caps lock and use as additional ctrl 
+exec --no-startup-id i3-msg "exec  setxkbmap -option ctrl:nocaps"

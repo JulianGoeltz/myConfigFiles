@@ -8,6 +8,7 @@ bash
 bc
 binutils
 bison
+bluez
 bluez-utils
 bzip2
 chromium
@@ -16,9 +17,11 @@ compton
 coreutils
 cronie
 cryptsetup
+cups
 device-mapper
 dhcpcd
 diffutils
+dolphin-emu
 dosfstools
 downgrade
 dropbox
@@ -29,6 +32,7 @@ env-modules
 ethtool
 exfat-utils
 fakeroot
+fceux
 feh
 file
 filesystem
@@ -85,7 +89,7 @@ neovim
 net-tools-debian-ifconfig
 netctl
 networkmanager
-noto-fonts-emoji
+noto-fonts
 openbsd-netcat
 pacman
 patch
@@ -94,10 +98,10 @@ perl
 pkgconf
 playerctl
 powerline
-powerline-fonts
 procps-ng
 psmisc
 pulseaudio
+pulseaudio-bluetooth
 python
 python-pip
 python-pynvim
@@ -127,7 +131,9 @@ thefuck
 thunderbird
 tmux
 ttf-dejavu
-ttf-joypixels
+ttf-dejavu-sans-mono-powerline-git
+ttf-liberation
+ttf-symbola
 udiskie
 usbutils
 util-linux

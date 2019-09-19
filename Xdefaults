@@ -33,7 +33,7 @@ XTerm.vt100.saveLines: 4096
 
 ! fonts
 !*faceName: Bitstream Vera Serif Mono
-*faceName: DejaVu Sans Mono for Powerline 
+*faceName: DejaVu Sans Mono for Powerline
 *faceSize: 10
 *eightBitInput: false
 

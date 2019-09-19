@@ -332,7 +332,7 @@ au BufNewFile,BufRead Jenkinsfile setf groovy
 colorscheme default
 set background=light
 " hide symbols that cant be displayed
-let g:airline_symbols = {'linenr' : ''}
+"let g:airline_symbols = {'linenr' : ''}
 
 " toggle dark light background with F5
 call togglebg#map("<F5>")

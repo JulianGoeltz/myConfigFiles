@@ -113,7 +113,7 @@ Pdfcompiling() {
 }
 
 #define bluetooth shitness
-alias bluetoothqc='based-connect $(echo "quit" | bluetoothctl | grep -o "\S* [LE-]*Bose QC35" | grep -o "\S*:\S*")'
+alias bluetoothqc='based-connect $(echo "devices" | bluetoothctl | grep -o "\S* [LE-]*Bose QC35" | grep -o "\S*:\S*")'
 
 # Send the header so that i3bar knows we want to use JSON:
 echo '{"version":1}'

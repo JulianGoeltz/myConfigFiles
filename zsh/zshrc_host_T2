@@ -54,7 +54,7 @@ alias proxies="source proxies.sh"
 # proxies
 
 bluetoothqc() {
-	address=$(echo 'quit' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')
+	address=$(echo 'devices' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')
 	based-connect $address $@
 }
 
