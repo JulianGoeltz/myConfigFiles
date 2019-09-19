@@ -19,6 +19,10 @@ allWentThrough=true
 checkSimilaritiesAndLink (){
 	orig=$LocOfScript/$1
 	dest=$2
+	# check if folder structure exists
+	if ! [ -d "$(dirname "$dest")" ]; then
+		mkdir -p "$(dirname "$dest")"
+	fi
 	# check if given dest is a link
 	if [ -L "$dest" ]; then
 		if [[ "$(readlink -f "$dest")" != "$orig" ]]; then
@@ -101,7 +105,7 @@ echo "--ipython"
 checkSimilaritiesAndLink ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"
 
 echo "--ssh"
-if [[ "$(hostname)" == "T1" ]]; then
+if [[ "$(hostname)" == "T2" ]]; then
 	# here we use the existing ssh config, which just says which identity files to use, and add a proxied version
 	[ -h "$HOME/.ssh/config_prox" ] && rm "$HOME/.ssh/config_prox"
 	cat "$HOME/.ssh/config" > "$HOME/.ssh/config_prox"
@@ -118,7 +122,7 @@ checkSimilaritiesAndLink tmux.conf "$HOME/.tmux.conf"
 for fn in "$LocOfScript"/tmux/tmux.conf_*; do
 	checkSimilaritiesAndLink tmux/"$(basename "$fn")" "$HOME/.tmux/$(basename "$fn")"
 done
-checkSimilaritiesAndLink tmux/tmux_T1_status.sh "$HOME/.tmux/tmux_T1_status.sh"
+checkSimilaritiesAndLink tmux/tmux_T2_status.sh "$HOME/.tmux/tmux_T2_status.sh"
 
 echo "--vim"
 checkSimilaritiesAndLink vimrc "$HOME/.vimrc"
@@ -139,7 +143,7 @@ checkSimilaritiesAndLink latexmkrc "$HOME/.latexmkrc"
 echo "--Xdefaults"
 checkSimilaritiesAndLink Xdefaults "$HOME/.Xdefaults"
 
-if [[ "$(hostname)" == "T1" ]]; then
+if [[ "$(hostname)" == "T2" ]]; then
 	echo "--this repo"
 	checkSimilaritiesAndLink ensureUpdates_pre-commit "$LocOfScript/.git/hooks/pre-commit"
 
@@ -154,20 +158,19 @@ if [[ "$(hostname)" == "T1" ]]; then
 	echo "--xinit"
 	checkSimilaritiesAndLink xinitrc "$HOME/.xinitrc"
 
-	echo "----sudos"
-
-	echo "--acpi&pm"
-	checkSimilaritiesAndLink sudos/lock /lib/systemd/system-sleep/10lock sudo nolink
-
-	# not used anymore because lightdm not used anymore
-	# echo "--new i3"
-	# checkSimilaritiesAndLink sudos/i3_new.desktop /usr/share/xsessions/i3_new.desktop sudo nolink
-
 	echo "--fusuma"
 	checkSimilaritiesAndLink fusuma.config "$HOME/.config/fusuma/config.yml"
 
 	echo "--dunst"
 	checkSimilaritiesAndLink dunstrc "$HOME/.config/dunst/dunstrc"
+
+	echo "----sudos"
+
+	echo "--acpi&pm"
+	checkSimilaritiesAndLink sudos/lock /lib/systemd/system-sleep/10lock sudo nolink
+
+	echo "--networkmanager"
+	checkSimilaritiesAndLink sudos/networkmanager /etc/NetworkManager/conf.d/10randomisation sudo nolink
 fi
 
 if ! $allWentThrough; then

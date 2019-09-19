@@ -8,7 +8,7 @@ SAVEHIST=1000000
 setopt INC_APPEND_HISTORY
 # End of lines configured by zsh-newuser-install
 # define filename for compinstall based on host
-if [[ "$(hostname)" == "T1" ]]; then
+if [[ "$(hostname)" == "T2" ]]; then
 	zstyle :compinstall filename '/home/julgoe/.zshrc'
 elif [[ "$(hostname)" == "helvetica" ]] || [[ "$(hostname)" == "hel" ]]; then
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'

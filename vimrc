@@ -54,7 +54,7 @@ Plug 'tpope/vim-fugitive'
 
 " in container on hel, zsh doesnt work
 set shell=/bin/sh
-if system('hostname') =~ "T1"
+if system('hostname') =~ "T2"
 	"sign column indication of git changes 
 	" ~~(THIS BREAKS THE C-xC-o omnicomplete FUNCTIONALITY, THUS DISABLED)~
 	" works now
@@ -84,7 +84,7 @@ endif
 Plug 'vim-airline/vim-airline'
 let g:airline_powerline_fonts = 1
 ""Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
-"if system('hostname') =~ "T1" || system('hostname') =~ "helvetica"
+"if system('hostname') =~ "T2" || system('hostname') =~ "helvetica"
 "	python3 from powerline.vim import setup as powerline_setup
 "	python3 powerline_setup()
 "	python3 del powerline_setup
@@ -158,19 +158,6 @@ nnoremap p gp
 "noremap p gp
 nnoremap gP P
 "noremap gP P
-
-"python with virtualenv support
-"may result in problems if py != py2/3 with execfile
-if system('hostname') =~ "T1"
-	py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-endif
 
 "easier navigations with split windows
 nnoremap <C-J> <C-W><C-J>
@@ -254,7 +241,7 @@ cmap w!! w !sudo tee > /dev/null %
 " line at 80 (+1 would be after textwidth -> wrap line)
 set colorcolumn=80
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
-" better title to distinguish hel and t1
+" better title to distinguish hel and t2
 auto BufEnter * let &titlestring = hostname() . "::" . expand("%:t")
 set title
 

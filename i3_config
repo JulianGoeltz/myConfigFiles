@@ -234,9 +234,10 @@ bindsym $mod+m "exec /bin/sh ~/.config/i3/scripts/muteAll.sh"
 
 # background
 # preparing image: convert IMG_1820.JPG -resize 1920 test.png; convert test.png -crop 1920x1080+0+0 test.png
-exec_always --no-startup-id "feh -zD5 --bg-max /home/julgoe/Pictures/actualBackgrounds"
+# or better yet with http://www.fmwconcepts.com/imagemagick/aspectcrop/index.php
+exec_always --no-startup-id "feh -z --bg-max --auto-rotate /home/julgoe/Pictures/BackgroundCropped"
 # and transperency
-exec --no-startup-id compton -bc &
+#exec --no-startup-id compton -bc &
 # for locking: 
 #bindsym $mod+Mod1+l exec "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
 # used i3lock is not standard but this one:
@@ -252,12 +253,12 @@ for_window [class="Spotify"] move --no-auto-back-and-forth to workspace 10
 assign [class="KeePass2"] 10
 assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 1; exec xterm'
-exec --no-startup-id i3-msg 'exec /usr/bin/keepass2'
+exec --no-startup-id i3-msg 'exec /usr/bin/keepass'
 exec --no-startup-id i3-msg workspace 1
 exec --no-startup-id exec xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
 
 bindsym $mod+Shift+v exec xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
-for_window [ title="julgoe::T1" ] move scratchpad
+for_window [ title="julgoe::T2" ] move scratchpad
 
 
 # switch to next/prev window
@@ -296,7 +297,7 @@ bindsym $mod+o move workspace to output right
 # exec --no-startup-id i3-msg 'exec udiskie --tray'
 
 # opening nemo for easy folder management
-bindsym $mod+e exec nemo
+#bindsym $mod+e exec nemo
 
 #always make inkviews floating
 # find classes with xprop: WM_CLASS: class, instance; 

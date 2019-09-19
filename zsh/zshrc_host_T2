@@ -1,12 +1,11 @@
 # ##################################
 # same but different
-alias cdmaster="cd ~/Dropbox/uni/MasterThesis/"
+alias cdmaster="cd ~/Documents/model-tempodrom/"
+export PATH=$PATH:~/Documents/model-tempodrom/help_scripts
+fpath=(~/Documents/model-tempodrom/help_scripts/completion $fpath)
 
 # ##################################
 # very different
-
-# disable caps lock and use as additional ctrl 
-[ -n "$DISPLAY" ] && setxkbmap -option ctrl:nocaps
 
 module () {
     eval `/usr/bin/modulecmd bash $*`
@@ -16,7 +15,7 @@ module () {
 alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/julgoe/Dropbox/printing"
 
 # if on tty, change colour scheme a bit
-. /home/julgoe/git/spack/share/spack/setup-env.sh
+. /home/julgoe/externalSources/spack/share/spack/setup-env.sh
 if [ "$TERM" = "linux" ]; then
 	#load the spack stuff in tty, gets passed on
 	#spack load python@2.7.16
@@ -71,7 +70,7 @@ fi
 [ -f /usr/share/autojump/autojump.sh ] && source /usr/share/autojump/autojump.sh
 [ -f /etc/profile.d/autojump.sh ] && source /etc/profile.d/autojump.zsh
 
-eval $(thefuck --alias) # for corrcet bindings
+type thefuck >/dev/null 2>&1 && eval $(thefuck --alias) # for correct bindings
 
 
 alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
@@ -155,24 +154,6 @@ if [[ -x `which notify-send` ]]; then
 fi
 
 alias spacky="module purge; spack load -r python@2.7.16; spack load -r vim; spack load -r nest; spack load -r py-h5py; spack load -r py-scipy; spack load -r py-matplotlib; spack load -r py-decorator; spack load -r py-pexpect; spack load -r py-simplegeneric; spack load -r py-pip; spack load neovim; spack load -r py-jupyter-notebook; spack load -r py-pandas; spack load -r py-scikit-learn; spack load -r py-pydot; module list"
-
-# alias spacky="module purge; source ~/myConfigFiles/zsh/zshrc_host_T1_spackenv; module list"
-# spacky_generate() {
-# cat <<EOF | /bin/sh >$HOME/myConfigFiles/zsh/zshrc_host_T1_spackenv
-# FIND='spack module loads --dependencies '
-# 
-# \$FIND python@2.7.16
-# \$FIND vim
-# \$FIND nest
-# \$FIND py-h5py
-# \$FIND py-scipy
-# \$FIND py-matplotlib
-# \$FIND py-decorator
-# \$FIND py-pexpect
-# \$FIND py-simplegeneric
-# \$FIND py-pip
-# EOF
-# }
 
 
 # copying files to my homepage to make them available

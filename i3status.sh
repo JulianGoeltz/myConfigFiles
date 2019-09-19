@@ -12,11 +12,12 @@ emojiHeadphone=🎧
 emojiBattery=🔋
 emojiVolume=🔊
 emojiMute=🔇
+emojiTune=🎵
 
 #Define the battery
 Battery() {
         BATPERC=$(acpi --battery | cut -d, -f2 | tr -d '\n')
-	echo "$emojiBattery $BATPERC"
+	echo "$emojiBattery$BATPERC"
 }
 
 #define the date
@@ -44,7 +45,7 @@ Playing() {
 		# in order for special chars to be properly escaped use json function above
 		tmp=$(json_escape "$artist - $title")
 		# but this uses quotes, get rid of them
-		echo "𝅘𝅥𝅮 ${tmp:1:-1}"
+		echo "$emojiTune ${tmp:1:-1}"
 	fi
 }
 
@@ -58,10 +59,10 @@ Ethernet() {
 }
 # wifi
 Wifi() {
-	string=$(iwconfig wlp4s0)
+	string=$(iw dev wlp4s0 link)
 	if [ "$?" -eq 0 ] && [ "$(echo "$string" | grep -c off/any)" -eq 0 ]; then
 		echo -n "Wifi: "
-		echo -n "$(echo "$string" | grep ESSID | sed -E 's/.*ESSID:"(.*?)".*/\1/')"
+		echo -n "$(echo "$string" | grep -oP "SSID: \K.*")"
 		signalstr=$(echo "$string" | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
 		signalstr=$(((100-signalstr)*2))
 		signalstr=$((signalstr > 100 ? 100 : signalstr))

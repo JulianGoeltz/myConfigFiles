@@ -1,17 +1,26 @@
-# make backspace backspace and not ^H, otherwise ^H can't be used in vim
-# from https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
-infocmp $TERM |  sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti
-tic $TERM.ti
-
 # coloured pacman (and yay) output:
 # uncomment `color` option in /etc/pacman.conf
-
-# make i3lock-color unlockable: needs pam.d file:
-# along the lines (add comment, make sure it doesn't exist)
-# echo "auth include login" > /etc/pam.d/i3lock
 
 
 # in compton.conf (either local or /etc/xdg/compton.conf) comment out `vsync = true;`, then rofi is opaque
 
 # for fusuma, add user to input group:
-# sudo gpasswd -a $USER input
+sudo gpasswd -a $USER input
+
+
+# enable tapping https://unix.stackexchange.com/questions/337008/activate-tap-to-click-on-touchpad
+xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+
+# use system clipboard in zsh: https://github.com/kutsan/zsh-system-clipboard
+git clone https://github.com/kutsan/zsh-system-clipboard ~/.zsh/plugins/zsh-system-clipboard
+
+# make backspace backspace and not ^H, otherwise ^H (i.e. go to left window) can't be used in vim
+# from https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
+infocmp $TERM |  sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti
+tic $TERM.ti
+
+
+# not needed last time
+# # make i3lock-color unlockable: needs pam.d file:
+# # along the lines (add comment, make sure it doesn't exist)
+# # echo "auth include login" > /etc/pam.d/i3lock
