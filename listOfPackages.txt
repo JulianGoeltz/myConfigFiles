@@ -148,6 +148,7 @@ xfsprogs
 xorg-server
 xorg-util-macros
 xorg-xbacklight
+xorg-xhost
 xorg-xinit
 xorg-xinput
 xorg-xrandr

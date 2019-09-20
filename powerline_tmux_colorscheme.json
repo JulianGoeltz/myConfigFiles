@@ -1,0 +1,6 @@
+{
+	"name": "make sure, the active window can be read",
+	"groups": {
+		"window:current": { "fg": "white", "attr": ["bold"] }
+	}
+}

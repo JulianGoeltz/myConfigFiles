@@ -124,6 +124,9 @@ for fn in "$LocOfScript"/tmux/tmux.conf_*; do
 done
 checkSimilaritiesAndLink tmux/tmux_T2_status.sh "$HOME/.tmux/tmux_T2_status.sh"
 
+echo "--powerline tmux"
+checkSimilaritiesAndLink powerline_tmux_colorscheme.json "$HOME/.config/powerline/colorschemes/tmux/default.json"
+
 echo "--vim"
 checkSimilaritiesAndLink vimrc "$HOME/.vimrc"
 [ ! -d "$HOME/.vim/after/ftplugin" ] && mkdir -p "$HOME/.vim/after/ftplugin"
