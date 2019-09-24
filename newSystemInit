@@ -2,7 +2,9 @@
 # uncomment `color` option in /etc/pacman.conf
 
 
-# in compton.conf (either local or /etc/xdg/compton.conf) comment out `vsync = true;`, then rofi is opaque
+# in compton.conf (either local or /etc/xdg/compton.conf) 
+# comment out `vsync = true;`, then rofi is opaque
+# set `fading = false;` st no annoying fading visible
 
 # for fusuma, add user to input group:
 sudo gpasswd -a $USER input
@@ -32,6 +34,7 @@ tic $TERM.ti
 # HandleLidSwitch=ignore
 # HandlePowerKey=suspend
 
+# add correct ca certificate (eduroam_ca.pem) to /etc/ssl/ and then add this to the profile in networkManager
 
 # not needed last time
 # # make i3lock-color unlockable: needs pam.d file:

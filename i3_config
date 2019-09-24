@@ -78,8 +78,8 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+f fullscreen toggle global
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+# bindsym $mod+s layout stacking
+# bindsym $mod+w layout tabbed
 # bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
@@ -235,9 +235,9 @@ bindsym $mod+m "exec /bin/sh ~/.config/i3/scripts/muteAll.sh"
 # background
 # preparing image: convert IMG_1820.JPG -resize 1920 test.png; convert test.png -crop 1920x1080+0+0 test.png
 # or better yet with http://www.fmwconcepts.com/imagemagick/aspectcrop/index.php
-exec_always --no-startup-id "feh -z --bg-max --auto-rotate /home/julgoe/Pictures/BackgroundCropped"
-# and transperency
-#exec --no-startup-id compton -bc &
+#exec_always --no-startup-id "feh -z --bg-max --auto-rotate /home/julgoe/Pictures/BackgroundCropped"
+# and transparency
+exec --no-startup-id compton -bc
 # for locking: 
 #bindsym $mod+Mod1+l exec "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
 # used i3lock is not standard but this one:
@@ -336,3 +336,6 @@ exec --no-startup-id i3-msg "exec  setxkbmap -option ctrl:nocaps"
 
 # use rofi for selecting unicode symbols as eg umlauts
 bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofiUnicodeSymbols.sh"
+
+# use rofi as window switcher
+bindsym $mod+w exec --no-startup-id rofi -show window
