@@ -21,11 +21,12 @@ greenlet            0.4.15
 html5lib            1.0.1  
 idna                2.8    
 importlib-metadata  0.23   
-keyutils            0.5    
+keyutils            0.6    
 lensfun             0.3.2  
 lockfile            0.12.2 
 louis               3.10.0 
 mccabe              0.6.1  
+meson               0.51.2 
 more-itertools      4.3.0  
 msgpack             0.6.1  
 packaging           19.1   

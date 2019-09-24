@@ -6,4 +6,4 @@
 * * * * * /home/julgoe/myConfigFiles/toolbox/checkLowBattery
 
 # change background every 10 minutes
-*/10 * * * * DISPLAY=:0.0 feh -z --bg-max --auto-rotate /home/julgoe/Pictures/BackgroundCropped
+#*/10 * * * * DISPLAY=:0.0 feh -z --bg-max --auto-rotate /home/julgoe/Pictures/BackgroundCropped

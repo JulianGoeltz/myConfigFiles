@@ -83,12 +83,16 @@ make
 man-db
 man-pages
 mdadm
+meson
 mirage
 nano
 neovim
 net-tools-debian-ifconfig
 netctl
+network-manager-applet
 networkmanager
+ninja
+nm-connection-editor
 noto-fonts
 openbsd-netcat
 pacman
@@ -99,6 +103,7 @@ pkgconf
 playerctl
 powerline
 procps-ng
+pscircle-git
 psmisc
 pulseaudio
 pulseaudio-bluetooth
