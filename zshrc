@@ -12,6 +12,8 @@ if [[ "$(hostname)" == "T2" ]]; then
 	zstyle :compinstall filename '/home/julgoe/.zshrc'
 elif [[ "$(hostname)" == "helvetica" ]] || [[ "$(hostname)" == "hel" ]] || [[ "$(hostname)" == "helvetica.kip.uni-heidelberg.de" ]]; then
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
+elif [[ "$(hostname)" == "login1.nemo.privat" ]] then
+	zstyle :compinstall filename '/home/hd/hd_hd/hd_ta400/.zshrc'
 elif echo $HOME | grep -q termux; then
 	echo "Welcome to termux!"
 	zstyle :compinstall filename '/data/data/com.termux/files/home/.zshrc'
@@ -45,7 +47,6 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found # to get info about similar commands
 [[ $PATH == *"myConfigFiles/toolbox"* ]] || PATH=$PATH:~/myConfigFiles/toolbox
 # add user's bin directories to path
-[[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 
 # To access port on hel locally, add to command (then go to localhost with that port):

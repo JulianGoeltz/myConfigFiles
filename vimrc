@@ -31,7 +31,7 @@ function! BuildYCM(info)
   endif
 endfunction
 
-let g:ycm_requirements_met = v:version >= 704 || (v:version == 703 && has('patch584'))
+let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
 if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
 	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM

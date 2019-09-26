@@ -3,6 +3,7 @@
 alias cdmaster="cd ~/Documents/model-tempodrom/"
 export PATH=$PATH:~/Documents/model-tempodrom/help_scripts
 fpath=(~/Documents/model-tempodrom/help_scripts/completion $fpath)
+[[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # ##################################
 # very different

@@ -1,0 +1,60 @@
+# ##################################
+# same but different
+alias cdmaster="cd ~/TtFS/model-tempodrom"
+export PATH=$PATH:~/TtFS/model-tempodrom/help_scripts
+fpath=(~/TtFS/model-tempodrom/help_scripts/completion $fpath)
+
+# ##################################
+# very different
+alias singularityzsh="singularity exec -B /opt:/mnt --app visionary-dls /work/ws/nemo/hd_ta400-TtFS-0/containers/2019-09-13_1.img zsh"
+
+if [ -z $SINGULARITY_APPNAME ]; then
+	# found by starting `bash -x` in tmux and searching output for module
+	source /etc/profile.d/modules.sh
+	# slurm alternative
+	source /etc/profile.d/moab.sh
+else
+	# modules and spack
+	source /opt/init/modules.sh
+	source /opt/spack/share/spack/setup-env.sh
+fi
+
+module list
+
+if [ -z "$PREEXEC_FUNCTIONS_AMMENDED" ]; then
+	preexec_functions=($preexec_functions updateEnvTmux)
+	PREEXEC_FUNCTIONS_AMMENDED="set"
+fi
+function updateEnvEverywhere () {
+	for _pane in `tmux list-panes -a -F '#{pane_id}'`
+	do
+		tmux send-keys -t ${_pane} ^z ^u updateEnv ^m fg ^m ;
+	done
+}
+function updateEnvTmux () {
+	[ -n "$TMUX" ] && updateEnv
+}
+function updateEnv () {
+	# uses the current (from the environment where tmux attach was done) ssh agent and display to allow ssh forwarding and X11 forwarding
+	# -> pushing and pulling in git and display use
+	eval "export $(tmux show-environment | grep SSH_AUTH_SOCK)"
+	eval "export $(tmux show-environment | grep DISPLAY)"
+}
+
+function tmux_killall () {
+	# kill all tmux clients
+	echo "before"
+	tmux list-clients
+	for cl in $(tmux list-clients | awk '{print $2}'); do
+		tmux detach -s "$cl"
+	done
+	echo "after"
+	tmux list-clients
+	# in all sessions set DISPLAY and SS_AUTH_SOCK
+	IFS=$'\n'
+	for sess in $(tmux list-sessions | grep -oP "^[^:]*"); do
+		tmux setenv -t "$sess" DISPLAY $DISPLAY
+		tmux setenv -t "$sess" SSH_AUTH_SOCK $SSH_AUTH_SOCK
+	done
+	unset IFS
+}
