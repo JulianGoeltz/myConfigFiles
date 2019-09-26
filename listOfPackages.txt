@@ -1,4 +1,6 @@
 acpi
+alsa-firmware
+alsa-utils
 autoconf
 autojump
 automake
@@ -95,6 +97,7 @@ ninja
 nm-connection-editor
 noto-fonts
 openbsd-netcat
+openmpi
 pacman
 patch
 pciutils
@@ -118,11 +121,13 @@ reiserfsprogs
 rofi
 ruby
 ruby-fusuma
+rust
 s-nail
 sed
 shadow
 singularity-container
 spotify
+spotifyd
 sshfs
 sudo
 sysfsutils

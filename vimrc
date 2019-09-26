@@ -2,7 +2,7 @@
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
 "   this is using vim-plug https://github.com/junegunn/vim-plug
-"   download vim-plug in .vim folder
+"   link plug.vim into ~/.vim/autoload folder
 "   plugins installed by :PlugInstall
 set nocompatible	" Use Vim defaults instead of 100% vi compatibility
 set backspace=indent,eol,start	" more powerful backspacing

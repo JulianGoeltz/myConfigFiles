@@ -7,7 +7,9 @@ set -euo pipefail
 port=1234
 codeword=slurmDone
 
-if [[ $1 == "sending" ]]; then
+if [ $# -eq 0 ]; then
+	echo "needs argument"
+elif [[ $1 == "sending" ]]; then
 	tmpFile=/wang/users/jgoeltz/cluster_home/.tmp_slurmJobs
 
 	oldState=$(cat $tmpFile)
@@ -26,11 +28,11 @@ if [[ $1 == "sending" ]]; then
 elif [[ $1 == "receiving" ]]; then
 	# wait until dunst is up an running
 	# sleep 10
-	/usr/bin/notify-send "starting slurmNotifs"
+	dunstify "starting slurmNotifs"
 	tmpFun () {
 		while IFS= read -r line; do
 			if [[ $line == "$codeword" ]]; then
-				/home/julgoe/.local/bin/dunstify -r 6666 -t 3000 "Slurm jobs on hel finished"
+				dunstify -r 6666 -t 3000 "Slurm jobs on hel finished"
 			fi
 		done
 	}

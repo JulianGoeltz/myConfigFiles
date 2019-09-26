@@ -51,8 +51,9 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 # To access port on hel locally, add to command (then go to localhost with that port):
 # -L 5678:localhost:5678
 # port forwarding to get notifs when slurm jobs are done
-alias sshhel="ssh -A -X -o ConnectTimeout=60 -o ServerAliveInterval=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de -R 1234:127.0.0.1:1234"
+alias sshhel="ssh -A -X -o ConnectTimeout=60 -o ServerAliveInterval=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de -R localhost:1234:localhost:1234"
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
+alias sshnemo="ssh -A -X hd_ta400@login1.nemo.uni-freiburg.de"
 # alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other,IdentityFile=/home/julgoe/.ssh/id_rsa"
 sshhel_fs_helper(){
 	sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
@@ -119,12 +120,13 @@ tmux_resetSocket () {
 # cat ~/myConfigFiles/tmp_art
 tm () {
 	tmpTmuxServerPid=$(ps axo pid,user,comm,args | grep $USER | grep -v grep | grep -P "(tmux: server|tmux)")
+
 	if [ -z "$tmpTmuxServerPid" ]; then
 		echo "no tmux server running, start it"
 		return
-	elif [ "$(echo $tmpTmuxServerPid | wc -l)" -ne 1 ]; then
+	elif [ "$(echo "$tmpTmuxServerPid" | wc -l)" -ne 1 ]; then
 		echo "More than one server running, handle manually:"
-		echo $tmpTmuxServerPid
+		echo "$tmpTmuxServerPid"
 		return
 	fi
 	tmpTmuxServerPid=$(echo $tmpTmuxServerPid | grep -o "^\s*[0-9]*" | grep -o "[0-9]*")
