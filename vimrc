@@ -340,3 +340,9 @@ call togglebg#map("<F5>")
 " overwrites airline color for inactive buffers, to make filename readable
 " (only the 85 is changed, and it is the same as the .normal. one)
 autocmd VimEnter * let g:airline#themes#dark#palette.inactive.airline_c = ['#4e4e4e', '#303030', 85, 236, '']
+
+" neovim specialties
+if has("nvim")
+	let g:vimtex_compiler_progname = 'nvr'
+	let g:vimtex_compiler_latexmk.backend = 'nvim'
+endif

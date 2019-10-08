@@ -58,9 +58,11 @@ alias sshnemo="ssh -A -X hd_ta400@login1.nemo.uni-freiburg.de"
 sshhel_fs_helper(){
 	sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
 }
-alias sshhel_fs="sshhel_fs_helper MasterThesis ~/mntHel; sshhel_fs_helper /loh/users/jgoeltz ~/mntHel_loh"
+alias sshhel_fs="sshhel_fs_helper MasterThesis ~/mnt/mntHel; sshhel_fs_helper /loh/users/jgoeltz ~/mnt/mntHel_loh"
 alias sshhel_fs_unmount="fusermount -u -z ~/mntHel; fusermount -u -z ~/mntHel_loh"
+alias sshnemo_fs="sshfs hd_ta400@login1.nemo.uni-freiburg.de:/work/ws/nemo/hd_ta400-TtFS-0 ~/mnt/mntNemo -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60"
 alias sshhel_visu="sshhel -L 6931:localhost:6931"
+alias sshnemo_fs_unmount="fusermount -u -z ~/mnt/mntNemo"
 
 alias vpn_connect="sudo openconnect vpn-ac.urz.uni-heidelberg.de"
 
@@ -172,9 +174,6 @@ function replaceGerrit() {
 
 # shift tab working as expected
 bindkey "$terminfo[kcbt]" reverse-menu-complete
-
-# if 'cd file' cd to the directory of that file
-function cd () { ! [ -f "$1" ] && builtin cd $1 || builtin cd "$(dirname "$1")"}
 
 # display ^C when CtrlC is pressed, eases reading of lines; maybe causes problems
 TRAPINT() {

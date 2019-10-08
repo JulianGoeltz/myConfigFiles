@@ -60,7 +60,7 @@ Ethernet() {
 # wifi
 Wifi() {
 	string=$(iw dev wlp4s0 link)
-	if [ "$?" -eq 0 ] && [ "$(echo "$string" | grep -c off/any)" -eq 0 ]; then
+	if [ "$?" -eq 0 ] && [ "$(echo "$string" | grep -c "Not connected.")" -eq 0 ]; then
 		echo -n "Wifi: "
 		echo -n "$(echo "$string" | grep -oP "SSID: \K.*")"
 		signalstr=$(echo "$string" | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
