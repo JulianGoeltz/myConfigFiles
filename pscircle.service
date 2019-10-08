@@ -1,0 +1,9 @@
+[Unit]
+Description=Runs pscircle to continuously update desktop wallpaper 
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/bin/bash -c "while true; do pscircle --background-color=000000FF --root-pid=1 --collapse-threads=true --max-children=35 --tree-sector-angle=3.1415 --tree-rotate=true --tree-rotation-angle=1.5708 --tree-center=-1580:0 --cpulist-center=300:0 --memlist-center=800:0 --output=/home/julgoe/.pscircle.png && feh --bg-scale ~/.pscircle.png; sleep 5; done"
+
+[Install]
+WantedBy=default.target

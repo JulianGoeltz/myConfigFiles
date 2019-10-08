@@ -30,7 +30,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec xterm
+bindsym $mod+Return exec --no-startup-id xterm
 #bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
@@ -193,7 +193,7 @@ bar {
 # 	-show run
 # 	#-fuzzy \
 # 	#-modi drun -show drun
-bindsym $mod+d exec rofi \
+bindsym $mod+d exec --no-startup-id rofi \
 	-font "pango:monospace 12" \
 	-opacity 70 \
 	-width 100 -lines 10 \
@@ -208,27 +208,27 @@ bindsym $mod+d exec rofi \
 # bindsym $mod+Shift+a exec rofi -show run -lines 21 -eh 1.3 -opacity "50" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$text-color" -hlfg "$bg-color" -font "System San Francisco Display 10"
 
 # brightness
-bindsym XF86MonBrightnessUp "exec /bin/sh ~/.config/i3/scripts/changeBrightness.sh up"
-bindsym XF86MonBrightnessDown "exec /bin/sh ~/.config/i3/scripts/changeBrightness.sh down"
-bindsym Shift+XF86MonBrightnessUp "exec /bin/bash ~/.config/i3/scripts/changeBrightness.sh high"
-bindsym Shift+XF86MonBrightnessDown "exec /bin/sh ~/.config/i3/scripts/changeBrightness.sh low"
+bindsym XF86MonBrightnessUp "exec --no-startup-id /bin/sh ~/.config/i3/scripts/changeBrightness.sh up"
+bindsym XF86MonBrightnessDown "exec --no-startup-id /bin/sh ~/.config/i3/scripts/changeBrightness.sh down"
+bindsym Shift+XF86MonBrightnessUp "exec --no-startup-id /bin/bash ~/.config/i3/scripts/changeBrightness.sh high"
+bindsym Shift+XF86MonBrightnessDown "exec --no-startup-id /bin/sh ~/.config/i3/scripts/changeBrightness.sh low"
 
 # playpause
-bindsym XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
-bindsym Shift+XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
-bindsym Mod1+XF86Tools "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
-bindsym XF86HomePage "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
-bindsym KP_Divide "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
-bindsym KP_Subtract "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
-bindsym KP_Multiply "exec /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+bindsym XF86Tools "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym Shift+XF86Tools "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
+bindsym Mod1+XF86Tools "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+bindsym XF86HomePage "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym KP_Divide "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym KP_Subtract "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
+bindsym KP_Multiply "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 
 # increase correct volume: if bluetooth connected use that one
-bindsym XF86AudioLowerVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
-bindsym XF86AudioRaiseVolume "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
-bindsym Control+KP_Subtract  "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
-bindsym Control+KP_Add "exec pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
-bindsym XF86AudioMute "exec pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) toggle"
-bindsym $mod+m "exec /bin/sh ~/.config/i3/scripts/muteAll.sh"
+bindsym XF86AudioLowerVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
+bindsym XF86AudioRaiseVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
+bindsym Control+KP_Subtract  "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
+bindsym Control+KP_Add "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
+bindsym XF86AudioMute "exec --no-startup-id pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) toggle"
+bindsym $mod+m "exec --no-startup-id /bin/sh ~/.config/i3/scripts/muteAll.sh"
 
 # syncient
 
@@ -244,8 +244,8 @@ exec --no-startup-id compton -bc
 # https://github.com/PandorasFox/i3lock-color
 # exec --no-startup-id xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
 # bindsym $mod+Mod1+Shift+l exec xautolock -detectsleep -time 30 -locker "/home/julgoe/myConfigFiles/toolbox/lock.sh"
-bindsym $mod+Mod1+l exec "/home/julgoe/myConfigFiles/toolbox/lock.sh"
-bindsym $mod+Mod1+Shift+l exec "/home/julgoe/myConfigFiles/toolbox/lockAlt.sh"
+bindsym $mod+Mod1+l exec --no-startup-id "/home/julgoe/myConfigFiles/toolbox/lock.sh"
+bindsym $mod+Mod1+Shift+l exec --no-startup-id "/home/julgoe/myConfigFiles/toolbox/lockAlt.sh"
 
 # autostart
 # find classes with xprop: WM_CLASS: class, instance; 
@@ -253,11 +253,11 @@ for_window [class="Spotify"] move --no-auto-back-and-forth to workspace 10
 assign [class="KeePass2"] 10
 assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 1; exec xterm'
-exec --no-startup-id i3-msg 'exec /usr/bin/keepass'
-exec --no-startup-id i3-msg workspace 1
-exec --no-startup-id exec xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
+exec --no-startup-id /usr/bin/keepass
+exec --no-startup-id workspace 1
+exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
 
-bindsym $mod+Shift+v exec xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
+bindsym $mod+Shift+v exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
 for_window [ title="julgoe::T2" ] move scratchpad
 
 
@@ -276,7 +276,7 @@ focus_follows_mouse no
 # touchpad: fusuma and other
 # sudo gem install --install-dir=/usr/local --no-user-install fusuma
 # or better yay fusuma
-exec --no-startup-id i3-msg 'exec fusuma'
+exec --no-startup-id fusuma
 exec_always --no-startup-id i3-msg 'exec synclient ClickFinger3=2; exec synclient TapButton3=2; exec synclient HorizTwoFingerScroll=1'
 
 # dunst notification daemon for /usr/bin/notify-send
@@ -311,19 +311,19 @@ for_window [class="Eog"] floating enable
 for_window [class="feh"] floating enable
 
 # bind key to use screenSet, easiest for making screen work after removing from dockingstation
-bindsym $mod+Control+1 "exec /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"
+bindsym $mod+Control+1 "exec --no-startup-id /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"
 
 # bind key for kaddl
-bindsym Mod1+F4 exec "notify-send -t 2000 'Hallo Kaddl ❤❤❤'"
+bindsym Mod1+F4 exec --no-startup-id "notify-send -t 2000 'Hallo Kaddl ❤❤❤'"
 
 #bind key for disabling touchpad
-bindsym $mod+t "exec /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"
+bindsym $mod+t "exec --no-startup-id /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"
 
 # for easy network managment
-exec --no-startup-id i3-msg 'exec nm-applet'
+exec --no-startup-id nm-applet
 
 # proxied telegram
-bindsym Mod1+t exec "/bin/bash ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/telegram-desktop"
+bindsym Mod1+t exec --no-startup-id "/bin/bash ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/telegram-desktop"
 
 # netcat listening for slurmDone calls
 exec --no-startup-id i3-msg "exec ~/myConfigFiles/toolbox/notifySlurmDone.sh receiving"
@@ -339,3 +339,16 @@ bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofi
 
 # use rofi as window switcher
 bindsym $mod+w exec --no-startup-id rofi -show window
+
+# floating temporary terminal
+for_window [class="FXTerm"] floating enable, move right 1500, move down 800
+# resize grow left 300, resize grow right 300, 
+bindsym $mod+Shift+Return exec --no-startup-id xterm -class FXTerm
+
+# window setting without borders
+default_border none
+default_floating_border none
+hide_edge_borders both
+
+# jump to urgent window
+bindsym $mod+x [urgent=latest] focus

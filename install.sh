@@ -95,15 +95,6 @@ for fn in "$LocOfScript"/zsh/*; do
 	checkSimilaritiesAndLink "zsh/$(basename "$fn")" "$HOME/.zsh/$(basename "$fn")"
 done
 
-echo "--GITCONFIG"
-checkSimilaritiesAndLink gitconfig "$HOME/.gitconfig"
-
-echo "--FLAKE8"
-checkSimilaritiesAndLink flake8 "$HOME/.config/flake8"
-
-echo "--ipython"
-checkSimilaritiesAndLink ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"
-
 echo "--ssh"
 if [[ "$(hostname)" == "T2" ]]; then
 	# here we use the existing ssh config, which just says which identity files to use, and add a proxied version
@@ -124,9 +115,6 @@ for fn in "$LocOfScript"/tmux/tmux.conf_*; do
 done
 checkSimilaritiesAndLink tmux/tmux_T2_status.sh "$HOME/.tmux/tmux_T2_status.sh"
 
-echo "--powerline tmux"
-checkSimilaritiesAndLink powerline_tmux_colorscheme.json "$HOME/.config/powerline/colorschemes/tmux/default.json"
-
 echo "--vim"
 checkSimilaritiesAndLink vimrc "$HOME/.vimrc"
 [ ! -d "$HOME/.vim/after/ftplugin" ] && mkdir -p "$HOME/.vim/after/ftplugin"
@@ -137,19 +125,28 @@ done
 for fn in "$LocOfScript"/vim/after/syntax/*; do
 	checkSimilaritiesAndLink vim/after/syntax/"$(basename "$fn")" "$HOME"/.vim/after/syntax/"$(basename "$fn")"
 done
-echo "--neovim"
+
+echo "--others"
+checkSimilaritiesAndLink powerline_tmux_colorscheme.json "$HOME/.config/powerline/colorschemes/tmux/default.json"
+
+checkSimilaritiesAndLink gitconfig "$HOME/.gitconfig"
+
+checkSimilaritiesAndLink flake8 "$HOME/.config/flake8"
+
+checkSimilaritiesAndLink ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"
+
 checkSimilaritiesAndLink neovim_init.vim "$HOME/.config/nvim/init.vim"
 
-echo "--latexmk"
 checkSimilaritiesAndLink latexmkrc "$HOME/.latexmkrc"
 
-echo "--Xdefaults"
 checkSimilaritiesAndLink Xdefaults "$HOME/.Xdefaults"
 
-if [[ "$(hostname)" == "T2" ]]; then
-	echo "--this repo"
-	checkSimilaritiesAndLink ensureUpdates_pre-commit "$LocOfScript/.git/hooks/pre-commit"
+checkSimilaritiesAndLink zathurarc "$HOME/.config/zathura/zathurarc"
 
+checkSimilaritiesAndLink ensureUpdates_pre-commit "$LocOfScript/.git/hooks/pre-commit"
+
+if [[ "$(hostname)" == "T2" ]]; then
+	echo "--T2 specifics"
 	echo "--i3"
 	checkSimilaritiesAndLink i3_config "$HOME/.config/i3/config"
 	checkSimilaritiesAndLink i3status.sh "$HOME/.config/i3/i3status.sh"
@@ -158,14 +155,19 @@ if [[ "$(hostname)" == "T2" ]]; then
 		checkSimilaritiesAndLink i3scripts/"$(basename "$fn")" "$HOME"/.config/i3/scripts/"$(basename "$fn")"
 	done
 
-	echo "--xinit"
+	echo "--others"
+
 	checkSimilaritiesAndLink xinitrc "$HOME/.xinitrc"
 
-	echo "--fusuma"
 	checkSimilaritiesAndLink fusuma.config "$HOME/.config/fusuma/config.yml"
 
-	echo "--dunst"
 	checkSimilaritiesAndLink dunstrc "$HOME/.config/dunst/dunstrc"
+
+	checkSimilaritiesAndLink compton.conf "$HOME/.config/compton.conf"
+
+	checkSimilaritiesAndLink pscircle.service "$HOME/.config/systemd/user/pscircle.service"
+
+	checkSimilaritiesAndLink zprofile "$HOME/.zprofile"
 
 	echo "----sudos"
 
