@@ -79,6 +79,7 @@ gtest
 gtk-doc
 gts
 gzip
+hdf5
 htop
 i3-gaps
 i3blocks
