@@ -143,8 +143,6 @@ checkSimilaritiesAndLink Xdefaults "$HOME/.Xdefaults"
 
 checkSimilaritiesAndLink zathurarc "$HOME/.config/zathura/zathurarc"
 
-checkSimilaritiesAndLink ensureUpdates_pre-commit "$LocOfScript/.git/hooks/pre-commit"
-
 if [[ "$(hostname)" == "T2" ]]; then
 	echo "--T2 specifics"
 	echo "--i3"
@@ -168,6 +166,8 @@ if [[ "$(hostname)" == "T2" ]]; then
 	checkSimilaritiesAndLink pscircle.service "$HOME/.config/systemd/user/pscircle.service"
 
 	checkSimilaritiesAndLink zprofile "$HOME/.zprofile"
+
+	checkSimilaritiesAndLink ensureUpdates_pre-commit "$LocOfScript/.git/hooks/pre-commit"
 
 	echo "----sudos"
 
