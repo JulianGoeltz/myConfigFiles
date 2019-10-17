@@ -12,8 +12,8 @@ ignore =
     W503,
     # W504: line break after binary operator
     W504,
-    # E701: multiple statements on one line (colon)
-    E701,
+    ## E701: multiple statements on one line (colon)
+    #E701,
     ## just for now: ignore local variable define but unused
     #F841,
 max-line-length = 120

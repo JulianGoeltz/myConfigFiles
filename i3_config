@@ -352,3 +352,6 @@ hide_edge_borders both
 
 # jump to urgent window
 bindsym $mod+x [urgent=latest] focus
+
+# make window sticky
+bindsym $mod+s sticky toggle

@@ -29,7 +29,7 @@ rofi.font: System San Francisco Display 18
 *VT100*underLine:       true
 
 !save more lines
-XTerm.vt100.saveLines: 4096
+*.vt100.saveLines: 4096
 
 ! fonts
 !*faceName: Bitstream Vera Serif Mono
@@ -95,6 +95,6 @@ XTerm.vt100.saveLines: 4096
 *color15:               S_base3
 
 
-XTerm*VT100.cutNewLine: false
-XTerm*VT100.cutToBeginningOfLine: false
-XTerm*VT100.charClass: 33:48,35:48,37:48,42:48,45-47:48,64:48,95:48,126:48
+*VT100.cutNewLine: false
+*VT100.cutToBeginningOfLine: false
+*VT100.charClass: 33:48,35:48,37:48,42:48,45-47:48,64:48,95:48,126:48

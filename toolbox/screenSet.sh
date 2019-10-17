@@ -2,6 +2,9 @@
 
 # set -euo pipefail
 
+# in general set keyboard option nocaps
+setxkbmap -option ctrl:nocaps
+
 if [ $# -gt 1 ]; then
 	# set up three monitor setup
 	dunstify -r 5555 -t 3000 "setting xrandr in office special"
