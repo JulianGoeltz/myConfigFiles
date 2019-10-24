@@ -159,14 +159,6 @@ eo () { ls -lAh $@; eog $(ls $@)}
 # with redraw there's a loss of lines, for this disable this feature:
 alias stoplinesdisappearing='printf "\e[?1004l"'
 
-# to copy to system clipboard with vi keybinds in zsh
-# check that ZSH_SYSTEM_CLIPBOARD is not empty, the file exist and we are not in a singularity shell
-[ -z "$ZSH_SYSTEM_CLIPBOARD" ] && \
-	[ -e "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh" ] && \
-	[ -z $SINGULARITY_APPNAME ] && \
-	[ -n "$DISPLAY" ] && \
-	source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
-
 function replaceGerrit() {
 	read "foobar?enter>" ;
 	echo ${foobar//gerrit.bioai.eu/brainscales-r.kip.uni-heidelberg.de}
@@ -395,31 +387,24 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:processes' command 'ps -u $USER -o pid,user,comm'
 
 
-# User configuration
+# ### Plugins
+pluginDir="$HOME/.zsh/plugins/"
+# to copy to system clipboard with vi keybinds in zsh
+# check that ZSH_SYSTEM_CLIPBOARD is not empty, the file exist and we are not in a singularity shell
+[ -z "$ZSH_SYSTEM_CLIPBOARD" ] && \
+	[ -e "$pluginDir/zsh-system-clipboard/zsh-system-clipboard.zsh" ] && \
+	[ -z $SINGULARITY_APPNAME ] && \
+	[ -n "$DISPLAY" ] && \
+	source "$pluginDir/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# load autosuggestions
+[ -d "$pluginDir/zsh-autosuggestions" ] && source $pluginDir/zsh-autosuggestions/zsh-autosuggestions.zsh
+export ZSH_AUTOSUGGEST_USE_ASYNC=""
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="underline"
+bindkey '^N' autosuggest-execute
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+[ -d "$pluginDir/zsh-syntax-highlighting" ] && source $pluginDir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+[ -d "$pluginDir/zsh-history-substring-search" ] && source $pluginDir/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
