@@ -12,6 +12,7 @@ automake
 awesome-terminal-fonts
 based-connect-git
 bash
+bat
 bc
 binutils
 bison
@@ -98,6 +99,7 @@ iputils
 itstool
 iw
 jfsutils
+joyutils
 keepass
 keepass-plugin-http
 keepass-plugin-keeagent
@@ -132,6 +134,7 @@ mallard-ducktype
 man-db
 man-pages
 mdadm
+mendeleydesktop
 meson
 mirage
 mpg123
