@@ -181,7 +181,7 @@ close_all = ctrl+shift+space
 # Redisplay last message(s).
 # On the US keyboard layout "grave" is normally above TAB and left
 # of "1".
-history = ctrl+grave
+history = ctrl+1
 
 # Context menu.
 context = ctrl+shift+period
