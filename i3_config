@@ -292,6 +292,7 @@ bindsym $mod+Escape scratchpad show
 
 # moving workspaces to other output
 bindsym $mod+o move workspace to output right
+bindsym $mod+Shift+o move workspace to output up
 
 # maybe use udiskie even in autostart to automaticcaly mount devices
 # exec --no-startup-id i3-msg 'exec udiskie --tray'

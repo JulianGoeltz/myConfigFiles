@@ -173,6 +173,9 @@ TRAPINT() {
   return $(( 128 + $1 ))
 }
 
+# change default theme of bat
+export BAT_THEME=GitHub
+
 # last thing before end, source the host specific files if existent
 [ -e ~/.zsh/zshrc_host_$(hostname | head -c 3) ] && source ~/.zsh/zshrc_host_$(hostname | head -c 3)
 

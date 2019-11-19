@@ -7,7 +7,7 @@ apr-util
 asar
 autoconf
 autoconf-archive
-autojump
+autojump-git
 automake
 awesome-terminal-fonts
 based-connect-git
@@ -17,6 +17,7 @@ bc
 binutils
 bison
 bluez
+bluez-alsa-git
 bluez-utils
 bzip2
 c-ares
@@ -27,11 +28,11 @@ clutter-gst
 clutter-gtk
 cmake
 cogl
-compton
 coreutils
 cronie
 cryptsetup
 cups
+cython
 device-mapper
 dhcpcd
 diffutils
@@ -65,6 +66,7 @@ gettext
 ghostscript
 giblib
 gimp
+gist
 git
 glib2-docs
 glibc
@@ -85,6 +87,7 @@ gts
 gzip
 hdf5
 htop
+hub
 i3-gaps
 i3blocks
 i3lock-color
@@ -100,6 +103,8 @@ itstool
 iw
 jfsutils
 joyutils
+jupyter
+jupyter-notebook
 keepass
 keepass-plugin-http
 keepass-plugin-keeagent
@@ -149,11 +154,15 @@ ninja
 nm-connection-editor
 nodejs
 noto-fonts
+octave
 okular
 openbsd-netcat
+openconnect
 openmpi
 pacman
+paprefs
 patch
+pavucontrol
 pciutils
 perl
 perl-encode-locale
@@ -180,9 +189,11 @@ perl-try-tiny
 perl-uri
 perl-www-robotrules
 perl-xml-parser
+picom
 pkgconf
 playerctl
 powerline
+powerline-common
 procps-ng
 pscircle-git
 psmisc
@@ -196,8 +207,10 @@ python-mako
 python-markdown
 python-markupsafe
 python-pip
+python-powerline
 python-pygments
 python-pynvim
+python-pytorch-opt
 python-setuptools
 python-telegram-bot
 python-xdg
@@ -235,6 +248,7 @@ texlive-publishers
 texlive-science
 thefuck
 thunderbird
+tk
 tmux
 ttf-dejavu
 ttf-dejavu-sans-mono-powerline-git
@@ -253,7 +267,6 @@ wget
 which
 xclip
 xdotool
-xf86-video-intel
 xfsprogs
 xorg-server
 xorg-server-xephyr
@@ -270,6 +283,7 @@ xterm
 yay
 yelp-tools
 yelp-xsl
+youtube-dl
 zathura
 zathura-djvu
 zathura-pdf-mupdf
