@@ -1,0 +1,17 @@
+#compdef venvsource
+_venvsource() {
+	_arguments \
+	  ":which venv to load:->venvs" \
+	  && return 0
+	# '*::command: _normal'
+	# '*::args:->command' "$common[@]" && ret=0
+	case $state in
+		venvs)
+			compadd "$@" \
+				$(for v in ~/venvs/*; do echo $v/bin/activate; done)
+			return
+			;;
+	esac
+	return
+}
+_venvsource "$@"
