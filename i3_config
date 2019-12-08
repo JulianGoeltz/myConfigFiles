@@ -228,6 +228,7 @@ bindsym XF86AudioRaiseVolume "exec --no-startup-id pactl set-sink-volume $(/bin/
 bindsym Control+KP_Subtract  "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
 bindsym Control+KP_Add "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
 bindsym XF86AudioMute "exec --no-startup-id pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) toggle"
+bindsym XF86AudioMicMute "exec --no-startup-id pactl set-source-mute 1 toggle"
 bindsym $mod+m "exec --no-startup-id /bin/sh ~/.config/i3/scripts/muteAll.sh"
 
 # syncient
