@@ -57,8 +57,11 @@ function updateEnvTmux () {
 function updateEnv () {
 	# uses the current (from the environment where tmux attach was done) ssh agent and display to allow ssh forwarding and X11 forwarding
 	# -> pushing and pulling in git and display use
-	eval "export $(tmux show-environment | grep SSH_AUTH_SOCK)"
-	eval "export $(tmux show-environment | grep DISPLAY)"
+
+	# filter out the unset variables, identified by leading dash
+	tmp="$(tmux show-environment | grep -v "^-")"
+	eval "export $(echo "$tmp" | grep SSH_AUTH_SOCK) >/dev/null"
+	eval "export $(echo "$tmp" | grep DISPLAY) >/dev/null"
 }
 
 function saveplottedtobackup() {
