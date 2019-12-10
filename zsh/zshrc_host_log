@@ -1,8 +1,8 @@
 # ##################################
 # same but different
-alias cdmaster="cd ~/TtFS/model-tempodrom"
-export PATH=$PATH:~/TtFS/model-tempodrom/help_scripts
-fpath=(~/TtFS/model-tempodrom/help_scripts/completion $fpath)
+alias cdmaster="cd /work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/code"
+export PATH=$PATH:/work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/help_scripts
+fpath=(/work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/help_scripts $fpath)
 
 # ##################################
 # very different
