@@ -166,7 +166,9 @@ function replaceGerrit() {
 }
 
 # shift tab working as expected
+zmodload zsh/complist
 bindkey "$terminfo[kcbt]" reverse-menu-complete
+bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 # display ^C when CtrlC is pressed, eases reading of lines; maybe causes problems
 TRAPINT() {
