@@ -117,14 +117,10 @@ checkSimilaritiesAndLink tmux/tmux_T2_status.sh "$HOME/.tmux/tmux_T2_status.sh"
 
 echo "--vim"
 checkSimilaritiesAndLink vimrc "$HOME/.vimrc"
-[ ! -d "$HOME/.vim/after/ftplugin" ] && mkdir -p "$HOME/.vim/after/ftplugin"
-for fn in "$LocOfScript"/vim/after/ftplugin/*; do
-	checkSimilaritiesAndLink vim/after/ftplugin/"$(basename "$fn")" "$HOME"/.vim/after/ftplugin/"$(basename "$fn")"
+for fn in "$LocOfScript"/vim/*; do
+	checkSimilaritiesAndLink vim/"$(basename "$fn")" "$HOME"/.vim/"$(basename "$fn")"
 done
-[ ! -d "$HOME/.vim/after/syntax" ] && mkdir -p "$HOME/.vim/after/syntax"
-for fn in "$LocOfScript"/vim/after/syntax/*; do
-	checkSimilaritiesAndLink vim/after/syntax/"$(basename "$fn")" "$HOME"/.vim/after/syntax/"$(basename "$fn")"
-done
+checkSimilaritiesAndLink "vim/autoload/vim-plug/plug.vim" vim/autoload/plug.vim
 
 echo "--others"
 checkSimilaritiesAndLink powerline_tmux_colorscheme.json "$HOME/.config/powerline/colorschemes/tmux/default.json"
