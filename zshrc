@@ -404,6 +404,7 @@ pluginDir="$HOME/.zsh/plugins/"
 	[ -e "$pluginDir/zsh-system-clipboard/zsh-system-clipboard.zsh" ] && \
 	[ -z $SINGULARITY_APPNAME ] && \
 	[ -n "$DISPLAY" ] && \
+	( which xclip >/dev/null 2>&1 || which xsel >/dev/null 2>&1) && \
 	source "$pluginDir/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
 # load autosuggestions

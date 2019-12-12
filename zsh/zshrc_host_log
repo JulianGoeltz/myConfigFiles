@@ -2,10 +2,18 @@
 # same but different
 alias cdmaster="cd /work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/code"
 export PATH=$PATH:/work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/help_scripts
-fpath=(/work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/help_scripts $fpath)
+fpath=(/work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/help_scripts/completion $fpath)
 
 # ##################################
 # very different
+#
+
+export PATH=$PATH:~/builds:~/.local/bin
+if $( echo $PYTHONPATH | grep -vq builds_python); then
+	export PYTHONPATH=$PYTHONPATH:/home/hd/hd_hd/hd_ta400/builds_python
+	export PYTHONPATH=$PYTHONPATH:/home/hd/hd_hd/hd_ta400/builds_python/lib/python2.7/site-packages
+fi
+
 alias singularityzsh="singularity exec -B /opt:/mnt --app visionary-dls /work/ws/nemo/hd_ta400-TtFS-0/containers/2019-09-13_1.img zsh"
 
 if [ -z $SINGULARITY_APPNAME ]; then
