@@ -1,18 +1,33 @@
-#!/bin/bash
+#!/bin/zsh
 set -euo pipefail
 
+cd /sys/class/backlight/intel_backlight/
+brightness=$(cat brightness)
+max_brightness=$(cat max_brightness)
 case $1 in
 	'up') 
-		xbacklight +20
+		# xbacklight +20
+		if [ "$(($max_brightness - $brightness))" -gt 20 ]; then
+			echo $(($brightness + 20)) > brightness
+		else
+			echo "$max_brightness" > brightness
+		fi
 		;;
 	'down') 
-		xbacklight -20
+		# xbacklight -20
+		if [ "$brightness" -gt 20 ]; then
+			echo $(($brightness - 20)) > brightness
+		else
+			echo 0 > brightness
+		fi
 		;;
 	'high') 
-		xbacklight -set 100
+		# xbacklight -set 100
+		echo "$max_brightness" > brightness
 		;;
 	'low') 
-		xbacklight -set 1
+		# xbacklight -set 1
+		echo 1 > brightness
 		;;
 esac
 
@@ -24,15 +39,17 @@ blockRight=▏
 blockBlank=⠀
 blockFull=█
 
-brightness=🔅
+brightnessSymbol=🔅
 
-num=$(xbacklight | xargs printf '%.*f' 0)
+# num=$(xbacklight | xargs printf '%.*f' 0)
+brightness=$(cat brightness)
+num=$(echo $(($brightness * 100.0 / $max_brightness)) | xargs printf '%.*f' 0)
 if [ "$num" -gt 0 -a "$num" -lt 5 ]; then
 	num=1
 else
 	num=$((num / 5))
 fi
 
-bar="$brightness$blockLeft$( echo "$(seq -s "$blockFull" 0 $num)$(seq -s "$blockBlank" $num 20 )" | tr -d 0,1,2,3,4,5,6,7,8,9)$blockRight"
+bar="$brightnessSymbol$blockLeft$( echo "$(seq -s "$blockFull" 0 $num)$(seq -s "$blockBlank" $num 20 )" | tr -d 0,1,2,3,4,5,6,7,8,9)$blockRight"
 
 dunstify -i display-brightness-symbolic -r 3333 "$bar"

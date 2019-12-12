@@ -168,7 +168,7 @@ bar {
 	i3bar_command /usr/bin/i3bar 
         status_command ~/.config/i3/i3status.sh
 	font pango: Awesome 9
-        tray_output eDP1
+        tray_output eDP-1
 	position top
 	colors {
 		background #2e3436

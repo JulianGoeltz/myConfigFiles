@@ -40,3 +40,6 @@ tic $TERM.ti
 # # make i3lock-color unlockable: needs pam.d file:
 # # along the lines (add comment, make sure it doesn't exist)
 # # echo "auth include login" > /etc/pam.d/i3lock
+
+# apparently xf86-video-intel can cause the freezes I experience
+# https://bbs.archlinux.org/viewtopic.php?pid=1869571
