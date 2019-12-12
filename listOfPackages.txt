@@ -95,6 +95,7 @@ i3status
 imagemagick
 inetutils
 inkscape
+inotify-tools
 intel-ucode
 intltool
 iproute2
@@ -139,7 +140,7 @@ mallard-ducktype
 man-db
 man-pages
 mdadm
-mendeleydesktop
+mendeleydesktop-bundled
 meson
 mirage
 mpg123
@@ -213,6 +214,7 @@ python-pynvim
 python-pytorch-opt
 python-setuptools
 python-telegram-bot
+python-virtualenv
 python-xdg
 python2
 python2-gobject
@@ -272,6 +274,7 @@ xorg-server
 xorg-server-xephyr
 xorg-util-macros
 xorg-xbacklight
+xorg-xev
 xorg-xhost
 xorg-xinit
 xorg-xinput
