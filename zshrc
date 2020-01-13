@@ -176,8 +176,8 @@ TRAPINT() {
   return $(( 128 + $1 ))
 }
 
-# change default theme of bat
-export BAT_THEME=GitHub
+# change default theme of bat in case bright solarized is used
+# export BAT_THEME=GitHub
 
 # allows custom completion function ls'ing ~/venvs folder
 venvsource() {source $1}

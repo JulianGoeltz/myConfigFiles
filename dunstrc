@@ -84,7 +84,7 @@ shrink = no
 # The transparency of the window.  Range: [0; 100].
 # This option will only work if a compositing windowmanager is
 # present (e.g. xcompmgr, compiz, etc.).
-transparency = 25
+transparency = 15
 
 # Don't remove messages, if the user is idle (no mouse or keyboard input)
 # for longer than idle_threshold seconds.
@@ -158,7 +158,7 @@ max_icon_size = 30
 
 # Paths to default icons.
 #icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
-icon_path = /usr/share/icons/Mint-X/status/48/
+# icon_path = /usr/share/icons/Mint-X/status/48/
 #:/usr/share/icons/Mint-X/status/scalable
 #icon_folders = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
 
@@ -189,23 +189,23 @@ context = ctrl+shift+period
 [urgency_low]
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
-frame_color = "#3B7C87"
-foreground = "#3B7C87"
-background = "#191311"
+frame_color = "#657b83"
+foreground = "#657b83"
+background = "#fdf6e3"
 #background = "#2B313C"
 timeout = 4
 
 [urgency_normal]
-frame_color = "#5B8234"
-foreground = "#5B8234"
-background = "#191311"
+frame_color = "#859900"
+foreground = "#859900"
+background = "#fdf6e3"
 #background = "#2B313C"
 timeout = 6
 
 [urgency_critical]
-frame_color = "#B7472A"
-foreground = "#B7472A"
-background = "#191311"
+frame_color = "#cb4b16"
+foreground = "#cb4b16"
+background = "#fdf6e3"
 #background = "#2B313C"
 timeout = 8
 

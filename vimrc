@@ -11,7 +11,6 @@ call plug#begin('~/.vim/plugged')
 " for xterm. do later
 "set t_Co=8
 "set termguicolors
-"colorscheme default
 
 " Make sure you use single quotes
 " python folding
@@ -82,17 +81,6 @@ elseif system('hostname') =~ "helvetica"
 endif
 
 Plug 'vim-airline/vim-airline'
-let g:airline_powerline_fonts = 1
-""Powerline-status installed via pip (on hel with pip install -b ~/tmpbuild -t ~/pip_files powerline-status
-"if system('hostname') =~ "T2" || system('hostname') =~ "helvetica"
-"	python3 from powerline.vim import setup as powerline_setup
-"	python3 powerline_setup()
-"	python3 del powerline_setup
-"elseif system('hostname') =~ "localhost"
-"	python3 from powerline.vim import setup as powerline_setup
-"	python3 powerline_setup()
-"	python3 del powerline_setup
-"endif
 "Latex 
 Plug 'lervag/vimtex'
 "Diff parts of one file (maps defined below)
@@ -130,10 +118,11 @@ syntax on
 set encoding=utf-8
 
 "use solarized colorscheme
+colorscheme solarized
 syntax enable
 set background=dark
 set cursorline
-hi CursorLine cterm=NONE ctermbg=8
+hi CursorLine cterm=underline ctermbg=8
 hi CursorLineNr ctermbg=1
 "let g:solarized_termcolors=16
 
@@ -329,10 +318,25 @@ endfunction
 au BufNewFile,BufRead Jenkinsfile setf groovy
 
 " have at very end to not be overwritten
-colorscheme default
-set background=light
-" hide symbols that cant be displayed
-"let g:airline_symbols = {'linenr' : ''}
+" colorscheme default
+" set background=dark
+
+" specifics on tty
+if empty($DISPLAY)
+	" hide symbols that cant be displayed
+	let g:airline_symbols = {'maxlinenr': '',
+				\ 'dirty': '*',
+				\ 'crypt': '',
+				\ 'linenr': '',
+				\ 'readonly': 'RO',
+				\ 'notexists': '',
+				\ 'branch': '',
+				\ 'whitespace': '',
+				\ }
+	let g:airline_powerline_fonts = 0
+else
+	let g:airline_powerline_fonts = 1
+endif
 
 " toggle dark light background with F5
 call togglebg#map("<F5>")
