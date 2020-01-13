@@ -79,6 +79,7 @@ alias -s svg=inkview
 alias -s out=less
 alias -s mp4=vlc
 
+alias -g B=" | bat"
 alias -g C=" | wc -l"
 alias -g G=" | grep"
 alias -g L=" | less" 

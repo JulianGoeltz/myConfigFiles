@@ -6,7 +6,7 @@
 	co = checkout
 	st = status
 [core]
-	pager = less -RSX
+	pager = delta
 	editor = nvim
 [gitreview]
 	username = goeltz

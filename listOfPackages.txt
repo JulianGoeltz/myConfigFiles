@@ -4,6 +4,7 @@ alsa-firmware
 alsa-utils
 apr
 apr-util
+arandr
 asar
 autoconf
 autoconf-archive
@@ -68,6 +69,7 @@ giblib
 gimp
 gist
 git
+git-delta
 glib2-docs
 glibc
 gmime
@@ -88,6 +90,9 @@ gzip
 hdf5
 htop
 hub
+hunspell-de
+hunspell-en_GB
+hunspell-en_US
 i3-gaps
 i3blocks
 i3lock-color
@@ -155,6 +160,9 @@ ninja
 nm-connection-editor
 nodejs
 noto-fonts
+nqc
+ntfs-3g
+ntp
 octave
 okular
 openbsd-netcat
@@ -176,6 +184,7 @@ perl-http-daemon
 perl-http-date
 perl-http-message
 perl-http-negotiate
+perl-image-exiftool
 perl-io-html
 perl-io-socket-ssl
 perl-libwww

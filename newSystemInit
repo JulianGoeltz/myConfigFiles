@@ -13,9 +13,6 @@ sudo gpasswd -a $USER input
 # enable tapping https://unix.stackexchange.com/questions/337008/activate-tap-to-click-on-touchpad
 xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 
-# use system clipboard in zsh: https://github.com/kutsan/zsh-system-clipboard
-git clone https://github.com/kutsan/zsh-system-clipboard ~/.zsh/plugins/zsh-system-clipboard
-
 # make backspace backspace and not ^H, otherwise ^H (i.e. go to left window) can't be used in vim
 # from https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
 infocmp $TERM |  sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti
@@ -36,6 +33,10 @@ tic $TERM.ti
 
 # add correct ca certificate (eduroam_ca.pem) to /etc/ssl/ and then add this to the profile in networkManager
 
+# somehow take care of pscircle.service with command (file is handled in install)
+# systemctl --user enable pscircle.service
+
+
 # not needed last time
 # # make i3lock-color unlockable: needs pam.d file:
 # # along the lines (add comment, make sure it doesn't exist)
@@ -43,3 +44,7 @@ tic $TERM.ti
 
 # apparently xf86-video-intel can cause the freezes I experience
 # https://bbs.archlinux.org/viewtopic.php?pid=1869571
+
+# this is done by submodules now
+# # use system clipboard in zsh: https://github.com/kutsan/zsh-system-clipboard
+# git clone https://github.com/kutsan/zsh-system-clipboard ~/.zsh/plugins/zsh-system-clipboard

@@ -1,5 +1,5 @@
 #!/bin/zsh
-set -euo pipefail
+# set -euo pipefail
 
 cd /sys/class/backlight/intel_backlight/
 brightness=$(cat brightness)

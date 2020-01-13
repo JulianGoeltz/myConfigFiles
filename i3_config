@@ -208,10 +208,10 @@ bindsym $mod+d exec --no-startup-id rofi \
 # bindsym $mod+Shift+a exec rofi -show run -lines 21 -eh 1.3 -opacity "50" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$text-color" -hlfg "$bg-color" -font "System San Francisco Display 10"
 
 # brightness
-bindsym XF86MonBrightnessUp "exec --no-startup-id /bin/sh ~/.config/i3/scripts/changeBrightness.sh up"
-bindsym XF86MonBrightnessDown "exec --no-startup-id /bin/sh ~/.config/i3/scripts/changeBrightness.sh down"
-bindsym Shift+XF86MonBrightnessUp "exec --no-startup-id /bin/bash ~/.config/i3/scripts/changeBrightness.sh high"
-bindsym Shift+XF86MonBrightnessDown "exec --no-startup-id /bin/sh ~/.config/i3/scripts/changeBrightness.sh low"
+bindsym XF86MonBrightnessUp "exec --no-startup-id /bin/zsh ~/.config/i3/scripts/changeBrightness.sh up"
+bindsym XF86MonBrightnessDown "exec --no-startup-id /bin/zsh ~/.config/i3/scripts/changeBrightness.sh down"
+bindsym Shift+XF86MonBrightnessUp "exec --no-startup-id /bin/zsh ~/.config/i3/scripts/changeBrightness.sh high"
+bindsym Shift+XF86MonBrightnessDown "exec --no-startup-id /bin/zsh ~/.config/i3/scripts/changeBrightness.sh low"
 
 # playpause
 bindsym XF86Tools "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
