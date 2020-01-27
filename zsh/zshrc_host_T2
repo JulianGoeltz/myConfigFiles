@@ -16,7 +16,7 @@ module () {
 alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/julgoe/Dropbox/printing"
 
 # if on tty, change colour scheme a bit
-. /home/julgoe/externalSources/spack/share/spack/setup-env.sh
+# . /home/julgoe/externalSources/spack/share/spack/setup-env.sh
 if [ "$TERM" = "linux" ]; then
 	#load the spack stuff in tty, gets passed on
 	#spack load python@2.7.16

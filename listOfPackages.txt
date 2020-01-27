@@ -32,6 +32,7 @@ cogl
 coreutils
 cronie
 cryptsetup
+cuda
 cups
 cython
 device-mapper
@@ -50,10 +51,12 @@ env-modules
 eog
 eog-plugins
 ethtool
+evince
 exfat-utils
 fakeroot
 fceux
 feh
+ffmpegthumbnailer
 file
 filesystem
 findutils
@@ -123,6 +126,7 @@ libpeas
 libquvi
 libquvi-scripts
 libreoffice-fresh
+libsaasound
 libshout
 libtool
 libvisual
@@ -164,6 +168,8 @@ nqc
 ntfs-3g
 ntp
 octave
+octave-image
+octave-symbolic
 okular
 openbsd-netcat
 openconnect
@@ -202,6 +208,7 @@ perl-xml-parser
 picom
 pkgconf
 playerctl
+playonlinux
 powerline
 powerline-common
 procps-ng
@@ -220,7 +227,7 @@ python-pip
 python-powerline
 python-pygments
 python-pynvim
-python-pytorch-opt
+python-pytorch-opt-cuda
 python-setuptools
 python-telegram-bot
 python-virtualenv
@@ -237,7 +244,6 @@ s-nail
 sed
 shadow
 singularity-container
-skypeforlinux-preview-bin
 spotify
 spotifyd
 sshfs
@@ -258,6 +264,7 @@ texlive-pstricks
 texlive-publishers
 texlive-science
 thefuck
+thunar
 thunderbird
 tk
 tmux
@@ -265,6 +272,7 @@ ttf-dejavu
 ttf-dejavu-sans-mono-powerline-git
 ttf-liberation
 ttf-symbola
+tumbler
 twolame
 udiskie
 usbutils
@@ -272,10 +280,13 @@ util-linux
 vala
 vi
 vim
+virtualbox
 vlc
 wavpack
 wget
 which
+wine-gecko
+wine-mono
 xclip
 xdotool
 xfsprogs
