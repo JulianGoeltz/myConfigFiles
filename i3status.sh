@@ -71,22 +71,7 @@ Wifi() {
 	fi
 	# in ICEs show some fun information
 	if [ "$(echo "$string" | grep -oP "SSID: \K.*")" = "WIFIonICE" ]; then
-		tmp=$(curl -s 'https://portal.imice.de/api1/rs/status')
-		if [ "$?" -eq 0 ]; then
-			json_result=$(echo "$tmp" | 
-				python -c 'import json, sys; data = json.load(sys.stdin); print(" [{}km/h, {} class]".format(data["speed"], "2." if data["wagonClass"] == "SECOND" else "1."))')
-			if [ "$?" -eq 0 ]; then
-				# perhaps do it in full python with
-				# import requests
-				# r = requests.get('https://portal.imice.de/api1/rs/status')
-				# # potentially r.json()
-				echo "$json_result"
-			else
-				echo "[connected to ICE: error with json]"
-			fi
-		else
-			echo "[connected to ICE: error connecting to portal]"
-		fi
+		python ~/.config//i3/scripts/ice_wifi.py
 	fi
 }
 # vpn
