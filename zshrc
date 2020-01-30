@@ -14,6 +14,8 @@ elif [[ "$(hostname)" == "helvetica" ]] || [[ "$(hostname)" == "hel" ]] || [[ "$
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
 elif [[ "$(hostname)" == "login1.nemo.privat" ]] then
 	zstyle :compinstall filename '/home/hd/hd_hd/hd_ta400/.zshrc'
+elif [[ "$(hostname)" == "lxhalle.stud.rbg.tum.de" ]]; then
+	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
 elif echo $HOME | grep -q termux; then
 	echo "Welcome to termux!"
 	zstyle :compinstall filename '/data/data/com.termux/files/home/.zshrc'
