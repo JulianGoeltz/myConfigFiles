@@ -1,9 +1,16 @@
 #!/bin/bash
 
 # set -euo pipefail
+LocOfScript=$(dirname "$(readlink -f "$0")")
+
+echo "First, all submodules are initted/updated"
+tmpDir=$(pwd)
+cd "$LocOfScript"
+git submodule update --init
+cd "$tmpDir"
+echo -e "\n\n\n\n\n"
 
 echo "This script will try to link the files, but not replace existing files (no -f force). If there are problems, remove the existing files by hand. This way it is safer."
-LocOfScript=$(dirname "$(readlink -f "$0")")
 
 # define colours for better output
 RED='\033[0;31m'
