@@ -114,6 +114,8 @@ for fn in "$LocOfScript"/tmux/tmux.conf_*; do
 	checkSimilaritiesAndLink tmux/"$(basename "$fn")" "$HOME/.tmux/$(basename "$fn")"
 done
 checkSimilaritiesAndLink tmux/tmux_T2_status.sh "$HOME/.tmux/tmux_T2_status.sh"
+checkSimilaritiesAndLink tmux/plugins/tpm "$HOME/.tmux/plugins/tpm"
+[ ! -d "$HOME/.tmux_stableSocket" ] && mkdir "$HOME/.tmux_stableSocket"
 
 echo "--vim"
 checkSimilaritiesAndLink vimrc "$HOME/.vimrc"

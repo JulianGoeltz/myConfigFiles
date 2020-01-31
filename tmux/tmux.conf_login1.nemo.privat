@@ -1,17 +1,5 @@
-unbind C-b
-set -g prefix C-a
-bind C-a send-prefix
+# ### potentially powerline
+run-shell "~/.local/bin/powerline-config tmux setup"
 
 
-if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "python2 ~/.local/bin/powerline-config tmux setup"'
-
-#set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
-#set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
-#this one correct, but unnecessary due to i3
-#set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| %a %d %b %R'
-set -g status-right ''
-
-
-set -g status-interval 5
-set -g status-right-length 60
-set -g status-justify left
+# ### other stuff

@@ -1,24 +1,14 @@
-unbind C-b
-set -g prefix C-a
-bind C-a send-prefix
-
-# powerline
+# ### potentially powerline
+# in tty dont use powerline
 if-shell 'env | grep -q DISPLAY' \
-	'source "/usr/lib/python3.8/site-packages/powerline/bindings/tmux/powerline.conf"' \
+	'run-shell "/usr/bin/powerline-config tmux setup"' \
 	'set-window-option -g window-status-current-style "fg=brightwhite,bg=cyan"; set -g status-left "#{?client_prefix,#[reverse][#S]#[noreverse],[#S]} "'
 
 
+# ### other stuff
 # for url view-> press shortcut+u to view urls in buffer
 bind-key u capture-pane \; save-buffer /tmp/tmux-buffer \; new-window -n "urlview" '$SHELL -c "urlview < /tmp/tmux-buffer"'
-
-#set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
-#set -g status-right '#{battery_status_bg} Batt: #{battery_icon} #{battery_percentage} #{battery_remain} | %a %h-%d %H:%M '
-#this one correct, but unnecessary due to i3
-# set -g status-right '#[fg=black,bg=white] on #[fg=cyan]#(hostname) #[fg=white,bg=black]| Batt: #(acpi -b | grep  -o "[0-9]*%") & #(acpi -b | grep  -o "[1-9]*%"| tail -n1) #[fg=green]#(acpi -b |grep -o "Charging")#[fg=red]#(acpi -b |grep -o "Discharging") #[fg=white]| %a %d %b %R'
+# additional status
 set -g status-right '#(/home/julgoe/.tmux/tmux_T2_status.sh)'
 set -g status-interval 10
 set -g status-right-length 120
-# also look at checkLowBattery script
-# and acpi -b | grep -Po '[0-9]{2}:[0-9]{2}(?=:[0-9]{2})' as well as 
-# set -g status-right ''
-
