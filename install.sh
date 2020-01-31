@@ -62,7 +62,7 @@ checkSimilaritiesAndLink (){
 	# do the linking
 	else
 		if [ -e "$dest" ]; then
-			echo -e "${RED}File $dest is niether link nor regular file, but still exists. Check manually."
+			echo -e "${RED}File $dest is neither link nor regular file, but still exists. Check manually."
 			allWentThrough=false
 		else
 			if [ "$4" = "nolink"  ]; then

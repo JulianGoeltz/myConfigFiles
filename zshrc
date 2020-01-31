@@ -59,6 +59,8 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 alias sshhel="ssh -A -X -o ConnectTimeout=60 -o ForwardX11Timeout=1000000s -o ServerAliveInterval=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de -R localhost:1234:localhost:1234"
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshnemo="ssh -A -X hd_ta400@login1.nemo.uni-freiburg.de"
+alias sshtum="ssh -A -X lxhalle"
+alias sshcremers="ssh -A -X cremers"
 # alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other,IdentityFile=/home/julgoe/.ssh/id_rsa"
 sshhel_fs_helper(){
 	sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
@@ -185,6 +187,8 @@ TRAPINT() {
 # export BAT_THEME=GitHub
 
 # allows custom completion function ls'ing ~/venvs folder
+# create in ~/venvs folder with `virtualenv --python=$(which python3) {name}`
+# add to ipython with `ipython kernel install --user --name={name}`
 venvsource() {source $1}
 
 # last thing before end, source the host specific files if existent
