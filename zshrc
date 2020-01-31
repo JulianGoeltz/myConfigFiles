@@ -19,6 +19,8 @@ elif [[ "$(hostname)" == "lxhalle.stud.rbg.tum.de" ]]; then
 elif echo $HOME | grep -q termux; then
 	echo "Welcome to termux!"
 	zstyle :compinstall filename '/data/data/com.termux/files/home/.zshrc'
+elif hostname | grep -q atcremers; then
+	echo "welcome at cremers"
 else
 	echo "no known host. what to do?"
 	echo "Opening bash so you can adapt. Think about exiting"
