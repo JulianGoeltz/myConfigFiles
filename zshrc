@@ -60,7 +60,8 @@ alias sshhel="ssh -A -X -o ConnectTimeout=60 -o ForwardX11Timeout=1000000s -o Se
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshnemo="ssh -A -X hd_ta400@login1.nemo.uni-freiburg.de"
 alias sshtum="ssh -A -X lxhalle"
-alias sshcremers="ssh -A -X cremers"
+# make it possible to reroute ssh connetion to have access to local folders on remote
+alias sshcremers="ssh -A -X -R 10000:localhost:2252 cremers"
 # alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other,IdentityFile=/home/julgoe/.ssh/id_rsa"
 sshhel_fs_helper(){
 	sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
@@ -70,6 +71,8 @@ alias sshhel_fs_unmount="fusermount -u -z ~/mnt/mntHel; fusermount -u -z ~/mnt/m
 alias sshnemo_fs="sshfs hd_ta400@login1.nemo.uni-freiburg.de:/work/ws/nemo/hd_ta400-TtFS-0 ~/mnt/mntNemo -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60"
 alias sshhel_visu="sshhel -L 6931:localhost:6931"
 alias sshnemo_fs_unmount="fusermount -u -z ~/mnt/mntNemo"
+alias sshcremers_fs="sshfs cremers:. ~/mnt/mntCremers"
+alias sshcremers_fs_unmount="fusermount -u -z ~/mnt/mntCremers"
 
 alias vpn_connect="sudo openconnect vpn-ac.urz.uni-heidelberg.de"
 
@@ -140,7 +143,7 @@ tm () {
 		return
 	fi
 	tmpTmuxServerPid=$(echo $tmpTmuxServerPid | grep -o "^\s*[0-9]*" | grep -o "[0-9]*")
-	[ -z "$TMUX" ] && /proc/$tmpTmuxServerPid/exe attach
+	[ -z "$TMUX" ] && /proc/$tmpTmuxServerPid/exe -2 attach
 	if [ -n "$TMUX" -o "$?" -ne "0" ]; then
 		echo "tmux server might have lost socket connection, or similar. Socket is reset, try connection again."
 		kill -s USR1 $tmpTmuxServerPid
