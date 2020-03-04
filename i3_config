@@ -256,9 +256,9 @@ assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 1; exec xterm'
 exec --no-startup-id /usr/bin/keepass
 exec --no-startup-id workspace 1
-exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
+exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 
-bindsym $mod+Shift+v exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux attach || tmux'"
+bindsym $mod+Shift+v exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 for_window [ title="julgoe::T2" ] move scratchpad
 
 
@@ -343,7 +343,7 @@ bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofi
 bindsym $mod+w exec --no-startup-id rofi -show window
 
 # floating temporary terminal
-for_window [class="FXTerm"] floating enable, move right 1500, move down 800
+for_window [class="FXTerm"] floating enable, move right 500, move down 300
 # resize grow left 300, resize grow right 300, 
 bindsym $mod+Shift+Return exec --no-startup-id xterm -class FXTerm
 

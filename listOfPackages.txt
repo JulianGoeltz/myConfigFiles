@@ -90,6 +90,7 @@ gtest
 gtk-doc
 gts
 gzip
+haveged
 hdf5
 htop
 hub
