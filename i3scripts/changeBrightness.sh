@@ -8,28 +8,31 @@ case $1 in
 	'up') 
 		# xbacklight +20
 		if [ "$(($max_brightness - $brightness))" -gt 20 ]; then
-			echo $(($brightness + 20)) > brightness
+			target=$(($brightness + 20))
 		else
-			echo "$max_brightness" > brightness
+			target="$max_brightness"
 		fi
 		;;
 	'down') 
 		# xbacklight -20
 		if [ "$brightness" -gt 20 ]; then
-			echo $(($brightness - 20)) > brightness
+			target=$(($brightness - 20))
 		else
-			echo 0 > brightness
+			target=0
 		fi
 		;;
 	'high') 
 		# xbacklight -set 100
-		echo "$max_brightness" > brightness
+		target="$max_brightness"
 		;;
 	'low') 
 		# xbacklight -set 1
-		echo 1 > brightness
+		target=1
 		;;
+	*)
+		target="$brightness"
 esac
+sudo /usr/local/bin/change_brightness.sh "$target"
 
 # xbacklight takes a bit to reflect change (default time 200ms)
 # sleep 0.4

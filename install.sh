@@ -181,6 +181,9 @@ if [[ "$(hostname)" == "T2" ]]; then
 
 	echo "--networkmanager"
 	checkSimilaritiesAndLink sudos/networkmanager /etc/NetworkManager/conf.d/10randomisation sudo nolink
+
+	echo "--changebrightness"
+	checkSimilaritiesAndLink sudos/change_brightness.sh /usr/local/bin/change_brightness.sh sudo nolink
 fi
 
 if ! $allWentThrough; then
