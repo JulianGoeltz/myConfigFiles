@@ -1,0 +1,15 @@
+# ##################################
+# same but different
+
+# ##################################
+# very different
+#
+export LD_LIBRARY_PATH=~/Documents/cuda/lib64:$LD_LIBRARY_PATH
+[[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# want to see "command not found errors"
+unfunction command_not_found_handler
+
+# better colours in tmux
+#export TERM=screen-256color
+alias tmux="tmux -2" # to assume 256 colours
