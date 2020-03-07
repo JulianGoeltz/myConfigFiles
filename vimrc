@@ -50,14 +50,12 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
 "Git
 Plug 'tpope/vim-fugitive'
+"sign column indication of git changes 
+Plug 'airblade/vim-gitgutter'
 
 " in container on hel, zsh doesnt work
 set shell=/bin/sh
 if system('hostname') =~ "T2"
-	"sign column indication of git changes 
-	" ~~(THIS BREAKS THE C-xC-o omnicomplete FUNCTIONALITY, THUS DISABLED)~
-	" works now
-	Plug 'airblade/vim-gitgutter'
 	"omnicomplete
 	"set omnifunc=syntaxcomplete#Complete
 	
@@ -70,9 +68,6 @@ if system('hostname') =~ "T2"
 		\ 'template_path': '/home/julgoe/Documents/vimwiki/templates'}]
 	"set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"
-	"sign column indication of git changes
-	Plug 'airblade/vim-gitgutter'
-
 	let g:ycm_extra_conf_vim_data = ['&filetype']
 	"let g:ycm_extra_conf_globlist = ['~/MasterThesis/utils/adc_error/*']
 
