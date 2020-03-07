@@ -17,3 +17,9 @@ unfunction command_not_found_handler
 # better colours in tmux
 #export TERM=screen-256color
 alias tmux="tmux -2" # to assume 256 colours
+
+# jax needs this to use double
+export JAX_ENABLE_X64=True
+
+# only use python3
+alias python=python3
