@@ -5,9 +5,6 @@
 	adog = log --all --decorate --oneline --graph --color
 	co = checkout
 	st = status
-[core]
-	pager = delta
-	editor = nvim
 [gitreview]
 	username = goeltz
 [http]

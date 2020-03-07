@@ -4,6 +4,10 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/data/data/com.termux/files/home/.oh-my-zsh
 
+# git editor and pager; easier to set host specific
+# export GIT_PAGER=delta
+# export GIT_EDITOR=nvim
+
 # ##################################
 # very different
 

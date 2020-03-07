@@ -1,6 +1,10 @@
 # ##################################
 # same but different
 
+# git editor and pager; easier to set host specific
+# export GIT_PAGER=delta
+# export GIT_EDITOR=nvim
+
 # ##################################
 # very different
 #

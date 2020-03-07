@@ -5,6 +5,10 @@ export PATH=$PATH:~/Documents/model-tempodrom/help_scripts
 fpath=(~/Documents/model-tempodrom/help_scripts/completion $fpath)
 [[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+# git editor and pager; easier to set host specific
+export GIT_PAGER=delta
+export GIT_EDITOR=nvim
+
 # ##################################
 # very different
 

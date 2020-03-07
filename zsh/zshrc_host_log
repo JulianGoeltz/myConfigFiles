@@ -4,6 +4,10 @@ alias cdmaster="cd /work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/code"
 export PATH=$PATH:/work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/help_scripts
 fpath=(/work/ws/nemo/hd_ta400-TtFS-0/TtFS/model-tempodrom/help_scripts/completion $fpath)
 
+# git editor and pager; easier to set host specific
+# export GIT_PAGER=delta
+export GIT_EDITOR=nvim
+
 # ##################################
 # very different
 #
