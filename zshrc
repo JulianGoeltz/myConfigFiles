@@ -71,7 +71,7 @@ alias sshhel_fs_unmount="fusermount -u -z ~/mnt/mntHel; fusermount -u -z ~/mnt/m
 alias sshnemo_fs="sshfs hd_ta400@login1.nemo.uni-freiburg.de:/work/ws/nemo/hd_ta400-TtFS-0 ~/mnt/mntNemo -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60"
 alias sshhel_visu="sshhel -L 6931:localhost:6931"
 alias sshnemo_fs_unmount="fusermount -u -z ~/mnt/mntNemo"
-alias sshcremers_fs="sshfs cremers:. ~/mnt/mntCremers"
+alias sshcremers_fs="sshfs -o ServerAliveInterval=60 cremers:. ~/mnt/mntCremers"
 alias sshcremers_fs_unmount="fusermount -u -z ~/mnt/mntCremers"
 
 alias vpn_connect="sudo openconnect vpn-ac.urz.uni-heidelberg.de"
