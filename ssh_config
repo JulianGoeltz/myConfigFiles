@@ -1,0 +1,57 @@
+Host github.com
+    IdentityFile ~/.ssh/github.id_rsa
+
+Host git.overleaf.com
+    User julian-goeltz@gmx.de
+
+Host gitviz.kip.uni-heidelberg.de
+    User git
+    IdentityFile ~/.ssh/gitviz.id_rsa
+
+# gerrit.bioai.eu port 29418
+# brainscales-r for gerrit has port 9443
+Host brainscales-r.kip.uni-heidelberg.de:9443
+    User goeltz
+    IdentityFile ~/.ssh/gerrit_rsa
+Host brainscales-r.kip.uni-heidelberg.de:29418
+    User goeltz
+    IdentityFile ~/.ssh/gerrit_rsa
+Host gerrit.bioai.eu:29418
+    User goeltz
+    IdentityFile ~/.ssh/gerrit_rsa
+
+Host ssh.strato.de
+    User www.julian-goeltz.de
+    IdentityFile ~/.ssh/strato_rsa
+
+Host login1.nemo.uni-freiburg.de
+    User hd_ta400
+    IdentityFile ~/.ssh/nemo_rsa
+
+#port 11022
+Host brainscales-r.kip.uni-heidelberg.de:11022
+    User jgoeltz
+    IdentityFile ~/.ssh/hel_rsa
+    ForwardX11 yes
+    ForwardX11Trusted no
+
+Host lxhalle
+    User goeltz
+    HostName lxhalle.in.tum.de
+    IdentityFile ~/.ssh/tum_rsa
+    ForwardX11 yes
+    ForwardX11Trusted no
+    IdentitiesOnly yes
+
+Host cremers
+    User goeltz
+    # HostName atcremers11.in.tum.de
+    HostName atcremers17.in.tum.de
+    # HostName atcremers19.in.tum.de
+    # HostName atcremers21.in.tum.de
+    # HostName atcremers22.in.tum.de
+    Port 58022
+    IdentityFile ~/.ssh/tum_rsa
+    ForwardX11 yes
+    ForwardX11Trusted no
+    IdentitiesOnly yes

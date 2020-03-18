@@ -127,14 +127,12 @@ for fn in "$LocOfScript"/zsh/*; do
 done
 
 echo "--ssh"
-if [[ "$(hostname)" == "T2" ]]; then
-	# here we use the existing ssh config, which just says which identity files to use, and add a proxied version
-	[ -h "$HOME/.ssh/config_prox" ] && rm "$HOME/.ssh/config_prox"
-	cat "$HOME/.ssh/config" > "$HOME/.ssh/config_prox"
-       	cat "$LocOfScript/ssh_config_proxiedgithub" >> "$HOME/.ssh/config_prox"
-	echo_gre "Combined ~/.ssh/config with local config_prox"
-elif [[ "$(hostname)" == "helvetica" ]]; then
-	checkSimilaritiesAndLink ssh_config_proxiedgithub "$HOME/.ssh/config"
+checkSimilaritiesAndLink ssh_config "$HOME/.ssh/config"
+# here we use the existing ssh config, which just says which identity files to use, and add a proxied version
+cat "$HOME/.ssh/config" > "$HOME/.ssh/config_prox"
+cat "$LocOfScript/ssh_config_proxiedgithub" >> "$HOME/.ssh/config_prox"
+echo_gre "Combined ~/.ssh/config with local config_prox"
+if [[ "$(hostname)" == "helvetica" ]]; then
 	checkSimilaritiesAndLink ssh_rc "$HOME/.ssh/rc"
 fi
 
@@ -184,16 +182,12 @@ if [[ "$(hostname)" == "T2" ]]; then
 
 	echo "--others"
 
-	checkSimilaritiesAndLink xinitrc "$HOME/.xinitrc"
-
-	checkSimilaritiesAndLink fusuma.config "$HOME/.config/fusuma/config.yml"
-
-	checkSimilaritiesAndLink dunstrc "$HOME/.config/dunst/dunstrc"
-
 	checkSimilaritiesAndLink compton.conf "$HOME/.config/compton.conf"
-
+	checkSimilaritiesAndLink dunstrc "$HOME/.config/dunst/dunstrc"
+	checkSimilaritiesAndLink fusuma.config "$HOME/.config/fusuma/config.yml"
 	checkSimilaritiesAndLink pscircle.service "$HOME/.config/systemd/user/pscircle.service"
-
+	checkSimilaritiesAndLink tsocks.conf "$HOME/.config/tsocks.conf"
+	checkSimilaritiesAndLink xinitrc "$HOME/.xinitrc"
 	checkSimilaritiesAndLink zprofile "$HOME/.zprofile"
 
 	echo "----sudos"

@@ -158,3 +158,6 @@ function tmux_killall () {
 }
 
 alias eog=eom
+
+# use proxied git command
+export GIT_SSH_COMMAND="ssh -F ~/.ssh/config_prox"
