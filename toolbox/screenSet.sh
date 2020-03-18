@@ -10,6 +10,8 @@ dp22="DP-2-2"
 dp23="DP-2-3"
 dp2Base="DP-2"
 
+hdmi2="HDMI-2"
+
 if [ $# -gt 1 ]; then
 	# set up three monitor setup
 	dunstify -r 5555 -t 3000 "setting xrandr in office special"
@@ -47,6 +49,11 @@ if xrandr | grep -q "$dp22 connected" &&
 	xrandr --output $dp23 --mode 1920x1080 --same-as $edp1
 	# maybe turn $dp23 off and on again (in xrandr)
 	# turn down screen brightness on edp1
+elif xrandr | grep -q "$hdmi2 connected"; then
+	dunstify -r 5555 -t 3000 "setting xrandr for one external HDMI"
+	xrandr --output "$hdmi2" --above eDP-1 --mode 1920x1080 --rotate normal
+	# set audio correctly
+	pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:hdmi-stereo-extra1
 else
 	# assume no other display connected, use only laptop
 	~/.config/i3/scripts/changeBrightness.sh high
@@ -54,9 +61,11 @@ else
 	xrandr --output $edp1 --auto --primary
 	xrandr --output $dp22 --off
 	xrandr --output $dp23 --off
+	xrandr --output $hdmi2 --off
 	#xrandr --output $dp22 --same-as $edp1 || xrandr --output $dp22 --off
 	#xrandr --output $dp23 --same-as $edp1 || xrandr --output $dp23 --off
 	# turn up screen brightness again
+	pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo
 fi
 
 #cat /etc/systemd/logind.conf
