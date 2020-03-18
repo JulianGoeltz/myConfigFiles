@@ -346,6 +346,7 @@ bindsym $mod+w exec --no-startup-id rofi -show window
 for_window [class="FXTerm"] floating enable, move right 500, move down 300
 # resize grow left 300, resize grow right 300, 
 bindsym $mod+Shift+Return exec --no-startup-id xterm -class FXTerm
+bindsym $mod+Shift+BackSpace exec --no-startup-id xterm -class FXTerm -e "zsh -c 'source /home/julgoe/venvs/pytorch/bin/activate && ipython'"
 
 # window setting without borders
 default_border none
