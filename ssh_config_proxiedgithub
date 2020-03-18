@@ -1,8 +1,10 @@
 Host gitviz.kip.uni-heidelberg.de
-    User git
-    IdentityFile ~/.ssh/gitviz.id_rsa
+	User git
+	IdentityFile ~/.ssh/gitviz.id_rsa
 
 host github*
-  ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
+	# ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
+	ProxyCommand ~/myConfigFiles/toolbox/tsocks_withConf.sh %h %p
 host ssh.strato*
-  ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
+	# ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
+	ProxyCommand ~/myConfigFiles/toolbox/tsocks_withConf.sh %h %p

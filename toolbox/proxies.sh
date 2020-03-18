@@ -26,7 +26,7 @@ if [[ "$arg" == "set" ]]; then
 	echo -n "Setting proxy for (current) shell, git"
 	export ftp_proxy=http://proxy.kip.uni-heidelberg.de:2121
 	export http_proxy=http://proxy.kip.uni-heidelberg.de:8080
-	export https_proxy=https://proxy.kip.uni-heidelberg.de:8080
+	export https_proxy=http://proxy.kip.uni-heidelberg.de:8080
 
 	export GIT_SSH_COMMAND="ssh -F ~/.ssh/config_prox"
 
