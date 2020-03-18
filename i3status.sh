@@ -8,11 +8,12 @@ Cfggrey="#b3b7af"
 CspecialCyan="#06989a"
 
 #emojis (easily searched on https://emojipedia.org/)
-emojiHeadphone=🎧
 emojiBattery=🔋
-emojiVolume=🔊
+emojiHeadphone=🎧
 emojiMute=🔇
 emojiTune=🎵
+emojiTV=📺
+emojiVolume=🔊
 
 #Define the battery
 Battery() {
@@ -37,7 +38,7 @@ json_escape () {
 }
 Playing() {
 	player=$1
-	if [ "$(playerctl -p "$player" status)" = "Playing" ]; then
+	if [ "$(playerctl -p "$player" status 2>/dev/null)" = "Playing" ]; then
 		artist=$(playerctl -p "$player" metadata artist)
 		title=$(playerctl -p "$player" metadata title)
 		[ "${#artist}" -gt "23" ] && artist="${artist:0:20}..."
@@ -83,24 +84,28 @@ Vpn() {
 }
 
 Volume() {
-	# if bluetooth is attached select volume of that one, and also print battery
-	# otherwise jsut first volume
 	[ "$#" -eq "0" ] && return
 
 	correctSink=$1
-	text=$(pactl list sinks | pcregrep -M "Sink #$correctSink(.|\n)*?Volume.*?$")
-       	retval=$(echo "$text" | grep -oP "Volume: .*?\%" | grep -oP "[0-9]*%")
+	# get full text of only the correct sink
+	text=$(pactl list sinks | pcregrep -M "Sink #$correctSink(.|\n)*?Formats:$")
+       	retval=$(echo "$text" | grep -oP --max-count=1 "Volume: .*?\%" | grep -oP "[0-9]*%")
 
+	# mute info
 	if echo "$text" | grep -q "Mute: yes"; then
 		retval="$emojiMute $retval"
 	else
 		retval="$emojiVolume $retval"
 	fi
-	if [ "$correctSink" -eq "0" ] &&
-		pactl list sinks | grep -q "Active Port: analog-output-headphones"; then
+
+	# add additional info
+	echo "$text" | grep -q "Active Port: analog-output-headphones" && \
 		retval="$retval $emojiHeadphone"
-	fi
-	if [ -n "$2" ]; then
+	echo "$text" | grep -q "HDMI" && \
+		retval="$retval $emojiTV"
+
+	# battery info
+	if [ -n "$2" -a "$1" -ne "0" ]; then
 		retval="$retval (QC $emojiBattery $2%)"
 	fi
 	echo "$retval" 
@@ -145,9 +150,12 @@ while true; do
 	echo '  { "full_text": "'"$playing_spotifyd"'"},'
 	echo '  { "full_text": "'"$playing_vlc"'"},'
 
-	echo '  { "full_text": "'"$(Volume 0)"'", "color":"'$Cfggrey'"},'
-	correctSink=$(/home/julgoe/.config/i3/scripts/correctSinkForChangingVolume.sh)
-	if [ "$correctSink" -ne 0 ]; then
+	# when changing alsa config to hdmi, a sink with id != 0 is created, thus get correct sink
+	sinkList=$(pactl list short sinks)
+	standardSink=$(echo "$sinkList" | grep "alsa_output" | awk '{print $1}')
+	echo '  { "full_text": "'"$(Volume $standardSink)"'", "color":"'$Cfggrey'"},'
+	bluezSink=$(echo "$sinkList" | grep "bluez" | awk '{print $1}')
+	if [ "$(echo "$sinkList" | wc -l )" -gt "1" ]; then
 		# boombox is sink != 0 too but cant communicate with bluetoothqc
 		if pactl list sinks | grep -q "Description:.*35"; then
 			if ! $qc_shown || [ "$((counter%100))" -eq 0 ] ; then
@@ -156,7 +164,7 @@ while true; do
 		else
 			qc_battery=""
 		fi
-		echo '  { "full_text": "'"$(Volume "$correctSink" "$qc_battery")"'", "color":"'$Cfggrey'"},'
+		echo '  { "full_text": "'"$(Volume "$bluezSink" "$qc_battery")"'", "color":"'$Cfggrey'"},'
 		qc_shown=true
 	else
 		qc_shown=false

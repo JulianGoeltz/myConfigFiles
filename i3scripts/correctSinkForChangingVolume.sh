@@ -2,9 +2,10 @@
 
 # set -euo pipefail
 
-tmpString=$(pactl list sinks | grep --context=2 bluez | grep -P "Sink #[0-9]*" | grep -oP "[0-9]*")
+alsa=$(pactl list short sinks | grep "alsa_output" | awk '{print $1}')
+tmpString=$(pactl list short sinks | grep "bluez" | awk '{print $1}')
 if [ -z "$tmpString" ] ; then
-	echo 0
+	echo "$alsa"
 else
 	echo "$tmpString"
 fi

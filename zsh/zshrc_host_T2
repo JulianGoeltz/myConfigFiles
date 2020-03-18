@@ -86,7 +86,8 @@ fi
 
 function correctSinkForChangingVolume () {
 	tmpString=$(pactl list short sinks | grep bluez | awk '{print $1}')
-	[ -z $tmpString ]  && echo 0 || echo $tmpString
+	alsa=$(pactl list short sinks | grep "alsa_output" | awk '{print $1}')
+	[ -z $tmpString ]  && echo "$alsa" || echo $tmpString
 }
 function correctSinkSet () {
 	cs=$(correctSinkForChangingVolume)
