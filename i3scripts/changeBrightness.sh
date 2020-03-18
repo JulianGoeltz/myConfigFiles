@@ -4,34 +4,37 @@
 cd /sys/class/backlight/intel_backlight/
 brightness=$(cat brightness)
 max_brightness=$(cat max_brightness)
+rel_brightness=$((100 * brightness / max_brightness))
 case $1 in
 	'up') 
 		# xbacklight +20
-		if [ "$(($max_brightness - $brightness))" -gt 20 ]; then
-			target=$(($brightness + 20))
+		if [ "$((rel_brightness))" -lt 80 ]; then
+			rel_target=$((rel_brightness + 20))
 		else
-			target="$max_brightness"
+			rel_target="100"
 		fi
 		;;
 	'down') 
 		# xbacklight -20
-		if [ "$brightness" -gt 20 ]; then
-			target=$(($brightness - 20))
+		if [ "$rel_brightness" -gt 20 ]; then
+			rel_target=$((rel_brightness - 20))
 		else
-			target=0
+			rel_target=0
 		fi
 		;;
 	'high') 
 		# xbacklight -set 100
-		target="$max_brightness"
+		rel_target="100"
 		;;
 	'low') 
 		# xbacklight -set 1
-		target=1
+		rel_target=1
 		;;
 	*)
-		target="$brightness"
+		rel_target="$rel_brightness"
 esac
+target=$((rel_target * max_brightness / 100))
+# the following produces some output ($1)
 sudo /usr/local/bin/change_brightness.sh "$target"
 
 # xbacklight takes a bit to reflect change (default time 200ms)
