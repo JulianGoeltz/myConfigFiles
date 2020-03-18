@@ -20,6 +20,7 @@ bison
 bluez
 bluez-alsa-git
 bluez-utils
+bolt
 bzip2
 c-ares
 cdparanoia
@@ -63,6 +64,7 @@ findutils
 firefox
 flake8
 flex
+fwupd
 gawk
 gcc
 gcc-libs
@@ -154,6 +156,7 @@ mendeleydesktop-bundled
 meson
 mirage
 mpg123
+mumble
 nano
 neovim
 neovim-remote
@@ -168,6 +171,8 @@ noto-fonts
 nqc
 ntfs-3g
 ntp
+nvidia
+nvtop
 octave
 octave-image
 octave-symbolic
@@ -271,6 +276,7 @@ tk
 tmux
 tor
 tor-browser
+tsocks
 ttf-dejavu
 ttf-dejavu-sans-mono-powerline-git
 ttf-liberation
@@ -315,4 +321,5 @@ zathura-djvu
 zathura-pdf-mupdf
 zathura-ps
 zip
+zoom
 zsh

@@ -66,7 +66,7 @@ alias sshcremers="ssh -A -X -R 10000:localhost:2252 cremers"
 sshhel_fs_helper(){
 	sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
 }
-alias sshhel_fs="sshhel_fs_helper MasterThesis ~/mnt/mntHel; sshhel_fs_helper /loh/users/jgoeltz ~/mnt/mntHel_loh"
+alias sshhel_fs="sshhel_fs_helper \"\" ~/mnt/mntHel; sshhel_fs_helper /loh/users/jgoeltz ~/mnt/mntHel_loh"
 alias sshhel_fs_unmount="fusermount -u -z ~/mnt/mntHel; fusermount -u -z ~/mnt/mntHel_loh"
 alias sshnemo_fs="sshfs hd_ta400@login1.nemo.uni-freiburg.de:/work/ws/nemo/hd_ta400-TtFS-0 ~/mnt/mntNemo -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60"
 alias sshhel_visu="sshhel -L 6931:localhost:6931"
