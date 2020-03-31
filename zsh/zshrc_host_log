@@ -22,7 +22,12 @@ alias singularityzsh="singularity exec -B /opt:/mnt --app visionary-dls /work/ws
 
 if [ -z $SINGULARITY_APPNAME ]; then
 	# found by starting `bash -x` in tmux and searching output for module
+	# special care has to be taken to make module work with zsh
+	BASH_REMATCH=(hd bla)
 	source /etc/profile.d/modules.sh
+	unfunction module
+	module() { eval $(/opt/bwhpc/common/admin/modules/module-wrapper/modulecmd.lmod zsh $*); }
+	# source ~/modules.sh
 	# slurm alternative
 	source /etc/profile.d/moab.sh
 else
