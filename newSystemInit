@@ -1,3 +1,8 @@
+# to switch dark and light solarized mode do
+* change Xdefaults
+* dircolors
+* git pager delta theme
+
 # coloured pacman (and yay) output:
 # uncomment `color` option in /etc/pacman.conf
 

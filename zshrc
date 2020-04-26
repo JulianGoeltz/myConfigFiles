@@ -401,7 +401,11 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' '+m:{A-Z}={a-z}' 'm:{a-zA
 
 
 # coloured completion
-eval "$(dircolors)"
+if [ -f "$PWD/myConfigFiles/submodules/dircolors-solarized/dircolors.ansi-light" ]; then
+	eval "$(dircolors ~/myConfigFiles/submodules/dircolors-solarized/dircolors.ansi-light)"
+else
+	eval "$(dircolors)"
+fi
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # complete all own processes
