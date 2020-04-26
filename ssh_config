@@ -29,7 +29,9 @@ Host login1.nemo.uni-freiburg.de
     IdentityFile ~/.ssh/nemo_rsa
 
 #port 11022
-Host brainscales-r.kip.uni-heidelberg.de:11022
+Host hel
+    Hostname brainscales-r.kip.uni-heidelberg.de
+    Port 11022
     User jgoeltz
     IdentityFile ~/.ssh/hel_rsa
     ForwardX11 yes
@@ -55,3 +57,10 @@ Host cremers
     ForwardX11 yes
     ForwardX11Trusted no
     IdentitiesOnly yes
+
+Host juwels
+    User goeltz1
+    HostName juwels04.fz-juelich.de
+    IdentityFile ~/.ssh/cscs_rsa
+    ForwardX11 yes
+    ForwardAgent yes

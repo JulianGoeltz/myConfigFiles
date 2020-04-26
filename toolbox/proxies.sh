@@ -29,6 +29,7 @@ if [[ "$arg" == "set" ]]; then
 	export https_proxy=http://proxy.kip.uni-heidelberg.de:8080
 
 	export GIT_SSH_COMMAND="ssh -F ~/.ssh/config_prox"
+	alias ssh="ssh -F ~/.ssh/config_prox"
 
 	# spotify
 	if [[ $# -gt 0 ]]; then
@@ -58,6 +59,7 @@ elif [[ "$arg" == "unset" ]]; then
 	export https_proxy=
 
 	unset GIT_SSH_COMMAND
+	unalias ssh 2>/dev/null
 
 	# spotify
 	if [[ $# -gt 0 ]]; then

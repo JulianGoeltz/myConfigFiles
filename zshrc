@@ -56,9 +56,9 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 # To access port on hel locally, add to command (then go to localhost with that port):
 # -L 5678:localhost:5678
 # port forwarding to get notifs when slurm jobs are done
-alias sshhel="ssh -A -X -o ConnectTimeout=60 -o ForwardX11Timeout=1000000s -o ServerAliveInterval=60 -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de -R localhost:1234:localhost:1234"
+alias sshhel="ssh -A -Y -o ConnectTimeout=60 -o ForwardX11Timeout=1000000s -o ServerAliveInterval=60 -R localhost:1234:localhost:1234 hel"
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
-alias sshnemo="ssh -A -X hd_ta400@login1.nemo.uni-freiburg.de"
+alias sshnemo="ssh -A -X nemo"
 alias sshtum="ssh -A -X lxhalle"
 # make it possible to reroute ssh connetion to have access to local folders on remote
 alias sshcremers="ssh -A -X -R 10000:localhost:2252 cremers"

@@ -8,3 +8,6 @@ host github*
 host ssh.strato*
 	# ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
 	ProxyCommand ~/myConfigFiles/toolbox/tsocks_withConf.sh %h %p
+host juwels
+	# ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
+	ProxyCommand ~/myConfigFiles/toolbox/tsocks_withConf.sh %h %p
