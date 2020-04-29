@@ -93,6 +93,7 @@ alias -g C=" | wc -l"
 alias -g G=" | grep"
 alias -g L=" | less" 
 alias -g T=" | tail"
+alias -g TT=' | tee teed_$(date +"%Y%m%d_%H%M%S")'
 alias -g H=" | head"
 alias -g S=" | sort"
 alias -g N=" && notify-send 'Command succeeded' || notify-send 'Command failed'"
