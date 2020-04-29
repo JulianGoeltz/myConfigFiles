@@ -15,6 +15,7 @@ based-connect-git
 bash
 bat
 bc
+biber
 binutils
 bison
 bluez
@@ -75,6 +76,7 @@ gimp
 gist
 git
 git-delta
+git-review
 glib2-docs
 glibc
 gmime
@@ -234,10 +236,10 @@ python-powerline
 python-pygments
 python-pynvim
 python-pytorch-opt-cuda
+python-pyxdg
 python-setuptools
 python-telegram-bot
 python-virtualenv
-python-xdg
 python2
 python2-gobject
 python2-pip
@@ -284,8 +286,10 @@ ttf-symbola
 tumbler
 twolame
 udiskie
+usbtop
 usbutils
 util-linux
+v4l2loopback-dkms
 vala
 vi
 vim
@@ -323,3 +327,4 @@ zathura-ps
 zip
 zoom
 zsh
+zvbi
