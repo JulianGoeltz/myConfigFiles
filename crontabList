@@ -7,3 +7,7 @@
 
 # change background every 10 minutes
 #*/10 * * * * DISPLAY=:0.0 feh -z --bg-max --auto-rotate /home/julgoe/Pictures/BackgroundCropped
+
+# on hel, to send completed job notifications
+# * * * * * /wang/users/jgoeltz/cluster_home/myConfigFiles/toolbox/notifySlurmDone.sh sending
+# * * * * * (sleep 30; /wang/users/jgoeltz/cluster_home/myConfigFiles/toolbox/notifySlurmDone.sh sending)
