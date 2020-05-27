@@ -58,7 +58,7 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 # port forwarding to get notifs when slurm jobs are done
 alias sshhel="ssh -A -Y -o ConnectTimeout=60 -o ForwardX11Timeout=1000000s -o ServerAliveInterval=60 -R localhost:1234:localhost:1234 hel"
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
-alias sshnemo="ssh -A -X nemo"
+alias sshnemo="ssh -A -t hel \"ssh -A -F ~/.ssh/config_prox nemo\""
 alias sshtum="ssh -A -X lxhalle"
 # make it possible to reroute ssh connetion to have access to local folders on remote
 alias sshcremers="ssh -A -X -R 10000:localhost:2252 cremers"
@@ -349,8 +349,8 @@ zle -N zle-keymap-select
 export KEYTIMEOUT=1  #this is for faster mode switching
 # to only show the venv once
 VIRTUAL_ENV_DISABLE_PROMPT="true"
-# set this to nozero length if git is very slow for some reason
-ZSH_PROMPT_GIT_DONTDOIT=""
+# set this to nozero length if git is very slow for some reason (not set is zero length)
+#ZSH_PROMPT_GIT_DONTDOIT=""
 
 git_prompt_info() {
 	# in sshfs'd folders dont query git

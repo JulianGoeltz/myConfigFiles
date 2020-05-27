@@ -16,7 +16,8 @@ Host brainscales-r.kip.uni-heidelberg.de:9443
 Host brainscales-r.kip.uni-heidelberg.de:29418
     User goeltz
     IdentityFile ~/.ssh/gerrit_rsa
-Host gerrit.bioai.eu:29418
+Host gerrit.bioai.eu
+    # Port 29418
     User goeltz
     IdentityFile ~/.ssh/gerrit_rsa
 
@@ -24,9 +25,10 @@ Host ssh.strato.de
     User www.julian-goeltz.de
     IdentityFile ~/.ssh/strato_rsa
 
-Host login1.nemo.uni-freiburg.de
+Host nemo
+    Hostname login2.nemo.uni-freiburg.de
     User hd_ta400
-    IdentityFile ~/.ssh/nemo_rsa
+    IdentityFile ~/.ssh/nemonew_rsa
 
 #port 11022
 Host hel

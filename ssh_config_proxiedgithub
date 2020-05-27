@@ -11,3 +11,6 @@ host ssh.strato*
 host juwels
 	# ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
 	ProxyCommand ~/myConfigFiles/toolbox/tsocks_withConf.sh %h %p
+host nemo
+	# ProxyCommand connect -5 -S proxy.kip.uni-heidelberg.de %h %p
+	ProxyCommand ~/myConfigFiles/toolbox/tsocks_withConf.sh %h %p
