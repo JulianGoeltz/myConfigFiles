@@ -1,3 +1,12 @@
+# Printing
+# infos on https://printer.kip.uni-heidelberg.de/jobs/
+# have to put the printserver in  ~/.cups/client.conf the following
+ServerName printer.kip.uni-heidelberg.de
+# to print at hel, use 
+# to use ssh as proxy (e.g. to check print jobs), use
+ssh -D 12345 myuser@remote_ssh_server
+chromium --proxy-server="socks5://localhost:12345"
+
 # to switch dark and light solarized mode do
 * change Xdefaults
 * dircolors

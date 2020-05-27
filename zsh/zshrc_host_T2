@@ -172,10 +172,11 @@ copyToWeb (){
 			echo "File ${file} does not exist."
 			continue
 		fi
-		fileUrl=http://julian-goeltz.de/sharing/$randNo/$file
-		scp -F $tmpConfig -r "$file" ssh.strato.de:juliangoeltzde/sharing/$randNo/ && \
+		fileTrimmed=$(echo $file | sed 's/[^0-9A-Za-z.-]//g')
+		fileUrl=http://julian-goeltz.de/sharing/$randNo/$fileTrimmed
+		scp -F $tmpConfig -r "$file" ssh.strato.de:juliangoeltzde/sharing/$randNo/$fileTrimmed && \
 			echo "File is available at $fileUrl" && \
-			( telegram-cli -W -e "msg Julian_Göltz $file\ $fileUrl" >/dev/null)
+			telegram-cli -W -e "msg Julian $file\ $fileUrl" >/dev/null
 	done
 }
 

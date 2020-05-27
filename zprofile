@@ -1,4 +1,6 @@
 #!zsh
-if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-	ssh-agent startx
+if systemctl -q is-active graphical.target; then
+	if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+		startx
+	fi
 fi

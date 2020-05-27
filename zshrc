@@ -87,6 +87,7 @@ alias -s txt=vim
 alias -s svg=inkview
 alias -s out=less
 alias -s mp4=vlc
+alias -s png=eog
 
 alias -g B=" | bat"
 alias -g C=" | wc -l"

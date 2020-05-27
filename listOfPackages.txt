@@ -245,6 +245,7 @@ python2-gobject
 python2-pip
 reiserfsprogs
 rofi
+rsync
 ruby
 ruby-fusuma
 rust
@@ -252,6 +253,7 @@ s-nail
 sed
 shadow
 singularity-container
+skypeforlinux-preview-bin
 spotify
 spotifyd
 sshfs
