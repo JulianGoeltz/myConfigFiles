@@ -148,6 +148,9 @@ mode "resize/move" {
 	bindsym Up move up
 	bindsym Down move down
 
+	# easier resizing if it is maxed
+	bindsym m resize set width 1000 px height 600 px
+
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -256,7 +259,7 @@ assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 1; exec xterm'
 exec --no-startup-id /usr/bin/keepass
 exec --no-startup-id workspace 1
-exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
+# exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 
 bindsym $mod+Shift+v exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 for_window [ title="julgoe::T2" ] move scratchpad
@@ -346,7 +349,7 @@ bindsym $mod+w exec --no-startup-id rofi -show window
 for_window [class="FXTerm"] floating enable, move right 500, move down 300
 # resize grow left 300, resize grow right 300, 
 bindsym $mod+Shift+Return exec --no-startup-id xterm -class FXTerm
-bindsym $mod+Shift+BackSpace exec --no-startup-id xterm -class FXTerm -e "zsh -c 'source /home/julgoe/venvs/pytorch/bin/activate && ipython'"
+bindsym $mod+Shift+BackSpace exec --no-startup-id xterm -class FXTerm -e "zsh ~/myConfigFiles/i3scripts/ipython.sh"
 
 # window setting without borders
 default_border none
@@ -358,3 +361,6 @@ bindsym $mod+x [urgent=latest] focus
 
 # make window sticky
 bindsym $mod+s sticky toggle
+
+# toggle profile of QC35 between audio sink and headset
+bindsym $mod+F4 "exec --no-startup-id /bin/bash ~/myConfigFiles/i3scripts/qc35_profile.sh"
