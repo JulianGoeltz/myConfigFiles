@@ -238,7 +238,7 @@ bindsym $mod+m "exec --no-startup-id /bin/sh ~/.config/i3/scripts/muteAll.sh"
 # or better yet with http://www.fmwconcepts.com/imagemagick/aspectcrop/index.php
 #exec_always --no-startup-id "feh -z --bg-max --auto-rotate /home/julgoe/Pictures/BackgroundCropped"
 # and transparency
-exec --no-startup-id compton -bc
+exec --no-startup-id picom -bc
 # for locking: 
 #bindsym $mod+Mod1+l exec "i3lock -befi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000"
 # used i3lock is not standard but this one:

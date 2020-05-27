@@ -182,7 +182,7 @@ if [[ "$(hostname)" == "T2" ]]; then
 
 	echo "--others"
 
-	checkSimilaritiesAndLink compton.conf "$HOME/.config/compton.conf"
+	checkSimilaritiesAndLink picom.conf "$HOME/.config/picom.conf"
 	checkSimilaritiesAndLink dunstrc "$HOME/.config/dunst/dunstrc"
 	checkSimilaritiesAndLink fusuma.config "$HOME/.config/fusuma/config.yml"
 	checkSimilaritiesAndLink pscircle.service "$HOME/.config/systemd/user/pscircle.service"
