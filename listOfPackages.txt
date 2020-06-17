@@ -83,6 +83,7 @@ gmime
 gnome-common
 gobject-introspection
 google-chrome
+gparted
 graphene
 graphviz
 grep
@@ -154,6 +155,7 @@ mallard-ducktype
 man-db
 man-pages
 mdadm
+medusa
 mendeleydesktop-bundled
 meson
 mirage
@@ -168,6 +170,7 @@ network-manager-applet
 networkmanager
 ninja
 nm-connection-editor
+nmap
 nodejs
 noto-fonts
 nqc
@@ -191,6 +194,7 @@ perl
 perl-encode-locale
 perl-exporter-tiny
 perl-file-listing
+perl-file-mimeinfo
 perl-html-parser
 perl-html-tagset
 perl-http-cookies
@@ -222,6 +226,7 @@ powerline-common
 procps-ng
 pscircle-git
 psmisc
+psutils
 pulseaudio
 pulseaudio-bluetooth
 python
@@ -313,6 +318,7 @@ xorg-xev
 xorg-xhost
 xorg-xinit
 xorg-xinput
+xorg-xkill
 xorg-xrandr
 xplayer
 xreader

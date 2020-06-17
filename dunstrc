@@ -162,8 +162,8 @@ max_icon_size = 30
 #:/usr/share/icons/Mint-X/status/scalable
 #icon_folders = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
 
-frame_width = 0
-frame_color = "#8EC07C"
+frame_width = 1
+frame_color = "#fdf6e3"
 
 [shortcuts]
 
@@ -189,24 +189,22 @@ context = ctrl+shift+period
 [urgency_low]
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
-frame_color = "#657b83"
 foreground = "#657b83"
-background = "#fdf6e3"
-#background = "#2B313C"
+#background = "#fdf6e3"
+background = "#002b36"
 timeout = 4
 
 [urgency_normal]
-frame_color = "#859900"
 foreground = "#859900"
-background = "#fdf6e3"
-#background = "#2B313C"
+#background = "#fdf6e3"
+background = "#002b36"
 timeout = 6
 
 [urgency_critical]
 frame_color = "#cb4b16"
 foreground = "#cb4b16"
-background = "#fdf6e3"
-#background = "#2B313C"
+#background = "#fdf6e3"
+background = "#2B313C"
 timeout = 8
 
 
