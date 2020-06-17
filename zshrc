@@ -10,7 +10,7 @@ setopt INC_APPEND_HISTORY
 # define filename for compinstall based on host
 if [[ "$(hostname)" == "T2" ]]; then
 	zstyle :compinstall filename '/home/julgoe/.zshrc'
-elif [[ "$(hostname)" == "helvetica" ]] || [[ "$(hostname)" == "hel" ]] || [[ "$(hostname)" == "helvetica.kip.uni-heidelberg.de" ]]; then
+elif [[ "$(hostname)" =~ "hel" ]] || [[ "$(hostname)" =~ "RyzenHost" ]]; then
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
 elif [[ "$(hostname)" == "login1.nemo.privat" ]] then
 	zstyle :compinstall filename '/home/hd/hd_hd/hd_ta400/.zshrc'

@@ -17,7 +17,7 @@ Host brainscales-r.kip.uni-heidelberg.de:29418
     User goeltz
     IdentityFile ~/.ssh/gerrit_rsa
 Host gerrit.bioai.eu
-    # Port 29418
+    Port 29418
     User goeltz
     IdentityFile ~/.ssh/gerrit_rsa
 
@@ -62,7 +62,7 @@ Host cremers
 
 Host juwels
     User goeltz1
-    HostName juwels04.fz-juelich.de
-    IdentityFile ~/.ssh/cscs_rsa
+    HostName juwels.fz-juelich.de
+    IdentityFile ~/.ssh/juwels_rsa
     ForwardX11 yes
     ForwardAgent yes
