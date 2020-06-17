@@ -1,0 +1,20 @@
+#compdef srun
+_srun() {
+	_arguments \
+	  "(-p --partition)"{-p,--partition}"[partition]:partition:(interactive simulation cube)" \
+	  "(-t --time)"{-t,--time}"[timelimit]:timelimit:" \
+	  "--begin[delayed start]:delayed start:" \
+	  "--fpga-without[fpga-without]:fpga without:(3)" \
+	  "--mem[mem]:Memory:" \
+	  "--wafer[Wafer number]:Wafer number:(75)" \
+	  "(-w --nodelist)"{-w,--nodelist}"[nodelist]:nodes to use:(RyzenHost1 RyzenHost2 RyzenHost3)" \
+	  "--nice[niceness]:niceness:(0)" \
+	  "*::args:->command" && return 0
+	# '*::command: _normal'
+	# '*::args:->command' "$common[@]" && ret=0
+	# shift 1 words
+	# (( CURRENT-- ))
+	_normal
+	return
+}
+_srun "$@"
