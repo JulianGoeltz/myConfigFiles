@@ -241,7 +241,7 @@ timeout = 8
 #    format = ""
 
 [removeIcon]
-	icon = "dialog-information"
+	# icon = "dialog-information"
 	new_icon = ""
 
 

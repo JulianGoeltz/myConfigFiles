@@ -213,6 +213,17 @@ fi
 #bindkey  '^H' backward-delete-char
 #bindkey  '^?' delete-char
 
+# for file navigation (copied from https://github.com/obreitwi/dot_zsh)
+myalias='..'
+mycmd='cd ..'
+for i in {1..20}; do
+    eval "alias ${myalias}='${mycmd}'"
+    myalias="${myalias}."
+    mycmd="${mycmd}/.."
+done
+unset mycmd
+unset myalias
+
 ######## end
 
 

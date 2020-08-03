@@ -66,3 +66,14 @@ Host juwels
     IdentityFile ~/.ssh/juwels_rsa
     ForwardX11 yes
     ForwardAgent yes
+
+Host elaCSCS
+    HostName ela.cscs.ch
+    IdentityFile ~/.ssh/daint_rsa
+    User bp000362
+
+Host daintCSCS
+    HostName daint.cscs.ch
+    IdentityFile ~/.ssh/daint_rsa
+    ProxyJump elaCSCS
+    User bp000362

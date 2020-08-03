@@ -2,6 +2,7 @@ aalib
 acpi
 alsa-firmware
 alsa-utils
+android-tools
 apr
 apr-util
 arandr
@@ -22,6 +23,7 @@ bluez
 bluez-alsa-git
 bluez-utils
 bolt
+borg
 bzip2
 c-ares
 cdparanoia
@@ -39,6 +41,7 @@ cups
 cython
 device-mapper
 dhcpcd
+diffpdf
 diffutils
 docbook-xml
 docbook-xsl
@@ -87,7 +90,7 @@ gparted
 graphene
 graphviz
 grep
-grive
+grive-git
 grub
 gst-plugins-base
 gst-plugins-good
@@ -134,6 +137,7 @@ libquvi-scripts
 libreoffice-fresh
 libsaasound
 libshout
+libsndio-61-compat
 libtool
 libvisual
 licenses
@@ -159,9 +163,11 @@ medusa
 mendeleydesktop-bundled
 meson
 mirage
+mosh
 mpg123
 mumble
 nano
+neovide-git
 neovim
 neovim-remote
 net-tools-debian-ifconfig
@@ -255,6 +261,7 @@ ruby
 ruby-fusuma
 rust
 s-nail
+scrot
 sed
 shadow
 singularity-container
@@ -302,6 +309,7 @@ vi
 vim
 virtualbox
 vlc
+vulkan-intel
 wavpack
 wget
 which

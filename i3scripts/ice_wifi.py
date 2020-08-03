@@ -31,8 +31,8 @@ def getit(stop_eva):
     return
 
 
-print(" [{}km/h, {} class, {}]".format(
-    data_status["speed"],
+print(" [{}, {} class, {}]".format(
+    f"{data_status['speed']}km/h" if data_status['gpsStatus'] != "INVALID" else "no GPS",
     "2." if data_status["wagonClass"] == "SECOND" else "1.",
     getit(data_trip['trip']['stopInfo']['actualNext']),
 ))

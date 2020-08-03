@@ -14,6 +14,6 @@ elif [ "$1" = "resume" ]; then
 		dunstify -t 2000 'Enabled notifications again'
 		exec echo 'running' > /home/julgoe/.tmp_dunststate
 	else
-		dunstify -r 1111 -i dialog-information -t 2000 'dunst already running'
+		dunstify -r 1111 -t 2000 'dunst already running'
 	fi
 fi

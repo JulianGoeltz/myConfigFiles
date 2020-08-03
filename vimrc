@@ -104,6 +104,8 @@ Plug 'chrisbra/Recover.vim'
 Plug 'rickhowe/diffchar.vim'
 " for psr-2 style in php scripts
 Plug 'stephpy/vim-php-cs-fixer'
+" neosolarized specifically for neovide
+Plug 'overcache/NeoSolarized'
 call plug#end()
 
 

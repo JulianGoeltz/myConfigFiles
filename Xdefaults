@@ -37,6 +37,7 @@ rofi.font: System San Francisco Display 18
 *faceSize: 10
 *eightBitInput: false
 
+! after change do `xrdb ~/.Xdefaults`
 ! LIGHT
 #define S_base3         #002b36
 #define S_base2         #073642

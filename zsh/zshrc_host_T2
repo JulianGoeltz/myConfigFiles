@@ -197,7 +197,9 @@ alias squeueRepeat='while true; do sshhel -t zsh -i -c "squeueRepeat" && sleep 1
 timer() {
 	local t=$1 && shift
 	[ $# -gt 0 ] && local message="$@" || local message="time's up"
-	(sleep $t && dunstify -t 10000 "$message") &!
+	(sleep $t && (cvlc ~/Music/bell.mp3 vlc://quit &;
+	              dunstify -t 10000 "$message")
+	) &!
 	echo "set timer for $t"
 }
 

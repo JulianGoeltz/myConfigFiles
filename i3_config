@@ -257,8 +257,8 @@ for_window [class="Spotify"] move --no-auto-back-and-forth to workspace 10
 assign [class="KeePass2"] 10
 assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 1; exec xterm'
-exec --no-startup-id /usr/bin/keepass
-exec --no-startup-id workspace 1
+# exec --no-startup-id /usr/bin/keepass
+workspace 1
 # exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 
 bindsym $mod+Shift+v exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
@@ -281,7 +281,7 @@ focus_follows_mouse no
 # sudo gem install --install-dir=/usr/local --no-user-install fusuma
 # or better yay fusuma
 exec --no-startup-id fusuma
-exec_always --no-startup-id i3-msg 'exec synclient ClickFinger3=2; exec synclient TapButton3=2; exec synclient HorizTwoFingerScroll=1'
+# exec_always --no-startup-id i3-msg 'exec synclient ClickFinger3=2; exec synclient TapButton3=2; exec synclient HorizTwoFingerScroll=1'
 
 # dunst notification daemon for /usr/bin/notify-send
 exec --no-startup-id i3-msg 'exec dunst; exec echo "running" > /home/julgoe/.tmp_dunststate'
@@ -336,8 +336,10 @@ exec --no-startup-id i3-msg "exec ~/myConfigFiles/toolbox/notifySlurmDone.sh rec
 # enable tapping 
 exec --no-startup-id i3-msg "exec xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Enabled' 1"
 
-# disable caps lock and use as additional ctrl 
-exec --no-startup-id i3-msg "exec  setxkbmap -option ctrl:nocaps"
+# disable caps lock and use as additional escape 
+exec --no-startup-id i3-msg "exec  setxkbmap -option caps:escape"
+# change autorepeat rate
+exec --no-startup-id i3-msg "exec  xset r rate 300 50"
 
 # use rofi for selecting unicode symbols as eg umlauts
 bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofiUnicodeSymbols.sh"
@@ -364,3 +366,9 @@ bindsym $mod+s sticky toggle
 
 # toggle profile of QC35 between audio sink and headset
 bindsym $mod+F4 "exec --no-startup-id /bin/bash ~/myConfigFiles/i3scripts/qc35_profile.sh"
+
+# screenshot
+# bindsym "exec --no-startup-id ffmpeg -f x11grab -video_size 1920x1080 -i $DISPLAY -vframes 1 ~/tmp_screen.png"
+bindsym --release Print exec "scrot -m '/home/julgoe/Pictures/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
+bindsym --release Shift+Print exec "scrot -s '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+bindsym --release $mod+Shift+Print exec "scrot -u -d 4 '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"

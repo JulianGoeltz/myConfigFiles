@@ -3,7 +3,7 @@
 # set -euo pipefail
 
 # in general set keyboard option nocaps
-setxkbmap -option ctrl:nocaps
+setxkbmap -option caps:escape
 
 edp1="eDP-1"
 dp22="DP-2-2"

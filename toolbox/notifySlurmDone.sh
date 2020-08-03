@@ -33,6 +33,7 @@ elif [[ $1 == "receiving" ]]; then
 		while IFS= read -r line; do
 			if [[ $line == "$codeword" ]]; then
 				dunstify -r 6666 -t 3000 "Slurm jobs on hel finished"
+				# cvlc ~/Music/bell.mp3 vlc://quit &
 			fi
 		done
 	}

@@ -58,4 +58,4 @@ fi
 
 bar="$brightnessSymbol$blockLeft$( echo "$(seq -s "$blockFull" 0 $num)$(seq -s "$blockBlank" $num 20 )" | tr -d 0,1,2,3,4,5,6,7,8,9)$blockRight"
 
-dunstify -i display-brightness-symbolic -r 3333 "$bar"
+dunstify -r 3333 "$bar"
