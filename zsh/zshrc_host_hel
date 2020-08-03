@@ -72,8 +72,8 @@ function updateEnv () {
 function saveplottedtobackup() {
 	for file in $@; do
 		# preprocessing
-		if [ ! -f "$file" ] ; then
-			echo "$file is not a file, skipping"
+		if [ ! -e "$file" ] ; then
+			echo "$file doesn't exist, skipping"
 			continue
 		fi
 		madeFileWriteableFirst=false
@@ -84,20 +84,35 @@ function saveplottedtobackup() {
 		fi
 
 		function tmp_saveplottedtobackup() {
-			# copy to folder if not already done and make readonly
-			if [ -f "${1}$(basename 2))" ] ; then
-				echo "File $2 already exists in $1, not copying"
-			else
-				cp $2 "$1$(basename $2)"
-				chmod 444 "$1$(basename $2)"
+			if [ -f "$2" ]; then
+				# file
+				# copy to folder if not already done and make readonly
+				if [ -f "${1}$(basename 2)" ] ; then
+					echo "File $2 already exists in $1, not copying"
+				else
+					cp $2 "$1$(basename $2)"
+					chmod 444 "$1$(basename $2)"
+				fi
+			elif [ -d "$2" ]; then
+				# directory
+				if [ -f "${1}$(basename 2).tar" ] ; then
+					echo "File $(basename $2).tar already exists in $1, not copying"
+				else
+					tar -cf "$1$(basename $2).tar" $2
+					chmod 444 "$1$(basename $2).tar"
+				fi
+			else 
+				echo "${2} not file nor folder but does exist?!"
 			fi
 		}
 
 		# tmp_saveplottedtobackup /wang/users/jgoeltz/cluster_home/MasterThesis/data_tempodrom_backupPlotted/ $file
 		# tmp_saveplottedtobackup /loh/users/jgoeltz/data_tempodrom_backupPlotted/ $file
+		# tmp_saveplottedtobackup /wang/users/jgoeltz/cluster_home/MasterThesis/data_hiwi_backup/ $file
+		# tmp_saveplottedtobackup /loh/users/jgoeltz/data_hiwi_backup/ $file
 
-		tmp_saveplottedtobackup /wang/users/jgoeltz/cluster_home/MasterThesis/data_hiwi_backup/ $file
-		tmp_saveplottedtobackup /loh/users/jgoeltz/data_hiwi_backup/ $file
+		tmp_saveplottedtobackup /wang/users/jgoeltz/cluster_home/Documents/backup_data_ttfs/ $file
+		tmp_saveplottedtobackup /loh/users/jgoeltz/backup_data_ttfs/ $file
 
 		# make readonly again
 		if $madeFileWriteableFirst; then
@@ -166,4 +181,31 @@ export GIT_SSH_COMMAND="ssh -F ~/.ssh/config_prox"
 # use sacct to display all infos
 function sacct_full () {
 	less -S -f <(sacct -j $1  --format=$(sacct -e | tr '\n' ' ' | sed 's/\s\+/,/g')) 
+}
+
+
+# load hx stuff
+load_hx_stuff() {
+	local path_software path_repo
+	if [ -n "$1" ]; then
+		path_software="$1"
+	else
+		echo "using standard software folder"
+		path_software="/wang/users/jgoeltz/cluster_home/Documents/utils/hx_software/"
+	fi
+	if [ -n "$2" ]; then
+		path_repo="$2"
+	else
+		echo "using standard repo folder"
+		path_repo="/wang/users/jgoeltz/cluster_home/Documents/ttfs_pytorch/src"
+	fi
+	echo "loading software from ${path_software}"
+	cd "$path_software"
+	module list
+	module purge
+	module load localdir
+	module list
+	cd "$path_repo"
+	echo "exporting to pythonpath ${path_repo}/py"
+	export PYTHONPATH="${path_repo}/py:$PYTHONPATH"
 }

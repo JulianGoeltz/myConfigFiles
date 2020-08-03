@@ -33,6 +33,9 @@ for jobinfo in $(scontrol show -o job); do
 	echo "$job_status" | grep -vqP "RUNNING|PENDING" && continue
 	job_status=$(printf '%7s' "$job_status")
 
+	job_host=" on $(echo "$jobinfo" | grep -oP "BatchHost=\K[^ ]*")"
+	echo "$job_status" | grep -vqP "RUNNING" && job_host=""
+
 	job_user=$(echo "$jobinfo" | grep -oP "UserId=\K[^\(]*")
 	job_user=$(printf '%10s' "$job_user")
 	job_user=${job_user:0:10}
@@ -57,13 +60,13 @@ for jobinfo in $(scontrol show -o job); do
 			else
 				job_name=""
 			fi
-		elif echo "$jobinfo" | grep -q "JobName=hx_sub.sh" ; then
+		elif echo "$jobinfo" | grep -q "JobName=hx_" ; then
 			if [[ "$job_status" == "RUNNING" ]]; then
 				tmpOutputFile=$(echo "$jobinfo" | grep -oP "StdOut=\K\S*")
 				tmpState=$(grep -P "... [0-9.]*% done" "$tmpOutputFile" | tail -n 1 | grep -oP "[0-9.]*")
 				job_name=", $(echo "$tmpState" | head -n2 | tail -n1)%: train $(echo "$tmpState" | head -n3 | tail -n1), valid $(echo "$tmpState" | head -n4 | tail -n1)"
 			else
-				job_name=", hx_sub.sh"
+				job_name=", $(echo "$jobinfo" | grep -oP "JobName=\K\S*")"
 			fi
 		else
 			job_name=", "
@@ -90,9 +93,9 @@ for jobinfo in $(scontrol show -o job); do
 	fi
 
 	if echo "$job_status" | grep -q "RUNNING"; then
-		jobsRunning="${jobsRunning}Job $job_id ($job_time) by $job_user has $job_licenses$job_name\n"
+		jobsRunning="${jobsRunning}Job $job_id ($job_time) by $job_user has $job_licenses$job_host$job_name\n"
 	else
-		jobsPending="${jobsPending}Job $job_id by $job_user has $job_licenses$job_name\n"
+		jobsPending="${jobsPending}Job $job_id by $job_user has $job_licenses$job_host$job_name\n"
 	fi
  done
 # redo previous change
