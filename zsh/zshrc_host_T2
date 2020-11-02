@@ -6,7 +6,7 @@ fpath=(~/Documents/model-tempodrom/help_scripts/completion $fpath)
 [[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # git editor and pager; easier to set host specific
-export GIT_PAGER="delta --theme=GitHub"
+export GIT_PAGER="delta " # --theme=GitHub"
 export GIT_EDITOR=nvim
 
 # ##################################
@@ -204,4 +204,4 @@ timer() {
 }
 
 # very specific
-alias sshhel_="sshhel_fs && export ZSH_PROMPT_GIT_DONTDOIT="lala" && cd ~/mnt/mntHel/Documents/ttfs_pytorch/src && zsh && sshhel_fs_unmount && exit"
+alias sshhel_="sshhel_fs && export ZSH_PROMPT_GIT_DONTDOIT="lala" && cd ~/mnt/mntHel/ttfs_complete/ttfs_pytorch/src && zsh && sshhel_fs_unmount && exit"

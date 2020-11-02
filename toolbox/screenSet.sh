@@ -4,6 +4,7 @@
 
 # in general set keyboard option nocaps
 setxkbmap -option caps:escape
+xset r rate 300 50
 
 edp1="eDP-1"
 dp22="DP-2-2"
@@ -17,10 +18,10 @@ if [ $# -gt 1 ]; then
 	dunstify -r 5555 -t 3000 "setting xrandr in office special"
 	xbacklight -set 100
 	~/.config/i3/scripts/changeBrightness.sh high
-	xrandr --output $dp23 --mode 1920x1080 --primary
+	xrandr --output $dp22 --mode 2560x1440 --primary
 	xrandr --output $edp1 --off
-	xrandr --output $edp1 --mode 1920x1080 --left-of $dp23
-	xrandr --output $dp22 --mode 1920x1080 --right-of $dp23
+	xrandr --output $edp1 --mode 1920x1080 --left-of $dp22
+	xrandr --output $dp23 --mode 1920x1080 --right-of $dp2h
 	exit
 elif [ $# -gt 0 ]; then
 	xrandr --output $edp1 --auto --primary
@@ -36,8 +37,8 @@ if xrandr | grep -q "$dp22 connected" &&
 	dunstify -r 5555 -t 3000 "setting xrandr for dockingstation in office"
 	# check if already set
 	if xrandr | grep "$edp1" | grep -q "+0+" && 
-		xrandr | grep "$dp22" | grep -q "+1920+" &&
-		xrandr | grep "$dp23" | grep -q "+0+"; then
+		xrandr | grep "$dp22" | grep -q "+0+" &&
+		xrandr | grep "$dp23" | grep -q "+2560+"; then
 		dunstify -r 5566 "xrandr already set, exiting."
 		exit
 	fi
@@ -45,7 +46,7 @@ if xrandr | grep -q "$dp22 connected" &&
 	xrandr --output VIRTUAL1 --off 
 	xrandr --output $dp22 --off
 	xrandr --output $dp23 --off
-	xrandr --output $dp22 --mode 1920x1080 --right-of $edp1
+	xrandr --output $dp22 --mode 2560x1440 --left-of $edp1
 	xrandr --output $dp23 --mode 1920x1080 --same-as $edp1
 	# maybe turn $dp23 off and on again (in xrandr)
 	# turn down screen brightness on edp1

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a  mac_array=("2C_41_A1_07_D2_28" "04_52_C7_34_22_DB" )
+declare -a  mac_array=("2C_41_A1_07_D2_28" "04_52_C7_34_22_DB" "00_1B_66_CA_9C_76")
 
 # check if bluez connected
 status="$(pactl list sinks short | grep bluez)"

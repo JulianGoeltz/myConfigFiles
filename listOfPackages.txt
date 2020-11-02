@@ -2,10 +2,12 @@ aalib
 acpi
 alsa-firmware
 alsa-utils
+android-file-transfer
 android-tools
 apr
 apr-util
 arandr
+aria2
 asar
 autoconf
 autoconf-archive
@@ -39,6 +41,7 @@ cryptsetup
 cuda
 cups
 cython
+deluge
 device-mapper
 dhcpcd
 diffpdf
@@ -68,6 +71,7 @@ findutils
 firefox
 flake8
 flex
+freerdp
 fwupd
 gawk
 gcc
@@ -123,10 +127,7 @@ jfsutils
 joyutils
 jupyter
 jupyter-notebook
-keepass
-keepass-plugin-http
-keepass-plugin-keeagent
-keepass-plugin-rpc
+keepassxc
 less
 libcaca
 libdv
@@ -196,6 +197,7 @@ paprefs
 patch
 pavucontrol
 pciutils
+pdfgrep
 perl
 perl-encode-locale
 perl-exporter-tiny
@@ -244,8 +246,10 @@ python-markdown
 python-markupsafe
 python-pip
 python-powerline
+python-pygame
 python-pygments
 python-pynvim
+python-pypdf2
 python-pytorch-opt-cuda
 python-pyxdg
 python-setuptools
@@ -254,13 +258,16 @@ python-virtualenv
 python2
 python2-gobject
 python2-pip
+qrencode
 reiserfsprogs
+ripgrep
 rofi
 rsync
 ruby
 ruby-fusuma
 rust
 s-nail
+screenfetch
 scrot
 sed
 shadow
@@ -315,6 +322,7 @@ wget
 which
 wine-gecko
 wine-mono
+x11-ssh-askpass
 xclip
 xdotool
 xfsprogs

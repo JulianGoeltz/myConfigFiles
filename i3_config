@@ -254,11 +254,9 @@ bindsym $mod+Mod1+Shift+l exec --no-startup-id "/home/julgoe/myConfigFiles/toolb
 # autostart
 # find classes with xprop: WM_CLASS: class, instance; 
 for_window [class="Spotify"] move --no-auto-back-and-forth to workspace 10
-assign [class="KeePass2"] 10
+assign [class="KeePassXC"] 10
 assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 1; exec xterm'
-# exec --no-startup-id /usr/bin/keepass
-workspace 1
 # exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 
 bindsym $mod+Shift+v exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
@@ -348,7 +346,7 @@ bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofi
 bindsym $mod+w exec --no-startup-id rofi -show window
 
 # floating temporary terminal
-for_window [class="FXTerm"] floating enable, move right 500, move down 300
+for_window [class="FXTerm"] floating enable, move absolute position center, move right 500, move down 300
 # resize grow left 300, resize grow right 300, 
 bindsym $mod+Shift+Return exec --no-startup-id xterm -class FXTerm
 bindsym $mod+Shift+BackSpace exec --no-startup-id xterm -class FXTerm -e "zsh ~/myConfigFiles/i3scripts/ipython.sh"
@@ -364,11 +362,11 @@ bindsym $mod+x [urgent=latest] focus
 # make window sticky
 bindsym $mod+s sticky toggle
 
-# toggle profile of QC35 between audio sink and headset
-bindsym $mod+F4 "exec --no-startup-id /bin/bash ~/myConfigFiles/i3scripts/qc35_profile.sh"
+# toggle profile of bluetooth audio device between audio sink and headset
+bindsym $mod+F4 "exec --no-startup-id /bin/bash ~/myConfigFiles/i3scripts/bluetooth_audio_profile.sh"
 
 # screenshot
 # bindsym "exec --no-startup-id ffmpeg -f x11grab -video_size 1920x1080 -i $DISPLAY -vframes 1 ~/tmp_screen.png"
 bindsym --release Print exec "scrot -m '/home/julgoe/Pictures/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
-bindsym --release Shift+Print exec "scrot -s '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+bindsym --release Shift+Print exec "killall picom; scrot -s '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'; picom -bs"
 bindsym --release $mod+Shift+Print exec "scrot -u -d 4 '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"

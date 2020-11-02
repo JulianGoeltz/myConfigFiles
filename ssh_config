@@ -77,3 +77,5 @@ Host daintCSCS
     IdentityFile ~/.ssh/daint_rsa
     ProxyJump elaCSCS
     User bp000362
+    ForwardAgent yes
+    ForwardX11 yes
