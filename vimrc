@@ -30,15 +30,18 @@ function! BuildYCM(info)
   endif
 endfunction
 
-let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
-if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
-	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
-endif
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+source ~/.vim/vim_coc.vim
+"let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
+"if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
+"	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+"	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
+"endif
 " not working. Plug 'jeaye/color_coded' " c colour coding
 "Syntax check
 Plug 'vim-syntastic/syntastic'
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_tex_checkers = ['chktex']
 "Check PEP8
 Plug 'nvie/vim-flake8'
 "Color Schemes
@@ -133,8 +136,8 @@ set clipboard=unnamedplus
 "hide .pyc files
 "let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" let g:ycm_autoclose_preview_window_after_completion=1
+" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
 let python_highlight_all=1
@@ -241,10 +244,10 @@ let g:syntastic_quiet_messages = { "regex": [
         \ ] }
 
 " ycm for tex files, works beautifully
-if !exists('g:ycm_semantic_triggers')
-  let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+" if !exists('g:ycm_semantic_triggers')
+  " let g:ycm_semantic_triggers = {}
+" endif
+" let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
 
 " open Gstatus with small height
 nnoremap <silent> <Leader>gs :G<CR>:20wincmd_<CR>
