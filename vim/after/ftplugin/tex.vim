@@ -31,9 +31,9 @@ function! MoveAfterSuccess(status)
 		call vimtex#log#warning("Compilation failed!")
 	endif
 endfunction
-call add(g:vimtex_compiler_callback_hooks, 'MoveAfterSuccess')
-" to first do the moving, to not overdraw the output
-call reverse(g:vimtex_compiler_callback_hooks)
+" call add(g:vimtex_compiler_callback_hooks, 'MoveAfterSuccess')
+" " to first do the moving, to not overdraw the output
+" call reverse(g:vimtex_compiler_callback_hooks)
 
 " to break at word boundary not mid word
 setlocal linebreak

@@ -22,4 +22,5 @@ i3lock -nte -B4 \
     --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+86:y+86" \
     --radius=15 --veriftext="" --wrongtext="" --noinputtext=""
 # resuming if it wasn't paused beofre locking
+sleep 2
 [[ "$(cat ~/.tmp_dunststate)" = "running" ]] && pkill -u "$USER" -USR2 dunst

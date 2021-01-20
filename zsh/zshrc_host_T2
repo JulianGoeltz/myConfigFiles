@@ -65,12 +65,6 @@ bluetoothqc() {
 
 alias cdmaster_hel="cd ~/mnt/mntHel/;ZSH_PROMPT_GIT_DONTDOIT='dont'"
 
-if [[ $PATH != *"pip_files"* ]]; then
-	PATH=$PATH:~/pip_files
-	export PYTHONPATH=$PYTHONPATH:~/pip_files/
-	export PYTHONPATH=$PYTHONPATH:~/pip_files/lib/python3.5/site-packages/
-fi
-
 # autojump 
 [ -f /usr/share/autojump/autojump.sh ] && source /usr/share/autojump/autojump.sh
 [ -f /etc/profile.d/autojump.sh ] && source /etc/profile.d/autojump.zsh
@@ -145,7 +139,7 @@ if [[ -x `which notify-send` ]]; then
         if [[ "${zsh_notifier_cmd}" != "" ]]; then
             time_taken=$(( `date +%s` - ${zsh_notifier_time} ))
             if (( $time_taken > $REPORTTIME )) &&
-		    ! echo $zsh_notifier_cmd | grep -qP "(^vim|^nvim|^fg|^less|^ssh|^iv |^inkview|^man)" ; then
+		    ! echo $zsh_notifier_cmd | grep -qP "(^vim|^nvim|^fg|^less|^ssh|^iv |^inkview|^man|^zoom|^ipython)" ; then
                 notify-send "task finished" \
 			"'$zsh_notifier_cmd' return $returnCode exited after $time_taken seconds"
             fi

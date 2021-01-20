@@ -41,10 +41,17 @@ Playing() {
 	if [ "$(playerctl -p "$player" status 2>/dev/null)" = "Playing" ]; then
 		artist=$(playerctl -p "$player" metadata artist)
 		title=$(playerctl -p "$player" metadata title)
-		[ "${#artist}" -gt "23" ] && artist="${artist:0:20}..."
-		[ "${#title}" -gt "23" ] && title="${title:0:20}..."
+		tmp=$?
+		if [ "$tmp" -eq "0" ]; then
+			[ "${#artist}" -gt "23" ] && artist="${artist:0:20}..."
+			[ "${#title}" -gt "23" ] && title="${title:0:20}..."
+			tmp="$artist - $title"
+		else
+			tmp=$(basename $( playerctl -p "$player" metadata xesam:url))
+			[ "${#tmp}" -gt "43" ] && tmp="${tmp:0:40}..."
+		fi
 		# in order for special chars to be properly escaped use json function above
-		tmp=$(json_escape "$artist - $title")
+		tmp=$(json_escape "$tmp")
 		# but this uses quotes, get rid of them
 		echo "$emojiTune ${tmp:1:-1}"
 	fi
@@ -152,7 +159,7 @@ while true; do
 
 	# when changing alsa config to hdmi, a sink with id != 0 is created, thus get correct sink
 	sinkList=$(pactl list short sinks)
-	standardSink=$(echo "$sinkList" | grep "alsa_output" | awk '{print $1}')
+	standardSink=$(echo "$sinkList" | grep "alsa_output.pci-0000_00_1f.3" | awk '{print $1}' | tail -n1)
 	echo '  { "full_text": "'"$(Volume $standardSink)"'", "color":"'$Cfggrey'"},'
 	bluezSink=$(echo "$sinkList" | grep "bluez" | awk '{print $1}')
 	if [ "$(echo "$sinkList" | wc -l )" -gt "1" ]; then

@@ -12,5 +12,5 @@ xrandr --output DP2-2 --mode 1920x1080 --same-as eDP1
 /home/julgoe/myConfigFiles/toolbox/screenSet.sh
 
 # resuming if it wasn't paused before locking; but sleep first
-sleep 1
+sleep 3
 [[ "$(cat ~/.tmp_dunststate)" = "running" ]] && pkill -u "$USER" -USR2 dunst

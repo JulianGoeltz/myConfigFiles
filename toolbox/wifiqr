@@ -34,7 +34,7 @@ str="WIFI:S:${ssid};T:WPA2;P:${psk};;"
 # encode it
 qrencode -t png -o /tmp/wifi.png "$str"
 # view it
-eog /tmp/wifi.png
+display /tmp/wifi.png
 rm /tmp/wifi.png
 
 return 0

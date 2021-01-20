@@ -16,4 +16,6 @@ ignore =
     #E701,
     ## just for now: ignore local variable define but unused
     #F841,
+    # E731: do not assign a lambda expression, use a def
+    E731,
 max-line-length = 120

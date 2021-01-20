@@ -27,5 +27,5 @@ for mac in "${mac_array[@]}"; do
 	else
 		pactl set-card-profile bluez_card.$mac headset_head_unit
 	fi
-	return
+	exit
 done

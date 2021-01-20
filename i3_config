@@ -78,9 +78,9 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+f fullscreen toggle global
 
 # change container layout (stacked, tabbed, toggle split)
-# bindsym $mod+s layout stacking
-# bindsym $mod+w layout tabbed
-# bindsym $mod+e layout toggle split
+bindsym $mod+Shift+s layout stacking
+bindsym $mod+Shift+w layout tabbed
+bindsym $mod+Shift+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -123,7 +123,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize/move" {
@@ -171,11 +171,12 @@ bar {
 	i3bar_command /usr/bin/i3bar 
         status_command ~/.config/i3/i3status.sh
 	font pango: Awesome 9
-        tray_output eDP-1
+        tray_output primary
 	position top
 	colors {
 		background #2e3436
 		statusline #d3d7cf
+		urgent_workspace #333333 #222222 #888888
 	}
 }
 #exec python /home/julgoe/venvs/py2nest/lib/python2.7/site-packages/powerline/bindings/lemonbar/powerline-lemonbar.py –i3
@@ -256,6 +257,8 @@ bindsym $mod+Mod1+Shift+l exec --no-startup-id "/home/julgoe/myConfigFiles/toolb
 for_window [class="Spotify"] move --no-auto-back-and-forth to workspace 10
 assign [class="KeePassXC"] 10
 assign [class="TelegramDesktop"] 9
+exec --no-startup-id i3-msg 'workspace 10; exec keepassxc'
+exec --no-startup-id i3-msg 'layout stacking'
 exec --no-startup-id i3-msg 'workspace 1; exec xterm'
 # exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 
@@ -312,6 +315,8 @@ for_window [title="Figure *"] floating enable
 for_window [class="Eom"] floating enable
 for_window [class="Eog"] floating enable
 for_window [class="feh"] floating enable
+# for_window [class="Spotify"] floating enable, resize set width 1400 px height 600 px
+for_window [class="Pavucontrol"] floating enable
 
 # bind key to use screenSet, easiest for making screen work after removing from dockingstation
 bindsym $mod+Control+1 "exec --no-startup-id /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"
@@ -346,7 +351,7 @@ bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofi
 bindsym $mod+w exec --no-startup-id rofi -show window
 
 # floating temporary terminal
-for_window [class="FXTerm"] floating enable, move absolute position center, move right 500, move down 300
+for_window [class="FXTerm"] floating enable, move position center, move right 500, move down 300
 # resize grow left 300, resize grow right 300, 
 bindsym $mod+Shift+Return exec --no-startup-id xterm -class FXTerm
 bindsym $mod+Shift+BackSpace exec --no-startup-id xterm -class FXTerm -e "zsh ~/myConfigFiles/i3scripts/ipython.sh"
@@ -368,5 +373,6 @@ bindsym $mod+F4 "exec --no-startup-id /bin/bash ~/myConfigFiles/i3scripts/blueto
 # screenshot
 # bindsym "exec --no-startup-id ffmpeg -f x11grab -video_size 1920x1080 -i $DISPLAY -vframes 1 ~/tmp_screen.png"
 bindsym --release Print exec "scrot -m '/home/julgoe/Pictures/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
-bindsym --release Shift+Print exec "killall picom; scrot -s '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'; picom -bs"
-bindsym --release $mod+Shift+Print exec "scrot -u -d 4 '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+bindsym --release Shift+Print exec "killall picom; scrot -s '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+bindsym --release $mod+Shift+Print exec "killall picom; scrot -s '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'; picom -bs"
+bindsym --release $mod+Print exec "scrot -u '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"

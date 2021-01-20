@@ -1,6 +1,7 @@
 [user]
 	email = goeltz@stud.uni-heidelberg.de
 	name = JulianGoeltz
+	signingkey = mail@julian-goeltz.de
 [alias]
 	adog = log --all --decorate --oneline --graph --color
 	co = checkout
@@ -12,3 +13,5 @@
 	default = simple
 [pull]
 	ff = only
+[init]
+	defaultBranch = main
