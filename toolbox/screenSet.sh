@@ -6,7 +6,13 @@
 setxkbmap -option caps:escape
 xset r rate 300 50
 
+# always set audio input profile to duplex to have a microphone
+pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo
+# turn off bern hdmi monitor audio output
+pactl set-card-profile alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00 off
+
 edp1="eDP-1"
+dp12="DP-1-2"
 dp22="DP-2-2"
 dp23="DP-2-3"
 dp2Base="DP-2"
@@ -50,6 +56,16 @@ if xrandr | grep -q "$dp22 connected" &&
 	xrandr --output $dp23 --mode 1920x1080 --same-as $edp1
 	# maybe turn $dp23 off and on again (in xrandr)
 	# turn down screen brightness on edp1
+elif xrandr | grep -q "$dp12 connected"; then
+	dunstify -r 5555 -t 3000 "setting xrandr in Bern"
+	if xrandr | grep "$edp1" | grep -q "1920x1080+2560+0" &&
+		xrandr | grep "$dp12" | grep -q "2560x1440+0+0"; then
+		dunstify -r 5566 "xrandr already set, exiting."
+		exit
+	fi
+	xrandr --output "$dp12" --mode 2560x1440 --primary --output eDP-1 --off
+	sleep 0.5
+	xrandr --output "$dp12" --mode 2560x1440 --primary --output eDP-1 --right-of "$dp12" --mode 1920x1080
 elif xrandr | grep -q "$hdmi2 connected"; then
 	dunstify -r 5555 -t 3000 "setting xrandr for one external HDMI"
 	xrandr --output "$hdmi2" --above eDP-1 --mode 1920x1080 --rotate normal
@@ -60,6 +76,7 @@ else
 	~/.config/i3/scripts/changeBrightness.sh high
 	dunstify -r 5555 -t 3000 "setting xrandr for mobile use"
 	xrandr --output $edp1 --auto --primary
+	xrandr --output $dp12 --off
 	xrandr --output $dp22 --off
 	xrandr --output $dp23 --off
 	xrandr --output $hdmi2 --off
