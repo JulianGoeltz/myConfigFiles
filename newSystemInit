@@ -55,6 +55,13 @@ tic $TERM.ti
 # add brightnesschange (see sudo install) to sudo nopasswd and make change_brightness executable
 sudo chmod u+x /usr/local/bin/change_brightness.sh
 
+# gpg connection for thunderbird see also https://wiki.mozilla.org/Thunderbird:OpenPGP:Smartcards
+# like in https://avaldes.co/2020/01/28/secret-service-keepassxc.html
+# when secret service is set up in keepassxc
+# add to ~/.gpg/gpg-agent.conf the line `pinentry-program /usr/bin/pinentry-gtk-2`
+# to once enter and save the password
+# afterwards can delete lines again
+
 
 # not needed last time
 # # make i3lock-color unlockable: needs pam.d file:
