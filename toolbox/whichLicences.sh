@@ -12,18 +12,37 @@ fileTmpScontrol=~/.tmp_scontrol2.sh
 jobsRunning=""
 jobsPending=""
 
-[ $# -gt 0 ] && echo "skipping '$@'"
+if [ $# -gt 0 ]; then
+	if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+		cat <<EOF
+Listing licences currently either pending or running.
+
+* first listed are runnning, then pending, and in colorful output
+* only the cube setups are looked at
+* if arguments are given (other than -h or --help), they are used as arguments
+  for grep on the jobinfo, and in case they fit the job is skipped. This is 
+  useful to still see important info if someone is spamming the queue
+* jobs on 75 ('my' setup) are highlighted
+* vis_jenkin on setup 62 is shortened to reduce clutter
+* if job_user and USER agree, special magic is done to infer info about the job
+EOF
+		exit
+	else
+		echo "skipping '$@'"
+	fi
+fi
 
 IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
 for jobinfo in $(scontrol show -o job); do
 	echo "$jobinfo" | grep -vqP "Partition=(cube)" && continue
-	if echo "$jobinfo" | grep -q vis_jenkin && echo "$jobinfo" | grep -q W62F3; then
+	if echo "$jobinfo" | grep -q vis_jenkin && echo "$jobinfo" | grep -q W62F; then
 		vis_jenkin="on 62"
 		continue
 	fi
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
 
+	# if arguments given they are passed onto grep of the jobinfo
 	if [ $# -gt 0 ]; then
 		echo "$jobinfo" | grep -q "$@" && continue
 	fi
