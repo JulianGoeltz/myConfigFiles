@@ -166,6 +166,8 @@ checkSimilaritiesAndLink neovim_init.vim "$HOME/.config/nvim/init.vim"
 
 checkSimilaritiesAndLink latexmkrc "$HOME/.latexmkrc"
 
+checkSimilaritiesAndLink vlty_defs.tex "$HOME/.config/vlty/defs.tex"
+
 checkSimilaritiesAndLink Xdefaults "$HOME/.Xdefaults"
 
 checkSimilaritiesAndLink zathurarc "$HOME/.config/zathura/zathurarc"
