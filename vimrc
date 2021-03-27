@@ -53,6 +53,8 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
 "Git
 Plug 'tpope/vim-fugitive'
+"surround with brackets easily
+Plug 'tpope/vim-surround'
 "sign column indication of git changes 
 Plug 'airblade/vim-gitgutter'
 
@@ -181,7 +183,7 @@ set laststatus=2 " Always display the statusline in all windows
 
 "new lines into normal mode
 nmap <C-o> O<Esc>
-nmap <CR> o<Esc>
+" nmap <CR> o<Esc>
 
 map <leader><Space> :set foldlevel=0<CR>
 map <leader><Space><Space> :set foldlevel=99<CR>

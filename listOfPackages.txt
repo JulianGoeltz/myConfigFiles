@@ -109,9 +109,12 @@ gst-plugins-good
 gtest
 gtk-doc
 gts
+gvfs
+gvfs-smb
 gzip
 haveged
 hdf5
+hexchat
 htop
 hub
 hunspell-de
@@ -139,6 +142,7 @@ joyutils
 jupyter
 jupyter-notebook
 keepassxc
+languagetool
 less
 libcaca
 libdv
@@ -176,6 +180,7 @@ medusa
 mendeleydesktop-bundled
 mercurial
 meson
+minidlna
 mirage
 mosh
 mpg123
@@ -250,6 +255,7 @@ pkgconf
 playerctl
 powerline
 powerline-common
+powertop
 procps-ng
 pscircle-git
 psmisc
@@ -272,7 +278,6 @@ python-powerline
 python-pybluez
 python-pygame
 python-pygments
-python-pylint
 python-pynvim
 python-pypdf2
 python-pyqt5
@@ -299,6 +304,7 @@ sed
 shadow
 singularity-container
 skypeforlinux-preview-bin
+smbclient
 speedtest-cli
 spotify
 spotifyd
@@ -320,6 +326,7 @@ texlive-pictures
 texlive-pstricks
 texlive-publishers
 texlive-science
+textidote-bin
 thefuck
 thunar
 thunderbird

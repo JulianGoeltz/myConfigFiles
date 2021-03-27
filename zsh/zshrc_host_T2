@@ -198,7 +198,7 @@ timer() {
 }
 
 # very specific
-alias sshhel_="sshhel_fs && export ZSH_PROMPT_GIT_DONTDOIT="lala" && cd ~/mnt/mntHel/ttfs_complete/ttfs_pytorch/src && zsh && sshhel_fs_unmount && exit"
+alias sshhel_="sshhel_fs && export ZSH_PROMPT_GIT_DONTDOIT="lala" && cd ~/mnt/mntHel/strobeStuff/ttfs_pytorch/src && zsh && sshhel_fs_unmount && exit"
 
 # copy files to android phone connected via USB
 adb_transfer() {
