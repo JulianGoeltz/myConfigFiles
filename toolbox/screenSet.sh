@@ -2,14 +2,17 @@
 
 # set -euo pipefail
 
-# in general set keyboard option nocaps
-setxkbmap -option caps:escape
-xset r rate 300 50
+doBeforeAndAfter(){
+	# in general set keyboard option nocaps
+	setxkbmap -option caps:escape
+	xset r rate 300 50
 
-# always set audio input profile to duplex to have a microphone
-pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo
-# turn off bern hdmi monitor audio output
-pactl set-card-profile alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00 off
+	# always set audio input profile to duplex to have a microphone
+	pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:analog-stereo+input:analog-stereo 2>/dev/null
+	# turn off bern hdmi monitor audio output
+	pactl set-card-profile alsa_card.usb-C-Media_Electronics_Inc._USB_Audio_Device-00 off 2>/dev/null
+}
+doBeforeAndAfter
 
 edp1="eDP-1"
 dp12="DP-1-2"
@@ -42,18 +45,21 @@ if xrandr | grep -q "$dp22 connected" &&
 	# Connected to Docking Station
 	dunstify -r 5555 -t 3000 "setting xrandr for dockingstation in office"
 	# check if already set
-	if xrandr | grep "$edp1" | grep -q "+0+" && 
-		xrandr | grep "$dp22" | grep -q "+0+" &&
-		xrandr | grep "$dp23" | grep -q "+2560+"; then
+	if xrandr | grep "$edp1" | grep -q "+2560+0" && 
+		xrandr | grep "$dp22" | grep -q "+0+0" &&
+		xrandr | grep "$dp23" | grep -q "+2560+0"; then
 		dunstify -r 5566 "xrandr already set, exiting."
 		exit
 	fi
 	~/.config/i3/scripts/changeBrightness.sh low
-	xrandr --output VIRTUAL1 --off 
+	# xrandr --output VIRTUAL1 --off 
 	xrandr --output $dp22 --off
-	xrandr --output $dp23 --off
-	xrandr --output $dp22 --mode 2560x1440 --left-of $edp1
-	xrandr --output $dp23 --mode 1920x1080 --same-as $edp1
+	# xrandr --output $dp23 --off
+	xrandr --output $dp23 --mode 1920x1080
+	xrandr --output $dp22 --mode 2560x1440 --left-of $dp23 --primary
+	xrandr --output $edp1 --same-as $dp23
+	# for presentation setting with reduced resolution:
+	# xrandr --output DP-2-2 --mode 1920x1080 --primary --output DP-2-3 --mode 1920x1080 --right-of DP-2-2 --output eDP-1 --same-as DP-2-3
 	# maybe turn $dp23 off and on again (in xrandr)
 	# turn down screen brightness on edp1
 elif xrandr | grep -q "$dp12 connected"; then
@@ -87,3 +93,4 @@ else
 fi
 
 #cat /etc/systemd/logind.conf
+doBeforeAndAfter
