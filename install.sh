@@ -100,7 +100,12 @@ checkSimilaritiesAndLink (){
 		fi
 	fi
 	# echo -en "$NC"
-
+	if [ -e "$orig" ]; then
+		echo_ora "Origin $orig exists."
+	else
+		echo_red "Origin $orig does not exist, solve this."
+		allWentThrough=false
+	fi
 }
 
 
@@ -118,6 +123,7 @@ echo -e "\n\n"
 
 
 
+echo "##general configs##"
 echo "--ZSH"
 checkSimilaritiesAndLink zshrc "$HOME/.zshrc"
 [ ! -d "$HOME/.zsh" ] && mkdir "$HOME/.zsh"
@@ -154,26 +160,19 @@ done
 checkSimilaritiesAndLink "vim/autoload/vim-plug/plug.vim" vim/autoload/plug.vim
 
 echo "--others"
-checkSimilaritiesAndLink powerline_tmux_colorscheme.json "$HOME/.config/powerline/colorschemes/tmux/default.json"
-
-checkSimilaritiesAndLink gitconfig "$HOME/.gitconfig"
-
-checkSimilaritiesAndLink flake8 "$HOME/.config/flake8"
-
-checkSimilaritiesAndLink ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"
-
-checkSimilaritiesAndLink neovim_init.vim "$HOME/.config/nvim/init.vim"
-
-checkSimilaritiesAndLink latexmkrc "$HOME/.latexmkrc"
-
-checkSimilaritiesAndLink vlty_defs.tex "$HOME/.config/vlty/defs.tex"
-
-checkSimilaritiesAndLink Xdefaults "$HOME/.Xdefaults"
-
-checkSimilaritiesAndLink zathurarc "$HOME/.config/zathura/zathurarc"
+checkSimilaritiesAndLink other_configs/flake8 "$HOME/.config/flake8"
+checkSimilaritiesAndLink other_configs/gitconfig "$HOME/.gitconfig"
+checkSimilaritiesAndLink other_configs/ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"
+checkSimilaritiesAndLink other_configs/latexmkrc "$HOME/.latexmkrc"
+checkSimilaritiesAndLink other_configs/neovim_init.vim "$HOME/.config/nvim/init.vim"
+checkSimilaritiesAndLink other_configs/powerline_tmux_colorscheme.json "$HOME/.config/powerline/colorschemes/tmux/default.json"
+checkSimilaritiesAndLink other_configs/vlty_defs.tex "$HOME/.config/vlty/defs.tex"
+checkSimilaritiesAndLink other_configs/Xdefaults "$HOME/.Xdefaults"
+checkSimilaritiesAndLink other_configs/zathurarc "$HOME/.config/zathura/zathurarc"
 
 if [[ "$(hostname)" == "T2" ]]; then
-	echo "--T2 specifics"
+	echo
+	echo "##T2 specifics##"
 	echo "--i3"
 	checkSimilaritiesAndLink i3_config "$HOME/.config/i3/config"
 	checkSimilaritiesAndLink i3status.sh "$HOME/.config/i3/i3status.sh"
@@ -184,13 +183,13 @@ if [[ "$(hostname)" == "T2" ]]; then
 
 	echo "--others"
 
-	checkSimilaritiesAndLink picom.conf "$HOME/.config/picom.conf"
-	checkSimilaritiesAndLink dunstrc "$HOME/.config/dunst/dunstrc"
-	checkSimilaritiesAndLink fusuma.config "$HOME/.config/fusuma/config.yml"
-	checkSimilaritiesAndLink pscircle.service "$HOME/.config/systemd/user/pscircle.service"
-	checkSimilaritiesAndLink tsocks.conf "$HOME/.config/tsocks.conf"
-	checkSimilaritiesAndLink xinitrc "$HOME/.xinitrc"
-	checkSimilaritiesAndLink zprofile "$HOME/.zprofile"
+	checkSimilaritiesAndLink other_configs/dunstrc "$HOME/.config/dunst/dunstrc"
+	checkSimilaritiesAndLink other_configs/fusuma.config "$HOME/.config/fusuma/config.yml"
+	checkSimilaritiesAndLink other_configs/picom.conf "$HOME/.config/picom.conf"
+	checkSimilaritiesAndLink other_configs/pscircle.service "$HOME/.config/systemd/user/pscircle.service"
+	checkSimilaritiesAndLink other_configs/tsocks.conf "$HOME/.config/tsocks.conf"
+	checkSimilaritiesAndLink other_configs/xinitrc "$HOME/.xinitrc"
+	checkSimilaritiesAndLink other_configs/zprofile "$HOME/.zprofile"
 
 	echo "----sudos"
 
