@@ -147,6 +147,7 @@ while true; do
 		playing_spotify=$(Playing spotify)
 		playing_spotifyd=$(Playing spotifyd)
 		playing_vlc=$(Playing vlc)
+		playing_chrome=$(Playing chromium)
 
 		pdfcompiling=$(Pdfcompiling)
 	fi
@@ -156,6 +157,7 @@ while true; do
 	echo '  { "full_text": "'"$playing_spotify"'"},'
 	echo '  { "full_text": "'"$playing_spotifyd"'"},'
 	echo '  { "full_text": "'"$playing_vlc"'"},'
+	echo '  { "full_text": "'"$playing_chrome"'"},'
 
 	# when changing alsa config to hdmi, a sink with id != 0 is created, thus get correct sink
 	sinkList=$(pactl list short sinks)

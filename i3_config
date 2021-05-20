@@ -260,6 +260,7 @@ assign [class="TelegramDesktop"] 9
 exec --no-startup-id i3-msg 'workspace 10; exec keepassxc'
 exec --no-startup-id i3-msg 'layout stacking'
 exec --no-startup-id i3-msg 'workspace 1; exec xterm'
+for_window [title="Vortragenden-Ansicht"] floating enable, move left 750
 # exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 
 bindsym $mod+Shift+v exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"

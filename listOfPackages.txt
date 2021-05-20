@@ -39,6 +39,7 @@ clutter-gst
 clutter-gtk
 cmake
 cogl
+comparepdf
 coreutils
 cronie
 cryptsetup
@@ -67,6 +68,7 @@ eog-plugins
 ethtool
 evince
 exfat-utils
+extra-cmake-modules
 fakeroot
 fceux
 feh
@@ -80,6 +82,7 @@ flake8
 flex
 freerdp
 fwupd
+fzf
 gawk
 gcc
 gcc-libs
@@ -112,14 +115,16 @@ gts
 gvfs
 gvfs-smb
 gzip
+hashcat
+hashcat-utils
 haveged
 hdf5
 hexchat
 htop
 hub
 hunspell-de
-hunspell-en_GB
-hunspell-en_US
+hunspell-en_gb
+hunspell-en_us
 i3-gaps
 i3blocks
 i3lock-color
@@ -128,6 +133,7 @@ imagemagick
 inetutils
 inkscape
 inotify-tools
+intel-compute-runtime
 intel-ucode
 intltool
 iperf
@@ -157,6 +163,7 @@ libsndio-61-compat
 libtool
 libvisual
 licenses
+linpack
 linux
 linux-firmware
 log4cxx-git
@@ -348,6 +355,7 @@ usbutils
 util-linux
 v4l2loopback-dkms
 vala
+veracrypt
 vi
 vim
 virtualbox

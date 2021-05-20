@@ -160,7 +160,7 @@ copyToWeb (){
 	tmpConfig="$(echo ${GIT_SSH_COMMAND:-} | grep -oP "\-F [^ ]*" | awk '{print $2}')"
 	[ -z "$tmpConfig" ] && tmpConfig=~/.ssh/config || tmpConfig=~/.ssh/config_prox
 	echo "Using config file $tmpConfig"
-	ssh -F $tmpConfig ssh.strato.de "mkdir -p juliangoeltzde/sharing/${randNo}"
+	ssh -F $tmpConfig ssh.strato.de "mkdir -p juliangoeltzde/sharing/${randNo}" || return $?
 	for file in $@; do 
 		if [ ! -f "$file" ] ; then
 			echo "File ${file} does not exist."
