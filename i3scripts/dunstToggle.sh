@@ -3,16 +3,14 @@
 # set -euo pipefail
 
 
-if [ "$1" = "pause" -a "$(cat ~/.tmp_dunststate)" = 'running' ]; then
+if [ "$1" = "pause" -a "$(dunstctl is-paused)" = 'false' ]; then
 	dunstify -r 2222 -t 2000 'Turning off notifications'
-	echo paused > /home/julgoe/.tmp_dunststate
 	sleep 2
-	dunstify 'DUNST_COMMAND_PAUSE'
+	dunstctl set-paused true
 elif [ "$1" = "resume" ]; then
-	if [ "$(cat ~/.tmp_dunststate)" = 'paused' ]; then
-		dunstify 'DUNST_COMMAND_RESUME'
+	if [ "$(dunstctl is-paused)" = 'true' ]; then
+		dunstctl set-paused false
 		dunstify -t 2000 'Enabled notifications again'
-		exec echo 'running' > /home/julgoe/.tmp_dunststate
 	else
 		dunstify -r 1111 -t 2000 'dunst already running'
 	fi
