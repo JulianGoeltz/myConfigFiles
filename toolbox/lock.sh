@@ -16,11 +16,11 @@ pkill -u "$USER" -USR1 dunst
 # i3lock -tbefi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000
 # -i /home/julgoe/Pictures/actualBackgrounds/lock_1820.png \
 i3lock -nte -B4 \
-    --insidecolor=373445ff --ringcolor=ffffffff --line-uses-inside \
-    --keyhlcolor=d23c3dff --bshlcolor=d23c3dff --separatorcolor=00000000 \
-    --insidevercolor=000000ff --insidewrongcolor=d23c3dff \
-    --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="x+86:y+86" \
-    --radius=15 --veriftext="" --wrongtext="" --noinputtext=""
+    --inside-color=373445ff --ring-color=ffffffff --line-uses-inside \
+    --keyhl-color=d23c3dff --bshl-color=d23c3dff --separator-color=00000000 \
+    --insidever-color=000000ff --insidewrong-color=d23c3dff \
+    --ringver-color=ffffffff --ringwrong-color=ffffffff --ind-pos="x+86:y+86" \
+    --radius=15 --verif-text="" --wrong-text="" --noinput-text=""
 # resuming if it wasn't paused beofre locking
 sleep 2
 [[ "$(cat ~/.tmp_dunststate)" = "running" ]] && pkill -u "$USER" -USR2 dunst
