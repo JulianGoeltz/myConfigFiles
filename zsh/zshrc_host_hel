@@ -23,7 +23,8 @@ fi
 #spack_global
 if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 	module load waf
-	module load nmpm_software/$(readlink /wang/environment/modules/nmpm_software/current)
+	# module load nmpm_software/$(readlink /wang/environment/modules/nmpm_software/current)
+	module load ppu-toolchain
 
 	module load slurm-singularity/current
 	export SINGULARITYENV_PREPEND_PATH=$SINGULARITYENV_PREPEND_PATH:$HOME/myConfigFiles/toolbox

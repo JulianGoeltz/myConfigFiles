@@ -2,5 +2,5 @@ Host gitviz.kip.uni-heidelberg.de
 	User git
 	IdentityFile ~/.ssh/gitviz.id_rsa
 
-host * !hel !brainscales-r.kip.uni-heidelberg.de
+host * !hel !brainscales-r.kip.uni-heidelberg.de !gerrit.bioai.eu
 	ProxyCommand ~/myConfigFiles/toolbox/tsocks_withConf.sh %h %p
