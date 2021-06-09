@@ -7,6 +7,8 @@ ORANGY='\033[0;33m'
 SPECIAL='\033[1;35m'
 NC='\033[0m'
 
+JENKINSSPECIALSETUP=W62F
+
 fileTmpScontrol=~/.tmp_scontrol2.sh
 
 jobsRunning=""
@@ -22,8 +24,10 @@ Listing licences currently either pending or running.
 * if arguments are given (other than -h or --help), they are used as arguments
   for grep on the jobinfo, and in case they fit the job is skipped. This is 
   useful to still see important info if someone is spamming the queue
-* jobs on 75 ('my' setup) are highlighted
-* vis_jenkin on setup 62 is shortened to reduce clutter
+* jobs on environment variable {LLSS} (ListLicencesSpecialSetup, for setups
+  that are of special interest) are highlighted; can be regex. Example:
+  \$LLSS=W66 or \$LLSS="(W66|W67)"
+* vis_jenkin on setup ${JENKINSSPECIALSETUP} is shortened to reduce clutter
 * if job_user and USER agree, special magic is done to infer info about the job
 EOF
 		exit
@@ -36,8 +40,8 @@ IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
 for jobinfo in $(scontrol show -o job); do
 	echo "$jobinfo" | grep -vqP "Partition=(cube)" && continue
-	if echo "$jobinfo" | grep -q vis_jenkin && echo "$jobinfo" | grep -q W62F; then
-		vis_jenkin="on 62"
+	if echo "$jobinfo" | grep -q vis_jenkin && echo "$jobinfo" | grep -q $JENKINSSPECIALSETUP; then
+		vis_jenkin="on $JENKINSSPECIALSETUP"
 		continue
 	fi
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
@@ -104,7 +108,7 @@ for jobinfo in $(scontrol show -o job); do
 	else
 		job_licenses="$tmpString"
 	fi
-	if echo "$job_licenses" | grep -q W75; then
+	if [ -n "$LLSS" ] && echo "$job_licenses" | grep -qP "$LLSS"; then
 		# job_licenses="Licenses=$(tput bold)${SPECIAL}$(echo "$job_licenses" | grep "[WFB,0-9]")$(tput sgr0)${NC}"
 		job_licenses="Licenses=${SPECIAL}$(echo "$job_licenses" | grep -o "[WFB,0-9]*")${NC}"
 	else
