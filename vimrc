@@ -30,13 +30,6 @@ function! BuildYCM(info)
   endif
 endfunction
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-source ~/.vim/vim_coc.vim
-"let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
-"if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
-"	Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-"	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
-"endif
 " not working. Plug 'jeaye/color_coded' " c colour coding
 "Syntax check
 Plug 'vim-syntastic/syntastic'
@@ -61,6 +54,9 @@ Plug 'airblade/vim-gitgutter'
 " in container on hel, zsh doesnt work
 set shell=/bin/sh
 if system('hostname') =~ "T2"
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	source ~/.vim/vim_coc.vim
+
 	"omnicomplete
 	"set omnifunc=syntaxcomplete#Complete
 	
@@ -73,6 +69,12 @@ if system('hostname') =~ "T2"
 		\ 'template_path': '/home/julgoe/Documents/vimwiki/templates'}]
 	"set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"
+	let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
+	if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
+		Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+		Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
+	endif
+
 	let g:ycm_extra_conf_vim_data = ['&filetype']
 	"let g:ycm_extra_conf_globlist = ['~/MasterThesis/utils/adc_error/*']
 
