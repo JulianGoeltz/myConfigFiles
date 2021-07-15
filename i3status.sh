@@ -79,7 +79,9 @@ Wifi() {
 	fi
 	# in ICEs show some fun information
 	if [ "$(echo "$string" | grep -oP "SSID: \K.*")" = "WIFIonICE" ]; then
-		python ~/.config//i3/scripts/ice_wifi.py
+		python ~/.config//i3/scripts/db_wifi.py ice
+	elif [ "$(echo "$string" | grep -oP "SSID: \K.*")" = "WIFI@DB" ]; then
+		python ~/.config//i3/scripts/db_wifi.py regio
 	fi
 }
 # vpn
