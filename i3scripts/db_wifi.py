@@ -49,9 +49,6 @@ else:
         print("[connected to db: error connecting to portal]")
         sys.exit()
 
-    from pprint import pprint
-    # pprint(data)
-
     def nextstopinfo(nextstop_id):
         for stop in data['stations']:
             if stop['id'] == nextstop_id:
@@ -67,5 +64,5 @@ else:
 
     print(" [{}, {}]".format(
         f"{float(data['speed']) * 3.6:.0f}km/h",
-        nextstopinfo(data['stateInformation']['nextStation']['id']),
+        nextstopinfo(data['stateInformation']['nextStation']['id']) if 'stateInformation' in data else "(in station)"
     ))
