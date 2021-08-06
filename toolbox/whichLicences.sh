@@ -67,13 +67,20 @@ for jobinfo in $(scontrol show -o job); do
 
 		if echo "$jobinfo" | grep -q "JobName=wrap" ; then
 			scontrol write batch_script "$job_id" $fileTmpScontrol >/dev/null
-			job_name=$([ -f $fileTmpScontrol ] && grep -oP "\S*\.(yaml|hdf5)\S*" $fileTmpScontrol)
+			job_name=$([ -f $fileTmpScontrol ] && grep -oP "\S*(\.yaml|\.hdf5|experiment_results)\S*" $fileTmpScontrol)
 			if [ -n "$job_name" ]; then
 				if [[ "$(echo "$job_name" | wc -l)" -eq 1 ]]; then
 					if echo "$job_name" | grep -q yaml; then
 						job_name=", $(basename "$(dirname "$job_name")")/$(basename "$job_name")"
 					else
 						job_name=", $(basename "$job_name")"
+					fi
+					if [[ "$job_status" == "RUNNING" ]]; then
+						tmpOutputFile=$(echo "$jobinfo" | grep -oP "StdOut=\K\S*")
+						if grep -qP "... [0-9.]*% done" "$tmpOutputFile"; then
+							tmpState=$(grep -P "... [0-9.]*% done" "$tmpOutputFile" | tail -n 1 | grep -oP "[0-9.]*")
+							job_name="$job_name, $(echo "$tmpState" | head -n2 | tail -n1)%: train $(echo "$tmpState" | head -n3 | tail -n1), valid $(echo "$tmpState" | head -n4 | tail -n1)"
+						fi
 					fi
 				elif [[ "$(echo "$job_name" | wc -l)" -eq 0 ]]; then
 					job_name=""
