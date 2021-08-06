@@ -6,7 +6,7 @@ fpath=(~/MasterThesis/model-tempodrom/help_scripts/completion $fpath)
 [[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # git editor and pager; easier to set host specific
-# export GIT_PAGER=delta
+export GIT_PAGER=delta
 export GIT_EDITOR=nvim
 
 # ##################################
@@ -25,6 +25,8 @@ if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
 	module load waf
 	# module load nmpm_software/$(readlink /wang/environment/modules/nmpm_software/current)
 	module load ppu-toolchain
+	module load tools-slurm
+	module load tools-kintex7
 
 	module load slurm-singularity/current
 	export SINGULARITYENV_PREPEND_PATH=$SINGULARITYENV_PREPEND_PATH:$HOME/myConfigFiles/toolbox

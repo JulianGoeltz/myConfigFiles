@@ -69,8 +69,6 @@ alias cdmaster_hel="cd ~/mnt/mntHel/;ZSH_PROMPT_GIT_DONTDOIT='dont'"
 [ -f /usr/share/autojump/autojump.sh ] && source /usr/share/autojump/autojump.sh
 [ -f /etc/profile.d/autojump.sh ] && source /etc/profile.d/autojump.zsh
 
-type thefuck >/dev/null 2>&1 && eval $(thefuck --alias) # for correct bindings
-
 
 alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
 

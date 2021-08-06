@@ -224,6 +224,8 @@ done
 unset mycmd
 unset myalias
 
+type thefuck >/dev/null 2>&1 && eval $(thefuck --alias) # for correct bindings
+
 ######## end
 
 
