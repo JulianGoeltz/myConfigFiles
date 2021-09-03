@@ -67,6 +67,7 @@ if system('hostname') =~ "T2"
 	let g:vimwiki_list = [{'path':'/home/julgoe/Documents/vimwiki/text/',
 		\ 'path_html':'/home/julgoe/Documents/vimwiki/html/',
 		\ 'template_path': '/home/julgoe/Documents/vimwiki/templates'}]
+	let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr, pre, script'
 	"set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"
 	let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
@@ -278,13 +279,19 @@ let g:vimtex_compiler_latexmk = {
 " dont open it automatically
 let g:vimtex_view_automatic = 0
 "let g:vimtex_quickfix_method = 'pplatex'
-let g:vimtex_quickfix_latexlog = {
-  \ 'overfull' : 0,
-  \ 'underfull' : 0,
-  \ 'packages' : {
-  \   'hyperref' : 0,
-  \ },
-  \}
+" let g:vimtex_quickfix_latexlog = {
+"   \ 'overfull',
+"   \ 'underfull',
+"   \ 'packages' : {
+"   \ },
+"   \}
+let g:vimtex_quickfix_ignore_filters = [
+  \ 'Marginpar on page',
+  \ 'Overfull',
+  \ 'Underfull',
+  \]
+  " \   'hyperref' : 0,
+
 map <localleader>ls :VimtexCompileSS<CR>
 
 "" scroll and advance the cursor
@@ -298,7 +305,7 @@ map <F6> ggg?G``
 imap jk <ESC>
 
 " default tex flavour
-let g:tex_flavor = 'tex'
+let g:tex_flavor = 'latex'
 
 " for security disable modeline
 " https://github.com/numirias/security/blob/master/doc/2019-06-04_ace-vim-neovim.md

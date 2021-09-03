@@ -160,7 +160,6 @@ done
 checkSimilaritiesAndLink "vim/autoload/vim-plug/plug.vim" vim/autoload/plug.vim
 
 echo "--others"
-checkSimilaritiesAndLink other_configs/asfa_config.yaml "$HOME/.config/asfa/config.yaml"
 checkSimilaritiesAndLink other_configs/flake8 "$HOME/.config/flake8"
 checkSimilaritiesAndLink other_configs/gitconfig "$HOME/.gitconfig"
 checkSimilaritiesAndLink other_configs/ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"

@@ -9,6 +9,7 @@ android-tools
 apr
 apr-util
 arandr
+archey3
 aria2
 asar
 autoconf
@@ -46,7 +47,6 @@ cryptsetup
 cuda
 cups
 cython
-dangerzone
 deluge
 deluge-gtk
 device-mapper
@@ -60,6 +60,7 @@ dosfstools
 downgrade
 dropbox
 dunst
+dust
 e2fsprogs
 efibootmgr
 env-modules
@@ -98,6 +99,7 @@ glib2-docs
 glibc
 gmime
 gnome-common
+gnuplot
 gobject-introspection
 google-chrome
 gparted
@@ -106,6 +108,7 @@ graphene
 graphviz
 grep
 grive-git
+gromit-mpx
 grub
 gst-plugins-base
 gst-plugins-good
@@ -142,6 +145,7 @@ iproute2
 iputils
 itstool
 iw
+jdk-openjdk
 jdk8-openjdk
 jfsutils
 joyutils
@@ -188,6 +192,7 @@ mendeleydesktop-bundled
 mercurial
 meson
 minidlna
+miraclecast-git
 mirage
 mosh
 mpg123
@@ -218,6 +223,7 @@ octave-symbolic
 okular
 openbsd-netcat
 openconnect
+openfortivpn
 openmpi
 pacman
 paprefs
@@ -380,6 +386,7 @@ xorg-xinit
 xorg-xinput
 xorg-xkill
 xorg-xrandr
+xournalpp
 xplayer
 xreader
 xsel
