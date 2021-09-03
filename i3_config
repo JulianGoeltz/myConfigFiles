@@ -188,28 +188,7 @@ bar {
 # ###### start of all the new stuff
 
 
-# bindsym $mod+p exec --no-startup-id "notify-send Hello, i3"
-# bindsym $mod+d exec rofi \
-# 	-font "pango:monospace 12" \
-# 	-opacity 70 \
-# 	-width 100 -lines 10 \
-# 	-padding 480 -location 0 \
-# 	-show run
-# 	#-fuzzy \
-# 	#-modi drun -show drun
-bindsym $mod+d exec --no-startup-id rofi \
-	-font "pango:monospace 12" \
-	-opacity 70 \
-	-width 100 -lines 10 \
-	-padding 400 \
-	-location 0 \
-	-show run
-	#-fuzzy \
-	#-modi drun -show drun
-
-# set $bg-color #2f343f
-# set $text-color #f3f4f5
-# bindsym $mod+Shift+a exec rofi -show run -lines 21 -eh 1.3 -opacity "50" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$text-color" -hlfg "$bg-color" -font "System San Francisco Display 10"
+bindsym $mod+d exec --no-startup-id rofi -show run
 
 # brightness
 bindsym XF86MonBrightnessUp "exec --no-startup-id /bin/zsh ~/.config/i3/scripts/changeBrightness.sh up"

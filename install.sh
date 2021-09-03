@@ -160,6 +160,7 @@ done
 checkSimilaritiesAndLink "vim/autoload/vim-plug/plug.vim" vim/autoload/plug.vim
 
 echo "--others"
+checkSimilaritiesAndLink other_configs/asfa_config.yaml "$HOME/.config/asfa/config.yaml"
 checkSimilaritiesAndLink other_configs/flake8 "$HOME/.config/flake8"
 checkSimilaritiesAndLink other_configs/gitconfig "$HOME/.gitconfig"
 checkSimilaritiesAndLink other_configs/ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"
@@ -187,6 +188,7 @@ if [[ "$(hostname)" == "T2" ]]; then
 	checkSimilaritiesAndLink other_configs/fusuma.config "$HOME/.config/fusuma/config.yml"
 	checkSimilaritiesAndLink other_configs/picom.conf "$HOME/.config/picom.conf"
 	checkSimilaritiesAndLink other_configs/pscircle.service "$HOME/.config/systemd/user/pscircle.service"
+	checkSimilaritiesAndLink other_configs/rofi_config.rasi "$HOME/.config/rofi/config.rasi"
 	checkSimilaritiesAndLink other_configs/tsocks.conf "$HOME/.config/tsocks.conf"
 	checkSimilaritiesAndLink other_configs/xinitrc "$HOME/.xinitrc"
 	checkSimilaritiesAndLink other_configs/zprofile "$HOME/.zprofile"

@@ -1,0 +1,13 @@
+configuration {
+
+	font: "pango:monospace 18";
+}
+
+@theme "solarized"
+
+window {
+    background-color:                   rgba ( 0, 43, 55, 85 % );
+    }
+element {
+    children: [element-icon, element-text];
+}
