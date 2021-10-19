@@ -20,7 +20,7 @@ Host gerrit.bioai.eu
     Port 29418
     User goeltz
     HostName brainscales-r.kip.uni-heidelberg.de
-    IdentityFile ~/.ssh/gerrit_rsa
+    IdentityFile ~/.ssh/gerrit_ecdsa
 
 Host ssh.strato.de
     User www.julian-goeltz.de
