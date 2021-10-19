@@ -38,8 +38,8 @@ fi
 
 IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
-for jobinfo in $(scontrol show -o job); do
-	echo "$jobinfo" | grep -vqP "Partition=(cube)" && continue
+for jobinfo in $(scontrol show -o job --all); do
+	echo "$jobinfo" | grep -vqP "Partition=(cube|jenkins)|UserId=$USER" && continue
 	if echo "$jobinfo" | grep -q vis_jenkin && echo "$jobinfo" | grep -q $JENKINSSPECIALSETUP; then
 		vis_jenkin="on $JENKINSSPECIALSETUP"
 		continue
@@ -134,3 +134,4 @@ unset IFS
 [ -n "${vis_jenkin}" ] && echo -e "(${ORANGY}vis_jenkin${NC} ${vis_jenkin})"
 echo -en "Running\n${jobsRunning}"
 echo -e "Pending\n${jobsPending}"
+echo "Free setups: $(find_free_chip.py | tr '\n' ' ')"
