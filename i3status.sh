@@ -23,7 +23,8 @@ Battery() {
 
 #define the date
 Date() {
-	echo "$(date +" %a %d %b %R ") "
+	# echo "$(date +"%a %d %b"); GER $(date +"%R"); UK $(TZ='Europe/London' date +"%R") "
+	date +"%a %d %b %R"
 }
 
 #define the host

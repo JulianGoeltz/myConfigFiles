@@ -132,7 +132,7 @@ z latin small letter z                                       	 Basic Latin
 ¾ vulgar fraction three quarters                             	 Latin-1 Supplement
 ¿ inverted question mark                                     	 Latin-1 Supplement
 À latin capital letter a with grave                          	 Latin-1 Supplement
-Á latin capital letter a with acute                          	 Latin-1 Supplement
+Á latin capital letter a with acute akos                      	 Latin-1 Supplement
 Â latin capital letter a with circumflex                     	 Latin-1 Supplement
 Ã latin capital letter a with tilde                          	 Latin-1 Supplement
 Ä latin capital letter a with diaeresis                      	 Latin-1 Supplement

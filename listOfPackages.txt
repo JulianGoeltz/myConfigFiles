@@ -103,6 +103,7 @@ gnuplot
 gobject-introspection
 google-chrome
 gparted
+gphoto2
 gradle
 graphene
 graphviz

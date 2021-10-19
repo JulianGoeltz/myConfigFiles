@@ -30,7 +30,7 @@ if [ $# -gt 1 ]; then
 	xrandr --output $dp22 --mode 2560x1440 --primary
 	xrandr --output $edp1 --off
 	xrandr --output $edp1 --mode 1920x1080 --left-of $dp22
-	xrandr --output $dp23 --mode 1920x1080 --right-of $dp2h
+	xrandr --output $dp23 --mode 1920x1080 --right-of $dp22
 	exit
 elif [ $# -gt 0 ]; then
 	xrandr --output $edp1 --auto --primary
