@@ -82,7 +82,7 @@ elif [[ "$arg" == "unset" ]]; then
 	else
 		echo
 	fi
-elif [ "$arg" == "proxify" -a $# -gt 1 ]; then
+elif [[ "$arg" == "proxify" ]] && [[ "$#" -gt 1 ]]; then
 	# to execute a command in a proxified environment
 	# used for Telegram in i3_config
 	cmd=$2
@@ -90,6 +90,6 @@ elif [ "$arg" == "proxify" -a $# -gt 1 ]; then
 	source "$0"
 	$cmd
 else
-	echo "argument has to be set or unset, not $1"
+	echo "argument has to be 'set' or 'unset', or 'proxify [command]', not '$@'"
 fi
 
