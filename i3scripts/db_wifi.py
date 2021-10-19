@@ -23,7 +23,7 @@ if len(sys.argv) == 1 or sys.argv[1] == 'ice':
             if stop['station']['evaNr'] == stop_eva:
                 scheduledArrival = int(stop['timetable']['scheduledArrivalTime']) / 1000
                 scheduledArrival_date = datetime.datetime.fromtimestamp(scheduledArrival)
-                return "next: {} at {}{} on track {}".format(
+                return ", next: {} at {}{} on track {}".format(
                     stop['station']['name'],
                     scheduledArrival_date.strftime('%H:%M'),
                     stop['timetable']['arrivalDelay'],
@@ -31,10 +31,11 @@ if len(sys.argv) == 1 or sys.argv[1] == 'ice':
                 )
         return
 
-    print(" [{}, {} class, {}]".format(
+    print(" [{}, {} class{}]".format(
         f"{data_status['speed']}km/h" if data_status['gpsStatus'] != "INVALID" else "no GPS",
         "2." if data_status["wagonClass"] == "SECOND" else "1.",
-        nextstopinfo(data_trip['trip']['stopInfo']['actualNext']),
+        (nextstopinfo(data_trip['trip']['stopInfo']['actualNext'])
+         if data_trip['trip']['stopInfo']['actualNext'] != '' else ''),
     ))
 
 else:
