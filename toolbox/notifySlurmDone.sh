@@ -10,6 +10,9 @@ codeword=slurmDone
 if [ $# -eq 0 ]; then
 	echo "needs argument"
 elif [[ $1 == "sending" ]]; then
+	# prevent spamming of jobs
+	ps aux | grep jgoeltz | grep -q "notifySlurmDone.sh sending" || exit
+
 	tmpFile=/wang/users/jgoeltz/cluster_home/.tmp_slurmJobs
 
 	oldState=$(cat $tmpFile)
