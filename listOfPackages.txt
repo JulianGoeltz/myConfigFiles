@@ -99,6 +99,7 @@ glib2-docs
 glibc
 gmime
 gnome-common
+gnome-sound-recorder
 gnuplot
 gobject-introspection
 google-chrome
