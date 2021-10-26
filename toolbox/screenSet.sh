@@ -45,9 +45,13 @@ if xrandr | grep -q "$dp22 connected" &&
 	# Connected to Docking Station
 	dunstify -r 5555 -t 3000 "setting xrandr for dockingstation in office"
 	# check if already set
-	if xrandr | grep "$edp1" | grep -q "+2560+0" && 
+	main_res_x=2560
+	main_res_y=1440
+	main_res_x=1920
+	main_res_y=1080
+	if xrandr | grep "$edp1" | grep -q "+${main_res_x}+0" && 
 		xrandr | grep "$dp22" | grep -q "+0+0" &&
-		xrandr | grep "$dp23" | grep -q "+2560+0"; then
+		xrandr | grep "$dp23" | grep -q "+${main_res_x}+0"; then
 		dunstify -r 5566 "xrandr already set, exiting."
 		exit
 	fi
@@ -56,7 +60,7 @@ if xrandr | grep -q "$dp22 connected" &&
 	xrandr --output $dp22 --off
 	# xrandr --output $dp23 --off
 	xrandr --output $dp23 --mode 1920x1080
-	xrandr --output $dp22 --mode 2560x1440 --left-of $dp23 --primary
+	xrandr --output $dp22 --mode ${main_res_x}x${main_res_y} --left-of $dp23 --primary
 	xrandr --output $edp1 --same-as $dp23
 	# for presentation setting with reduced resolution:
 	# xrandr --output DP-2-2 --mode 1920x1080 --primary --output DP-2-3 --mode 1920x1080 --right-of DP-2-2 --output eDP-1 --same-as DP-2-3
