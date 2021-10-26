@@ -40,10 +40,10 @@ IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
 for jobinfo in $(scontrol show -o job --all); do
 	echo "$jobinfo" | grep -vqP "Partition=(cube|jenkins)|UserId=$USER" && continue
-	if echo "$jobinfo" | grep -q vis_jenkin && echo "$jobinfo" | grep -q $JENKINSSPECIALSETUP; then
-		vis_jenkin="on $JENKINSSPECIALSETUP"
-		continue
-	fi
+	# if echo "$jobinfo" | grep -q vis_jenkin && echo "$jobinfo" | grep -q $JENKINSSPECIALSETUP; then
+	# 	vis_jenkin="on $JENKINSSPECIALSETUP"
+	# 	continue
+	# fi
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
 
 	# if arguments given they are passed onto grep of the jobinfo
@@ -56,13 +56,17 @@ for jobinfo in $(scontrol show -o job --all); do
 	echo "$job_status" | grep -vqP "RUNNING|PENDING" && continue
 	job_status=$(printf '%7s' "$job_status")
 
-	job_host=" on $(echo "$jobinfo" | grep -oP "BatchHost=\K[^ ]*")"
-	echo "$job_status" | grep -vqP "RUNNING" && job_host=""
+	if echo "$job_status" | grep -qP "RUNNING"; then
+		job_host="$(echo "$jobinfo" | grep -oP "BatchHost=\K[^ ]*")"
+		job_host=" on $(printf '%10s' "$job_host")"
+	else
+		job_host=""
+	fi
 
 	job_user=$(echo "$jobinfo" | grep -oP "UserId=\K[^\(]*")
 	job_user=$(printf '%10s' "$job_user")
 	job_user=${job_user:0:10}
-	if echo "$job_user" | grep -q "$USER" ; then
+	if echo "$job_user" | grep -qP "$USER" ; then
 		job_user="${RED}${job_user}${NC}"
 
 		if echo "$jobinfo" | grep -q "JobName=wrap" ; then
@@ -99,14 +103,25 @@ for jobinfo in $(scontrol show -o job --all); do
 				job_name=", $(echo "$jobinfo" | grep -oP "JobName=\K\S*")"
 			fi
 		else
-			job_name=", "
+			job_name=""
 		fi
+	elif echo "$job_user" | grep -qP "vis_jenkin"; then
+		if echo "$jobinfo" | grep -q "JobName=p_jg_FastAndDeep"; then
+			job_name=", ${SPECIAL}$(echo "$jobinfo" | grep -oP "JobName=\K[^ ]*")${NC}"
+		elif echo "$jobinfo" | grep -q "JobName=hourly_hx_health_check"; then
+			continue
+		else
+			job_name=""
+			# job_name=", ${SPECIAL}$(echo "$jobinfo" | grep -oP "JobName=\K[^ ]*")${NC}"
+		fi
+		job_user="${ORANGY}${job_user}${NC}"
 	else
 		job_user="${ORANGY}${job_user}${NC}"
 		job_name=""
 	fi
 
 	job_time=$(echo "$jobinfo" | grep -oP "RunTime=\K[0-9:-]*")
+	job_time=$(printf '%10s' "$job_time")
 
 	# cut off too long licences
 	tmpString=$(echo "$jobinfo" | grep -o --color=never "Licenses=[WFB,0-9]*")
