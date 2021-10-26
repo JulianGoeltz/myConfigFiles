@@ -23,4 +23,4 @@ i3lock -nte -B4 \
     --radius=15 --verif-text="" --wrong-text="" --noinput-text=""
 # resuming if it wasn't paused beofre locking
 sleep 2
-[[ "$(cat ~/.tmp_dunststate)" = "running" ]] && pkill -u "$USER" -USR2 dunst
+[[ "$(dunstctl is-paused)" = 'true' ]] && pkill -u "$USER" -USR2 dunst

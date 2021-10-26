@@ -24,7 +24,7 @@ STATUS=$(cat $POWERSUPPLY)
 if [ "$COMPARING_FLOATS" -eq 1 -a "$STATUS" == "$NOT_CHARGING" ]
 then
 	# if dunst is asleep, activate
-	if [ "$(cat ~/.tmp_dunststate)" = 'paused' ]; then
+	if [ "$(dunstctl is-paused)" = 'true' ]; then
 		/home/julgoe/myConfigFiles/i3scripts/dunstToggle.sh resume
 	fi
 	dunstify -u critical -i "$ICON" -r 4444 -t 60000 "Battery low" "Battery level is $(printf %.0f "$BATTERY_LEVEL")%!"

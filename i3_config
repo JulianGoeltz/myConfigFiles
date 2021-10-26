@@ -268,6 +268,10 @@ exec --no-startup-id fusuma
 exec --no-startup-id i3-msg 'exec dunst; exec echo "running" > /home/julgoe/.tmp_dunststate'
 bindsym $mod+p exec --no-startup-id "~/.config/i3/scripts/dunstToggle.sh pause"
 bindsym $mod+Shift+p exec --no-startup-id "~/.config/i3/scripts/dunstToggle.sh resume"
+bindsym ctrl+1 exec --no-startup-id dunstctl history-pop
+bindsym ctrl+space exec --no-startup-id dunstctl close
+bindsym ctrl+shift+space exec --no-startup-id dunstctl close-all
+bindsym ctrl+shift+period exec --no-startup-id dunstctl context
 
 # back and forth
 workspace_auto_back_and_forth yes

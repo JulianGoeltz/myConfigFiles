@@ -13,4 +13,4 @@ xrandr --output DP2-2 --mode 1920x1080 --same-as eDP1
 
 # resuming if it wasn't paused before locking; but sleep first
 sleep 3
-[[ "$(cat ~/.tmp_dunststate)" = "running" ]] && pkill -u "$USER" -USR2 dunst
+[[ "$(dunstctl is-paused)" = 'true' ]] && pkill -u "$USER" -USR2 dunst
