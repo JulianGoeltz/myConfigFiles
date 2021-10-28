@@ -357,10 +357,10 @@ bindsym $mod+F4 "exec --no-startup-id /bin/bash ~/myConfigFiles/i3scripts/blueto
 
 # screenshot
 # bindsym "exec --no-startup-id ffmpeg -f x11grab -video_size 1920x1080 -i $DISPLAY -vframes 1 ~/tmp_screen.png"
-bindsym --release Print exec "scrot -m '/home/julgoe/Pictures/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
-bindsym --release Shift+Print exec "killall picom; scrot -s '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
-bindsym --release $mod+Shift+Print exec "killall picom; scrot -s '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'; picom -bs"
-bindsym --release $mod+Print exec "scrot -u '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+bindsym --release Print exec "scrot -m -e 'xclip -selection c -t image/png $f' '/home/julgoe/Pictures/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
+bindsym --release Shift+Print exec "killall picom; scrot -s -e 'xclip -selection c -t image/png $f' '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+bindsym --release $mod+Shift+Print exec "killall picom; scrot -s -e 'xclip -selection c -t image/png $f' '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'; picom -bc"
+bindsym --release $mod+Print exec "scrot -u -e 'xclip -selection c -t image/png $f' '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
 
 # draw on screen (look in man gromit-mpx for keyboard control)
 bindsym F9 exec --no-startup-id gromit-mpx
