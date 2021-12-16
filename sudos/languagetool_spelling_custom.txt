@@ -1,0 +1,17 @@
+# Add terms here that should be accepted by the LanguageTool spell checker, one word or phrase per line
+BrainScaleS
+BrainScaleS-2
+backpropagation
+CoBa
+CuBa
+energy-to-solution
+first-spike
+integrate-and-fire
+LIF
+MNIST
+nLIF
+neuromorphic
+PSP
+time-to-first-spike
+time-to-solution
+TTFS

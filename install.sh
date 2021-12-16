@@ -202,6 +202,9 @@ if [[ "$(hostname)" == "T2" ]]; then
 
 	echo "--changebrightness"
 	checkSimilaritiesAndLink sudos/change_brightness.sh /usr/local/bin/change_brightness.sh sudo nolink
+
+	echo "--languagetool spelling"
+	checkSimilaritiesAndLink sudos/languagetool_spelling_custom.txt /usr/share/languagetool/org/languagetool/resource/en/hunspell/spelling_custom.txt sudo
 fi
 
 if ! $allWentThrough; then
