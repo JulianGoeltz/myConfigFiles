@@ -149,7 +149,7 @@ mode "resize/move" {
 	bindsym Down move down
 
 	# easier resizing if it is maxed
-	bindsym m resize set width 1000 px height 600 px
+	bindsym m resize set width 960 px height 500 px
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -300,6 +300,8 @@ for_window [class="Eom"] floating enable
 for_window [class="Eog"] floating enable
 for_window [class="feh"] floating enable
 for_window [class="Gromit-mpx"] floating enable
+for_window [class="zoom"] floating enable
+for_window [class="Chromium-browser"] floating enable
 # for_window [class="Spotify"] floating enable, resize set width 1400 px height 600 px
 for_window [class="Pavucontrol"] floating enable
 
