@@ -27,61 +27,21 @@ if [[ "$arg" == "set" ]]; then
 	export ftp_proxy=http://proxy.kip.uni-heidelberg.de:2121
 	export http_proxy=http://proxy.kip.uni-heidelberg.de:8080
 	export https_proxy=http://proxy.kip.uni-heidelberg.de:8080
+	export SOCKS_PROXY=socks5://proxy.kip.uni-heidelberg.de:1080
 
 	export GIT_SSH_COMMAND="ssh -F ~/.ssh/config_prox"
 	alias ssh="ssh -F ~/.ssh/config_prox"
 
-	# spotify
-	if [[ $# -gt 0 ]]; then
-		echo ", spotify"
-		( if grep "network.proxy.mode=1" ~/.config/spotify/prefs -q; then
-			spotifyRunning=false
-			if pgrep -c spotify >/dev/null; then
-				spotifyRunning=true
-				spotifyPlaying=$(playerctl -p spotify status)
-				killall spotify
-				sleep 1
-			fi
-			sed -i 's/network.proxy.mode=1/network.proxy.mode=3/g' ~/.config/spotify/prefs
-			if $spotifyRunning; then
-				i3-msg exec /usr/bin/spotify >/dev/null
-				sleep 1
-				[[ $spotifyPlaying == "Playing" ]] && playerctl -p spotify play
-			fi
-		fi & )
-	else
-		echo
-	fi
 elif [[ "$arg" == "unset" ]]; then
 	echo -n "Removing proxy from (current) shell, git"
 	export ftp_proxy=
 	export http_proxy=
 	export https_proxy=
+	export SOCKS_PROXY=
 
 	unset GIT_SSH_COMMAND
 	unalias ssh 2>/dev/null
 
-	# spotify
-	if [[ $# -gt 0 ]]; then
-		echo ", spotify"
-		( if grep "network.proxy.mode=3" ~/.config/spotify/prefs -q; then
-			spotifyRunning=false
-			if pgrep -c spotify >/dev/null; then
-				spotifyRunning=true
-				spotifyPlaying=$(playerctl -p spotify status)
-				killall spotify
-				sleep 1
-			fi
-			sed -i 's/network.proxy.mode=3/network.proxy.mode=1/g' ~/.config/spotify/prefs
-			if $spotifyRunning; then
-				i3-msg exec /usr/bin/spotify >/dev/null
-				sleep 1
-				[[ $spotifyPlaying == "Playing" ]] && playerctl -p spotify play
-			fi
-		fi & )
-	else
-		echo
-	fi
 elif [[ "$arg" == "proxify" ]] && [[ "$#" -gt 1 ]]; then
 	# to execute a command in a proxified environment
 	# used for Telegram in i3_config
