@@ -11,7 +11,8 @@ if [ "$(who | grep -oP "tty[0-9]" | sort | uniq | wc -l )" -ne 1 ]; then
 fi
 
 # pausing dunst to not show notifs on lock screen
-pkill -u "$USER" -USR1 dunst
+state_of_dunst=$(dunstctl is-paused)
+dunstctl set-paused true
 # previously: 
 # i3lock -tbefi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000
 # -i /home/julgoe/Pictures/actualBackgrounds/lock_1820.png \
@@ -23,4 +24,4 @@ i3lock -nte -B4 \
     --radius=15 --verif-text="" --wrong-text="" --noinput-text=""
 # resuming if it wasn't paused beofre locking
 sleep 2
-[[ "$(dunstctl is-paused)" = 'true' ]] && pkill -u "$USER" -USR2 dunst
+[[ "$state_of_dunst" = 'false' ]] && dunstctl set-paused false
