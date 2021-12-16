@@ -160,7 +160,9 @@ done
 checkSimilaritiesAndLink "vim/autoload/vim-plug/plug.vim" vim/autoload/plug.vim
 
 echo "--others"
+# flake8 < 4.0.0 searches in .config, latere versions directly for ~/.flake8
 checkSimilaritiesAndLink other_configs/flake8 "$HOME/.config/flake8"
+checkSimilaritiesAndLink other_configs/flake8 "$HOME/.flake8"
 checkSimilaritiesAndLink other_configs/gitconfig "$HOME/.gitconfig"
 checkSimilaritiesAndLink other_configs/ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"
 checkSimilaritiesAndLink other_configs/latexmkrc "$HOME/.latexmkrc"
