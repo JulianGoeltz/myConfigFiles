@@ -6,6 +6,12 @@ LocOfScript=$(dirname "$(readlink -f "$0")")
 # check debug options
 [ "$1" == "--debug" ] && debug=true || debug=false
 
+# check that this script is not executed as root (it shouldn't be)
+if [ $(id -u) = 0 ]; then
+	echo "This script should not be executed as root! In case you know what you are doing, you can also modify the install script, but be careful."
+	exit
+fi
+
 # define colours for better output
 COLOUR_NON='\033[0m'
 COLOUR_RED='\033[0;31m'
@@ -88,9 +94,10 @@ checkSimilaritiesAndLink (){
 			else
 				tmpStr=$(ln -sv "$orig" "$dest" 2>&1)
 				if [ "$?" -ne "0" ]; then
-					echo_red "Str"
+					echo_red "$tmpStr"
 					if [ "$3" = "sudo"  ]; then
-						echo_red "Tried and failed to replace $dest with link to $orig, try again with sudo."
+						echo_red "Tried and failed to replace $dest with link to $orig, try yourself with sudo:"
+						echo_red "sudo ln -sv \"$orig\" \"$dest\""
 					fi
 					allWentThrough=false
 				else
