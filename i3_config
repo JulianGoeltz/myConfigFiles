@@ -330,6 +330,9 @@ exec --no-startup-id i3-msg "exec xinput set-prop 'SynPS/2 Synaptics TouchPad' '
 exec --no-startup-id i3-msg "exec  setxkbmap -option caps:escape"
 # change autorepeat rate
 exec --no-startup-id i3-msg "exec  xset r rate 300 50"
+exec --no-startup-id i3-msg "exec  xset s off"
+exec --no-startup-id i3-msg "exec  xset -dpms"
+exec --no-startup-id i3-msg "exec  xset s noblank"
 
 # use rofi for selecting unicode symbols as eg umlauts
 bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofiUnicodeSymbols.sh"

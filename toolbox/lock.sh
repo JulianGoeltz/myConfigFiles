@@ -13,6 +13,8 @@ fi
 # pausing dunst to not show notifs on lock screen
 state_of_dunst=$(dunstctl is-paused)
 dunstctl set-paused true
+# turn on screensaver/energysaver
+xset +dpms; xset s on; xset s blank
 # previously: 
 # i3lock -tbefi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000
 # -i /home/julgoe/Pictures/actualBackgrounds/lock_1820.png \
@@ -25,3 +27,5 @@ i3lock -nte -B4 \
 # resuming if it wasn't paused beofre locking
 sleep 2
 [[ "$state_of_dunst" = 'false' ]] && dunstctl set-paused false
+# turn off screensaver again
+xset s off; xset -dpms; xset s noblank
