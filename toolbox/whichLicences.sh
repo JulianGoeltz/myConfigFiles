@@ -40,10 +40,14 @@ IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
 for jobinfo in $(scontrol show -o job --all); do
 	echo "$jobinfo" | grep -vqP "Partition=(cube|jenkins)|UserId=$USER" && continue
-	# if echo "$jobinfo" | grep -q vis_jenkin && echo "$jobinfo" | grep -q $JENKINSSPECIALSETUP; then
-	# 	vis_jenkin="on $JENKINSSPECIALSETUP"
-	# 	continue
-	# fi
+	if echo "$jobinfo" | grep -q vis_jenkin; then
+		if echo "$jobinfo" | grep -q "Licenses=$JENKINSSPECIALSETUP"; then
+			vis_jenkin="on $JENKINSSPECIALSETUP"
+			continue
+		elif echo "$jobinfo" | grep -q "Licenses=(null)"; then
+			continue
+		fi
+	fi
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
 
 	# if arguments given they are passed onto grep of the jobinfo
