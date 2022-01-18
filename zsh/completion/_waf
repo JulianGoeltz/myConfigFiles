@@ -1,9 +1,9 @@
 #compdef waf
 _waf() {
 	_arguments \
-	  "::command:(setup configure build install)" \
+	  "::command:(setup configure build install projectstatus)" \
 	  "--project[project]:Project:->project" \
-	  "--gerrit-changes[# of CS]:Changeset:" \
+	  "--gerrit-changes[# of CS]:Changeset:->changeset" \
 	  "--gerrit-username[exact username if it is different then $USER]:gerrit username:" \
 	  "--repo-db-url[for external users]:URL of repo db:" \
 	  && return 0
@@ -12,10 +12,26 @@ _waf() {
 	case $state in
 		project)
 			compadd "$@" \
-				marocco cake halbe redman bitter sthal meta-nmpm_software pyhmf
+				calix model-hx-strobe pynn-brainscales tools-slurm
+			return
+			;;
+		changeset)
+			local -a addresses names
+			_values -s , 'changes' \
+				'13234[big calix CS]' \
+				'15180[strobe: namespaces]' \
+				'15691[strobe: quantities]'
 			return
 			;;
 	esac
 	return
 }
 _waf "$@"
+# potentially projects parsed dynamically with something like
+# python <<EOF
+# import json, requests as r;
+# url = 'https://raw.githubusercontent.com/electronicvisions/projects/master/repo_db.json';
+# d = r.get(url).json();
+# for k in d:
+#   if k[0] != '_': print(k)
+# EOF
