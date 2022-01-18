@@ -23,7 +23,8 @@ ssid=$(nmcli -s -g connection.id con show "$1")
 psk=$(nmcli -s -g 802-11-wireless-security.psk con show "$1")
 if [ -z "$ssid" -o -z "$psk" ]; then
 	echo "Problem with ssid or psk, investigate"
-	echo "${ssid}||$psk"
+	echo "|ssid||psk|"
+	echo "|${ssid}||${psk}|"
 	return 1
 fi
 # echo "${ssid}||$psk"
@@ -32,8 +33,9 @@ fi
 str="WIFI:S:${ssid};T:WPA2;P:${psk};;"
 # echo "using '${str}'"
 # encode it
-qrencode -t png -o /tmp/wifi.png "$str"
+qrencode -t png -s 10 -o /tmp/wifi.png "$str"
 # view it
+xprop -id "$WINDOWID" -f _NET_WM_WINDOW_TYPE 8u -set _NET_WM_WINDOW_TYPE splash
 display /tmp/wifi.png
 rm /tmp/wifi.png
 
