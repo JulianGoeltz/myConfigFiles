@@ -158,6 +158,9 @@ for fn in "$LocOfScript"/vim/*; do
 	checkSimilaritiesAndLink vim/"$(basename "$fn")" "$HOME"/.vim/"$(basename "$fn")"
 done
 checkSimilaritiesAndLink "vim/autoload/vim-plug/plug.vim" vim/autoload/plug.vim
+# neovim
+checkSimilaritiesAndLink other_configs/neovim_init.vim "$HOME/.config/nvim/init.vim"
+checkSimilaritiesAndLink other_configs/coc-settings.json "$HOME/.config/nvim/coc-settings.json"
 
 echo "--others"
 # flake8 < 4.0.0 searches in .config, latere versions directly for ~/.flake8
@@ -166,7 +169,6 @@ checkSimilaritiesAndLink other_configs/flake8 "$HOME/.flake8"
 checkSimilaritiesAndLink other_configs/gitconfig "$HOME/.gitconfig"
 checkSimilaritiesAndLink other_configs/ipython_config.py "$HOME/.ipython/profile_default/ipython_config.py"
 checkSimilaritiesAndLink other_configs/latexmkrc "$HOME/.latexmkrc"
-checkSimilaritiesAndLink other_configs/neovim_init.vim "$HOME/.config/nvim/init.vim"
 checkSimilaritiesAndLink other_configs/powerline_tmux_colorscheme.json "$HOME/.config/powerline/colorschemes/tmux/default.json"
 checkSimilaritiesAndLink other_configs/vlty_defs.tex "$HOME/.config/vlty/defs.tex"
 checkSimilaritiesAndLink other_configs/Xdefaults "$HOME/.Xdefaults"
