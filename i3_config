@@ -176,7 +176,7 @@ bar {
 	colors {
 		background #2e3436
 		statusline #d3d7cf
-		urgent_workspace #333333 #222222 #888888
+		# urgent_workspace #333333 #222222 #888888
 	}
 }
 #exec python /home/julgoe/venvs/py2nest/lib/python2.7/site-packages/powerline/bindings/lemonbar/powerline-lemonbar.py –i3
@@ -296,6 +296,7 @@ for_window [class="Inkview" instance="inkview"] floating enable
 for_window [class="Xviewer"] floating enable
 for_window [class="Xplayer"] floating enable
 for_window [title="Figure *"] floating enable
+for_window [class="Display"] floating enable, move position center
 for_window [class="Eom"] floating enable
 for_window [class="Eog"] floating enable
 for_window [class="feh"] floating enable

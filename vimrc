@@ -364,3 +364,5 @@ endif
 
 
 nnoremap <Leader>w :execute 'windo set wrap'<CR>
+
+map <A-space> <Plug>VimwikiToggleListItem

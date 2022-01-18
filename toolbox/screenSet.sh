@@ -27,7 +27,8 @@ if [ $# -gt 1 ]; then
 	dunstify -r 5555 -t 3000 "setting xrandr in office special"
 	xbacklight -set 100
 	~/.config/i3/scripts/changeBrightness.sh high
-	xrandr --output $dp22 --mode 2560x1440 --primary
+	# xrandr --output $dp22 --mode 2560x1440 --primary
+	xrandr --output $dp22 --mode 1920x1080 --primary
 	xrandr --output $edp1 --off
 	xrandr --output $edp1 --mode 1920x1080 --left-of $dp22
 	xrandr --output $dp23 --mode 1920x1080 --right-of $dp22
