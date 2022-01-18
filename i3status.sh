@@ -14,6 +14,7 @@ emojiMute=🔇
 emojiTune=🎵
 emojiTV=📺
 emojiVolume=🔊
+emojiWifiOff=📴
 
 #Define the battery
 Battery() {
@@ -68,6 +69,11 @@ Ethernet() {
 }
 # wifi
 Wifi() {
+	# state DOWN is not sufficient for turned off
+	if ip link show wlp4s0 | grep -q "state DOWN mode DEFAULT"; then
+		echo "$emojiWifiOff"
+		return
+	fi
 	string=$(iw dev wlp4s0 link)
 	if [ "$?" -eq 0 ] && [ "$(echo "$string" | grep -c "Not connected.")" -eq 0 ]; then
 		echo -n "Wifi: "
