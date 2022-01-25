@@ -14,26 +14,40 @@ fileTmpScontrol=~/.tmp_scontrol2.sh
 jobsRunning=""
 jobsPending=""
 
-if [ $# -gt 0 ]; then
-	if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-		cat <<EOF
+help_text() {
+	cat <<EOF
 Listing licences currently either pending or running.
 
 * first listed are runnning, then pending, and in colorful output
 * only the cube setups are looked at
-* if arguments are given (other than -h or --help), they are used as arguments
-  for grep on the jobinfo, and in case they fit the job is skipped. This is 
-  useful to still see important info if someone is spamming the queue
-* jobs on environment variable {LLSS} (ListLicencesSpecialSetup, for setups
-  that are of special interest) are highlighted; can be regex. Example:
-  \$LLSS=W66 or \$LLSS="(W66|W67)"
 * vis_jenkin on setup ${JENKINSSPECIALSETUP} is shortened to reduce clutter
 * if job_user and USER agree, special magic is done to infer info about the job
+* arguments:
+   [-h|--help] this help text
+   [-s|--skip <pattern>] pattern used as arguments for grep on the jobinfo to
+        skip the job on match. This is useful to still see important info if
+	someone is spamming the queue
+   [-c|--color|--colour <pattern>] identifier for setups of interest to be
+        highlighted can be regex. Example: '-c W66' or pattern '-c "(W66|W67)"'
 EOF
-		exit
-	else
-		echo "skipping '$@'"
-	fi
+}
+
+# parse potential arguments
+if [ $# -gt 0 ]; then
+	case $1 in
+		"-s"|"--skip")
+			patternForSkipping=$2
+			shift 2
+			;;
+		"-c"|"--color"|"--colour")
+			LLSS=$2
+			shift 2
+			;;
+		"-h"|"--help"|*)
+			help_text
+			exit
+			;;
+	esac
 fi
 
 IFS=$'\n'
@@ -51,8 +65,8 @@ for jobinfo in $(scontrol show -o job --all); do
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
 
 	# if arguments given they are passed onto grep of the jobinfo
-	if [ $# -gt 0 ]; then
-		echo "$jobinfo" | grep -q "$@" && continue
+	if [ -n "$patternForSkipping" ]; then
+		echo "$jobinfo" | grep -q "$patternForSkipping" && continue
 	fi
 
 	job_status=$(echo "$jobinfo" | grep -oP "JobState=\K\S*")
