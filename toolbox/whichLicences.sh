@@ -2,10 +2,10 @@
 
 # set -euo pipefail
 
-RED='\033[1;31m'
-ORANGY='\033[0;33m'
-SPECIAL='\033[1;35m'
-NC='\033[0m'
+RED=$(printf '\033[1;31m')
+ORANGY=$(printf '\033[0;33m')
+SPECIAL=$(printf '\033[1;35m')
+NC=$(printf '\033[0m')
 
 JENKINSSPECIALSETUP=W62F
 
@@ -167,4 +167,9 @@ unset IFS
 [ -n "${vis_jenkin}" ] && echo -e "(${ORANGY}vis_jenkin${NC} ${vis_jenkin})"
 echo -en "Running\n${jobsRunning}"
 echo -e "Pending\n${jobsPending}"
-echo "Free setups: $(find_free_chip.py | tr '\n' ' ')"
+if [ -n "$LLSS" ]; then
+	freesetups="$(find_free_chip.py | sed -r "s#$LLSS#${SPECIAL}&${NC}#" | tr '\n' ' ')"
+else
+	freesetups="$(find_free_chip.py | tr '\n' ' ')"
+fi
+echo -e "Free setups: ${freesetups}"
