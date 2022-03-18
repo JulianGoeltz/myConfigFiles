@@ -211,3 +211,23 @@ load_hx_stuff() {
 	echo "exporting to pythonpath ${path_repo}/py"
 	export PYTHONPATH="${path_repo}/py:$PYTHONPATH"
 }
+
+reconfigure_hxcube() {
+	# reconfigure stalled FPGA
+	# First argument 'wafer', second argument FPGA
+	# also checks with two calibration calls whether connections work correctly
+	local wafer
+	local cubex
+	local fpga
+	wafer=$1
+	fpga=$2
+	cubex=$((wafer - 60))
+	module load tools-kintex7
+	srun -p cubectrl --wafer ${wafer} --fpga-without ${fpga} --gres "cubex${cubex}" reconfigure_hxcube.py ${fpga} 
+	echo "starting tests (twice)"
+	cd ~/jenkinsjob_FD_20220308/
+	module load localdir
+	cd model-hx-strobe/experiments/yinyang
+	srun -p cube --wafer ${wafer} --fpga-without ${fpga} singularity exec --app visionary-dls /containers/stable/latest python generate_calibration.py --output tmp.npz
+	srun -p cube --wafer ${wafer} --fpga-without ${fpga} singularity exec --app visionary-dls /containers/stable/latest python generate_calibration.py --output tmp.npz
+}
