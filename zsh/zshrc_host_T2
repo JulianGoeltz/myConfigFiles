@@ -7,8 +7,8 @@ fpath=(~/Documents/model-tempodrom/help_scripts/completion $fpath)
 [[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # git editor and pager; easier to set host specific
-export GIT_PAGER="delta " # --theme=GitHub"
-alias bat="bat --theme=delta"
+export GIT_PAGER="delta"
+alias bat="bat --theme=GitHub"
 export GIT_EDITOR=nvim
 
 # ##################################
