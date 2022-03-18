@@ -7,6 +7,10 @@ ORANGY=$(printf '\033[0;33m')
 SPECIAL=$(printf '\033[1;35m')
 NC=$(printf '\033[0m')
 
+# to make ugly uids human readable
+declare -A replace_user=( [hd383]=billi [iy410]=yannik [qx385]=joscha [wv385]=baumi)
+
+# variable is used via grep for removing jobs on matching setups from printed list
 JENKINSSPECIALSETUP=W62F
 
 fileTmpScontrol=~/.tmp_scontrol2.sh
@@ -82,8 +86,14 @@ for jobinfo in $(scontrol show -o job --all); do
 	fi
 
 	job_user=$(echo "$jobinfo" | grep -oP "UserId=\K[^\(]*")
+	# replace ugly UIDs
+	for uid in "${!replace_user[@]}"; do
+		job_user=${job_user//$uid/${replace_user[$uid]}}
+	done
+	# shorten user
 	job_user=$(printf '%10s' "$job_user")
 	job_user=${job_user:0:10}
+
 	if echo "$job_user" | grep -qP "$USER" ; then
 		job_user="${RED}${job_user}${NC}"
 
