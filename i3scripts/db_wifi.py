@@ -7,12 +7,16 @@ import sys
 import time
 
 
+# curl -s --insecure 'https://portal.imice.de/api1/rs/tripInfo/trip' | jq -r ".trip.stops[].station.name"
 # give notification if arrival within next x minutes for the following stops:
 notification_minutes = 5
 notification_stops = [
+    "Basel SBB",
+    "Berlin",
+    "Bern",
+    "Crailsheim",
     "Mannheim Hbf",
     "Stuttgart Hbf",
-    "Crailsheim",
 ]
 
 if len(sys.argv) == 1 or sys.argv[1] == 'ice':

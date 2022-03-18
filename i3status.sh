@@ -41,7 +41,10 @@ json_escape () {
 Playing() {
 	player=$1
 	if [ "$(playerctl -p "$player" status 2>/dev/null)" = "Playing" ]; then
-		artist=$(playerctl -p "$player" metadata artist)
+		artist="$(playerctl -p "$player" metadata artist 2>&1)"
+		if [ "$?" -ne "0" ]; then
+			artist="$(playerctl -p "$player" metadata xesam:albumArtist 2>&1)"
+		fi
 		title=$(playerctl -p "$player" metadata title)
 		tmp=$?
 		if [ "$tmp" -eq "0" ]; then
@@ -129,12 +132,17 @@ Volume() {
 
 # see whether there is a pdflatex instance running
 Pdfcompiling() {
+	tmp=""
 	if pidof pdflatex >/dev/null; then
-		echo "pdflatex running"
+		tmp="${tmp}pdf,"
 	fi
 	if pidof lualatex >/dev/null; then
-		echo "lualatex running"
+		tmp="${tmp}lua,"
 	fi
+	if pidof xelatex >/dev/null; then
+		tmp="${tmp}xe,"
+	fi
+	echo -n "${tmp:0:-1}latex running"
 }
 
 #define bluetooth shitness

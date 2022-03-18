@@ -203,6 +203,9 @@ alias sshhel_="sshhel_fs && export ZSH_PROMPT_GIT_DONTDOIT="lala" && cd ~/mnt/mn
 
 # copy files to android phone connected via USB
 adb_transfer() {
+	echo "DO THIS WITH MOUNTING INSTEAD, I.E.:"
+	echo "aft-mtp-mount ~/mnt/mntDaint"
+	return 1
 	if [ "$#" -eq 0 ]; then
 		echo "transfers all files given in args[1:] to folder args[0]"
 		echo "to find correct folder explore with 'aft-mtp-cli' (and create it)"

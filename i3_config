@@ -197,13 +197,16 @@ bindsym Shift+XF86MonBrightnessUp "exec --no-startup-id /bin/zsh ~/.config/i3/sc
 bindsym Shift+XF86MonBrightnessDown "exec --no-startup-id /bin/zsh ~/.config/i3/scripts/changeBrightness.sh low"
 
 # playpause
-bindsym XF86Tools "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym XF86Tools       "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym XF86HomePage    "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym KP_Divide       "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym XF86AudioPlay   "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
 bindsym Shift+XF86Tools "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
-bindsym Mod1+XF86Tools "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
-bindsym XF86HomePage "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
-bindsym KP_Divide "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
-bindsym KP_Subtract "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
-bindsym KP_Multiply "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+bindsym KP_Subtract     "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
+bindsym XF86AudioNext   "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
+bindsym Mod1+XF86Tools  "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+bindsym KP_Multiply     "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+bindsym XF86AudioPrev   "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 
 # increase correct volume: if bluetooth connected use that one
 bindsym XF86AudioLowerVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
@@ -334,6 +337,9 @@ exec --no-startup-id i3-msg "exec  xset r rate 300 50"
 exec --no-startup-id i3-msg "exec  xset s off"
 exec --no-startup-id i3-msg "exec  xset -dpms"
 exec --no-startup-id i3-msg "exec  xset s noblank"
+
+# set screen at boot
+exec --no-startup-id /bin/sh ~/myConfigFiles/toolbox/screenSet.sh
 
 # use rofi for selecting unicode symbols as eg umlauts
 bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofiUnicodeSymbols.sh"

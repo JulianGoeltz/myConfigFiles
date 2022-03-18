@@ -54,6 +54,10 @@ tic $TERM.ti
 
 # add brightnesschange (see sudo install) to sudo nopasswd and make change_brightness executable
 sudo chmod u+x /usr/local/bin/change_brightness.sh
+# also, (i think) you have to make it executable for user without entering psswd
+# for this, in /etc/sudoers enter something akin to the following:
+#Cmnd_Alias    BRIGHTNESSCHANGE = /usr/local/bin/change_brightness.sh
+#julgoe ALL=(ALL) NOPASSWD:BRIGHTNESSCHANGE
 
 # gpg connection for thunderbird see also https://wiki.mozilla.org/Thunderbird:OpenPGP:Smartcards
 # like in https://avaldes.co/2020/01/28/secret-service-keepassxc.html
