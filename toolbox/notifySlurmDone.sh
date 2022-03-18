@@ -10,16 +10,12 @@ codeword=slurmDone
 if [ $# -eq 0 ]; then
 	echo "needs argument"
 elif [[ $1 == "sending" ]]; then
-	# prevent spamming of jobs
-	ps aux | grep jgoeltz | grep -q "notifySlurmDone.sh sending" || exit
-
 	tmpFile=/wang/users/jgoeltz/cluster_home/.tmp_slurmJobs
 
 	oldState=$(cat $tmpFile)
-	state=$(/usr/local/bin/squeue -u jgoeltz -o "%t" --noheader 2>/dev/null)
+	state="$(/usr/local/bin/squeue -u jgoeltz -o "%t" --noheader 2>/dev/null)"
 	if [ -z "$state" ]; then
-		if [[ $oldState == "running" ]] && 
-			nc -z 127.0.0.1 "$port"  ; then
+		if [[ $oldState == "running" ]] && nc -z 127.0.0.1 "$port"; then
 			echo noJobs > $tmpFile
 			echo $codeword | nc -N 127.0.0.1 "$port"
 			# could send mail with
