@@ -17,5 +17,8 @@
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
 [submodule "submodules/dircolors-solarized"]
-	path = submodules/dircolors-solarized
+	path = externalRepos/dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized
+[submodule "externalRepos/obreitwi__dot_zsh"]
+	path = externalRepos/obreitwi__dot_zsh
+	url = https://github.com/obreitwi/dot_zsh

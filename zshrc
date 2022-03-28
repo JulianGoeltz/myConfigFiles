@@ -226,6 +226,10 @@ unset myalias
 
 type thefuck >/dev/null 2>&1 && eval $(thefuck --alias) # for correct bindings
 
+# jenkins commands from obreitwi
+if [ -f "$PWD/myConfigFiles/externalRepos/obreitwi__dot_zsh/functions.d/jenkins.zsh" ]; then
+	source $PWD/myConfigFiles/externalRepos/obreitwi__dot_zsh/functions.d/jenkins.zsh
+fi
 ######## end
 
 
@@ -417,8 +421,8 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' '+m:{A-Z}={a-z}' 'm:{a-zA
 
 
 # coloured completion
-if [ -f "$PWD/myConfigFiles/submodules/dircolors-solarized/dircolors.ansi-light" ]; then
-	eval "$(dircolors ~/myConfigFiles/submodules/dircolors-solarized/dircolors.ansi-light)"
+if [ -f "$PWD/myConfigFiles/externalRepos/dircolors-solarized/dircolors.ansi-light" ]; then
+	eval "$(dircolors ~/myConfigFiles/externalRepos/dircolors-solarized/dircolors.ansi-light)"
 else
 	eval "$(dircolors)"
 fi
