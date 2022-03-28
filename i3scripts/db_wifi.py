@@ -15,6 +15,7 @@ notification_stops = [
     "Berlin",
     "Bern",
     "Crailsheim",
+    "Heidelberg Hbf",
     "Mannheim Hbf",
     "Stuttgart Hbf",
 ]

@@ -199,7 +199,6 @@ if [[ "$(hostname)" == "T2" ]]; then
 	checkSimilaritiesAndLink other_configs/picom.conf "$HOME/.config/picom.conf"
 	checkSimilaritiesAndLink other_configs/pscircle.service "$HOME/.config/systemd/user/pscircle.service"
 	checkSimilaritiesAndLink other_configs/rofi_config.rasi "$HOME/.config/rofi/config.rasi"
-	checkSimilaritiesAndLink other_configs/tsocks.conf "$HOME/.config/tsocks.conf"
 	checkSimilaritiesAndLink other_configs/xinitrc "$HOME/.xinitrc"
 	checkSimilaritiesAndLink other_configs/zprofile "$HOME/.zprofile"
 

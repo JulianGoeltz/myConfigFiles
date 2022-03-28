@@ -14,7 +14,7 @@ emojiMute=🔇
 emojiTune=🎵
 emojiTV=📺
 emojiVolume=🔊
-emojiWifiOff=📴
+emojiWifiOff=✈️
 
 #Define the battery
 Battery() {
@@ -133,6 +133,9 @@ Volume() {
 # see whether there is a pdflatex instance running
 Pdfcompiling() {
 	tmp=""
+	if pgrep gridspeccer >/dev/null; then
+		tmp="${tmp}gridspeccer; "
+	fi
 	if pidof pdflatex >/dev/null; then
 		tmp="${tmp}pdf,"
 	fi
@@ -142,7 +145,9 @@ Pdfcompiling() {
 	if pidof xelatex >/dev/null; then
 		tmp="${tmp}xe,"
 	fi
-	echo -n "${tmp:0:-1}latex running"
+	if [[ "${#tmp}" -gt "1" ]]; then
+		echo -n "${tmp:0:-1}latex running"
+	fi
 }
 
 #define bluetooth shitness

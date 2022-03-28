@@ -41,7 +41,7 @@ elif [ $# -gt 0 ]; then
 fi
 
 if xrandr | grep -q "$dp22 connected" &&
-	[ "$(xrandr | grep --after-context=1 "$dp22" | grep -c "$dp2Base")" -eq 1 ]; then
+	[ "$(xrandr | grep --after-context=1 "$dp22 " | grep -c "$dp2Base")" -eq 1 ]; then
 	# second condition because it takes time to adapt to dockingstation
 	# Connected to Docking Station
 	dunstify -r 5555 -t 3000 "setting xrandr for dockingstation in office"

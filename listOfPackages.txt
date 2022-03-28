@@ -46,6 +46,7 @@ cmake
 cogl
 comparepdf
 coreutils
+corkscrew
 cronie
 cryptsetup
 cuda
