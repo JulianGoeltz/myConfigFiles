@@ -1,4 +1,6 @@
 # Add terms here that should be accepted by the LanguageTool spell checker, one word or phrase per line
+ANN
+ANNs
 BrainScaleS
 BrainScaleS-2
 backpropagation
@@ -7,11 +9,22 @@ CuBa
 energy-to-solution
 first-spike
 integrate-and-fire
+initializations
 LIF
+Loihi
 MNIST
+monotonicity
 nLIF
 neuromorphic
+neurosynaptic
+observables
 PSP
+regularizer
+SNN
+SNNs
+SpiNNaker
+subthreshold
 time-to-first-spike
 time-to-solution
 TTFS
+von-Neumann
