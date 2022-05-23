@@ -89,10 +89,8 @@ Wifi() {
 		printf " at%4u%%" $signalstr
 	fi
 	# in ICEs show some fun information
-	if [ "$(echo "$string" | grep -oP "SSID: \K.*")" = "WIFIonICE" ]; then
-		python ~/.config//i3/scripts/db_wifi.py ice
-	elif [ "$(echo "$string" | grep -oP "SSID: \K.*")" = "WIFI@DB" ]; then
-		python ~/.config//i3/scripts/db_wifi.py regio
+	if [[ "$(echo "$string" | grep -oP "SSID: \K.*")" =~ "(WIFIonICE|WIFI@DB|freeWIFIahead!)" ]]; then
+		python ~/.config//i3/scripts/db_wifi.py
 	fi
 }
 # vpn

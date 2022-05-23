@@ -20,7 +20,15 @@ notification_stops = [
     "Stuttgart Hbf",
 ]
 
-if len(sys.argv) == 1 or sys.argv[1] == 'ice':
+
+# x = subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1/rs/tripInfo/trip".split(" "),
+#                     stdout=sys.stdout, stderr=sys.stderr)
+# # stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+# time.sleep(1)
+# print(x)
+
+if subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1/rs/tripInfo/trip".split(" "),
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0:
     base = 'https://portal.imice.de/api1/rs/'
 
     try:
@@ -93,7 +101,8 @@ if len(sys.argv) == 1 or sys.argv[1] == 'ice':
          if data_trip['trip']['stopInfo']['actualNext'] != '' else ''),
     ))
 
-else:
+elif subprocess.call("ping -c 1 -W 0.5 www.wifi-bahn.de".split(" "),
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0:
     url = 'https://www.wifi-bahn.de/schedule.jason'
 
     try:
@@ -118,7 +127,25 @@ else:
                 )
         return
 
+    # current place info:
+    current_state = "(no data/in station)"
+    if 'stateInformation' in data:
+        current_state = nextstopinfo(data['stateInformation']['nextStation']['id'])
+    elif 'lat' in data and 'lng' in data:
+        lat, lng = data['lat'], data['lng']
+        info = requests.get(f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lng}&format=json").json()
+        if 'address' in info:
+            if 'town' in info['address']:
+                current_state = "close to " + info['address']['town']
+            elif 'village' in info['address']:
+                current_state = "close to " + info['address']['village']
+        else:
+            from pprint import pformat
+            print(pformat(info), file=sys.stderr)
+
     print(" [{}, {}]".format(
         f"{float(data['speed']) * 3.6:.0f}km/h",
-        nextstopinfo(data['stateInformation']['nextStation']['id']) if 'stateInformation' in data else "(in station)"
+        current_state,
     ))
+else:
+    print("No known api host reachable")
