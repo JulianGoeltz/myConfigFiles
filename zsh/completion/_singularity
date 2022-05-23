@@ -2,15 +2,15 @@
 _singularity() {
 	_arguments \
 	  ":command:(exec shell apps)" \
-	  ":--app:(--app)" \
-	  ":app:(dev-tools specialforjg visionary-dls visionary-wafer visionary-simulation)" \
+	  "--app:(--app):(dev-tools specialforjg dls wafer simulation)" \
+	  "(-H --home)"{-H,--home}"[homefolder]:home directory specification.:_files" \
 	  ":container image to use:->files" \
 	  "*:::args:->comd" && return 0
 	# '*::command: _normal'
 	# '*::args:->command' "$common[@]" && ret=0
 	case $state in
-		files)
-			_files
+		(files)
+			_files -g "*.img(*)"
 			return
 			;;
 		(comd)
