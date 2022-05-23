@@ -31,7 +31,7 @@ fi
 
 # create string for qrencode
 str="WIFI:S:${ssid};T:WPA2;P:${psk};;"
-# echo "using '${str}'"
+echo "ssid is '${ssid}' and pw '${psk}'"
 # encode it
 qrencode -t png -s 10 -o /tmp/wifi.png "$str"
 # view it

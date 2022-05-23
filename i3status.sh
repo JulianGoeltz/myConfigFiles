@@ -10,6 +10,7 @@ CspecialCyan="#06989a"
 #emojis (easily searched on https://emojipedia.org/)
 emojiBattery=🔋
 emojiHeadphone=🎧
+emojiMicrophone=🎙️
 emojiMute=🔇
 emojiTune=🎵
 emojiTV=📺
@@ -187,7 +188,7 @@ while true; do
 	echo '  { "full_text": "'"$(Volume $standardSink)"'", "color":"'$Cfggrey'"},'
 	bluezSink=$(echo "$sinkList" | grep "bluez" | awk '{print $1}')
 	if [ "$(echo "$sinkList" | wc -l )" -gt "1" ]; then
-		# boombox is sink != 0 too but cant communicate with bluetoothqc
+		# get battery for bose qc35
 		if pactl list sinks | grep -q "Description:.*35"; then
 			if ! $qc_shown || [ "$((counter%100))" -eq 0 ] ; then
 				qc_battery=$(bluetoothqc -b)
@@ -195,7 +196,15 @@ while true; do
 		else
 			qc_battery=""
 		fi
-		echo '  { "full_text": "'"$(Volume "$bluezSink" "$qc_battery")"'", "color":"'$Cfggrey'"},'
+
+		# display microphone if headset unit active
+		if echo "$sinkList" | grep -q _head_unit; then
+			bluetoothheadset=" ${emojiMicrophone}"
+		else
+			bluetoothheadset=""
+		fi
+
+		echo '  { "full_text": "'"$(Volume "$bluezSink" "$qc_battery")${bluetoothheadset}"'", "color":"'$Cfggrey'"},'
 		qc_shown=true
 	else
 		qc_shown=false
