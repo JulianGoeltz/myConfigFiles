@@ -215,6 +215,7 @@ if [[ "$(hostname)" == "T2" ]]; then
 
 	echo "--languagetool spelling"
 	checkSimilaritiesAndLink sudos/languagetool_spelling_custom.txt /usr/share/languagetool/org/languagetool/resource/en/hunspell/spelling_custom.txt sudo
+	checkSimilaritiesAndLink sudos/languagetool_spelling_custom_de.txt /usr/share/languagetool/org/languagetool/resource/de/hunspell/spelling_custom.txt sudo
 fi
 
 if ! $allWentThrough; then

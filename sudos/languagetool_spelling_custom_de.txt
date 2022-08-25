@@ -1,0 +1,23 @@
+# Add terms here that should be accepted by the LanguageTool spell checker, one word or phrase per line
+ANN
+ANNs
+BrainScaleS
+BrainScaleS-2
+CoBa
+CuBa
+Göltz
+Kriener
+LIF
+Loihi
+Mihai
+MNIST
+nLIF
+neuromorph
+neurosynaptisch
+Petrovici
+PSP
+SNN
+SNNs
+SpiNNaker
+TTFS
+von-Neumann
