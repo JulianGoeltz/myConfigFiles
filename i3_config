@@ -376,3 +376,7 @@ bindsym --release $mod+Print exec "scrot -u -e 'xclip -selection c -t image/png 
 
 # draw on screen (look in man gromit-mpx for keyboard control)
 bindsym F9 exec --no-startup-id gromit-mpx
+
+# after selecting text, on mod+i open a floating vim with the text in it
+bindsym $mod+i exec "xclip -o > /tmp/clipvim; xterm -class FXTerm -e nvim /tmp/clipvim; xclip -i  -selection clipboard < /tmp/clipvim"
+
