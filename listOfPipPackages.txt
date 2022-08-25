@@ -1,5 +1,6 @@
 Package         Version
---------------- ---------
+--------------- ----------
 arxiv-collector 0.4.1
 python-vlc      3.0.12118
 v4l2            0.2
+youtube-dl      2021.12.17

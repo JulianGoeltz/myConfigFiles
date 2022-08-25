@@ -57,6 +57,23 @@ if system('hostname') =~ "T2"
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	source ~/.vim/vim_coc.vim
 
+	function! s:check_back_space() abort
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~ '\s'
+	endfunction
+
+	" Insert <tab> when previous text is space, refresh completion if not.
+	inoremap <silent><expr> <TAB>
+				\ coc#pum#visible() ? coc#pum#next(1):
+				\ <SID>check_back_space() ? "\<Tab>" :
+				\ coc#refresh()
+	inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+	inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+	"let g:coc_snippet_next = '<tab>'
+
 	"omnicomplete
 	"set omnifunc=syntaxcomplete#Complete
 	
@@ -65,8 +82,9 @@ if system('hostname') =~ "T2"
 	let g:vimtex_view_method = 'zathura'
 
 	let g:vimwiki_list = [{'path':'/home/julgoe/Documents/vimwiki/text/',
-		\ 'path_html':'/home/julgoe/Documents/vimwiki/html/',
-		\ 'template_path': '/home/julgoe/Documents/vimwiki/templates'}]
+				\ 'path_html':'/home/julgoe/Documents/vimwiki/html/',
+				\ 'template_path': '/home/julgoe/Documents/vimwiki/text/aux'
+				\ }]
 	let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr, pre, script'
 	"set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"

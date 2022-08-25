@@ -31,6 +31,7 @@ if [[ "$arg" == "set" ]]; then
 
 	export GIT_SSH_COMMAND="ssh -F ~/.ssh/config_prox"
 	alias ssh="ssh -F ~/.ssh/config_prox"
+	alias sshfs="sshfs -F ~/.ssh/config_prox"
 
 elif [[ "$arg" == "unset" ]]; then
 	echo -n "Removing proxy from (current) shell, git"
@@ -41,6 +42,7 @@ elif [[ "$arg" == "unset" ]]; then
 
 	unset GIT_SSH_COMMAND
 	unalias ssh 2>/dev/null
+	unalias sshfs 2>/dev/null
 
 elif [[ "$arg" == "proxify" ]] && [[ "$#" -gt 1 ]]; then
 	# to execute a command in a proxified environment

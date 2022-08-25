@@ -30,13 +30,17 @@ binutils
 bison
 bluez
 bluez-alsa-git
+bluez-hcitool
 bluez-rfcomm
+bluez-tools
 bluez-utils
 bolt
 borg
 breeze
+btop
 bzip2
 c-ares
+cargo-flamegraph
 cdparanoia
 chromium
 clutter
@@ -58,6 +62,8 @@ device-mapper
 dhcpcd
 diffpdf
 diffutils
+displaylink
+dmidecode
 docbook-xml
 docbook-xsl
 dolphin-emu
@@ -84,8 +90,10 @@ file-roller
 filesystem
 findutils
 firefox
+fish
 flake8
 flex
+freecad
 freerdp
 fwupd
 fzf
@@ -102,6 +110,7 @@ git-delta
 git-review
 glib2-docs
 glibc
+glow
 gmime
 gnome-common
 gnome-sound-recorder
@@ -116,6 +125,7 @@ graphviz
 grep
 grive-git
 gromit-mpx
+gron
 grub
 gst-plugins-base
 gst-plugins-good
@@ -128,7 +138,6 @@ gzip
 hashcat
 hashcat-utils
 haveged
-hdf5
 hexchat
 htop
 httpie
@@ -142,6 +151,7 @@ i3lock-color
 i3status
 imagemagick
 inetutils
+inferno
 inkscape
 inotify-tools
 intel-compute-runtime
@@ -157,7 +167,6 @@ jdk-openjdk
 jdk8-openjdk
 jfsutils
 joyutils
-jupyter
 jupyter-notebook
 keepassxc
 languagetool
@@ -169,6 +178,7 @@ libnotify
 libpeas
 libquvi
 libquvi-scripts
+librecad
 libreoffice-fresh
 libsaasound
 libshout
@@ -181,6 +191,7 @@ linux
 linux-firmware
 log4cxx-git
 logrotate
+lsof
 lua52
 lua52-bitop
 lua52-expat
@@ -197,6 +208,8 @@ man-pages
 matterhorn
 mdadm
 medusa
+memtest86+
+memtester
 mendeleydesktop-bundled
 mercurial
 meson
@@ -233,6 +246,7 @@ openbsd-netcat
 openconnect
 openfortivpn
 openmpi
+openscad
 pacman
 paprefs
 patch
@@ -277,6 +291,7 @@ powerline
 powerline-common
 powertop
 procps-ng
+proot
 pscircle-git
 psmisc
 psutils
@@ -284,6 +299,7 @@ pulseaudio
 pulseaudio-bluetooth
 pyright
 python
+python-aiogram
 python-anytree
 python-apipkg
 python-beaker
@@ -312,7 +328,7 @@ python-setuptools
 python-telegram-bot
 python-tqdm
 python-virtualenv
-python-yalafi
+qemu-desktop
 qrencode
 reiserfsprogs
 ripgrep
@@ -320,13 +336,15 @@ rofi
 rsync
 ruby
 ruby-fusuma
-rust
 s-nail
+s-tui
 screenfetch
 scrot
 sed
 shadow
+sioyek
 skypeforlinux-preview-bin
+smartmontools
 smbclient
 speedtest-cli
 spotify
@@ -339,6 +357,7 @@ systemd-sysvcompat
 tar
 telegram-cli-git
 telegram-desktop
+termshark
 texinfo
 texlive-bibtexextra
 texlive-fontsextra
@@ -377,6 +396,7 @@ veracrypt
 vi
 vim
 virtualbox
+viu
 vlc
 vulkan-intel
 wavpack
@@ -384,6 +404,8 @@ wget
 which
 wine-gecko
 wine-mono
+wireshark-cli
+wireshark-qt
 x11-ssh-askpass
 xclip
 xdotool
@@ -398,6 +420,7 @@ xorg-xinit
 xorg-xinput
 xorg-xkill
 xorg-xrandr
+xorg-xwininfo
 xournalpp
 xplayer
 xpra
@@ -407,7 +430,6 @@ xterm
 yay
 yelp-tools
 yelp-xsl
-youtube-dl
 zathura
 zathura-djvu
 zathura-pdf-mupdf

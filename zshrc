@@ -300,6 +300,8 @@ bindkey -v
 alias la="ls -lAh --color=always"
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
+# open vim with fugitive window open
+alias vimgs="vim -c 'G' -c '20wincmd_'"
 
 # ######## PROMPT
 # Old prompt
