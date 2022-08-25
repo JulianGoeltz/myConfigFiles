@@ -21,6 +21,21 @@ notification_stops = [
 ]
 
 
+def find_place_from_gps(lat, lng):
+    info = requests.get(f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lng}&format=json").json()
+    if 'address' in info:
+        if 'town' in info['address']:
+            return "close to " + info['address']['town']
+        elif 'village' in info['address']:
+            return "close to " + info['address']['village']
+        elif 'municipality' in info['address']:
+            return "close to " + info['address']['municipality']
+    # handle errors
+    from pprint import pformat
+    print(pformat(info), file=sys.stderr)
+    return ""
+
+
 # x = subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1/rs/tripInfo/trip".split(" "),
 #                     stdout=sys.stdout, stderr=sys.stderr)
 # # stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -94,11 +109,18 @@ if subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1
                 )
         return
 
-    print(" [{}, {} class{}]".format(
+    # print("", file=sys.stderr)
+    # print(find_place_from_gps(data_status['latitude'], data_status['longitude']), file=sys.stderr)
+    # print("", file=sys.stderr)
+
+    print(" [{}, {} class{}{}]".format(
         f"{data_status['speed']}km/h" if data_status['gpsStatus'] != "INVALID" else "no GPS",
         "2." if data_status["wagonClass"] == "SECOND" else "1.",
         (nextstopinfo(data_trip['trip']['stopInfo']['actualNext'])
-         if data_trip['trip']['stopInfo']['actualNext'] != '' else ''),
+         if (data_trip['trip']['stopInfo'] is not None and
+             data_trip['trip']['stopInfo']['actualNext'] != '') else ''),
+        (", " + find_place_from_gps(data_status['latitude'], data_status['longitude'])
+         if data_status['gpsStatus'] != 'INVALID' else ""),
     ))
 
 elif subprocess.call("ping -c 1 -W 0.5 www.wifi-bahn.de".split(" "),
@@ -132,16 +154,7 @@ elif subprocess.call("ping -c 1 -W 0.5 www.wifi-bahn.de".split(" "),
     if 'stateInformation' in data:
         current_state = nextstopinfo(data['stateInformation']['nextStation']['id'])
     elif 'lat' in data and 'lng' in data:
-        lat, lng = data['lat'], data['lng']
-        info = requests.get(f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lng}&format=json").json()
-        if 'address' in info:
-            if 'town' in info['address']:
-                current_state = "close to " + info['address']['town']
-            elif 'village' in info['address']:
-                current_state = "close to " + info['address']['village']
-        else:
-            from pprint import pformat
-            print(pformat(info), file=sys.stderr)
+        current_state = find_place_from_gps(data['lat'], data['lng'])
 
     print(" [{}, {}]".format(
         f"{float(data['speed']) * 3.6:.0f}km/h",
