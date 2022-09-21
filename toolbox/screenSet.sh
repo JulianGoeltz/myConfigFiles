@@ -79,7 +79,8 @@ elif xrandr | grep -q "$dp12 connected"; then
 	xrandr --output "$dp12" --mode 2560x1440 --primary --output eDP-1 --right-of "$dp12" --mode 1920x1080
 elif xrandr | grep -q "$hdmi2 connected"; then
 	dunstify -r 5555 -t 3000 "setting xrandr for one external HDMI"
-	xrandr --output "$hdmi2" --above eDP-1 --mode 1920x1080 --rotate normal
+	# xrandr --output "$hdmi2" --above eDP-1 --mode 1920x1080 --rotate normal
+	xrandr --output "$hdmi2" --above eDP-1 --mode 2560x1440 --rotate normal
 	# set audio correctly
 	pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:hdmi-stereo-extra1
 else

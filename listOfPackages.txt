@@ -221,7 +221,7 @@ mtr
 mumble
 mypy
 nano
-neovide-git
+neovide
 neovim
 neovim-remote
 net-tools-debian-ifconfig
@@ -254,6 +254,7 @@ pavucontrol
 pciutils
 pdfgrep
 pdfpc
+pdftk
 perl
 perl-crypt-cbc
 perl-crypt-des_ede3
@@ -294,6 +295,7 @@ procps-ng
 proot
 pscircle-git
 psmisc
+pstoedit
 psutils
 pulseaudio
 pulseaudio-bluetooth

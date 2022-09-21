@@ -18,6 +18,7 @@
 [delta]
 	syntax-theme = GitHub
 	# side-by-side = true
+	max-line-length = 0
 
 [interactive]
 	diffFilter = delta --color-only

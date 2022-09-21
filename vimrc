@@ -290,6 +290,7 @@ let g:vimtex_compiler_latexmk = {
     \   '-verbose',
     \   '-file-line-error',
     \   '-synctex=1',
+    \   '-shell-escape',
     \   '-interaction=nonstopmode',
     \ ],
     \}
@@ -305,10 +306,10 @@ let g:vimtex_view_automatic = 0
 "   \}
 let g:vimtex_quickfix_ignore_filters = [
   \ 'Marginpar on page',
-  \ 'Overfull',
   \ 'Underfull',
   \]
-  " \   'hyperref' : 0,
+"   \ 'Overfull',
+"   \ 'hyperref' : 0,
 
 map <localleader>ls :VimtexCompileSS<CR>
 
@@ -384,3 +385,6 @@ endif
 nnoremap <Leader>w :execute 'windo set wrap'<CR>
 
 map <A-space> <Plug>VimwikiToggleListItem
+
+" only use ft=vimwiki for actual wiki files
+let g:vimwiki_global_ext=0
