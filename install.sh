@@ -186,6 +186,7 @@ if [[ "$(hostname)" == "T2" ]]; then
 	echo "##T2 specifics##"
 	echo "--i3"
 	checkSimilaritiesAndLink i3_config "$HOME/.config/i3/config"
+	checkSimilaritiesAndLink i3blocks.conf "$HOME/.config/i3blocks/config"
 	checkSimilaritiesAndLink i3status.sh "$HOME/.config/i3/i3status.sh"
 	[ ! -d "$HOME/.config/i3/scripts" ] && mkdir "$HOME/.config/i3/scripts"
 	for fn in "$LocOfScript"/i3scripts/*; do

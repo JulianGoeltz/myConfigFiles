@@ -1,4 +1,4 @@
-#!~/bin/sh
+#!/bin/sh
 
 # set -eu
 
@@ -18,3 +18,5 @@ elif playerctl -l | grep -q vlc; then
 else
 	playerctl -a "$1"
 fi
+
+sleep 0.5 && pkill -SIGRTMIN+10 i3blocks

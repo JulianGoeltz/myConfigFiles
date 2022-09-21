@@ -164,12 +164,8 @@ bindsym $mod+r mode "resize/move"
 #     status_command i3status
 # }
 bar {
-        # i3bar_command ~/.config/i3/i3status.sh | lemonbar -p -B "#2e3436" -F "#d3d7cf"
-        # status_command ~/.config/i3/i3status.sh | lemonbar -p -B "#2e3436" -F "#d3d7cf"
-        #status_command ~/.config/i3/i3status.sh
-        # status_command $HOME/.config/i3/conky-i3bar
-	i3bar_command /usr/bin/i3bar 
-        status_command ~/.config/i3/i3status.sh
+        # status_command ~/.config/i3/i3status.sh
+	status_command i3blocks
 	font pango: Awesome 9
         tray_output primary
 	position top
@@ -209,13 +205,13 @@ bindsym KP_Multiply     "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playp
 bindsym XF86AudioPrev   "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 
 # increase correct volume: if bluetooth connected use that one
-bindsym XF86AudioLowerVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
-bindsym XF86AudioRaiseVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
-bindsym Control+KP_Subtract  "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10%"
-bindsym Control+KP_Add "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10%"
-bindsym XF86AudioMute "exec --no-startup-id pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) toggle"
+bindsym XF86AudioLowerVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10% && pkill -SIGRTMIN+20 i3blocks"
+bindsym XF86AudioRaiseVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10% && pkill -SIGRTMIN+20 i3blocks"
+bindsym Control+KP_Subtract  "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10% && pkill -SIGRTMIN+20 i3blocks"
+bindsym Control+KP_Add "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10% && pkill -SIGRTMIN+20 i3blocks"
+bindsym XF86AudioMute "exec --no-startup-id pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) toggle && pkill -SIGRTMIN+20 i3blocks"
 bindsym XF86AudioMicMute "exec --no-startup-id pactl set-source-mute $(/usr/bin/pactl list sources short | grep -v monitor | grep alsa | cut -f 1) toggle"
-bindsym $mod+m "exec --no-startup-id /bin/sh ~/.config/i3/scripts/muteAll.sh"
+bindsym $mod+m "exec --no-startup-id /bin/sh ~/.config/i3/scripts/muteAll.sh && pkill -SIGRTMIN+20 i3blocks"
 
 # syncient
 

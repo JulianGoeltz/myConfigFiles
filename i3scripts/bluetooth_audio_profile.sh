@@ -28,5 +28,6 @@ for mac in "${mac_array[@]}"; do
 		pactl set-card-profile bluez_card.$mac handsfree_head_unit || \
 		pactl set-card-profile bluez_card.$mac headset_head_unit
 	fi
+	pkill -SIGRTMIN+20 i3blocks
 	exit
 done
