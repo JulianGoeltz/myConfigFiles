@@ -7,7 +7,7 @@ import sys
 import time
 
 
-# curl -s --insecure 'https://portal.imice.de/api1/rs/tripInfo/trip' | jq -r ".trip.stops[].station.name"
+# curl -s --insecure 'https://iceportal.de/api1/rs/tripInfo/trip' | jq -r ".trip.stops[].station.name"
 # give notification if arrival within next x minutes for the following stops:
 notification_minutes = 5
 notification_stops = [
@@ -16,6 +16,7 @@ notification_stops = [
     "Bern",
     "Crailsheim",
     "Heidelberg Hbf",
+    "Karlsruhe Hbf",
     "Mannheim Hbf",
     "Stuttgart Hbf",
 ]
@@ -24,7 +25,9 @@ notification_stops = [
 def find_place_from_gps(lat, lng):
     info = requests.get(f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lng}&format=json").json()
     if 'address' in info:
-        if 'town' in info['address']:
+        if 'city' in info['address']:
+            return "close to " + info['address']['city']
+        elif 'town' in info['address']:
             return "close to " + info['address']['town']
         elif 'village' in info['address']:
             return "close to " + info['address']['village']
@@ -44,9 +47,10 @@ def find_place_from_gps(lat, lng):
 
 if subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1/rs/tripInfo/trip".split(" "),
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0:
-    base = 'https://portal.imice.de/api1/rs/'
+    base = 'https://iceportal.de/api1/rs/'
 
     try:
+        # SSL certificate is not verified
         data_status = requests.get(
             base + 'status',
         ).json()
@@ -57,23 +61,8 @@ if subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1
         print("[connected to ICE: error with json]")
         raise e
     except requests.exceptions.ConnectionError as e:
-        # import urllib3
-        # urllib3.disable_warnings()
-        print("found the following exception", file=sys.stderr)
-        print(e, file=sys.stderr)
-        print("retrying without verification of ssl certificate", file=sys.stderr)
-        try:
-            data_status = requests.get(
-                base + 'status',
-                verify=False,
-            ).json()
-            data_trip = requests.get(
-                base + 'tripInfo/trip',
-                verify=False
-            ).json()
-        except requests.exceptions.ConnectionError as e:
-            print("[connected to ICE: error connecting to portal]")
-            raise e
+        print("[connected to ICE: error connecting to portal]")
+        raise e
 
     def nextstopinfo(stop_eva):
         for stop in data_trip['trip']['stops']:
@@ -120,7 +109,7 @@ if subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1
          if (data_trip['trip']['stopInfo'] is not None and
              data_trip['trip']['stopInfo']['actualNext'] != '') else ''),
         (", " + find_place_from_gps(data_status['latitude'], data_status['longitude'])
-         if data_status['gpsStatus'] != 'INVALID' else ""),
+         if data_status['gpsStatus'] != 'VALID' else ""),
     ))
 
 elif subprocess.call("ping -c 1 -W 0.5 www.wifi-bahn.de".split(" "),
