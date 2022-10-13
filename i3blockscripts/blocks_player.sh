@@ -4,11 +4,6 @@
 source /home/julgoe/myConfigFiles/i3blockscripts/blocks_defines.sh
 
 
-json_escape () {
-	# from https://stackoverflow.com/questions/10053678/escaping-characters-in-bash-for-json
-	printf '%s' "$1" | python -c 'import json,sys; print(json.dumps(sys.stdin.read()))'
-}
-
 Playing() {
 	player=$1
 	if [ "$(playerctl -p "$player" status 2>/dev/null)" = "Playing" ]; then
@@ -26,10 +21,7 @@ Playing() {
 			tmp=$(basename $( playerctl -p "$player" metadata xesam:url))
 			[ "${#tmp}" -gt "43" ] && tmp="${tmp:0:40}..."
 		fi
-		# in order for special chars to be properly escaped use json function above
-		tmp=$(json_escape "$tmp")
-		# but this uses quotes, get rid of them
-		echo "$emojiTune ${tmp:1:-1}"
+		echo "$emojiTune $tmp"
 	fi
 }
 

@@ -207,6 +207,7 @@ if [[ "$(hostname)" == "T2" ]]; then
 
 	echo "--acpi&pm"
 	checkSimilaritiesAndLink sudos/lock /lib/systemd/system-sleep/10lock sudo nolink
+	checkSimilaritiesAndLink sudos/acpi_handler.sh /etc/acpi/handler.sh sudo nolink
 
 	echo "--networkmanager"
 	checkSimilaritiesAndLink sudos/networkmanager /etc/NetworkManager/conf.d/10randomisation sudo nolink
