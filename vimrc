@@ -388,3 +388,6 @@ map <A-space> <Plug>VimwikiToggleListItem
 
 " only use ft=vimwiki for actual wiki files
 let g:vimwiki_global_ext=0
+
+" turn off mouse interactions
+set mouse=

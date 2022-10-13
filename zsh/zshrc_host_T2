@@ -191,9 +191,9 @@ alias squeueRepeat='while true; do sshhel -t zsh -i -c "squeueRepeat" && sleep 1
 timer() {
 	local t=$1 && shift
 	[ $# -gt 0 ] && local message="$@" || local message="time's up"
-	(sleep $t && (cvlc ~/Music/bell.mp3 vlc://quit &;
+	(sleep $t && (cvlc ~/Music/bell.mp3 vlc://quit 2>/dev/null &;
 	              dunstify -t 10000 "$message")
-	) &!
+	) &|
 	echo "set timer for $t"
 }
 
@@ -217,4 +217,4 @@ adb_transfer() {
 	done
 }
 
-alias btheadset="bluetoothctl disconnect 00:1B:66:CA:9C:76 && bluetoothctl connect 00:1B:66:CA:9C:76 && (sleep 1 && pkill -SIGRTMIN+20 i3blocks)& "
+alias btheadset="bluetoothctl disconnect 00:1B:66:CA:9C:76 && bluetoothctl connect 00:1B:66:CA:9C:76 && (sleep 1 && pkill -SIGRTMIN+20 i3blocks)&| "

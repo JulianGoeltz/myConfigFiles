@@ -289,7 +289,7 @@ bindsym $mod+Shift+o move workspace to output up
 #bindsym $mod+e exec nemo
 
 #always make inkviews floating
-# find classes with xprop: WM_CLASS: class, instance; 
+# find classes with xprop: WM_CLASS: instance, class; 
 for_window [class="Inkview" instance="inkview"] floating enable
 #for_window [class="vlc"] floating enable # leave like this, then we can compare videos better
 for_window [class="Xviewer"] floating enable
@@ -302,8 +302,10 @@ for_window [class="feh"] floating enable
 for_window [class="Gromit-mpx"] floating enable
 for_window [class="zoom"] floating enable
 for_window [class="Chromium-browser"] floating enable
+for_window [all] border pixel
 # for_window [class="Spotify"] floating enable, resize set width 1400 px height 600 px
 for_window [class="Pavucontrol"] floating enable
+for_window [instance="Msgcompose"] floating enable, resize set width 800 px height 700 px 
 
 # bind key to use screenSet, easiest for making screen work after removing from dockingstation
 bindsym $mod+Control+1 "exec --no-startup-id /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"

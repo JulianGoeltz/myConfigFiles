@@ -48,8 +48,8 @@ if xrandr | grep -q "$dp22 connected" &&
 	# check if already set
 	main_res_x=2560
 	main_res_y=1440
-	main_res_x=1920
-	main_res_y=1080
+	# main_res_x=1920
+	# main_res_y=1080
 	if xrandr | grep "$edp1" | grep -q "+${main_res_x}+0" && 
 		xrandr | grep "$dp22" | grep -q "+0+0" &&
 		xrandr | grep "$dp23" | grep -q "+${main_res_x}+0"; then
