@@ -53,7 +53,7 @@ Plug 'airblade/vim-gitgutter'
 
 " in container on hel, zsh doesnt work
 set shell=/bin/sh
-if system('hostname') =~ "T2"
+if system('hostname') =~ "P1"
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	source ~/.vim/vim_coc.vim
 

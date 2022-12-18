@@ -1,8 +1,7 @@
 # ##################################
 # same but different
-alias cdmaster="cd ~/Documents/model-tempodrom/"
 alias cdu="cd ~/Documents/utils"
-export PATH=$PATH:~/Documents/model-tempodrom/help_scripts
+alias cdp="cd ~/Documents/papers"
 [[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # git editor and pager; easier to set host specific
@@ -77,19 +76,6 @@ if [ -x /usr/bin/mint-fortune ]; then
      #/usr/bin/mint-fortune
 fi
 
-function correctSinkForChangingVolume () {
-	tmpString=$(pactl list short sinks | grep bluez | awk '{print $1}')
-	alsa=$(pactl list short sinks | grep "alsa_output" | awk '{print $1}')
-	[ -z $tmpString ]  && echo "$alsa" || echo $tmpString
-}
-function correctSinkSet () {
-	cs=$(correctSinkForChangingVolume)
-	echo "Changing the inputs to sink ${cs}."
-	pactl set-default-sink $cs
-	for inputid in $(pactl list short sink-inputs | awk '{print $1}'); do
-		pactl move-sink-input $inputid $cs
-	done
-}
 alias bluetoothBoom='echo "connect 08:DF:1F:86:0B:30\nquit" | bluetoothctl'
 
 function convertSVGsToeps() {
@@ -218,4 +204,12 @@ adb_transfer() {
 }
 
 alias btheadset="bluetoothctl disconnect 00:1B:66:CA:9C:76 && bluetoothctl connect 00:1B:66:CA:9C:76 && (sleep 1 && pkill -SIGRTMIN+20 i3blocks)&| "
+
+# create MWE of latex
+mwe_latex () {
+	tmpfn=mwe.tex
+	[ -f $tmpfn ] && echo "MWE $tmpfn already exitst, delete first" && return 1
+	touch $tmpfn
+	echo "\\documentclass{article}\n\\\\begin{document}\nMWE for latex\n\n\\\\end{document}" > $tmpfn
+}
 
