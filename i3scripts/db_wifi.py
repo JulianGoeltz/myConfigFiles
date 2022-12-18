@@ -1,6 +1,8 @@
 #!python
 import datetime
 import json
+import os
+import os.path as osp
 import requests
 import subprocess
 import sys
@@ -75,19 +77,23 @@ if subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1
                 minutes_to_arrival = time_to_arrival / 60
 
                 if stop['station']['name'] in notification_stops and minutes_to_arrival < notification_minutes:
-                    if subprocess.run(["dunstctl", "is-paused"], capture_output=True).stdout == b'true\n':
-                        print("resuming dunstify", file=sys.stderr)
-                        subprocess.run(['/home/julgoe/myConfigFiles/i3scripts/dunstToggle.sh', 'resume'],)
-                    else:
-                        print("dunstify already running", file=sys.stderr)
+                    # check if notifications have been paused
+                    notfication_filename = '/tmp/db_wifi_stop_notifs'
+                    if not (osp.isfile(notfication_filename) and \
+                            (time.time() - os.stat(notfication_filename).st_mtime) < (notification_minutes + 10) * 60):
+                        if subprocess.run(["dunstctl", "is-paused"], capture_output=True).stdout == b'true\n':
+                            print("resuming dunstify", file=sys.stderr)
+                            subprocess.run(['/home/julgoe/myConfigFiles/i3scripts/dunstToggle.sh', 'resume'],)
+                        else:
+                            print("dunstify already running", file=sys.stderr)
 
-                    subprocess.run(["dunstify",
-                                    "-r", "7777",  # to replace old ones
-                                    "Stop in {} in {:.0f} minutes".format(
-                                        stop['station']['name'],
-                                        minutes_to_arrival,
-                                    ),
-                                    ])
+                        subprocess.run(["dunstify",
+                                        "-r", "7777",  # to replace old ones
+                                        "Stop in {} in {:.0f} minutes".format(
+                                            stop['station']['name'],
+                                            minutes_to_arrival,
+                                        ),
+                                        ])
 
                 scheduledArrival_date = datetime.datetime.fromtimestamp(scheduledArrival)
                 return ", next: {} at {}{} on track {}".format(
