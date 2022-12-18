@@ -44,6 +44,14 @@ alias vi=vim
 
 alias sourcezsh="source ~/.zshrc"
 mkcd () { mkdir -p $1 && cd $1}
+mkcdtmp () { dir="$(mktemp -d -t custom_XXX)"; cd $dir; }
+function venvtemp {
+    # Inspired by:  https://gist.github.com/cupdike/6a9caaf18f30250364c8fcf6d64ff22e#file-zshrc_et_al
+    THROWAWAY_DIR=$(mktemp -d -t customVenv_XXX);
+    cd $THROWAWAY_DIR;
+    python3 -m venv venvtemp;
+    source venvtemp/bin/activate;
+}
 
 
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
@@ -92,6 +100,7 @@ alias -s png=eog
 alias -g B=" | bat"
 alias -g C=" | wc -l"
 alias -g G=" | grep"
+alias -g J=" | json_pp"
 alias -g L=" | less" 
 alias -g T=" | tail"
 alias -g TT=' | tee teed_$(date +"%Y%m%d_%H%M%S")'
