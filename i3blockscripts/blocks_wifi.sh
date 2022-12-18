@@ -4,11 +4,11 @@
 source /home/julgoe/myConfigFiles/i3blockscripts/blocks_defines.sh
 
 # state DOWN is not sufficient for turned off
-if ip link show wlp4s0 | grep -q "state DOWN mode DEFAULT"; then
+if ip link show wlp0s20f3 | grep -q "state DOWN mode DEFAULT"; then
 	echo "$emojiWifiOff"
 	return
 fi
-string=$(iw dev wlp4s0 link)
+string=$(iw dev wlp0s20f3 link)
 if [ "$?" -eq 0 ] && [ "$(echo "$string" | grep -c "Not connected.")" -eq 0 ]; then
 	echo -n "Wifi: "
 	echo -n "$(echo "$string" | grep -oP "SSID: \K.*")"

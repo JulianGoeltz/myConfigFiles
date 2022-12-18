@@ -1,9 +1,2 @@
-### way to give periodic messages
-# # this way, the correct dbus is set
-# * * * * * tmpStr=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/"$(pidof i3)"/environ); DBUS_SESSION_BUS_ADDRESS=${tmpStr:25:200} /usr/bin/dunstify "changed bg"
-
 # check for low battery
-* * * * * /home/julgoe/myConfigFiles/toolbox/checkLowBattery
-
-# change background every 10 minutes
-#*/10 * * * * DISPLAY=:0.0 feh -z --bg-max --auto-rotate /home/julgoe/Pictures/BackgroundCropped
+* * * * * /home/julgoe/myConfigFiles/toolbox/checkLowBattery &> /tmp/cron.log

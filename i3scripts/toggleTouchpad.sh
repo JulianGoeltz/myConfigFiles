@@ -3,8 +3,7 @@
 # set -euo pipefail
 
 # get name with `xinput list`
-name="SynPS/2 Synaptics TouchPad"
-xinput list --long "$name" | grep "disabled"
+name="SYNA8018:00 06CB:CE67 Touchpad"
 if xinput list --long "$name" | grep -q "disabled"; then
 	xinput enable "$name"
 else

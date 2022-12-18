@@ -15,7 +15,7 @@ if [[ $? -ne 0 ]]; then
 	everythingOK=false
 fi
 
-if [[ "$(hostname)" == "T2" ]]; then
+if [[ "$(hostname)" == "P1" ]]; then
 	# check current crontabList
 	tmpString=$(diff "$LocOfScript/../crontabList" <(crontab -l))
 	if [[ $? -ne 0 ]]; then

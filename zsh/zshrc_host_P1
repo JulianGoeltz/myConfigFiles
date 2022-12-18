@@ -1,0 +1,221 @@
+# ##################################
+# same but different
+alias cdmaster="cd ~/Documents/model-tempodrom/"
+alias cdu="cd ~/Documents/utils"
+export PATH=$PATH:~/Documents/model-tempodrom/help_scripts
+[[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# git editor and pager; easier to set host specific
+export GIT_PAGER="delta"
+alias bat="bat --theme=GitHub"
+export GIT_EDITOR=nvim
+
+# ##################################
+# very different
+
+module () {
+    eval `/usr/bin/modulecmd bash $*`
+}
+
+# to connect to terminal server from urz
+alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/julgoe/Dropbox/printing"
+
+# if on tty, change colour scheme a bit
+# . /home/julgoe/externalSources/spack/share/spack/setup-env.sh
+if [ "$TERM" = "linux" ]; then
+	#load the spack stuff in tty, gets passed on
+	#spack load python@2.7.16
+	#spack load vim
+	#spack load neovim
+
+	echo -en "\e]P0000000" #black # originally 232323 # in between it was 111111
+	echo -en "\e]P82B2B2B" #darkgrey
+	echo -en "\e]P1D75F5F" #darkred
+	echo -en "\e]P9E33636" #red
+	echo -en "\e]P287AF5F" #darkgreen
+	echo -en "\e]PA98E34D" #green
+	echo -en "\e]P3D7AF87" #brown
+	echo -en "\e]PBFFD75F" #yellow
+	echo -en "\e]P48787AF" #darkblue
+	echo -en "\e]PC7373C9" #blue
+	echo -en "\e]P5BD53A5" #darkmagenta
+	echo -en "\e]PDD633B2" #magenta
+	echo -en "\e]P65FAFAF" #darkcyan
+	echo -en "\e]PE44C9C9" #cyan
+	echo -en "\e]P7E5E5E5" #lightgrey
+	echo -en "\e]PFFFFFFF" #white
+	# clear #for background artifacting
+fi
+
+# alias for staring chromium in fullscreen
+alias startxChromium="startx <( echo 'chromium-browser --window-size=1920,1080 --window-position=0,0')"
+alias startxZathura="startx ~/myConfigFiles/toolbox/startx.sh"
+alias startxx="ssh-agent startx"
+alias startxzsh="startx <(echo \"xterm -e 'xterm -geometry 200x60 -bg black -fg white -fa monospace -fs 10'\")"
+# for correct sized term emulator:
+# xterm -geometry 200x60 -bg black -fg white -fa monospace -fs 10
+
+# proxy definition. has to be sourced or env of shell is not changed
+alias proxies="source proxies.sh"
+# proxies
+
+bluetoothqc() {
+	address=$(echo 'devices Paired' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')
+	based-connect $address $@
+}
+
+alias cdmaster_hel="cd ~/mnt/mntHel/;ZSH_PROMPT_GIT_DONTDOIT='dont'"
+
+# autojump 
+[ -f /usr/share/autojump/autojump.sh ] && source /usr/share/autojump/autojump.sh
+[ -f /etc/profile.d/autojump.sh ] && source /etc/profile.d/autojump.zsh
+
+
+alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
+
+if [ -x /usr/bin/mint-fortune ]; then
+     #/usr/bin/mint-fortune
+fi
+
+function correctSinkForChangingVolume () {
+	tmpString=$(pactl list short sinks | grep bluez | awk '{print $1}')
+	alsa=$(pactl list short sinks | grep "alsa_output" | awk '{print $1}')
+	[ -z $tmpString ]  && echo "$alsa" || echo $tmpString
+}
+function correctSinkSet () {
+	cs=$(correctSinkForChangingVolume)
+	echo "Changing the inputs to sink ${cs}."
+	pactl set-default-sink $cs
+	for inputid in $(pactl list short sink-inputs | awk '{print $1}'); do
+		pactl move-sink-input $inputid $cs
+	done
+}
+alias bluetoothBoom='echo "connect 08:DF:1F:86:0B:30\nquit" | bluetoothctl'
+
+function convertSVGsToeps() {
+	echo "Using the command 'inkscape -f [File] --export-latex -E [NewFile]'"
+	echo "on every .svg file in CWD if NewFile does not exist"
+	for file in $(ls *.svg); do
+		newFile=${file/.svg/.eps}
+		if [ -f $newFile ]; then
+			echo "> File $file already converted"
+			continue
+		else
+			echo "Converting File $file to $newFile"
+			inkscape -f $file --export-latex -E $newFile
+		fi
+	done
+}
+
+
+# to connect to WiFi on TTY, look in man nmcli for 'wifi connect'.
+# especially difference wifi connect and con ... up
+
+# alias to send current style status to Katja
+sendCurrentState () {
+	cd /home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/
+	detex -e easylist,align,figure,wrapfigure,equation main.tex > main.txt
+	style main.txt > main.style.txt
+	if [ $# -gt 0 ]; then
+		telegram-cli -W -e "send_text Julian_Göltz main.style.txt"
+	fi
+	echo -n "Done, now return to "
+	cd -
+}
+
+# send notifications for lang tasks
+# from: https://superuser.com/questions/553564/is-there-a-way-to-make-zsh-run-a-command-after-reporttime
+if [[ -x `which notify-send` ]]; then
+    notify-preexec-hook() {
+        zsh_notifier_cmd="$1"
+        zsh_notifier_time="`date +%s`"
+    }
+
+    notify-precmd-hook() {
+    	returnCode=$?
+        local time_taken
+
+        if [[ "${zsh_notifier_cmd}" != "" ]]; then
+            time_taken=$(( `date +%s` - ${zsh_notifier_time} ))
+            if (( $time_taken > $REPORTTIME )) &&
+		    ! echo $zsh_notifier_cmd | grep -qP "(^vim|^nvim|^fg|^less|^ssh|^iv |^inkview|^man|^zoom|^ipython)" ; then
+                notify-send "task finished" \
+			"'$zsh_notifier_cmd' return $returnCode exited after $time_taken seconds"
+            fi
+        fi
+        zsh_notifier_cmd=
+    }
+	[[ -z $preexec_functions ]] && preexec_functions=()
+	preexec_functions=($preexec_functions notify-preexec-hook)
+
+	[[ -z $precmd_functions ]] && precmd_functions=()
+	precmd_functions=($precmd_functions notify-precmd-hook)
+fi
+
+
+# copying files to my homepage to make them available
+copyToWeb (){
+	randNo=$RANDOM$RANDOM$RANDOM
+	tmpConfig="$(echo ${GIT_SSH_COMMAND:-} | grep -oP "\-F [^ ]*" | awk '{print $2}')"
+	[ -z "$tmpConfig" ] && tmpConfig=~/.ssh/config || tmpConfig=~/.ssh/config_prox
+	echo "Using config file $tmpConfig"
+	ssh -F $tmpConfig ssh.strato.de "mkdir -p juliangoeltzde/sharing/${randNo}" || return $?
+	for file in $@; do 
+		if [ ! -f "$file" ] ; then
+			echo "File ${file} does not exist."
+			continue
+		fi
+		fileTrimmed=$(echo $file | sed 's/[^0-9A-Za-z.-]//g')
+		fileUrl=http://julian-goeltz.de/sharing/$randNo/$fileTrimmed
+		scp -F $tmpConfig -r "$file" ssh.strato.de:juliangoeltzde/sharing/$randNo/$fileTrimmed && \
+			echo "File is available at $fileUrl"
+					# && \
+			# telegram-cli -W -e "msg Julian $file\ $fileUrl" >/dev/null
+	done
+}
+
+
+# Printing
+# infos on https://printer.kip.uni-heidelberg.de/jobs/
+# have to put the printserver in  ~/.cups/client.conf the following
+# ServerName printer.kip.uni-heidelberg.de
+alias lp_1="lp -U jgoeltz -o fit-to-page -o sides=one-sided -o media=A4 -d"
+alias lp_2="lp -U jgoeltz -o fit-to-page -o sides=two-sided-long-edge -o media=A4 -d"
+
+# quick grepping
+alias grepp="grep -rn --include=\*tex "
+
+# displaying queue on hel easily
+alias squeueRepeat='while true; do sshhel -t zsh -i -c "squeueRepeat" && sleep 10;done'
+
+timer() {
+	local t=$1 && shift
+	[ $# -gt 0 ] && local message="$@" || local message="time's up"
+	(sleep $t && (cvlc ~/Music/bell.mp3 vlc://quit 2>/dev/null &;
+	              dunstify -t 10000 "$message")
+	) &|
+	echo "set timer for $t"
+}
+
+# very specific
+alias sshhel_="sshhel_fs && export ZSH_PROMPT_GIT_DONTDOIT="lala" && cd ~/mnt/mntHel/ && zsh && sshhel_fs_unmount && exit"
+
+# copy files to android phone connected via USB
+adb_transfer() {
+	echo "DO THIS WITH MOUNTING INSTEAD, I.E.:"
+	echo "aft-mtp-mount ~/mnt/mntDaint"
+	return 1
+	if [ "$#" -eq 0 ]; then
+		echo "transfers all files given in args[1:] to folder args[0]"
+		echo "to find correct folder explore with 'aft-mtp-cli' (and create it)"
+		return
+	fi
+	folder=$1
+	shift
+	for f in $@; do
+		aft-mtp-cli "cd ${folder}" "put \"${f}\""
+	done
+}
+
+alias btheadset="bluetoothctl disconnect 00:1B:66:CA:9C:76 && bluetoothctl connect 00:1B:66:CA:9C:76 && (sleep 1 && pkill -SIGRTMIN+20 i3blocks)&| "
+

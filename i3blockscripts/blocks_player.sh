@@ -28,5 +28,5 @@ Playing() {
 echo -n $(Playing spotify)
 echo -n $(Playing spotifyd)
 echo -n $(Playing vlc)
-echo -n $(Playing chromium)
+# echo -n $(Playing chromium)
 echo

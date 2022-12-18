@@ -155,7 +155,7 @@ checkSimilaritiesAndLink tmux.conf "$HOME/.tmux.conf"
 for fn in "$LocOfScript"/tmux/tmux.conf_*; do
 	checkSimilaritiesAndLink tmux/"$(basename "$fn")" "$HOME/.tmux/$(basename "$fn")"
 done
-checkSimilaritiesAndLink tmux/tmux_T2_status.sh "$HOME/.tmux/tmux_T2_status.sh"
+checkSimilaritiesAndLink tmux/tmux_status.sh "$HOME/.tmux/tmux_status.sh"
 checkSimilaritiesAndLink tmux/plugins/tpm "$HOME/.tmux/plugins/tpm"
 [ ! -d "$HOME/.tmux_stableSocket" ] && mkdir "$HOME/.tmux_stableSocket"
 
@@ -181,9 +181,9 @@ checkSimilaritiesAndLink other_configs/vlty_defs.tex "$HOME/.config/vlty/defs.te
 checkSimilaritiesAndLink other_configs/Xdefaults "$HOME/.Xdefaults"
 checkSimilaritiesAndLink other_configs/zathurarc "$HOME/.config/zathura/zathurarc"
 
-if [[ "$(hostname)" == "T2" ]]; then
+if [[ "$(hostname)" == "P1" ]]; then
 	echo
-	echo "##T2 specifics##"
+	echo "##P1 specifics##"
 	echo "--i3"
 	checkSimilaritiesAndLink i3_config "$HOME/.config/i3/config"
 	checkSimilaritiesAndLink i3blocks.conf "$HOME/.config/i3blocks/config"
@@ -211,9 +211,6 @@ if [[ "$(hostname)" == "T2" ]]; then
 
 	echo "--networkmanager"
 	checkSimilaritiesAndLink sudos/networkmanager /etc/NetworkManager/conf.d/10randomisation sudo nolink
-
-	echo "--changebrightness"
-	checkSimilaritiesAndLink sudos/change_brightness.sh /usr/local/bin/change_brightness.sh sudo nolink
 
 	echo "--languagetool spelling"
 	checkSimilaritiesAndLink sudos/languagetool_spelling_custom.txt /usr/share/languagetool/org/languagetool/resource/en/hunspell/spelling_custom.txt sudo

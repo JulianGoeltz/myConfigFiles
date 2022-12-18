@@ -33,7 +33,7 @@ endfunction
 " not working. Plug 'jeaye/color_coded' " c colour coding
 "Syntax check
 Plug 'vim-syntastic/syntastic'
-let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checkers = [] " could be 'flake8'
 let g:syntastic_tex_checkers = ['chktex']
 "Check PEP8
 Plug 'nvie/vim-flake8'

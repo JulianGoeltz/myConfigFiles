@@ -8,6 +8,9 @@
 # i3 config file (v4)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# mod1: alt
+# mod4: super
 
 set $mod Mod4
 
@@ -204,6 +207,10 @@ bindsym Mod1+XF86Tools  "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playp
 bindsym KP_Multiply     "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 bindsym XF86AudioPrev   "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 
+bindsym XF86Messenger       "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym Shift+XF86Messenger "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
+bindsym Mod1+XF86Messenger "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+
 # increase correct volume: if bluetooth connected use that one
 bindsym XF86AudioLowerVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10% && pkill -SIGRTMIN+20 i3blocks"
 bindsym XF86AudioRaiseVolume "exec --no-startup-id pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10% && pkill -SIGRTMIN+20 i3blocks"
@@ -242,7 +249,7 @@ for_window [title="Vortragenden-Ansicht"] floating enable, move left 750
 # exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
 
 bindsym $mod+Shift+v exec --no-startup-id xterm -e "cd /home/julgoe/Documents/vimwiki/text && zsh -c 'tmux -2 attach || tmux -2'"
-for_window [ title="julgoe::T2" ] move scratchpad
+for_window [ title="julgoe::P1" ] move scratchpad
 
 
 # switch to next/prev window
@@ -257,14 +264,10 @@ bindsym $mod+Right workspace next
 # dont focus on window for each mouse hover
 focus_follows_mouse no
 
-# touchpad: fusuma and other
-# sudo gem install --install-dir=/usr/local --no-user-install fusuma
-# or better yay fusuma
-exec --no-startup-id fusuma
 # exec_always --no-startup-id i3-msg 'exec synclient ClickFinger3=2; exec synclient TapButton3=2; exec synclient HorizTwoFingerScroll=1'
 
 # dunst notification daemon for /usr/bin/notify-send
-exec --no-startup-id i3-msg 'exec dunst; exec echo "running" > /home/julgoe/.tmp_dunststate'
+exec --no-startup-id i3-msg 'exec dunst'
 bindsym $mod+p exec --no-startup-id "~/.config/i3/scripts/dunstToggle.sh pause"
 bindsym $mod+Shift+p exec --no-startup-id "~/.config/i3/scripts/dunstToggle.sh resume"
 bindsym ctrl+1 exec --no-startup-id dunstctl history-pop
@@ -326,15 +329,15 @@ bindsym Mod1+t exec --no-startup-id "/bin/bash ~/myConfigFiles/toolbox/proxies.s
 exec --no-startup-id i3-msg "exec ~/myConfigFiles/toolbox/notifySlurmDone.sh receiving"
 
 # enable tapping 
-exec --no-startup-id i3-msg "exec xinput set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Enabled' 1"
+exec --no-startup-id i3-msg "exec xinput set-prop 'SYNA8018:00 06CB:CE67 Touchpad' 'libinput Tapping Enabled' 1"
 
 # disable caps lock and use as additional escape 
-exec --no-startup-id i3-msg "exec  setxkbmap -option caps:escape"
+exec --no-startup-id i3-msg "exec setxkbmap -option caps:escape"
 # change autorepeat rate
-exec --no-startup-id i3-msg "exec  xset r rate 300 50"
-exec --no-startup-id i3-msg "exec  xset s off"
-exec --no-startup-id i3-msg "exec  xset -dpms"
-exec --no-startup-id i3-msg "exec  xset s noblank"
+exec --no-startup-id i3-msg "exec xset r rate 300 50"
+exec --no-startup-id i3-msg "exec xset s off"
+exec --no-startup-id i3-msg "exec xset -dpms"
+exec --no-startup-id i3-msg "exec xset s noblank"
 
 # set screen at boot
 exec --no-startup-id /bin/sh ~/myConfigFiles/toolbox/screenSet.sh
@@ -367,9 +370,13 @@ bindsym $mod+F4 "exec --no-startup-id /bin/bash ~/myConfigFiles/i3scripts/blueto
 
 # screenshot
 # bindsym "exec --no-startup-id ffmpeg -f x11grab -video_size 1920x1080 -i $DISPLAY -vframes 1 ~/tmp_screen.png"
+# scrt all
 bindsym --release Print exec "scrot -m -e 'xclip -selection c -t image/png $f' '/home/julgoe/Pictures/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
+# scrt selection wo picom restart
 bindsym --release Shift+Print exec "killall picom; scrot -s -e 'xclip -selection c -t image/png $f' '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+# scrt selection with picom restart
 bindsym --release $mod+Shift+Print exec "killall picom; scrot -s -e 'xclip -selection c -t image/png $f' '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'; picom -bc"
+# scrt current window
 bindsym --release $mod+Print exec "scrot -u -e 'xclip -selection c -t image/png $f' '/home/julgoe/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
 
 # draw on screen (look in man gromit-mpx for keyboard control)

@@ -5,7 +5,7 @@
 # the following comes from i3 status
 # ethernet
 Ethernet() {
-	if [ "$(ifconfig enp0s31f6 | grep -c addr)" -gt 1 ]; then
+	if [ "$(ifconfig enp0s31f6 | grep -c inet)" -gt 1 ]; then
 		echo -n "Eth: "
 		# string=$(ifconfig enp0s31f6)
 		echo -n "$(ethtool enp0s31f6  2>/dev/null| grep Speed | sed -E 's/.*Speed: ([0-9]*Mb\/s).*/\1/')"
@@ -14,7 +14,7 @@ Ethernet() {
 }
 # wifi
 Wifi() {
-	string=$(iw dev wlp4s0 link)
+	string=$(iw dev wlp0s20f3 link)
 	if [ "$(echo "$string" | grep -c off/any)" -eq 0 ]; then
 		echo -n "Wifi: "
 		echo -n "$(echo "$string" | grep -oP "SSID: \K.*")"
@@ -46,7 +46,7 @@ elif [ -n "$wifi" ]; then
 fi
 # [ -n "$vpn" ] && echo -n " $vpn |"
 # echo -n "#[fg=black,bg=white] on #[fg=cyan]$(hostname) #[fg=white,bg=black]| "
-echo -n " Batt: $(acpi -b | grep  -o '[0-9]*%' | head -n1) & $(acpi -b | grep  -o '[0-9]*%'| tail -n1) "
+echo -n " Batt: $(acpi -b | grep  -o '[0-9]*%' | head -n1) "
 echo -n "#[fg=green]$(acpi -b |grep -o "Charging")#[fg=red]$(acpi -b |grep -o "Discharging") "
 echo -n "#[fg=white]| $(date +'%a %d %b %R ')"
 # seconds show with %S

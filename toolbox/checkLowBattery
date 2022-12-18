@@ -17,7 +17,7 @@ export DBUS_SESSION_BUS_ADDRESS=${tmpStr:25:200}
 export LC_NUMERIC=en_US.UTF-8
 
 # BATTERY_LEVEL=$(acpi -b | grep -P -o '[0-9]+(?=%)')
-BATTERY_LEVEL=$(acpi -b | grep  -o '[0-9]*%' | grep -o '[0-9]*' | awk 'BEGIN{num=0}{ SUM += $1; num+=1} END { print SUM/num }')
+BATTERY_LEVEL=$(acpi -b | grep  -oP "[0-9]+(?=%)")
 COMPARING_FLOATS=$(echo "$BATTERY_LEVEL<$TOO_LOW" | bc -l)
 STATUS=$(cat $POWERSUPPLY)
 

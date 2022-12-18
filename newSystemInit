@@ -27,7 +27,7 @@ sudo gpasswd -a $USER input
 
 
 # enable tapping https://unix.stackexchange.com/questions/337008/activate-tap-to-click-on-touchpad
-xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+xinput set-prop "SYNA8018:00 06CB:CE67 Touchpad" "libinput Tapping Enabled" 1
 
 # make backspace backspace and not ^H, otherwise ^H (i.e. go to left window) can't be used in vim
 # from https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
@@ -65,6 +65,8 @@ sudo chmod u+x /usr/local/bin/change_brightness.sh
 # add to ~/.gpg/gpg-agent.conf the line `pinentry-program /usr/bin/pinentry-gtk-2`
 # to once enter and save the password
 # afterwards can delete lines again
+
+# add to rofi commands the ones for chromium, chrome
 
 
 # not needed last time
