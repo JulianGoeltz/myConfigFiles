@@ -125,7 +125,7 @@ function saveplottedtobackup() {
 }
 
 # alias squeueRepeat='while true; do tmp=$(date; LLSS="(W66|W67)" ~/myConfigFiles/toolbox/whichLicences.sh); clear; echo -en "$tmp"; sleep 10; done'
-alias squeueRepeat='while true; do tmp=$(date; LLSS="(W67F3)" ~/myConfigFiles/toolbox/whichLicences.sh); clear; echo -en "$tmp"; sleep 10; done'
+alias squeueRepeat='while true; do tmp=$(date; ~/myConfigFiles/toolbox/whichLicences.sh --colour "(W69F0)" --chip-revision 3); clear; echo -en "$tmp"; sleep 10; done'
 #alias squeueRepeatWork="cd ~/MasterThesis/model-tempodrom/code; while true; do squeueRepeat.sh work | tee ~/.tmp_squeueRepeat ; done"
 # function squeueRepeat () {
 # 	while true; do

@@ -37,8 +37,12 @@ EOF
 }
 
 # parse potential arguments
-if [ $# -gt 0 ]; then
+while [ "$#" -gt 0 ]; do
 	case $1 in
+		"--chip-revision")
+			chipRevisionArg="--chip-revision=$2"
+			shift 2
+			;;
 		"-s"|"--skip")
 			patternForSkipping=$2
 			shift 2
@@ -52,7 +56,7 @@ if [ $# -gt 0 ]; then
 			exit
 			;;
 	esac
-fi
+done
 
 IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
@@ -178,8 +182,8 @@ unset IFS
 echo -en "Running\n${jobsRunning}"
 echo -e "Pending\n${jobsPending}"
 if [ -n "$LLSS" ]; then
-	freesetups="$(find_free_chip.py | sed -r "s#$LLSS#${SPECIAL}&${NC}#" | tr '\n' ' ')"
+	freesetups="$(find_free_chip.py $chipRevisionArg | sed -r "s#$LLSS#${SPECIAL}&${NC}#" | tr '\n' ' ')"
 else
-	freesetups="$(find_free_chip.py | tr '\n' ' ')"
+	freesetups="$(find_free_chip.py $chipRevisionArg | tr '\n' ' ')"
 fi
 echo -e "Free setups: ${freesetups}"
