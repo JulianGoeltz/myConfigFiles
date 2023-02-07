@@ -10,7 +10,7 @@ setopt INC_APPEND_HISTORY
 # define filename for compinstall based on host
 if [[ "$(hostname)" == "P1" ]] || [[ "$(hostname)" == "T2" ]]; then
 	zstyle :compinstall filename '/home/julgoe/.zshrc'
-elif [[ "$(hostname)" =~ "hel" ]] || [[ "$(hostname)" =~ "RyzenHost" ]]; then
+elif [[ "$(hostname)" =~ "hel" ]] || [[ "$(hostname)" =~ "RyzenHost" ]] || [[ "$(hostname)" =~ "EpycHost" ]]; then
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
 elif [[ "$(hostname)" == "login1.nemo.privat" ]] then
 	zstyle :compinstall filename '/home/hd/hd_hd/hd_ta400/.zshrc'
@@ -154,7 +154,7 @@ tm () {
 		return
 	fi
 	tmpTmuxServerPid=$(echo $tmpTmuxServerPid | grep -o "^\s*[0-9]*" | grep -o "[0-9]*")
-	[ -z "$TMUX" ] && /proc/$tmpTmuxServerPid/exe -2 attach
+	[ -z "$TMUX" ] && /proc/$tmpTmuxServerPid/exe -2 attach -c ~
 	if [ -n "$TMUX" -o "$?" -ne "0" ]; then
 		echo "tmux server might have lost socket connection, or similar. Socket is reset, try connection again."
 		kill -s USR1 $tmpTmuxServerPid

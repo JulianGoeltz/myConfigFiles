@@ -1,6 +1,7 @@
 # ##################################
 # same but different
 alias cdmaster="cd ~/Documents/ttfs_pytorch/src"
+alias cdu="cd ~/Documents/utils"
 export PATH=$PATH:~/MasterThesis/model-tempodrom/help_scripts
 fpath=(~/MasterThesis/model-tempodrom/help_scripts/completion $fpath)
 [[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
