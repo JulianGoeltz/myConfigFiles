@@ -349,10 +349,10 @@ bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofi
 bindsym $mod+w exec --no-startup-id rofi -show window
 
 # floating temporary terminal
-for_window [class="FXTerm"] floating enable, move position center, resize set width 960 px height 500 px, move right 300, move down 200
+for_window [instance="FXTerm"] floating enable, move position center, resize set width 960 px height 500 px, move right 300, move down 200
 # resize grow left 300, resize grow right 300, 
-bindsym $mod+Shift+Return exec --no-startup-id xterm -class FXTerm
-bindsym $mod+Shift+BackSpace exec --no-startup-id xterm -class FXTerm -e "zsh ~/myConfigFiles/i3scripts/ipython.sh"
+bindsym $mod+Shift+Return exec --no-startup-id xterm -name FXTerm
+bindsym $mod+Shift+BackSpace exec --no-startup-id xterm -name FXTerm -e "zsh ~/myConfigFiles/i3scripts/ipython.sh"
 
 # window setting without borders
 default_border none
@@ -383,5 +383,5 @@ bindsym --release $mod+Print exec "scrot -u -e 'xclip -selection c -t image/png 
 bindsym F9 exec --no-startup-id gromit-mpx
 
 # after selecting text, on mod+i open a floating vim with the text in it
-bindsym $mod+i exec "xclip -o -selection clipboard > /tmp/clipvim; xterm -class FXTerm -e nvim /tmp/clipvim; xclip -i  -selection clipboard < /tmp/clipvim"
+bindsym $mod+i exec "xclip -o -selection clipboard > /tmp/clipvim; xterm -name FXTerm -e nvim /tmp/clipvim; xclip -i  -selection clipboard < /tmp/clipvim"
 
