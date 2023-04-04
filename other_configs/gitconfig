@@ -20,6 +20,12 @@
 	syntax-theme = GitHub
 	# side-by-side = true
 	max-line-length = 0
+	# to have completely new/deleted lines with darker colour
+	# colours from https://github.com/dandavison/delta/blob/2d739d181307e51751a0aecd3a88524f9b878c15/themes.gitconfig#L76
+	plus-style = "syntax #a0efa0"
+	plus-non-emph-style = "syntax #d0ffd0"
+	minus-style = "syntax #ffc0c0"
+	minus-non-emph-style = "syntax #ffe0e0"
 
 [interactive]
 	diffFilter = delta --color-only
