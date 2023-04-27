@@ -5,7 +5,6 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
-setopt INC_APPEND_HISTORY
 # End of lines configured by zsh-newuser-install
 # define filename for compinstall based on host
 if [[ "$(hostname)" == "P1" ]] || [[ "$(hostname)" == "T2" ]]; then
@@ -54,7 +53,7 @@ function venvtemp {
 }
 
 
-setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
+setopt SHARE_HISTORY  # adds history incrementally and share it across sessions
 REPORTTIME=10 # print elapsed time when more than 10 seconds
 [ -f /etc/zsh_command_not_found ] && source /etc/zsh_command_not_found # to get info about similar commands
 [[ $PATH == *"myConfigFiles/toolbox"* ]] || PATH=$PATH:~/myConfigFiles/toolbox
@@ -465,3 +464,8 @@ bindkey '^N' autosuggest-execute
 [ -d "$pluginDir/zsh-history-substring-search" ] && source $pluginDir/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+# actual delete character
+bindkey "^[[3~" delete-char
+# history line up or down with ctrl-j/k
+bindkey '^K' up-line-or-history
+bindkey '^J' down-line-or-history
