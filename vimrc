@@ -132,6 +132,22 @@ Plug 'rickhowe/diffchar.vim'
 Plug 'stephpy/vim-php-cs-fixer'
 " neosolarized specifically for neovide
 Plug 'overcache/NeoSolarized'
+" wilder for autosuggestions
+if has('nvim')
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+
+  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+else
+  Plug 'gelguy/wilder.nvim'
+
+  " To use Python remote plugin features in Vim, can be skipped
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 call plug#end()
 
 
@@ -391,3 +407,6 @@ let g:vimwiki_global_ext=0
 
 " turn off mouse interactions
 set mouse=
+
+" autosuggestions in command and search modes
+call wilder#setup({'modes': [':', '/', '?']})
