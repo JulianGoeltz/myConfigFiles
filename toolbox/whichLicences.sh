@@ -68,6 +68,8 @@ for jobinfo in $(scontrol show -o job --all); do
 			continue
 		elif echo "$jobinfo" | grep -q "Licenses=(null)"; then
 			continue
+		elif echo "$jobinfo" | grep -vq "JobName=p_jg_FastAndDeep"; then
+			continue
 		fi
 	fi
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
@@ -123,6 +125,8 @@ for jobinfo in $(scontrol show -o job --all); do
 				else
 					job_name=", $(echo $job_name | wc -l) files"
 				fi
+			elif grep -q "test.py" $fileTmpScontrol ; then
+				job_name=" '$(grep -Po "test.py \K.*" $fileTmpScontrol)'"
 			else
 				job_name=""
 			fi
@@ -168,11 +172,13 @@ for jobinfo in $(scontrol show -o job --all); do
 	else
 		job_licenses=$(echo "$job_licenses" | grep --color=always "W[0-9]*")
 	fi
+	[[ -n "${job_licenses}" ]] && job_licenses=" has ${job_licenses}"
+
 
 	if echo "$job_status" | grep -q "RUNNING"; then
-		jobsRunning="${jobsRunning}Job $job_id ($job_time) by $job_user has $job_licenses$job_host$job_name\n"
+		jobsRunning="${jobsRunning}Job $job_id ($job_time) by $job_user$job_licenses$job_host$job_name\n"
 	else
-		jobsPending="${jobsPending}Job $job_id by $job_user has $job_licenses$job_host$job_name\n"
+		jobsPending="${jobsPending}Job $job_id by $job_user$job_licenses$job_host$job_name\n"
 	fi
  done
 # redo previous change
