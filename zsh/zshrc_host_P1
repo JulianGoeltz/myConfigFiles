@@ -6,6 +6,7 @@ alias cdp="cd ~/Documents/papers"
 
 # git editor and pager; easier to set host specific
 export GIT_PAGER="delta"
+# alias bat="bat --theme='Solarized (dark)'"
 alias bat="bat --theme=GitHub"
 export GIT_EDITOR=nvim
 

@@ -17,9 +17,12 @@
 [init]
 	defaultBranch = main
 [delta]
-	syntax-theme = GitHub
-	# side-by-side = true
 	max-line-length = 0
+	# side-by-side = true
+	# # THEME DARK
+	# syntax-theme = zenburn
+	# THEME BRIGHT
+	syntax-theme = GitHub
 	# to have completely new/deleted lines with darker colour
 	# colours from https://github.com/dandavison/delta/blob/2d739d181307e51751a0aecd3a88524f9b878c15/themes.gitconfig#L76
 	plus-style = "syntax #a0efa0"

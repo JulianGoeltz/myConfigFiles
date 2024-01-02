@@ -37,6 +37,8 @@ xterm*VT100.Translations: #override \
 *faceSize: 10
 *eightBitInput: false
 
+! for theme bright/dark change. also change zsh/zshrc_host_P1 and other_configs/gitconfig
+#if 1
 ! after change do `xrdb ~/.Xdefaults`
 ! LIGHT
 #define S_base3         #002b36
@@ -48,15 +50,17 @@ xterm*VT100.Translations: #override \
 #define S_base02        #eee8d5
 #define S_base03        #fdf6e3
 
-! ! DARK
-! #define S_base3         #fdf6e3
-! #define S_base2         #eee8d5
-! #define S_base1         #93a1a1
-! #define S_base0         #839496
-! #define S_base00        #657b83
-! #define S_base01        #586e75
-! #define S_base02        #073642
-! #define S_base03        #002b36
+#else
+! DARK
+#define S_base3         #fdf6e3
+#define S_base2         #eee8d5
+#define S_base1         #93a1a1
+#define S_base0         #839496
+#define S_base00        #657b83
+#define S_base01        #586e75
+#define S_base02        #073642
+#define S_base03        #002b36
+#endif
 
 *background:            S_base03
 *foreground:            S_base0
