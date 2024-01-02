@@ -203,7 +203,12 @@ adb_transfer() {
 	done
 }
 
-alias btheadset="bluetoothctl disconnect 00:1B:66:CA:9C:76 && bluetoothctl connect 00:1B:66:CA:9C:76 && (sleep 1 && pkill -SIGRTMIN+20 i3blocks)&| "
+btheadset () {
+	bluetoothctl disconnect 00:1B:66:CA:9C:76 && \
+	bluetoothctl connect 00:1B:66:CA:9C:76 && \
+	(sleep 1 && pkill -SIGRTMIN+20 i3blocks)&|
+	(sleep 2.5 && pactldefault.sh)&|
+}
 
 # create MWE of latex
 mwe_latex () {
