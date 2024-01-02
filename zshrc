@@ -109,6 +109,7 @@ alias -g TT=' | tee teed_$(date +"%Y%m%d_%H%M%S")'
 alias -g H=" | head"
 alias -g S=" | sort"
 alias -g N=" && notify-send 'Command succeeded' || notify-send 'Command failed'"
+alias -g Y=" | xclip -i -selection clipboard"
 
 
 ipy (){
