@@ -5,10 +5,11 @@
 RED=$(printf '\033[1;31m')
 ORANGY=$(printf '\033[0;33m')
 SPECIAL=$(printf '\033[1;35m')
+BOLD=$(printf '\033[1m')
 NC=$(printf '\033[0m')
 
 # to make ugly uids human readable
-declare -A replace_user=( [hd383]=billi [iy410]=yannik [qx385]=joscha [wv385]=baumi)
+declare -A replace_user=( [hd383]=billi [iy410]=yannik [qx382]=joscha [wv385]=baumi)
 
 # variable is used via grep for removing jobs on matching setups from printed list
 JENKINSSPECIALSETUP=W62F
@@ -58,6 +59,7 @@ while [ "$#" -gt 0 ]; do
 	esac
 done
 
+dostuff () {
 IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
 for jobinfo in $(scontrol show -o job --all); do
@@ -68,8 +70,8 @@ for jobinfo in $(scontrol show -o job --all); do
 			continue
 		elif echo "$jobinfo" | grep -q "Licenses=(null)"; then
 			continue
-		elif echo "$jobinfo" | grep -vq "JobName=p_jg_FastAndDeep"; then
-			continue
+		# elif echo "$jobinfo" | grep -vq "JobName=p_jg_FastAndDeep"; then
+		# 	continue
 		fi
 	fi
 	job_id=$(echo "$jobinfo" | grep -oP "JobId=\K[0-9]*")
@@ -183,13 +185,19 @@ for jobinfo in $(scontrol show -o job --all); do
  done
 # redo previous change
 unset IFS
+}
+dostuff
 
 [ -n "${vis_jenkin}" ] && echo -e "(${ORANGY}vis_jenkin${NC} ${vis_jenkin})"
-echo -en "Running\n${jobsRunning}"
 echo -e "Pending\n${jobsPending}"
+echo -en "Running\n${jobsRunning}"
 if [ -n "$LLSS" ]; then
 	freesetups="$(find_free_chip.py $chipRevisionArg | sed -r "s#$LLSS#${SPECIAL}&${NC}#" | tr '\n' ' ')"
 else
 	freesetups="$(find_free_chip.py $chipRevisionArg | tr '\n' ' ')"
 fi
+freeNodes="$(sinfo -p einc -t IDLE --noheader -o "%N")"
+gpuNodes="$(scontrol show nodes --oneliner "EINCHost[1-17]" | grep -i gpu | grep -oP "(NodeName=|Gres=|State=)\K[^ ]*" | tr '\n' ' ' | sed -r "s#(,|)(EINCHost[0-9]*)#  ${BOLD}\2${NC}#g")"
 echo -e "Free setups: ${freesetups}"
+echo -e "Free nodes: ${freeNodes}"
+echo -e "GPU nodes: ${gpuNodes::-1}"
