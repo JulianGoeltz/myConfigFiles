@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # set -euo pipefail
 source /home/julgoe/myConfigFiles/i3blockscripts/blocks_defines.sh
@@ -12,14 +12,10 @@ string=$(iw dev wlp0s20f3 link)
 if [ "$?" -eq 0 ] && [ "$(echo "$string" | grep -c "Not connected.")" -eq 0 ]; then
 	echo -n "Wifi: "
 	echo -n "$(echo "$string" | grep -oP "SSID: \K.*")"
-	signalstr=$(echo "$string" | grep "Signal level" | sed -E 's/.*Signal level=-([0-9]*) dBm.*/\1/')
-	signalstr=$(((100-signalstr)*2))
-	signalstr=$((signalstr > 100 ? 100 : signalstr))
-	signalstr=$((signalstr < 0 ? 0 : signalstr))
-	printf " at%4u%%" $signalstr
 fi
-# in ICEs show some fun information
-if [[ "$(echo "$string" | grep -oP "SSID: \K.*")" =~ "(WIFIonICE|WIFI@DB|freeWIFIahead!)" ]]; then
-	python ~/.config//i3/scripts/db_wifi.py
+# in some trains show fun information
+wifi_ssid="$(echo "$string" | grep -oP "SSID: \K.*")"
+if [[ "$wifi_ssid" =~ "(WIFIonICE|WIFI@DB|freeWIFIahead!|_SNCF_WIFI_INOUI|Portaleregionale FNM)" ]]; then
+	python ~/.config//i3/scripts/db_wifi.py "$wifi_ssid"
 fi
 echo
