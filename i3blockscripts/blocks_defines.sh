@@ -9,6 +9,7 @@ CspecialCyan="#06989a"
 
 #emojis (easily searched on https://emojipedia.org/)
 emojiBattery=🔋
+emojiFan=🌬
 emojiHeadphone=🎧
 emojiMicrophone=🎙️
 emojiMute=🔇
