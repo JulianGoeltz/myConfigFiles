@@ -171,6 +171,24 @@ tmux_tree () {
 	done
 }
 
+function tmux_killall () {
+	# kill all tmux clients
+	echo "before"
+	tmux list-clients
+	for cl in $(tmux list-clients | awk '{print $2}'); do
+		tmux detach -s "$cl"
+	done
+	echo "after"
+	tmux list-clients
+	# in all sessions set DISPLAY and SS_AUTH_SOCK
+	IFS=$'\n'
+	for sess in $(tmux list-sessions | grep -oP "^[^:]*"); do
+		tmux setenv -t "$sess" DISPLAY $DISPLAY
+		tmux setenv -t "$sess" SSH_AUTH_SOCK $SSH_AUTH_SOCK
+	done
+	unset IFS
+}
+
 # in order to see filenames before looking at files
 iv () { ls -lAh $@; inkview $(ls $@)}
 fe () { ls -lAh $@; feh $(ls $@)}

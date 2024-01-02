@@ -158,24 +158,6 @@ alias singularityemrun='singularity exec --app visionary-wafer /containers/stabl
 # to cd to current jenkins workspace if a p_jg_TimeToFirstSpike is running
 alias cdjenk="cd; cd /jenkins/jenlib_workspaces_f9/p_jg_T*x/"
 
-function tmux_killall () {
-	# kill all tmux clients
-	echo "before"
-	tmux list-clients
-	for cl in $(tmux list-clients | awk '{print $2}'); do
-		tmux detach -s "$cl"
-	done
-	echo "after"
-	tmux list-clients
-	# in all sessions set DISPLAY and SS_AUTH_SOCK
-	IFS=$'\n'
-	for sess in $(tmux list-sessions | grep -oP "^[^:]*"); do
-		tmux setenv -t "$sess" DISPLAY $DISPLAY
-		tmux setenv -t "$sess" SSH_AUTH_SOCK $SSH_AUTH_SOCK
-	done
-	unset IFS
-}
-
 alias eog=eom
 
 # use proxied git command
