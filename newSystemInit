@@ -18,7 +18,7 @@ chromium --proxy-server="socks5://localhost:12345"
 # vim completion with coc
 # first make node and npm available (on HPC via executable like `wget https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-x64.tar.xz`)
 # then PlugInstall and PlugUpdate
-# then install :CocInstall coc-pyright coc-json coc-vimtex
+# then install :CocInstall coc-pyright coc-json coc-vimtex coc-rust-analyzer
 
 # in compton.conf (either local or /etc/xdg/compton.conf) 
 # comment out `vsync = true;`, then rofi is opaque
