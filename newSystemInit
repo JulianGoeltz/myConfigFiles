@@ -1,5 +1,5 @@
 # Printing
-# infos on https://printer.kip.uni-heidelberg.de/jobs/
+# infos on https://printer.kip.uni-heidelberg.de/jobs/ and https://wiki.kip.uni-heidelberg.de/KIPwiki/index.php/EDV:Drucker/Linux
 # have to put the printserver in  ~/.cups/client.conf the following
 ServerName printer.kip.uni-heidelberg.de
 # to print at hel, use 
