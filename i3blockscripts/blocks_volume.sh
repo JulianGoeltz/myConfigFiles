@@ -3,12 +3,13 @@
 # set -euo pipefail
 source /home/julgoe/myConfigFiles/i3blockscripts/blocks_defines.sh
 
-tmpQCbatteryFile=/tmp/qcbattery
+tmpCbatteryFile=/tmp/qcbattery
+tmpTWbatteryFile=/tmp/TWbattery
 
-bluetoothqc() {
+batteryQC() {
 	if ! [ -f $tmpQCbatteryFile ] || [ $(($(date +%s) - $(stat -c %Y $tmpQCbatteryFile))) -gt 60 ]; then
 		address=$(echo 'devices Paired' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')
-		based-connect $address $@ > $tmpQCbatteryFile
+		based-connect $address -b > $tmpQCbatteryFile
 	fi
 	cat $tmpQCbatteryFile
 }
@@ -39,7 +40,7 @@ Volume() {
 
 	# battery info
 	if [ "$#" -gt 1 -a "$1" -ne "0" ]; then
-		retval="$retval (QC $emojiBattery $2%)"
+		retval="$retval ($emojiBattery $2%)"
 	fi
 	echo "$retval" 
 }
@@ -49,16 +50,16 @@ standardSink=$(echo "$sinkList" | jq '.[] | select (.name == "alsa_output.pci-00
 
 echo -n "$(Volume $standardSink)"
 
-bluezSink=$(echo "$sinkList" | grep "bluez" | awk '{print $1}')
 for bluezSink in $(echo $sinkList | jq '.[] | select (.name | match("bluez")) | .index' ); do
 	# get battery for bose qc35
-	echo $bluezSink >&2
+	# echo $bluezSink >&2
 	if echo $sinkList | jq '.[] | select (.index == '"$bluezSink"') | .description' | grep -q "35"; then
-		qc_battery=$(bluetoothqc -b)
-		echo  $qc_battery>&2
+		qc_battery=$(batteryQC)
+	# elif [[ "$(echo $sinkList | jq '.[] | select (.index == '"$bluezSink"') | .description')" == '"MOMENTUM TW 3"' ]] ; then
+	# 	qc_battery="$(echo $sinkList | jq '.[] | select ( .index == '$bluezSink' ) | .properties."bluetooth.battery"')"
+	# 	qc_battery=${qc_battery:1:-2}
 	else
 		qc_battery=""
-		echo  qc_battery>&2
 	fi
 
 	# display microphone if headset unit active
