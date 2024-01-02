@@ -1,0 +1,26 @@
+# ##################################
+# same but different
+[[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+alias cdmaster="cd /store/hbp/ich029/TTFS/jgoeltz/ttfs_pytorch/src"
+
+# git editor and pager; easier to set host specific
+export GIT_PAGER=delta
+export GIT_EDITOR=nvim
+
+# ##################################
+# very different
+#
+module load cray-python
+module load daint-gpu
+# module load cudatoolkit/10.2.89_3.28-2.1__g52c0314
+module load cudatoolkit/11.1.0_3.39-4.1__g484e319
+module load singularity/3.6.4
+module load PyTorch/1.10.1-CrayGNU-21.09
+
+module list
+
+# better colours in tmux
+#export TERM=screen-256color
+alias tmux="tmux -2" # to assume 256 colours
+

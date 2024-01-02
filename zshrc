@@ -20,6 +20,8 @@ elif echo $HOME | grep -q termux; then
 	zstyle :compinstall filename '/data/data/com.termux/files/home/.zshrc'
 elif hostname | grep -q atcremers; then
 	echo "welcome at cremers"
+elif hostname | grep -q daint; then
+	zstyle :compinstall filename '/users/bp000362/.zshrc'
 else
 	echo "no known host. what to do?"
 	echo "Opening bash so you can adapt. Think about exiting"

@@ -1,0 +1,5 @@
+# ### potentially powerline
+run-shell "~/.local/bin/powerline-config tmux setup"
+
+
+# ### other stuff
