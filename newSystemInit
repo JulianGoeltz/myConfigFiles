@@ -16,7 +16,9 @@ chromium --proxy-server="socks5://localhost:12345"
 # uncomment `color` option in /etc/pacman.conf
 
 # vim completion with coc
-# install :CocInstall coc-pyright coc-json coc-vimtex
+# first make node and npm available (on HPC via executable like `wget https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-x64.tar.xz`)
+# then PlugInstall and PlugUpdate
+# then install :CocInstall coc-pyright coc-json coc-vimtex
 
 # in compton.conf (either local or /etc/xdg/compton.conf) 
 # comment out `vsync = true;`, then rofi is opaque

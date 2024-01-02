@@ -53,7 +53,8 @@ Plug 'airblade/vim-gitgutter'
 
 " in container on hel, zsh doesnt work
 set shell=/bin/sh
-if system('hostname') =~ "P1"
+" setup coc on P1, hel, daint
+if system('hostname') =~ "P1" || system('hostname') =~ "helvetica" || system('hostname') =~ "daint"
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	source ~/.vim/vim_coc.vim
 
@@ -73,10 +74,16 @@ if system('hostname') =~ "P1"
 				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 	"let g:coc_snippet_next = '<tab>'
+else
+	let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
+	if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
+		Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+		Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
+		let g:ycm_extra_conf_vim_data = ['&filetype']
+	endif
+endif
 
-	"omnicomplete
-	"set omnifunc=syntaxcomplete#Complete
-	
+if system('hostname') =~ "P1"
 	"for forward search in latex with zathura
 	let g:vimtex_view_general_viewer='zathura'
 	let g:vimtex_view_method = 'zathura'
@@ -88,24 +95,6 @@ if system('hostname') =~ "P1"
 	let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr, pre, script'
 	"set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	source ~/.vim/vim_coc.vim
-
-	function! s:check_back_space() abort
-		let col = col('.') - 1
-		return !col || getline('.')[col - 1]  =~ '\s'
-	endfunction
-
-	" Insert <tab> when previous text is space, refresh completion if not.
-	inoremap <silent><expr> <TAB>
-				\ coc#pum#visible() ? coc#pum#next(1):
-				\ <SID>check_back_space() ? "\<Tab>" :
-				\ coc#refresh()
-	inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-	inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
-				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
 	"for forward search in latex with zathura
 	let g:vimtex_view_method = 'mupdf' "zathura'
 endif
