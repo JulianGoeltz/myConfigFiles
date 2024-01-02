@@ -1,7 +1,7 @@
 #compdef srun
 _srun() {
 	_arguments \
-	  "(-p --partition)"{-p,--partition}"[partition]:partition:(interactive simulation cube)" \
+	  "(-p --partition)"{-p,--partition}"[partition]:partition:(interactive simulation cube einc compile)" \
 	  "(-t --time)"{-t,--time}"[timelimit]:timelimit:" \
 	  "--begin[delayed start]:delayed start:" \
 	  "--fpga-without[fpga-without]:fpga without:(3)" \
