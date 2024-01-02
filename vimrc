@@ -88,14 +88,23 @@ if system('hostname') =~ "P1"
 	let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr, pre, script'
 	"set shell=/bin/zsh
 elseif system('hostname') =~ "helvetica"
-	let g:ycm_requirements_met = v:version >= 705 || (v:version == 703 && has('patch584'))
-	if g:ycm_requirements_met " && index(g:hosts_ycm, hostname()) >= 0
-		Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-		Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'} " generating ycm_extra_conf.py for YCM
-	endif
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	source ~/.vim/vim_coc.vim
 
-	let g:ycm_extra_conf_vim_data = ['&filetype']
-	"let g:ycm_extra_conf_globlist = ['~/MasterThesis/utils/adc_error/*']
+	function! s:check_back_space() abort
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~ '\s'
+	endfunction
+
+	" Insert <tab> when previous text is space, refresh completion if not.
+	inoremap <silent><expr> <TAB>
+				\ coc#pum#visible() ? coc#pum#next(1):
+				\ <SID>check_back_space() ? "\<Tab>" :
+				\ coc#refresh()
+	inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+	inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 	"for forward search in latex with zathura
 	let g:vimtex_view_method = 'mupdf' "zathura'
