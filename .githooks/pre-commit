@@ -38,16 +38,6 @@ if [[ "$(hostname)" == "P1" ]]; then
 		everythingOK=false
 		pacman -Qqe > "$LocOfScript/../listOfPackages.txt"
 	fi
-
-	# check whether new pips have been installed
-	tmpString=$(diff "$LocOfScript/../listOfPipPackages.txt" <(pip list --user))
-	if [[ $? -ne 0 ]]; then
-		echo "The saved list of installed pip packages and the current installed pip packages differ like this:"
-		echo "$tmpString"
-		echo "(If you think everything is correct, commit with '--no-verify')"
-		everythingOK=false
-		pip list --user > "$LocOfScript/../listOfPipPackages.txt"
-	fi
 fi
 
 if ! $everythingOK; then
