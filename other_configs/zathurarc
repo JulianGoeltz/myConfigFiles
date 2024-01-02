@@ -1,3 +1,6 @@
+# switch odd/even pages in side-by-side mode
+# set first-page-column 1:1
+
 # zoom and scroll step size
 set zoom-step 20
 set scroll-step 80

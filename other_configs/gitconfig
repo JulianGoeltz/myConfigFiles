@@ -6,6 +6,7 @@
 	adog = log --all --decorate --oneline --graph --color
 	co = checkout
 	st = status
+	legs = "!f() { echo do you even lift; }; f"
 	watch = "!f() { watch -n 0.1 --color 'git adog | head -n 30'; }; f"
 [gitreview]
 	username = goeltz

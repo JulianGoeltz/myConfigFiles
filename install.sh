@@ -206,7 +206,6 @@ if [[ "$(hostname)" == "P1" ]]; then
 	echo "----sudos"
 
 	echo "--acpi&pm"
-	checkSimilaritiesAndLink sudos/lock /lib/systemd/system-sleep/10lock sudo nolink
 	checkSimilaritiesAndLink sudos/acpi_handler.sh /etc/acpi/handler.sh sudo nolink
 
 	echo "--networkmanager"

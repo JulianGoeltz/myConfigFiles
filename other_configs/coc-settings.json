@@ -5,5 +5,5 @@
     //         "--ignored-classes=numpy",
     //         "--extension-pkg-whitelist=numpy"
     // ],
-    "python.linting.pylintEnabled": true
+    // "python.linting.pylintEnabled": true
 }

@@ -8,6 +8,7 @@ CoBa
 CuBa
 distortive
 energy-to-solution
+EBRAINS
 first-spike
 integrate-and-fire
 initializations

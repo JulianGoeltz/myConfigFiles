@@ -309,6 +309,7 @@ for_window [all] border pixel
 # for_window [class="Spotify"] floating enable, resize set width 1400 px height 600 px
 for_window [class="Pavucontrol"] floating enable
 for_window [instance="Msgcompose"] floating enable, resize set width 800 px height 700 px 
+for_window [window_role="extensionPopup"] floating enable # float thunderbird popups
 
 # bind key to use screenSet, easiest for making screen work after removing from dockingstation
 bindsym $mod+Control+1 "exec --no-startup-id /bin/sh ~/myConfigFiles/toolbox/screenSet.sh"
@@ -384,4 +385,5 @@ bindsym F9 exec --no-startup-id gromit-mpx
 
 # after selecting text, on mod+i open a floating vim with the text in it
 bindsym $mod+i exec "xclip -o -selection clipboard > /tmp/clipvim; xterm -name FXTerm -e nvim /tmp/clipvim; xclip -i  -selection clipboard < /tmp/clipvim"
+bindsym $mod+Shift+i exec "xclip -o -selection clipboard > /tmp/clipvim_LT; languagetool --language en-GB --disable OXFORD_SPELLING_Z_NOT_S /tmp/clipvim_LT 2>&1 | tee /tmp/clipvim_LTchecked; xterm -name FXTerm -e nvim -O /tmp/clipvim_LT /tmp/clipvim_LTchecked; xclip -i  -selection clipboard < /tmp/clipvim_LT"
 

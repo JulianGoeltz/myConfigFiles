@@ -72,6 +72,9 @@ if system('hostname') =~ "P1" || system('hostname') =~ "helvetica" || system('ho
 
 	inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
 				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+	" default coc jump is to vsplit, see https://vi.stackexchange.com/questions/21774/open-coc-definition-in-new-split-in-coc
+	let g:coc_user_config = {}
+	let g:coc_user_config['coc.preferences.jumpCommand'] = ':vsplit'
 
 	"let g:coc_snippet_next = '<tab>'
 else
@@ -408,3 +411,10 @@ set mouse=
 
 " autosuggestions in command and search modes
 call wilder#setup({'modes': [':', '/', '?']})
+
+map <C-7> :Rexplore<cr>
+
+" to be able to use the shorter one (muscle memory)
+command Gblame Git blame
+" show gitgutter in addition to line numbers
+set signcolumn=yes

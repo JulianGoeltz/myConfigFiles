@@ -125,7 +125,7 @@ if [[ -x `which notify-send` ]]; then
         if [[ "${zsh_notifier_cmd}" != "" ]]; then
             time_taken=$(( `date +%s` - ${zsh_notifier_time} ))
             if (( $time_taken > $REPORTTIME )) &&
-		    ! echo $zsh_notifier_cmd | grep -qP "(^vim|^nvim|^fg|^less|^ssh|^iv |^inkview|^man|^zoom|^ipython)" ; then
+		    ! echo $zsh_notifier_cmd | grep -qP "(^vim|^nvim|^fg|^less|^ssh|^iv |^inkview|^man|^zoom|^ipython|^git|^eog)" ; then
                 notify-send "task finished" \
 			"'$zsh_notifier_cmd' return $returnCode exited after $time_taken seconds"
             fi
@@ -179,13 +179,21 @@ timer() {
 	local t=$1 && shift
 	[ $# -gt 0 ] && local message="$@" || local message="time's up"
 	(sleep $t && (cvlc ~/Music/bell.mp3 vlc://quit 2>/dev/null &;
+		      dunstctl set-paused false;
 	              dunstify -t 10000 "$message")
 	) &|
 	echo "set timer for $t"
 }
 
 # very specific
-alias sshhel_="sshhel_fs && export ZSH_PROMPT_GIT_DONTDOIT="lala" && cd ~/mnt/mntHel/ && zsh && sshhel_fs_unmount && exit"
+sshhel_ () {
+	sshhel_fs && \
+	export ZSH_PROMPT_GIT_DONTDOIT="lala" && \
+	cd /home/julgoe/mnt/mntHel/${1:-jenkinsjob_FD_20231009/fastAndDeep/src} && \
+	zsh && \ 
+	sshhel_fs_unmount && killall watchAndUpdateFile.sh && \
+	exit
+}
 
 # copy files to android phone connected via USB
 adb_transfer() {
@@ -222,3 +230,7 @@ mwe_latex () {
 
 # inverse search with vimtex
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket_$$
+
+compareToTemplate () {
+	vimdiff $1 ~/Documents/utils/automised_latex_template/$1
+}
