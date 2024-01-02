@@ -79,14 +79,16 @@ Host judac
 
 Host elaCSCS
     HostName ela.cscs.ch
-    IdentityFile ~/.ssh/daint_rsa
+    IdentityFile ~/.ssh/cscs-key
+    IdentitiesOnly yes
     User bp000362
     ForwardAgent yes
     ForwardX11 yes
 
 Host daintCSCS
-    HostName daint103.cscs.ch
-    IdentityFile ~/.ssh/daint_rsa
+    HostName daint102.cscs.ch
+    IdentityFile ~/.ssh/cscs-key
+    IdentitiesOnly yes
     ProxyJump elaCSCS
     User bp000362
     ForwardAgent yes

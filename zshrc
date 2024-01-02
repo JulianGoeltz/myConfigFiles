@@ -82,6 +82,7 @@ alias sshhel_visu="sshhel -L 6931:localhost:6931"
 alias sshnemo_fs_unmount="fusermount -u -z ~/mnt/mntNemo"
 alias sshcremers_fs="sshfs -o ServerAliveInterval=60 cremers:. ~/mnt/mntCremers"
 alias sshcremers_fs_unmount="fusermount -u -z ~/mnt/mntCremers"
+alias sshdaint="bash ~/externalSources/sshservice-cli/cscs-keygen.sh && ssh daintCSCS"
 
 alias vpn_connect="sudo openconnect vpn-ac.urz.uni-heidelberg.de"
 
