@@ -219,3 +219,6 @@ mwe_latex () {
 	echo "\\documentclass{article}\n\\\\begin{document}\nMWE for latex\n\n\\\\end{document}" > $tmpfn
 }
 
+
+# inverse search with vimtex
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket_$$

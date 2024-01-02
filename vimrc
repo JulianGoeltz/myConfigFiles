@@ -309,8 +309,8 @@ let g:vimtex_compiler_latexmk = {
     \ ],
     \}
 "    \   '-jobname=tmp.main', " but should be done in local .latexmkrc
-" dont open it automatically
-let g:vimtex_view_automatic = 0
+" " dont open it automatically
+" let g:vimtex_view_automatic = 0
 "let g:vimtex_quickfix_method = 'pplatex'
 " let g:vimtex_quickfix_latexlog = {
 "   \ 'overfull',
@@ -391,8 +391,8 @@ autocmd VimEnter * let g:airline#themes#dark#palette.inactive.airline_c = ['#4e4
 
 " neovim specialties
 if has("nvim")
-	let g:vimtex_compiler_progname = 'nvr'
-	let g:vimtex_compiler_latexmk.backend = 'nvim'
+	" let g:vimtex_compiler_progname = 'nvr'
+	" let g:vimtex_compiler_latexmk.backend = 'nvim'
 endif
 
 
