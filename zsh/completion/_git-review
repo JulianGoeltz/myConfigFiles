@@ -1,0 +1,26 @@
+#compdef git-review
+_git-review() {
+	_arguments \
+	  "(-d --download)"{-d,--download}"[download change]:download change:->changes" \
+	  && return 0
+
+	case $state in
+		changes)
+		        local -a changes descs
+		        # in order to split on new lines not spaces
+		        IFS=$'\n'
+		        for line in $(git-review --list | head -n -1); do
+				# echo $line | tr -s '[:blank:]' ' ' | cut --delimiter=' ' -f1
+		                changes=($changes "$(echo $line | cut --delimiter=' ' -f1)")
+		                names=($names $line)
+		        done
+			unset IFS
+			# command adapted from some other
+		        _wanted -V changes expl changes compadd -d names -a changes && ret=0
+			return
+			;;
+	esac
+	return
+}
+_git-review "$@"
+
