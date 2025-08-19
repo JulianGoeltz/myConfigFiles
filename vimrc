@@ -444,3 +444,5 @@ nmap <silent> zn <Plug>(SpellRotateForward)
 nmap <silent> zp <Plug>(SpellRotateBackward)
 vmap <silent> zn <Plug>(SpellRotateForwardV)
 vmap <silent> zp <Plug>(SpellRotateBackwardV)
+" open markdown as vimwiki
+autocmd BufNewFile,BufRead *.md set ft=vimwiki
