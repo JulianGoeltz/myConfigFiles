@@ -2,8 +2,8 @@
 # same but different
 alias cdmaster="cd ~/Documents/ttfs_pytorch/src"
 alias cdu="cd ~/Documents/utils"
-export PATH=$PATH:~/MasterThesis/model-tempodrom/help_scripts
-fpath=(~/MasterThesis/model-tempodrom/help_scripts/completion $fpath)
+# export PATH=$PATH:~/MasterThesis/model-tempodrom/help_scripts
+# fpath=(~/MasterThesis/model-tempodrom/help_scripts/completion $fpath)
 [[ $PATH == *".local/bin"* ]] || export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # git editor and pager; easier to set host specific
@@ -15,44 +15,46 @@ export GIT_EDITOR=nvim
 if [ -z $SINGULARITY_APPNAME ]; then
 	source /wang/environment/software/Modules/current/init/zsh
 	# to have access to new module files, eg the one with vim+x
-	export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
+	# export MODULEPATH=/wang/environment/software/jessie/spack/20180129_live/modules:$MODULEPATH
 else
 	source /opt/init/modules.sh
-	source /opt/spack/share/spack/setup-env.sh
+	# source /opt/spack/share/spack/setup-env.sh
 fi
 
 #spack_global
 if [ -z "$TMUX" -a -z $SINGULARITY_APPNAME ]; then
-	module load waf
+	# module load waf
 	# module load nmpm_software/$(readlink /wang/environment/modules/nmpm_software/current)
-	module load ppu-toolchain
-	module load tools-slurm
-	module load tools-kintex7
+	# module load ppu-toolchain
+	# module load tools-slurm
+	# module load tools-kintex7
 
-	module load slurm-singularity/current
-	export SINGULARITYENV_PREPEND_PATH=$SINGULARITYENV_PREPEND_PATH:$HOME/myConfigFiles/toolbox
-	export SINGULARITY_SHELL=/bin/zsh
+	# module load slurm-singularity/current
+	# export SINGULARITYENV_PREPEND_PATH=$SINGULARITYENV_PREPEND_PATH:$HOME/myConfigFiles/toolbox
+	# export SINGULARITY_SHELL=/bin/zsh
 
 fi
 
 module list
 
-export PATH=$PATH:~/pip_files
+# export PATH=$PATH:~/pip_files
 export PATH=$PATH:~/tmpbuild
-if $( echo $PYTHONPATH | grep -vq pip_files); then
-	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
-	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
-	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python
-	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python/lib/python2.7/site-packages/
-fi
+# if $( echo $PYTHONPATH | grep -vq pip_files); then
+# 	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/
+# 	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/pip_files/lib/python2.7/site-packages/
+# 	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python
+# 	export PYTHONPATH=$PYTHONPATH:/wang/users/jgoeltz/cluster_home/builds_python/lib/python2.7/site-packages/
+# fi
 
 export MANPATH=/usr/local/share/man:$MANPATH
 
 
 
-if [ -z "$PREEXEC_FUNCTIONS_AMMENDED" ]; then
-	preexec_functions=($preexec_functions updateEnvTmux)
-	PREEXEC_FUNCTIONS_AMMENDED="set"
+if [ -z $SINGULARITY_APPNAME ]; then
+	if [ -z "$PREEXEC_FUNCTIONS_AMMENDED" ]; then
+		preexec_functions=($preexec_functions updateEnvTmux)
+		PREEXEC_FUNCTIONS_AMMENDED="set"
+	fi
 fi
 function updateEnvEverywhere () {
 	for _pane in `tmux list-panes -a -F '#{pane_id}'`
@@ -126,7 +128,7 @@ function saveplottedtobackup() {
 }
 
 # alias squeueRepeat='while true; do tmp=$(date; LLSS="(W66|W67)" ~/myConfigFiles/toolbox/whichLicences.sh); clear; echo -en "$tmp"; sleep 10; done'
-alias squeueRepeat='while true; do tmp=$(date; ~/myConfigFiles/toolbox/whichLicences.sh --colour "(W69F0)" --chip-revision 3); clear; echo -en "$tmp"; sleep 10; done'
+alias squeueRepeat='module load tools-slurm; while true; do tmp=$(date; ~/myConfigFiles/toolbox/whichLicences.sh --colour "(W69F0)" --chip-revision 3); clear; echo -en "$tmp"; sleep 10; done'
 #alias squeueRepeatWork="cd ~/MasterThesis/model-tempodrom/code; while true; do squeueRepeat.sh work | tee ~/.tmp_squeueRepeat ; done"
 # function squeueRepeat () {
 # 	while true; do
