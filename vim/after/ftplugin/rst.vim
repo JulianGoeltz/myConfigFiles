@@ -1,0 +1,2 @@
+setlocal spelllang=en spell
+
