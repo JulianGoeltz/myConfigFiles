@@ -24,7 +24,7 @@ help_text() {
 Listing licences currently either pending or running.
 
 * first listed are runnning, then pending, and in colorful output
-* only the cube setups are looked at
+* only the cube,einc setups are looked at
 * vis_jenkin on setup ${JENKINSSPECIALSETUP} is shortened to reduce clutter
 * if job_user and USER agree, special magic is done to infer info about the job
 * arguments:
@@ -63,7 +63,7 @@ dostuff () {
 IFS=$'\n'
 # for job in $(squeue -p "experiment" --sort=-t,u --noheader -o "%i %u %M %T" "$@"); do
 for jobinfo in $(scontrol show -o job --all); do
-	echo "$jobinfo" | grep -vqP "Partition=(cube|jenkins)|UserId=$USER" && continue
+	echo "$jobinfo" | grep -vqP "Partition=(cube|jenkins|einc)|UserId=$USER" && continue
 	if echo "$jobinfo" | grep -q vis_jenkin; then
 		if echo "$jobinfo" | grep -q "Licenses=$JENKINSSPECIALSETUP"; then
 			vis_jenkin="on $JENKINSSPECIALSETUP"
@@ -81,6 +81,22 @@ for jobinfo in $(scontrol show -o job --all); do
 		echo "$jobinfo" | grep -q "$patternForSkipping" && continue
 	fi
 
+	job_user=$(echo "$jobinfo" | grep -oP "UserId=\K[^\(]*")
+
+	tmpString=$(echo "$jobinfo" | grep -o --color=never "Licenses=[WFB,0-9]*")
+	# only show jobs with licences
+	if [[ "${tmpString}" == "Licenses=" ]]; then
+		if [[ "$job_user" != "$USER" ]]; then
+			continue
+		fi
+	fi
+	# cut off too long licences
+	if [[ "${#tmpString}" -gt 40 ]]; then
+		job_licenses="${tmpString::40}..."
+	else
+		job_licenses="$tmpString"
+	fi
+
 	job_status=$(echo "$jobinfo" | grep -oP "JobState=\K\S*")
 	# only include running/pending jobs
 	echo "$job_status" | grep -vqP "RUNNING|PENDING" && continue
@@ -93,7 +109,6 @@ for jobinfo in $(scontrol show -o job --all); do
 		job_host=""
 	fi
 
-	job_user=$(echo "$jobinfo" | grep -oP "UserId=\K[^\(]*")
 	# replace ugly UIDs
 	for uid in "${!replace_user[@]}"; do
 		job_user=${job_user//$uid/${replace_user[$uid]}}
@@ -161,13 +176,6 @@ for jobinfo in $(scontrol show -o job --all); do
 	job_time=$(echo "$jobinfo" | grep -oP "RunTime=\K[0-9:-]*")
 	job_time=$(printf '%10s' "$job_time")
 
-	# cut off too long licences
-	tmpString=$(echo "$jobinfo" | grep -o --color=never "Licenses=[WFB,0-9]*")
-	if [[ "${#tmpString}" -gt 40 ]]; then
-		job_licenses="${tmpString::40}..."
-	else
-		job_licenses="$tmpString"
-	fi
 	if [ -n "$LLSS" ] && echo "$job_licenses" | grep -qP "$LLSS"; then
 		# job_licenses="Licenses=$(tput bold)${SPECIAL}$(echo "$job_licenses" | grep "[WFB,0-9]")$(tput sgr0)${NC}"
 		job_licenses="Licenses=${SPECIAL}$(echo "$job_licenses" | grep -o "[WFB,0-9]*")${NC}"
