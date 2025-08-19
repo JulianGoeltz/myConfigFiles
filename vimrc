@@ -434,3 +434,13 @@ map <C-7> :Rexplore<cr>
 command Gblame Git blame
 " show gitgutter in addition to line numbers
 set signcolumn=yes
+"move current line one up/down
+nnoremap <A-j> :m .+1<CR>
+nnoremap <A-k> :m .-2<CR>
+
+
+" for spell rotate
+nmap <silent> zn <Plug>(SpellRotateForward)
+nmap <silent> zp <Plug>(SpellRotateBackward)
+vmap <silent> zn <Plug>(SpellRotateForwardV)
+vmap <silent> zp <Plug>(SpellRotateBackwardV)
