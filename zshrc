@@ -336,6 +336,10 @@ alias grep="grep --color=auto"
 # open vim with fugitive window open
 alias vimgs="vim -c 'G' -c '20wincmd_'"
 
+function doi2bib () {
+	/usr/bin/doi2bib $1 | bibtex-tidy --curly --numeric --duplicates=key --no-remove-dupe-fields
+}
+
 # ######## PROMPT
 # Old prompt
 # RPROMPT='%{$fg[cyan]%}[%?]%{$reset_color%} | %{$fg[yellow]%}%*%{$reset_color%}'
