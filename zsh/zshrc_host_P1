@@ -234,3 +234,7 @@ export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket_$$
 compareToTemplate () {
 	vimdiff $1 ~/Documents/utils/automised_latex_template/$1
 }
+
+# shorthand for bluetoothctl
+blc () {bluetoothctl $@ }
+blcconnect () { for ad in 08:DF:1F:86:0B:30 2C:41:A1:07:D2:28 80:C3:BA:2F:85:57; do blc connect $ad& done}
