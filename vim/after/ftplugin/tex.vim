@@ -9,6 +9,7 @@ setlocal colorcolumn=0
 
 " do spell check
 setlocal spelllang=en_gb spell
+"setlocal spelllang=en_us spell
 
 " set wrap, especcially in diffs
 setlocal wrap

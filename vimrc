@@ -50,6 +50,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 "sign column indication of git changes 
 Plug 'airblade/vim-gitgutter'
+"Typst stuff
+Plug 'kaarmu/typst.vim'
+" expose undotree
+Plug 'mbbill/undotree'
 
 " in container on hel, zsh doesnt work
 set shell=/bin/sh
@@ -105,6 +109,11 @@ endif
 Plug 'vim-airline/vim-airline'
 "Latex 
 Plug 'lervag/vimtex'
+" for the problems with lags
+let g:vimtex_syntax_conceal_disable = 1
+let g:matchup_matchparen_deferred = 1
+
+
 "Diff parts of one file (maps defined below)
 Plug 'AndrewRadev/linediff.vim'
 "vimwiki
@@ -149,6 +158,8 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+" spell rotate
+Plug 'tweekmonster/spellrotate.vim'
 call plug#end()
 
 
@@ -158,9 +169,13 @@ syntax on
 set encoding=utf-8
 
 "use solarized colorscheme
-colorscheme solarized
+if has('nvim')
+	colorscheme NeoSolarized
+else
+	colorscheme solarized
+	set background=
+endif
 syntax enable
-set background=dark
 set cursorline
 hi CursorLine cterm=underline ctermbg=8
 hi CursorLineNr ctermbg=1
@@ -274,14 +289,14 @@ highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 auto BufEnter * let &titlestring = hostname() . "::" . expand("%:t")
 set title
 
-" no more unnerving errors with vimtex
-let g:syntastic_quiet_messages = { "regex": [
-        \ '\mpossible unwanted space at "{"',
-	\ 'Command terminated with space.',
-	\ "You should perhaps use ..max. instead.",
-	\ 'Vertical rules in tables are ugly.',
-	\ 'Use .toprule, midrule, or .bottomrule from booktabs.',
-        \ ] }
+" " no more unnerving errors with vimtex
+" let g:syntastic_quiet_messages = { "regex": [
+"         \ '\mpossible unwanted space at "{"',
+" 	\ 'Command terminated with space.',
+" 	\ "You should perhaps use ..max. instead.",
+" 	\ 'Vertical rules in tables are ugly.',
+" 	\ 'Use .toprule, midrule, or .bottomrule from booktabs.',
+"         \ ] }
 
 " ycm for tex files, works beautifully
 " if !exists('g:ycm_semantic_triggers')
@@ -295,22 +310,22 @@ nnoremap <silent> <Leader>gs :G<CR>:20wincmd_<CR>
 " remove colorbar for vimwiki
 autocmd FileType vimwiki set colorcolumn=0
 
-" all but jobname are defualt, see :help vimtex_compiler_latexmk
-let g:vimtex_compiler_latexmk = {
-    \ 'backend' : 'jobs',
-    \ 'background' : 1,
-    \ 'build_dir' : '',
-    \ 'callback' : 1,
-    \ 'continuous' : 1,
-    \ 'executable' : 'latexmk',
-    \ 'options' : [
-    \   '-verbose',
-    \   '-file-line-error',
-    \   '-synctex=1',
-    \   '-shell-escape',
-    \   '-interaction=nonstopmode',
-    \ ],
-    \}
+" " all but jobname are defualt, see :help vimtex_compiler_latexmk
+" let g:vimtex_compiler_latexmk = {
+"     \ 'backend' : 'jobs',
+"     \ 'background' : 1,
+"     \ 'build_dir' : '',
+"     \ 'callback' : 1,
+"     \ 'continuous' : 1,
+"     \ 'executable' : 'latexmk',
+"     \ 'options' : [
+"     \   '-verbose',
+"     \   '-file-line-error',
+"     \   '-synctex=1',
+"     \   '-shell-escape',
+"     \   '-interaction=nonstopmode',
+"     \ ],
+"     \}
 "    \   '-jobname=tmp.main', " but should be done in local .latexmkrc
 " " dont open it automatically
 " let g:vimtex_view_automatic = 0
@@ -322,9 +337,10 @@ let g:vimtex_compiler_latexmk = {
 "   \ },
 "   \}
 let g:vimtex_quickfix_ignore_filters = [
-  \ 'Marginpar on page',
-  \ 'Underfull',
+  \ 'The length marginparwidth is less than 2cm',
   \]
+  " \ 'Marginpar on page',
+  " \ 'Underfull',
 "   \ 'Overfull',
 "   \ 'hyperref' : 0,
 
@@ -399,12 +415,12 @@ if has("nvim")
 endif
 
 
-nnoremap <Leader>w :execute 'windo set wrap'<CR>
+nnoremap <Leader>w :execute 'windo set wrap!'<CR>
 
 map <A-space> <Plug>VimwikiToggleListItem
 
 " only use ft=vimwiki for actual wiki files
-let g:vimwiki_global_ext=0
+let g:vimwiki_global_ext=0 "1
 
 " turn off mouse interactions
 set mouse=

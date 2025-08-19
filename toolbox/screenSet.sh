@@ -104,7 +104,7 @@ elif xrandr | grep -q "$hdmi2 connected"; then
 	# pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:hdmi-stereo-extra1
 elif xrandr | grep -q "$dp121 connected"; then
 	dunstify -r 5555 -t 3000 "setting xrandr for one external HDMI via USB-C"
-	xrandr --output "$dp121" --above eDP-1 --mode 2560x1440 --rotate normal
+	xrandr --output "$dp121" --left-of eDP-1 --mode 2560x1440 --rotate normal
 else
 	# assume no other display connected, use only laptop
 	# ~/.config/i3/scripts/changeBrightness.sh high

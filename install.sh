@@ -187,7 +187,6 @@ if [[ "$(hostname)" == "P1" ]]; then
 	echo "--i3"
 	checkSimilaritiesAndLink i3_config "$HOME/.config/i3/config"
 	checkSimilaritiesAndLink i3blocks.conf "$HOME/.config/i3blocks/config"
-	checkSimilaritiesAndLink i3status.sh "$HOME/.config/i3/i3status.sh"
 	[ ! -d "$HOME/.config/i3/scripts" ] && mkdir "$HOME/.config/i3/scripts"
 	for fn in "$LocOfScript"/i3scripts/*; do
 		checkSimilaritiesAndLink i3scripts/"$(basename "$fn")" "$HOME"/.config/i3/scripts/"$(basename "$fn")"
@@ -202,6 +201,10 @@ if [[ "$(hostname)" == "P1" ]]; then
 	checkSimilaritiesAndLink other_configs/rofi_config.rasi "$HOME/.config/rofi/config.rasi"
 	checkSimilaritiesAndLink other_configs/xinitrc "$HOME/.xinitrc"
 	checkSimilaritiesAndLink other_configs/zprofile "$HOME/.zprofile"
+
+	echo "--using languagetool spelling for vim"
+	checkSimilaritiesAndLink sudos/languagetool_spelling_custom.txt "$HOME/.vim/spell/en.utf-8.add"
+
 
 	echo "----sudos"
 

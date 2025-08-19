@@ -7,7 +7,7 @@ tmpfile=~/myConfigFiles/i3scripts/tmpSymbols.txt
 if ! [ -f  "$tmpfile" ]; then
 	! [ -f ~/myConfigFiles/i3scripts/unicodeSymbolList.txt ] && dunstify "Problem with unicode list, look in script" && exit
 	awk '{print "0 "$0}' ~/myConfigFiles/i3scripts/unicodeSymbolList.txt > $tmpfile
-	sort -r -o $tmpfile $tmpfile
+	sort -r -n -o $tmpfile $tmpfile
 fi
 
 # open rofi and have user select desired symbol

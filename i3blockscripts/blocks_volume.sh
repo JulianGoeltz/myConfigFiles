@@ -3,7 +3,7 @@
 # set -euo pipefail
 source /home/julgoe/myConfigFiles/i3blockscripts/blocks_defines.sh
 
-tmpCbatteryFile=/tmp/qcbattery
+tmpQCbatteryFile=/tmp/qcbattery
 tmpTWbatteryFile=/tmp/TWbattery
 
 batteryQC() {
@@ -45,8 +45,10 @@ Volume() {
 	echo "$retval" 
 }
 
+# standardName="alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink"
+standardName="alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink"
 sinkList=$(pactl -f json list sinks)
-standardSink=$(echo "$sinkList" | jq '.[] | select (.name == "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink") | .index')
+standardSink=$(echo "$sinkList" | jq '.[] | select (.name == "'${standardName}'") | .index')
 
 echo -n "$(Volume $standardSink)"
 

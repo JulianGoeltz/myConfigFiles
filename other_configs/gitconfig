@@ -33,3 +33,5 @@
 
 [interactive]
 	diffFilter = delta --color-only
+[protocol "file"]
+	allow = always

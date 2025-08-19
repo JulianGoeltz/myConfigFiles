@@ -8,3 +8,7 @@ if ifconfig tun0 &>/dev/null; then
 	echo -n "VPN:"
 	ps --no-headers -o command "$(pgrep openconnect)" | awk '{print $2}'
 fi
+if ifconfig tap0 &>/dev/null; then
+	echo -n "VPN: "
+	basename $(ps --no-headers -o command "$(pgrep openvpn)" | awk '{print $2}')
+fi

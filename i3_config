@@ -197,13 +197,16 @@ bindsym Shift+XF86MonBrightnessDown "exec --no-startup-id /bin/zsh ~/.config/i3/
 
 # playpause
 bindsym XF86Tools       "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
+bindsym XF86Favorites       "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
 bindsym XF86HomePage    "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
 bindsym KP_Divide       "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
 bindsym XF86AudioPlay   "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause"
 bindsym Shift+XF86Tools "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
+bindsym Shift+XF86Favorites "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
 bindsym KP_Subtract     "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
 bindsym XF86AudioNext   "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh next"
 bindsym Mod1+XF86Tools  "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
+bindsym Mod1+XF86Favorites  "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 bindsym KP_Multiply     "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 bindsym XF86AudioPrev   "exec --no-startup-id /bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous"
 
@@ -324,7 +327,7 @@ bindsym $mod+t "exec --no-startup-id /bin/sh ~/myConfigFiles/i3scripts/toggleTou
 exec --no-startup-id nm-applet
 
 # proxied telegram
-bindsym Mod1+t exec --no-startup-id "/bin/bash ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/telegram-desktop"
+bindsym Mod1+t exec --no-startup-id "/bin/bash ~/myConfigFiles/toolbox/proxies.sh proxify /usr/bin/Telegram"
 
 # netcat listening for slurmDone calls
 exec --no-startup-id i3-msg "exec ~/myConfigFiles/toolbox/notifySlurmDone.sh receiving"

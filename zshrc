@@ -75,8 +75,8 @@ alias sshcremers="ssh -A -X -R 10000:localhost:2252 cremers"
 sshhel_fs_helper(){
 	sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
 }
-alias sshhel_fs="sshhel_fs_helper \"\" ~/mnt/mntHel; sshhel_fs_helper /loh/users/jgoeltz ~/mnt/mntHel_loh"
-alias sshhel_fs_unmount="fusermount -u -z ~/mnt/mntHel; fusermount -u -z ~/mnt/mntHel_loh"
+alias sshhel_fs="sshhel_fs_helper \"\" ~/mnt/mntHel; sshhel_fs_helper /ley/users/jgoeltz ~/mnt/mntHel_ley"
+alias sshhel_fs_unmount="fusermount -u -z ~/mnt/mntHel; fusermount -u -z ~/mnt/mntHel_ley"
 alias sshnemo_fs="sshfs hd_ta400@login1.nemo.uni-freiburg.de:/work/ws/nemo/hd_ta400-TtFS-0 ~/mnt/mntNemo -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60"
 alias sshhel_visu="sshhel -L 6931:localhost:6931"
 alias sshnemo_fs_unmount="fusermount -u -z ~/mnt/mntNemo"
@@ -84,7 +84,7 @@ alias sshcremers_fs="sshfs -o ServerAliveInterval=60 cremers:. ~/mnt/mntCremers"
 alias sshcremers_fs_unmount="fusermount -u -z ~/mnt/mntCremers"
 alias sshdaint="bash ~/externalSources/sshservice-cli/cscs-keygen.sh && ssh daintCSCS"
 
-alias vpn_connect="sudo openconnect vpn-ac.urz.uni-heidelberg.de"
+alias vpn_connect="sudo openconnect --user=ta400 vpn-ac.urz.uni-heidelberg.de"
 
 # makes 10s wait period before executing rm -rf *
 setopt rm_star_wait
@@ -260,6 +260,9 @@ type thefuck >/dev/null 2>&1 && eval $(thefuck --alias) # for correct bindings
 if [ -f "$PWD/myConfigFiles/externalRepos/obreitwi__dot_zsh/functions.d/jenkins.zsh" ]; then
 	source $PWD/myConfigFiles/externalRepos/obreitwi__dot_zsh/functions.d/jenkins.zsh
 fi
+
+# for better tab suggestion
+alias localkill=kill
 ######## end
 
 
