@@ -67,6 +67,12 @@ sudo chmod u+x /usr/local/bin/change_brightness.sh
 # add to ~/.gpg/gpg-agent.conf the line `pinentry-program /usr/bin/pinentry-gtk-2`
 # to once enter and save the password
 # afterwards can delete lines again
+# for extension of validity: https://superuser.com/questions/813421/can-you-extend-the-expiration-date-of-an-already-expired-gpg-key
+# gpg --list-secret-keys
+# gpg --edit-key [ID]
+# `expire`, select validity, `save` (also for subkey)
+# delete in thunderbird key manager, add manually again
+# in thunderird key manager, add the public key `gpg --export --armor [id]`
 
 # add to rofi commands the ones for chromium, chrome
 
