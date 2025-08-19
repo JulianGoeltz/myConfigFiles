@@ -254,7 +254,9 @@ done
 unset mycmd
 unset myalias
 
-type thefuck >/dev/null 2>&1 && eval $(thefuck --alias) # for correct bindings
+if [ -z $SINGULARITY_APPNAME ]; then
+	type thefuck >/dev/null 2>&1 && eval $(thefuck --alias) # for correct bindings
+fi
 
 # jenkins commands from obreitwi
 if [ -f "$PWD/myConfigFiles/externalRepos/obreitwi__dot_zsh/functions.d/jenkins.zsh" ]; then
