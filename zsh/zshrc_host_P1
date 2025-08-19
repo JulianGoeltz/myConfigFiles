@@ -68,7 +68,7 @@ alias cdmaster_hel="cd ~/mnt/mntHel/;ZSH_PROMPT_GIT_DONTDOIT='dont'"
 
 # autojump 
 [ -f /usr/share/autojump/autojump.sh ] && source /usr/share/autojump/autojump.sh
-[ -f /etc/profile.d/autojump.sh ] && source /etc/profile.d/autojump.zsh
+[ -f /etc/profile.d/autojump.sh ] && source /etc/profile.d/autojump.sh
 
 
 alias activatePy2nest="source ~/venvs/py2nest/bin/activate; source ~/venvs/py2nest/nest/bin/nest_vars.sh"
@@ -238,3 +238,13 @@ compareToTemplate () {
 # shorthand for bluetoothctl
 blc () {bluetoothctl $@ }
 blcconnect () { for ad in 08:DF:1F:86:0B:30 2C:41:A1:07:D2:28 80:C3:BA:2F:85:57; do blc connect $ad& done}
+
+setupKeyboardCorrectly(){
+	# in general set keyboard option nocaps
+	setxkbmap -option caps:escape
+	xset r rate 300 50
+	xset s off
+	xset -dpms
+	xset s noblank
+	xinput set-prop 'SYNA8018:00 06CB:CE67 Touchpad' 'libinput Tapping Enabled' 1
+}
