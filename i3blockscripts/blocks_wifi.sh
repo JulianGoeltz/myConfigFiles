@@ -15,7 +15,8 @@ if [ "$?" -eq 0 ] && [ "$(echo "$string" | grep -c "Not connected.")" -eq 0 ]; t
 fi
 # in some trains show fun information
 wifi_ssid="$(echo "$string" | grep -oP "SSID: \K.*")"
-if [[ "$wifi_ssid" =~ "(WIFIonICE|WIFI@DB|freeWIFIahead!|_SNCF_WIFI_INOUI|Portaleregionale FNM)" ]]; then
+# maybe add phone for wifi-sharing
+if [[ "$wifi_ssid" =~ "(WIFIonICE|WIFI@DB|OEBB|freeWIFIahead!|_SNCF_WIFI_INOUI|Portaleregionale FNM|Frecciaross)" ]]; then
 	python ~/.config//i3/scripts/db_wifi.py "$wifi_ssid"
 fi
 echo

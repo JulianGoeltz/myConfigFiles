@@ -72,7 +72,27 @@ def find_place_from_gps(lat, lng):
 # time.sleep(1)
 # print(x)
 
-if len(sys.argv) > 1 and sys.argv[1] == "Portaleregionale FNM":
+if len(sys.argv) > 1 and sys.argv[1] == "OEBB":
+    try:
+        trip_status = requests.get(
+            f'https://railnet.oebb.at/assets/media/fis/combined.json?_time={int(time.time() * 1000)}'
+        ).json()
+    except json.decoder.JSONDecodeError as e:
+        print("[connected to OEBB: error with json]")
+        raise e
+    except requests.exceptions.ConnectionError as e:
+        print("[connected to OEBB: error connecting to portal]")
+        raise e
+
+    speed = trip_status['latestStatus']['speed']
+    next_stop = trip_status['nextStation']['name']['de']
+    next_stop_time = trip_status['nextStation']['arrival']['forecast']
+
+    print(" [{} {} {}]".format(
+        f"{speed}km/h",
+        next_stop, next_stop_time,
+    ))
+elif len(sys.argv) > 1 and sys.argv[1] == "Portaleregionale FNM":
     # base ip address can be found with wireshark
     base = "http://192.168.10.197/PortaleRegionale/"
 
@@ -91,6 +111,31 @@ if len(sys.argv) > 1 and sys.argv[1] == "Portaleregionale FNM":
         f"{float(data['infos']['speed']):.0f}km/h",
         f"next {data['nextStation']}",
         f"to {data['infos']['stazioneArrivo']}",
+    ))
+
+elif len(sys.argv) > 1 and "Frecciaross" in sys.argv[1]:
+    # base ip address can be found with wireshark
+    base = "https://d6o.frecciaplay.it/PortaleFrecce/infoViaggioActionJson"
+
+    try:
+        data = requests.get(
+            base, verify=False
+        ).json()
+    except json.decoder.JSONDecodeError as e:
+        print("[connected to trenitalia: error with json]")
+        raise e
+    except requests.exceptions.ConnectionError as e:
+        print("[connected to trenitalia: error connecting to portal]")
+        raise e
+
+    speed = data['speed']
+    next_stop = data['prossimaStazione']
+    next_stop_time = data['eta']
+
+    print(" [{}; next {} at {} ({})]".format(
+        f"{speed}km/h",
+        next_stop, next_stop_time,
+        data['delay2']
     ))
 
 elif subprocess.call("curl -s --insecure --max-time 1 https://wifi.sncf".split(" "),
@@ -133,8 +178,15 @@ elif subprocess.call("curl -s --insecure --max-time 1 https://wifi.sncf".split("
         (f"next: {next_stop} at {expected_arrival}" if next_stop is not None else ''),
     ))
 
-elif subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1/rs/tripInfo/trip".split(" "),
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0:
+elif (
+    # if in the ICE, this works
+    subprocess.call("curl -s --insecure --max-time 1 https://portal.imice.de/api1/rs/tripInfo/trip".split(" "),
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0
+    # # when connected via wifi-sharing hotspot
+    # or
+    # subprocess.call("curl -s --insecure --max-time 1 https://iceportal.de/api1/rs/status".split(" "),
+    #                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0
+):
     base = 'https://iceportal.de/api1/rs/'
 
     try:
