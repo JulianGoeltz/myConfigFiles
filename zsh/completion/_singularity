@@ -4,6 +4,7 @@ _singularity() {
 	  ":command:(exec shell apps)" \
 	  "--app:(--app):(dev-tools specialforjg dls wafer simulation)" \
 	  "(-H --home)"{-H,--home}"[homefolder]:home directory specification.:_files" \
+	  "(-o --overlay)"{-o,--overlay}"[overlay-image]:image to overlay.:_files" \
 	  ":container image to use:->files" \
 	  "*:::args:->comd" && return 0
 	# '*::command: _normal'
