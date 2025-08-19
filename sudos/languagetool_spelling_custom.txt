@@ -1,22 +1,27 @@
-# Add terms here that should be accepted by the LanguageTool spell checker, one word or phrase per line
 ANN
 ANNs
+axonal
+Billaudelle
 BrainScaleS
 BrainScaleS-2
 backpropagation
 CoBa
 CuBa
+DelGrad
 distortive
 energy-to-solution
 EBRAINS
 first-spike
 integrate-and-fire
 initializations
+in silico
+Jülich
 Kriener
 LIF
 Loihi
 Mihai
 MNIST
+mappable
 monotonicity
 nLIF
 neuromorphic
@@ -27,7 +32,9 @@ Petrovici
 potentiation
 PSP
 regularizer
+RRAM
 Senn
+semantization
 SNN
 SNNs
 SpiNNaker
@@ -36,4 +43,8 @@ SystemVerilog
 time-to-first-spike
 time-to-solution
 TTFS
+Universität
 von-Neumann
+hyperparameter
+expressivity
+YY
