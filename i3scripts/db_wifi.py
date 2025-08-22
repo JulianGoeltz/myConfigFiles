@@ -22,6 +22,8 @@ notification_stops = '  '.join([
     "Karlsruhe Hbf",
     "Mannheim Hbf",
     "Paris",
+    "Schwäbisch Hall",
+    "Schwäbisch Hall-Hessental",
     "Stuttgart Hbf",
 ])
 
@@ -264,6 +266,16 @@ elif subprocess.call("ping -c 1 -W 0.5 www.wifi-bahn.de".split(" "),
         print("[connected to db: error connecting to portal]")
         sys.exit()
 
+    url_stat = 'https://zugportal.de/@prd/zupo-travel-information/api/public/ri/journey'
+    try:
+        data_stat = requests.get(url_stat, verify=False).json()
+    except json.decoder.JSONDecodeError:
+        print("[connected to db: error with json]")
+        sys.exit()
+    except requests.exceptions.ConnectionError:
+        print("[connected to db: error connecting to portal]")
+        sys.exit()
+
     def nextstopinfo(nextstop_id):
         for stop in data['stations']:
             if stop['id'] == nextstop_id:
@@ -281,8 +293,30 @@ elif subprocess.call("ping -c 1 -W 0.5 www.wifi-bahn.de".split(" "),
     current_state = "(no data/in station)"
     if 'stateInformation' in data:
         current_state = nextstopinfo(data['stateInformation']['nextStation']['id'])
-    elif 'lat' in data and 'lng' in data:
-        current_state = find_place_from_gps(data['lat'], data['lng'])
+    else:
+        for stop in data_stat['stops']:
+            try:
+                if (
+                    ("departureTime" in stop and stop["departureTime"]["timeType"] == "REAL")
+                    or
+                    ("arrivalTime" in stop and stop["arrivalTime"]["timeType"] == "REAL")
+                ):
+                    continue
+            except:
+                print(stop, file=sys.stderr)
+                raise
+            scheduledArrival = int(stop["arrivalTime"]["targetTimeInMs"] / 1000)
+            scheduledArrival_date = datetime.datetime.fromtimestamp(scheduledArrival)
+            delay = (stop["arrivalTime"]["predictedTimeInMs"] - stop["arrivalTime"]["targetTimeInMs"]) / 1000/ 60
+            current_state = "next: {} at {}{} on track {}".format(
+                stop["station"]['name'],
+                scheduledArrival_date.strftime('%H:%M'),
+                f"+{delay:.0}",
+                stop['track']['target'],
+            )
+            possibly_notify(stop["station"]['name'], delay)
+    # elif 'lat' in data and 'lng' in data:
+    #     current_state = find_place_from_gps(data['lat'], data['lng'])
 
     print(" [{}, {}]".format(
         f"{float(data['speed']) * 3.6:.0f}km/h",
