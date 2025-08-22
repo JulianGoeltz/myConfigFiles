@@ -50,7 +50,19 @@ def possibly_notify(station, minutes_to_arrival):
 
 
 def find_place_from_gps(lat, lng):
-    info = requests.get(f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lng}&format=json").json()
+    try:
+        url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lng}&format=json"
+        reponse = requests.get(url, headers={'User-Agent': 'locateMyTrain / 0.1'})
+        reponse.raise_for_status()  # raises exception when not a 2xx response
+        info = reponse.json()
+    except json.decoder.JSONDecodeError as e:
+        print("[OSM error with json]")
+        # print(url, file=sys.stderr)
+        # print(plain, file=sys.stderr)
+        raise e
+    except requests.exceptions.ConnectionError as e:
+        print("[OSM connection error]")
+        raise e
     if 'address' in info:
         if 'city' in info['address']:
             return "close to " + info['address']['city']
