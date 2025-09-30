@@ -35,6 +35,9 @@ disp_EINCoffice1="DP-3-2"
 disp_EINCoffice2="DP-3-3"
 disp_EINC="DP-2"
 
+# EINC billi
+disp_EINC_billi="DP-3-1"
+
 hdmi2="HDMI-1"
 dp121="DP-1-2-1"
 dp121="DP-3"
@@ -78,7 +81,7 @@ if xrandr | grep -q "$disp_EINCoffice1 connected"; then
 	xrandr --output $disp_EINCoffice1 --off --output $disp_EINCoffice2 --off --output $edp1 --primary --mode 1920x1200
 	xrandr --output $disp_EINCoffice1 --mode 2560x1440 --primary \
 		--output $disp_EINCoffice2 --mode 2560x1440 --left-of $disp_EINCoffice1 \
-		--output eDP-1 --off
+		--output $edp1 --off
 elif xrandr | grep -q "$dp12 connected"; then
 	displayIdentifier="$(xrandr | grep -oP "$dp12(?= connected)")"
 	dunstify -r 5555 -t 3000 "setting xrandr in Bern on ${displayIdentifier}"
@@ -93,24 +96,27 @@ elif xrandr | grep -q "$dp12 connected"; then
 		dunstify -r 5566 "xrandr already set, exiting."
 		exit
 	fi
-	xrandr --output "$displayIdentifier" --mode 2560x1440 --primary --output eDP-1 --off
+	xrandr --output "$displayIdentifier" --mode 2560x1440 --primary --output $edp1 --off
 	sleep 0.5
-	xrandr --output "$displayIdentifier" --mode 2560x1440 --primary --output eDP-1 --above "$displayIdentifier" --mode 1920x1200
+	xrandr --output "$displayIdentifier" --mode 2560x1440 --primary --output $edp1 --above "$displayIdentifier" --mode 1920x1200
 elif xrandr | grep -q "$hdmi2 connected"; then
 	dunstify -r 5555 -t 3000 "setting xrandr for one external HDMI"
-	xrandr --output "$hdmi2" --above eDP-1 --mode 1920x1080 --rotate normal
-	# xrandr --output "$hdmi2" --below eDP-1 --mode 2560x1440 --rotate normal
+	xrandr --output "$hdmi2" --above $edp1 --mode 1920x1080 --rotate normal
+	# xrandr --output "$hdmi2" --below $edp1 --mode 2560x1440 --rotate normal
 	# set audio correctly
 	# pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:hdmi-stereo-extra1
 elif xrandr | grep -q "$dp121 connected"; then
 	dunstify -r 5555 -t 3000 "setting xrandr for one external HDMI via USB-C"
-	xrandr --output "$dp121" --left-of eDP-1 --mode 2560x1440 --rotate normal
+	xrandr --output "$dp121" --left-of $edp1 --mode 2560x1440 --rotate normal
+elif xrandr | grep -q "$disp_EINC_billi connected"; then
+	dunstify -r 5555 -t 3000 "setting xrandr at billis office"
+	xrandr --output $edp1 --mode 1920x1200 --primary --output $disp_EINC_billi --mode 3440x1440 --above $edp1
 else
 	# assume no other display connected, use only laptop
 	# ~/.config/i3/scripts/changeBrightness.sh high
 	dunstify -r 5555 -t 3000 "setting xrandr for mobile use"
 	xrandr --output $edp1 --auto --primary
-	for disp in $(xrandr | grep -v eDP-1 | grep connected | grep -P "[0-9]+x[0-9]+\+[0-9]+\+[0-9]+" | cut -f1 -d " "); do
+	for disp in $(xrandr | grep -v $edp1 | grep connected | grep -P "[0-9]+x[0-9]+\+[0-9]+\+[0-9]+" | cut -f1 -d " "); do
 		xrandr --output $disp --off
 	done
 	# xrandr --output $dp12 --off
