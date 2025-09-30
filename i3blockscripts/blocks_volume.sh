@@ -8,7 +8,11 @@ tmpTWbatteryFile=/tmp/TWbattery
 
 batteryQC() {
 	if ! [ -f $tmpQCbatteryFile ] || [ $(($(date +%s) - $(stat -c %Y $tmpQCbatteryFile))) -gt 60 ]; then
-		address=$(echo 'devices Paired' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')
+		if [[ $# -eq 0 ]]; then
+			address=$(echo 'devices Paired' | bluetoothctl | grep -oE '\S* [LE-]*Bose (QC|QuietComfort)35'|grep -o '\S*:\S*')
+		else
+			address=$1
+		fi
 		based-connect $address -b > $tmpQCbatteryFile
 	fi
 	cat $tmpQCbatteryFile
@@ -55,11 +59,13 @@ echo -n "$(Volume $standardSink)"
 for bluezSink in $(echo $sinkList | jq '.[] | select (.name | match("bluez")) | .index' ); do
 	# get battery for bose qc35
 	# echo $bluezSink >&2
-	if echo $sinkList | jq '.[] | select (.index == '"$bluezSink"') | .description' | grep -q "35"; then
-		qc_battery=$(batteryQC)
-	# elif [[ "$(echo $sinkList | jq '.[] | select (.index == '"$bluezSink"') | .description')" == '"MOMENTUM TW 3"' ]] ; then
-	# 	qc_battery="$(echo $sinkList | jq '.[] | select ( .index == '$bluezSink' ) | .properties."bluetooth.battery"')"
-	# 	qc_battery=${qc_battery:1:-2}
+	bluezSinkDesc="$(echo $sinkList | jq '.[] | select (.index == '"$bluezSink"') | .description')"
+	if [[ "$bluezSinkDesc" =~ "35" ]] || [[ "$bluezSinkDesc" =~ "Silver" ]]; then
+		qc_battery=$(batteryQC $(echo $sinkList | jq --raw-output '.[] | select (.index == '"$bluezSink"') | .properties | ."device.string"'))
+	elif [[ "$(echo $sinkList | jq '.[] | select (.index == '"$bluezSink"') | .description')" == '"MOMENTUM TW 3"' ]] ; then
+		# qc_battery="$(echo $sinkList | jq '.[] | select ( .index == '$bluezSink' ) | .properties."bluetooth.battery"')"
+		# qc_battery=${qc_battery:1:-2}
+		qc_battery=$(bluetoothctl info $(echo $sinkList | jq --raw-output '.[] | select (.index == '"$bluezSink"') | .properties | ."device.string"') | grep -oP 'Battery Percentage: 0x[0-f]* \(\K[0-9]*')
 	else
 		qc_battery=""
 	fi
