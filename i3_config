@@ -389,7 +389,8 @@ bindsym F9 exec --no-startup-id gromit-mpx
 # after selecting text, on mod+i open a floating vim with the text in it
 bindsym $mod+i exec "xclip -o -selection clipboard > /tmp/clipvim; xterm -name FXTerm -e nvim /tmp/clipvim; xclip -i  -selection clipboard < /tmp/clipvim"
 # bindsym $mod+Shift+i exec "xclip -o -selection clipboard > /tmp/clipvim_LT; languagetool --language en-GB --disable OXFORD_SPELLING_Z_NOT_S /tmp/clipvim_LT 2>&1 | tee /tmp/clipvim_LTchecked; xterm -name FXTerm -e nvim -O /tmp/clipvim_LT /tmp/clipvim_LTchecked; xclip -i  -selection clipboard < /tmp/clipvim_LT"
-bindsym $mod+Ctrl+i exec "xclip -o -selection clipboard > /tmp/clipvim_tidy.bib; bibtex-tidy --modify --curly --numeric --duplicates=key --no-remove-dupe-fields /tmp/clipvim_tidy.bib 2>&1; xterm -name FXTerm -e nvim /tmp/clipvim_tidy.bib; xclip -i  -selection clipboard < /tmp/clipvim_tidy.bib"
-bindsym $mod+Mod1+i exec "xclip -o -selection clipboard > /tmp/clipvim_doi; doi2bib --input /tmp/clipvim_doi --output /tmp/clipvim_doi.bib; bibtool -r /home/julgoe/Documents/papers/GUT-bib/bibtool.rsc /tmp/clipvim_doi.bib > /tmp/clipvim_doi_tool.bib; cat /tmp/clipvim_doi_tool.bib | bibtex-tidy --curly --numeric --duplicates=key --no-remove-dupe-fields --output /tmp/clipvim_doi_tool_tidy.bib 2>&1; xterm -name FXTerm -e nvim /tmp/clipvim_doi_tool_tidy.bib; xclip -i  -selection clipboard < /tmp/clipvim_doi_tool_tidy.bib"
-bindsym $mod+Shift+i exec "bash /home/julgoe/myConfigFiles/toolbox/arxiv2bib.sh"
+bindsym $mod+Ctrl+i  exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh bibtex"
+bindsym $mod+Mod1+i  exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh doi"
+bindsym $mod+Shift+i exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh arxiv"
+bindsym $mod+Ctrl+Mod1+i exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh isbn"
 
