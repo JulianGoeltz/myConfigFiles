@@ -392,5 +392,5 @@ bindsym $mod+i exec "xclip -o -selection clipboard > /tmp/clipvim; xterm -name F
 bindsym $mod+Ctrl+i  exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh bibtex"
 bindsym $mod+Mod1+i  exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh doi"
 bindsym $mod+Shift+i exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh arxiv"
-bindsym $mod+Ctrl+Mod1+i exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh isbn"
+bindsym $mod+Ctrl+Mod1+i exec "bash /home/julgoe/myConfigFiles/toolbox/bibHandling.sh"
 
