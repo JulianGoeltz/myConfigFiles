@@ -24,4 +24,4 @@
 	url = https://github.com/obreitwi/dot_zsh
 [submodule "toolbox/arxiv_tag"]
 	path = toolbox/arxiv_tag
-	url = git@github.com:JulianGoeltz/arxiv_tag
+	url = https://github.com/JulianGoeltz/arxiv_tag
