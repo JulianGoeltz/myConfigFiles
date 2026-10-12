@@ -9,8 +9,8 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 #
-# mod1: alt
-# mod4: super
+# Mod1: alt
+# Mod4: super
 
 set $mod Mod4
 
@@ -281,7 +281,7 @@ bindsym ctrl+shift+period exec --no-startup-id dunstctl context
 # back and forth
 workspace_auto_back_and_forth yes
 bindsym $mod+Tab workspace back_and_forth
-bindsym $mod+q move scratchpad
+bindsym $mod+Mod1+q move scratchpad
 bindsym $mod+Escape scratchpad show
 
 # moving workspaces to other output
@@ -321,7 +321,7 @@ bindsym $mod+Control+1 "exec --no-startup-id /bin/sh ~/myConfigFiles/toolbox/scr
 bindsym Mod1+F4 exec --no-startup-id "notify-send -t 2000 'Hallo Kaddl ❤❤❤'"
 
 #bind key for disabling touchpad
-bindsym $mod+t "exec --no-startup-id /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"
+#bindsym $mod+t "exec --no-startup-id /bin/sh ~/myConfigFiles/i3scripts/toggleTouchpad.sh"
 
 # for easy network managment
 exec --no-startup-id nm-applet
@@ -348,6 +348,7 @@ exec --no-startup-id /bin/sh ~/myConfigFiles/toolbox/screenSet.sh
 
 # use rofi for selecting unicode symbols as eg umlauts
 bindsym $mod+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofiUnicodeSymbols.sh"
+bindsym $mod+Mod1+u exec --no-startup-id "exec /bin/sh ~/myConfigFiles/i3scripts/rofiUnicodeSymbols.sh full"
 
 # use rofi as window switcher
 bindsym $mod+w exec --no-startup-id rofi -show window
@@ -387,10 +388,10 @@ bindsym --release $mod+Print exec "scrot -u -e 'xclip -selection c -t image/png 
 bindsym F9 exec --no-startup-id gromit-mpx
 
 # after selecting text, on mod+i open a floating vim with the text in it
-bindsym $mod+i exec "xclip -o -selection clipboard > /tmp/clipvim; xterm -name FXTerm -e nvim /tmp/clipvim; xclip -i  -selection clipboard < /tmp/clipvim"
+bindsym $mod+i exec "xclip -o -selection clipboard > /home/jutr/.tmp/clipvim; xterm -name FXTerm -e nvim /home/jutr/.tmp/clipvim; xclip -i  -selection clipboard < /home/jutr/.tmp/clipvim"
 # bindsym $mod+Shift+i exec "xclip -o -selection clipboard > /tmp/clipvim_LT; languagetool --language en-GB --disable OXFORD_SPELLING_Z_NOT_S /tmp/clipvim_LT 2>&1 | tee /tmp/clipvim_LTchecked; xterm -name FXTerm -e nvim -O /tmp/clipvim_LT /tmp/clipvim_LTchecked; xclip -i  -selection clipboard < /tmp/clipvim_LT"
 bindsym $mod+Ctrl+i  exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh bibtex"
 bindsym $mod+Mod1+i  exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh doi"
-bindsym $mod+Shift+i exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh arxiv"
+# bindsym $mod+Shift+i exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh arxiv"
 bindsym $mod+Ctrl+Mod1+i exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh"
 
