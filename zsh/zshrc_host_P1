@@ -217,7 +217,39 @@ mwe_latex () {
 	tmpfn=mwe.tex
 	[ -f $tmpfn ] && echo "MWE $tmpfn already exitst, delete first" && return 1
 	touch $tmpfn
-	echo "\\documentclass{article}\n\\\\begin{document}\nMWE for latex\n\n\\\\end{document}" > $tmpfn
+	cat <<'EOF' |  > $tmpfn
+\documentclass[
+    a4paper,
+    twoside,
+    11pt
+]{scrbook}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{libertinus,libertinust1math}
+\usepackage{amsthm,amsmath,amsfonts,amssymb,amscd}
+\usepackage[]{geometry}
+    \geometry{
+        a4paper,
+        inner=30mm,
+        outer=37mm,
+        top=32mm,
+        bottom=40mm,
+    }
+\usepackage[
+    docdef=atom,
+    nomain,
+    acronym,
+    automake,
+    nonumberlist,  % to not have page numbers in glossary
+]{glossaries-extra}
+\makeglossaries{}
+    \setabbreviationstyle[acronym]{long-short}
+    \input{/home/$USER/Documents/papers/2025_thesis/texMaterials/glossaries.tex}
+\input{/home/$USER/Documents/papers/2025_thesis/texMaterials/math.tex}
+\begin{document}
+MWE for latex
+\end{document}
+EOF
 }
 
 
