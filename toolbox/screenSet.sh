@@ -23,6 +23,10 @@ doBeforeAndAfter(){
 }
 doBeforeAndAfter
 
+setBrightness() {
+	/bin/zsh ~/.config/i3/scripts/changeBrightness.sh high
+}
+
 edp1="eDP-1"
 # bern
 dp12=DP-3-1
@@ -41,6 +45,7 @@ disp_EINC_billi="DP-3-1"
 hdmi2="HDMI-1"
 dp121="DP-1-2-1"
 dp121="DP-3"
+dp1="DP-1"
 
 if [ $# -gt 1 ]; then
 	# set up three monitor setup
@@ -107,10 +112,14 @@ elif xrandr | grep -q "$hdmi2 connected"; then
 	# pactl set-card-profile alsa_card.pci-0000_00_1f.3 output:hdmi-stereo-extra1
 elif xrandr | grep -q "$dp121 connected"; then
 	dunstify -r 5555 -t 3000 "setting xrandr for one external HDMI via USB-C"
-	xrandr --output "$dp121" --left-of $edp1 --mode 2560x1440 --rotate normal
+	xrandr --output "$dp121" --above $edp1 --mode 2560x1440 --rotate normal
+elif xrandr | grep -qP "^$dp1 connected"; then
+	dunstify -r 5555 -t 3000 "setting xrandr for one external HDMI via other USB-C"
+	xrandr --output "$dp1" --above $edp1 --mode 2560x1440 --rotate normal
 elif xrandr | grep -q "$disp_EINC_billi connected"; then
 	dunstify -r 5555 -t 3000 "setting xrandr at billis office"
 	xrandr --output $edp1 --mode 1920x1200 --primary --output $disp_EINC_billi --mode 3440x1440 --above $edp1
+	setBrightness
 else
 	# assume no other display connected, use only laptop
 	# ~/.config/i3/scripts/changeBrightness.sh high

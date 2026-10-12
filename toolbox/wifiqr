@@ -4,13 +4,16 @@
 
 # might not work yet
 if [[ "$#" -lt 1 ]]; then
-	echo "needs an SSID as an argument"
-	return
+	#arg="$(iw dev wlp0s20f3 link | grep -oP "SSID: \K.*")"
+	arg="$(nmcli -g NAME con show --active | head -n1)"
+	echo "no argument given, taking current connection ($arg) as arg"
+else
+	arg="$1"
 fi
 
 # needs qrencode and nmcli
 if type nmcli >/dev/null 2>&1 && type qrencode >/dev/null 2>&1; then
-	echo "creates qr code for connection '$1'"
+	echo "creates qr code for connection '$arg'"
 else
 	echo "Needs qrencode and nmcli"
 	return 1
@@ -19,8 +22,9 @@ fi
 #### actual stuff
 
 local ssid psk
-ssid=$(nmcli -s -g connection.id con show "$1")
-psk=$(nmcli -s -g 802-11-wireless-security.psk con show "$1")
+ssid=$(nmcli -s -g 802-11-wireless.ssid con show "$arg")
+psk=$(nmcli -s -g 802-11-wireless-security.psk con show "$arg")
+# or 802-1x.password (for eduroam), but onespot 802-11-wireless-security.psk
 if [ -z "$ssid" -o -z "$psk" ]; then
 	echo "Problem with ssid or psk, investigate"
 	echo "|ssid||psk|"
@@ -33,10 +37,7 @@ fi
 str="WIFI:S:${ssid};T:WPA2;P:${psk};;"
 echo "ssid is '${ssid}' and pw '${psk}'"
 # encode it
-qrencode -t png -s 10 -o /tmp/wifi.png "$str"
-# view it
-xprop -id "$WINDOWID" -f _NET_WM_WINDOW_TYPE 8u -set _NET_WM_WINDOW_TYPE splash
-display /tmp/wifi.png
-rm /tmp/wifi.png
+#
+qrdisplay "$str"
 
 return 0
