@@ -2,6 +2,7 @@
 # print on ${printer}=hbp-printer in KIP by copying a file to wang and print via hel; also delete file again
 
 printer="eincprinter"
+# printer="r1"
 
 set -euo pipefail
 
@@ -17,5 +18,7 @@ for file in "$@"; do
 	scp "$file" hel:printing/tmp/"$fileTrimmed"
 	# print and delete file
 	# -o sides=one-sided
-	ssh hel 'lp -U jgoeltz -o fit-to-page -o sides=two-sided-long-edge -o media=A4 -h printer.kip.uni-heidelberg.de -d '"${printer}"' "printing/tmp/'"$fileTrimmed"'"; rm "printing/tmp/'"$fileTrimmed"'";';
+	# page list
+	#  -P 51-200
+	ssh hel 'lp -o fit-to-page -o sides=two-sided-long-edge -o media=A4 -h printer.kip.uni-heidelberg.de -d '"${printer}"' "printing/tmp/'"$fileTrimmed"'"; rm "printing/tmp/'"$fileTrimmed"'";';
 done

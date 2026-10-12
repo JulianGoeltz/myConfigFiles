@@ -14,7 +14,7 @@ mkdir -p /tmp/forPrinting
 for file in "$@"; do
 	# cleaned filename
 	fileTrimmed="$(echo "$file" | sed 's/[^0-9A-Za-z.-]//g')"
-	convert -density 150 "$file" -colorspace gray  +swap -compose divide  -linear-stretch 5%x0% -rotate 1.5 /tmp/forPrinting/$fileTrimmed || true
+	convert -density 150 "$file" -colorspace gray  +swap -compose divide /tmp/forPrinting/$fileTrimmed || true
 
 	# copy file to tmp folder on wang
 	scp /tmp/forPrinting/$fileTrimmed hel:printing/tmp/"$fileTrimmed"
