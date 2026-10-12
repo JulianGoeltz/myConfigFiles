@@ -273,3 +273,32 @@ setupKeyboardCorrectly(){
 	xset s noblank
 	xinput set-prop 'SYNA8018:00 06CB:CE67 Touchpad' 'libinput Tapping Enabled' 1
 }
+
+spellingCheck() {
+	str=""
+	for w in $@; do
+		str="${str},$(echo $w)";
+	done
+	echo "https://books.google.com/ngrams/graph?content=${str}&year_start=1950&corpus=en-GB&smoothing=10&case_insensitive=true"
+
+	# to not print PID of background processes
+	set +m
+	BOLD=$(printf '\033[1m')
+	NC=$(printf '\033[0m')
+	tmpfn() {
+		base="$(basename "${2}")"
+		IFS=$'\n'
+		for m in $(pdfgrep --color always -i "${1}" "${2}"); do
+			echo "$base $m";
+		done
+		unset IFS
+	}
+	for w in $@; do
+		echo "    ${BOLD}${w}${NC}"
+		for f in /home/$USER/Documents/papers/2022_billithesis/dissertation-billaudelle-faculty-2022-04-05.pdf /home/$USER/Dropbox/uni/MasterThesis/literature/petrovici_phdthesis_formal.pdf /home/$USER/Documents/papers/2025_thesis/dissertation_JulianGoeltz_20260220.pdf; do
+			tmpfn "${w}" "${f}"&
+		done
+		wait
+	done
+	set -m
+}
