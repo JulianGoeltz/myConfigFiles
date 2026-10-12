@@ -1,17 +1,18 @@
 #!/bin/bash
 
-set -euo pipefail
+#set -euo pipefail
+set -eu
 
 
-curr_connected="$(bluetoothctl devices Connected | 	while read -r line; do echo "${line:25:99} "; done )"
+curr_connected="$(echo devices Connected | bluetoothctl | grep Device | while read -r line; do echo "${line:25:99} "; done )"
 
 arg=$((
-	bluetoothctl devices | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" |
+	echo devices | bluetoothctl | grep Device | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" |
 		while read -r line; do echo "${line:25:99}|${line:7:18}"; done |
 		sort -r |
 		column --separator="|" -t --output-separator="|    ";
 	echo "Already connected";
-	bluetoothctl devices Connected | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" |
+	echo devices Connected | bluetoothctl | grep Device | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" |
 		while read -r line; do echo "${line:25:99}"; done |
 		sort -r
 		#column --separator="|" -t --output-separator="|    "
@@ -22,13 +23,13 @@ arg=$((
 
 echo "return to function"
 
-for mac in $(bluetoothctl devices Connected | cut --delimiter=' ' -f2); do bluetoothctl disconnect $mac& done
+for mac in $(echo devices Connected | bluetoothctl | grep Device | cut --delimiter=' ' -f2); do echo disconnect $mac | bluetoothctl& done
 
 mac=$(echo ${arg} | cut --delimiter '|' -f2)
 
 echo "chose '$arg'"
 echo "trying to connect to '$mac'"
 
-bluetoothctl connect $mac
+echo connect $mac | bluetoothctl
 
 pkill -SIGRTMIN+20 i3blocks

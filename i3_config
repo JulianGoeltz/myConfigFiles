@@ -395,3 +395,4 @@ bindsym $mod+Mod1+i  exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh 
 # bindsym $mod+Shift+i exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh arxiv"
 bindsym $mod+Ctrl+Mod1+i exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh"
 
+bindsym $mod+b exec "bash /home/jutr/myConfigFiles/toolbox/blc.sh"
