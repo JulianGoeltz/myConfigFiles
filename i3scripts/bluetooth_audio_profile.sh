@@ -23,6 +23,8 @@ for mac in "${mac_array[@]}"; do
 	fi
 	# determine what current status is
 	if echo "$substatus" | grep _head_unit; then
+		echo $mac
+		echo pactl set-card-profile bluez_card.$mac a2dp_sink
 		pactl set-card-profile bluez_card.$mac a2dp_sink
 	else
 		pactl set-card-profile bluez_card.$mac handsfree_head_unit || \

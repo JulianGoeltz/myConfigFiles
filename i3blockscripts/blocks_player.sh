@@ -3,6 +3,20 @@
 # set -euo pipefail
 source /home/$USER/myConfigFiles/i3blockscripts/blocks_defines.sh
 
+if [ -n "${button}" ]; then
+	case "${button}" in
+		"1")
+			/bin/sh ~/.config/i3/scripts/playpausetoggle.sh play-pause
+			;;
+		"2")
+			/bin/sh ~/.config/i3/scripts/playpausetoggle.sh previous
+			;;
+		"3")
+			/bin/sh ~/.config/i3/scripts/playpausetoggle.sh next
+			;;
+	esac
+fi
+
 
 Playing() {
 	player=$1
@@ -28,5 +42,7 @@ Playing() {
 echo -n $(Playing spotify)
 echo -n $(Playing spotifyd)
 echo -n $(Playing vlc)
-# echo -n $(Playing chromium)
+for p in $(playerctl -l | grep chromium); do
+	echo -n $(Playing $p)
+done
 echo

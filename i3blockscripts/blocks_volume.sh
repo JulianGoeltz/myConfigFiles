@@ -6,6 +6,21 @@ source /home/$USER/myConfigFiles/i3blockscripts/blocks_defines.sh
 tmpQCbatteryFile=/tmp/qcbattery
 tmpTWbatteryFile=/tmp/TWbattery
 
+if [ -n "${button}" ]; then
+	# notify-send $button
+	case "${button}" in
+		"1")
+			pactl set-sink-mute $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) toggle && pkill -SIGRTMIN+20 i3blocks
+			;;
+		"2"|"5")
+			pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) -10% && pkill -SIGRTMIN+20 i3blocks
+			;;
+		"3"|"4")
+			pactl set-sink-volume $(/bin/sh ~/.config/i3/scripts/correctSinkForChangingVolume.sh) +10% && pkill -SIGRTMIN+20 i3blocks
+			;;
+	esac
+fi
+
 batteryQC() {
 	if ! [ -f $tmpQCbatteryFile ] || [ $(($(date +%s) - $(stat -c %Y $tmpQCbatteryFile))) -gt 60 ]; then
 		if [[ $# -eq 0 ]]; then
@@ -51,10 +66,13 @@ Volume() {
 
 # standardName="alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp__sink"
 standardName="alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink"
+standardNameHeadphone="alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Headphones__sink"
 sinkList=$(pactl -f json list sinks)
 standardSink=$(echo "$sinkList" | jq '.[] | select (.name == "'${standardName}'") | .index')
+standardSinkHP=$(echo "$sinkList" | jq '.[] | select (.name == "'${standardNameHeadphone}'") | .index')
 
 echo -n "$(Volume $standardSink)"
+echo -n "$(Volume $standardSinkHP)"
 
 for bluezSink in $(echo $sinkList | jq '.[] | select (.name | match("bluez")) | .index' ); do
 	# get battery for bose qc35
@@ -65,7 +83,9 @@ for bluezSink in $(echo $sinkList | jq '.[] | select (.name | match("bluez")) | 
 	elif [[ "$(echo $sinkList | jq '.[] | select (.index == '"$bluezSink"') | .description')" == '"MOMENTUM TW 3"' ]] ; then
 		# qc_battery="$(echo $sinkList | jq '.[] | select ( .index == '$bluezSink' ) | .properties."bluetooth.battery"')"
 		# qc_battery=${qc_battery:1:-2}
-		qc_battery=$(bluetoothctl info $(echo $sinkList | jq --raw-output '.[] | select (.index == '"$bluezSink"') | .properties | ."device.string"') | grep -oP 'Battery Percentage: 0x[0-f]* \(\K[0-9]*')
+		qc_battery=$(echo info $(echo $sinkList | jq --raw-output '.[] | select (.index == '"$bluezSink"') | .properties | ."device.string"') | bluetoothctl | grep -oP 'Battery Percentage: 0x[0-f]* \(\K[0-9]*')
+	elif [[ "$(echo $sinkList | jq '.[] | select (.index == '"$bluezSink"') | .description')" == '"Bose Mini II SoundLink"' ]] ; then
+		qc_battery=$(echo info $(echo $sinkList | jq --raw-output '.[] | select (.index == '"$bluezSink"') | .properties | ."device.string"') | bluetoothctl | grep -oP 'Battery Percentage: 0x[0-f]* \(\K[0-9]*')
 	else
 		qc_battery=""
 	fi
