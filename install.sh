@@ -71,7 +71,7 @@ checkSimilaritiesAndLink (){
 				fi
 			fi
 		else
-			echo_red "File $dest is a regular file, delete manually."
+			echo_red "File $dest is a regular file, delete manually (to allow link to $orig)."
 			allWentThrough=false
 		fi
 	# do the linking
@@ -204,6 +204,8 @@ if [[ "$(hostname)" == "P1" ]]; then
 
 	echo "--using languagetool spelling for vim"
 	checkSimilaritiesAndLink sudos/languagetool_spelling_custom.txt "$HOME/.vim/spell/en.utf-8.add"
+	checkSimilaritiesAndLink sudos/languagetool_spelling_custom.txt "$HOME/.local/share/nvim/site/spell/en.utf-8.add"
+	checkSimilaritiesAndLink sudos/languagetool_spelling_custom_de.txt "$HOME/.local/share/nvim/site/spell/de.utf-8.add"
 
 
 	echo "----sudos"
@@ -217,6 +219,14 @@ if [[ "$(hostname)" == "P1" ]]; then
 	echo "--languagetool spelling"
 	checkSimilaritiesAndLink sudos/languagetool_spelling_custom.txt /usr/share/languagetool/org/languagetool/resource/en/hunspell/spelling_custom.txt sudo
 	checkSimilaritiesAndLink sudos/languagetool_spelling_custom_de.txt /usr/share/languagetool/org/languagetool/resource/de/hunspell/spelling_custom.txt sudo
+
+	echo "--custom browser"
+	checkSimilaritiesAndLink other_configs/customBrowser.desktop /usr/share/applications/customBrowser.desktop sudo
+	checkSimilaritiesAndLink other_configs/mimeapps.list "$HOME/.config/mimeapps.list"
+
+	echo "--tlp power saving"
+	checkSimilaritiesAndLink sudos/tlp.conf /etc/tlp.conf sudo
+
 fi
 
 if ! $allWentThrough; then
