@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # set -euo pipefail
-source /home/julgoe/myConfigFiles/i3blockscripts/blocks_defines.sh
+source /home/$USER/myConfigFiles/i3blockscripts/blocks_defines.sh
 
 # state DOWN is not sufficient for turned off
 if ip link show wlp0s20f3 | grep -q "state DOWN mode DEFAULT"; then

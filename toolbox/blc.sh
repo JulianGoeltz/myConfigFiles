@@ -18,7 +18,7 @@ arg=$((
 	) |
 	# cut  -f1,2 | column --separator="|" -t --output-separator="    " --table-right 1 |
 	# --table-right 1 |
-	rofi -config /home/julgoe/.config/rofi/config.rasi -dmenu -p "which device to connect to?")
+	rofi -config /home/$USER/.config/rofi/config.rasi -dmenu -p "which device to connect to?")
 
 echo "return to function"
 

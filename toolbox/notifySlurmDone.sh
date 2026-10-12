@@ -39,8 +39,8 @@ elif [[ $1 == "receiving" ]]; then
 	
 	exact_call="nc -k -l localhost $port"
 	# first check whether nc is already instantiated, if so kill it
-	if pgrep -u julgoe -f "$exact_call" >/dev/null ; then
-		kill "$(pgrep -u julgoe -f "$exact_call")"
+	if pgrep -u $USER -f "$exact_call" >/dev/null ; then
+		kill "$(pgrep -u $USER -f "$exact_call")"
 	fi
 	# important to only be listening from localhost, otherwise anyone can send
 	eval "$exact_call"  | tmpFun

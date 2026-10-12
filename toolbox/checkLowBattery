@@ -2,7 +2,7 @@
 # from Higemaru on https://unix.stackexchange.com/questions/60778/how-can-i-get-an-alert-when-my-battery-is-about-to-die-in-linux-mint
 # used with (after chmod +x)
 ## $ crontab -e
-## */5 * * * * /home/julgoe/myConfigFiles/checkLowBattery
+## */5 * * * * /home/$USER/myConfigFiles/checkLowBattery
 
 # set -euo pipefail
 
@@ -25,7 +25,7 @@ if [ "$COMPARING_FLOATS" -eq 1 -a "$STATUS" == "$NOT_CHARGING" ]
 then
 	# if dunst is asleep, activate
 	if [ "$(dunstctl is-paused)" = 'true' ]; then
-		/home/julgoe/myConfigFiles/i3scripts/dunstToggle.sh resume
+		/home/$USER/myConfigFiles/i3scripts/dunstToggle.sh resume
 	fi
 	dunstify -u critical -i "$ICON" -r 4444 -t 60000 "Battery low" "Battery level is $(printf %.0f "$BATTERY_LEVEL")%!"
 fi

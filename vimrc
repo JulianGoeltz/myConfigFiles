@@ -95,9 +95,9 @@ if system('hostname') =~ "P1"
 	let g:vimtex_view_general_viewer='zathura'
 	let g:vimtex_view_method = 'zathura'
 
-	let g:vimwiki_list = [{'path':'/home/julgoe/Documents/vimwiki/text/',
-				\ 'path_html':'/home/julgoe/Documents/vimwiki/html/',
-				\ 'template_path': '/home/julgoe/Documents/vimwiki/text/aux'
+	let g:vimwiki_list = [{'path':'/home/jutr/Documents/vimwiki/text/',
+				\ 'path_html':'/home/jutr/Documents/vimwiki/html/',
+				\ 'template_path': '/home/jutr/Documents/vimwiki/text/aux'
 				\ }]
 	let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr, pre, script'
 	"set shell=/bin/zsh

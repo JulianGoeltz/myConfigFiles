@@ -16,8 +16,8 @@ dunstctl set-paused true
 # turn on screensaver/energysaver
 xset +dpms; xset s on; xset s blank
 # previously: 
-# i3lock -tbefi /home/julgoe/Pictures/actualBackgrounds/lock_1820.png -c 000000
-# -i /home/julgoe/Pictures/actualBackgrounds/lock_1820.png \
+# i3lock -tbefi /home/$USER/Pictures/actualBackgrounds/lock_1820.png -c 000000
+# -i /home/$USER/Pictures/actualBackgrounds/lock_1820.png \
 i3lock -nte -B4 \
     --inside-color=373445ff --ring-color=ffffffff --line-uses-inside \
     --keyhl-color=d23c3dff --bshl-color=d23c3dff --separator-color=00000000 \

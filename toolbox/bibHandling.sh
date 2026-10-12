@@ -50,7 +50,7 @@ echo "after case esac"
 # one pass to get rid of umlauts
 cat ${fileBase}.bib | bibtex-tidy --output ${fileBase}_tidy.bib
 
-bibtool -r /home/julgoe/Documents/papers/GUT-bib/bibtool.rsc ${fileBase}_tidy.bib > ${fileBase}_tidy_tool.bib
+bibtool -r /home/$USER/Documents/papers/GUT-bib/bibtool.rsc ${fileBase}_tidy.bib > ${fileBase}_tidy_tool.bib
 cat ${fileBase}_tidy_tool.bib | bibtex-tidy --curly --numeric --duplicates --blank-lines --sort --sort-fields --output ${fileBase}_tidy_tool_tidy.bib
 # create a blank line at the end
 echo "" >> ${fileBase}_tidy_tool_tidy.bib

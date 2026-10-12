@@ -8,7 +8,7 @@ SAVEHIST=1000000
 # End of lines configured by zsh-newuser-install
 # define filename for compinstall based on host
 if [[ "$(hostname)" == "P1" ]] || [[ "$(hostname)" == "T2" ]]; then
-	zstyle :compinstall filename '/home/julgoe/.zshrc'
+	zstyle :compinstall filename '/home/jutr/.zshrc'
 elif [[ "$(hostname)" =~ "hel" ]] || [[ "$(hostname)" =~ "RyzenHost" ]] || [[ "$(hostname)" =~ "EpycHost" ]] || [[ "$(hostname)" =~ "EINCHost" ]]; then
 	zstyle :compinstall filename '/wang/users/jgoeltz/cluster_home/.zshrc'
 elif [[ "$(hostname)" == "login1.nemo.privat" ]] then

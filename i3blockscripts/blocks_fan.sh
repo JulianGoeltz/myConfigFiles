@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set -euo pipefail
-source /home/julgoe/myConfigFiles/i3blockscripts/blocks_defines.sh
+source /home/$USER/myConfigFiles/i3blockscripts/blocks_defines.sh
 
 # emoji
 echo -n "$emojiFan "

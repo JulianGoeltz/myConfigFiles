@@ -38,7 +38,7 @@ def possibly_notify(station, minutes_to_arrival):
                 (time.time() - os.stat(notfication_filename).st_mtime) < (notification_minutes + 10) * 60):
             if subprocess.run(["dunstctl", "is-paused"], capture_output=True).stdout == b'true\n':
                 print("resuming dunstify", file=sys.stderr)
-                subprocess.run(['/home/julgoe/myConfigFiles/i3scripts/dunstToggle.sh', 'resume'],)
+                subprocess.run(['/home/$USER/myConfigFiles/i3scripts/dunstToggle.sh', 'resume'],)
             else:
                 print("dunstify already running", file=sys.stderr)
 

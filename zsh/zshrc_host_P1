@@ -18,10 +18,9 @@ module () {
 }
 
 # to connect to terminal server from urz
-alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/julgoe/Dropbox/printing"
+alias rdesktopURZ="rdesktop -u ta400 -d ad tsneu.ad.uni-heidelberg.de -r disk:share=/home/$USER/Dropbox/printing"
 
 # if on tty, change colour scheme a bit
-# . /home/julgoe/externalSources/spack/share/spack/setup-env.sh
 if [ "$TERM" = "linux" ]; then
 	#load the spack stuff in tty, gets passed on
 	#spack load python@2.7.16
@@ -189,7 +188,7 @@ timer() {
 sshhel_ () {
 	sshhel_fs && \
 	export ZSH_PROMPT_GIT_DONTDOIT="lala" && \
-	cd /home/julgoe/mnt/mntHel/${1:-jenkinsjob_FD_20231009/fastAndDeep/src} && \
+	cd /home/$USER/mnt/mntHel/${1:-jenkinsjob_FD_20231009/fastAndDeep/src} && \
 	zsh && \ 
 	sshhel_fs_unmount && killall watchAndUpdateFile.sh && \
 	exit

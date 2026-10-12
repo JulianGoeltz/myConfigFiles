@@ -1,2 +1,2 @@
 # check for low battery
-* * * * * /home/julgoe/myConfigFiles/toolbox/checkLowBattery &> /tmp/cron.log
+* * * * * /home/jutr/myConfigFiles/toolbox/checkLowBattery &> /tmp/cron.log
