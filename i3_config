@@ -396,3 +396,4 @@ bindsym $mod+Mod1+i  exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh 
 bindsym $mod+Ctrl+Mod1+i exec "bash /home/jutr/myConfigFiles/toolbox/bibHandling.sh"
 
 bindsym $mod+b exec "bash /home/jutr/myConfigFiles/toolbox/blc.sh"
+bindsym $mod+t exec "bash /home/jutr/myConfigFiles/toolbox/totp.sh"
