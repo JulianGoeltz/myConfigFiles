@@ -1,0 +1,22 @@
+#!/bin/zsh
+
+echo "in qrdisplay"
+
+# if argument given, take that
+if [ $# -ne 0 ]; then
+	str="${1}"
+else
+	str="$(xclip -o -selection clipboard)"
+fi
+
+
+file=/tmp/qr.png
+# encode it
+echo "'$str'"
+qrencode -t png -s 10 -o $file "$str"
+# view it
+#xprop -id "$WINDOWID" -f _NET_WM_WINDOW_TYPE 8u -set _NET_WM_WINDOW_TYPE splash
+display $file
+rm $file
+
+return 0
