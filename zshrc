@@ -101,6 +101,7 @@ alias -s png=eog
 
 alias -g B=" | bat"
 alias -g C=" | wc -l"
+alias -g D=" | delta"
 alias -g G=" | grep"
 alias -g J=" | json_pp"
 alias -g L=" | less" 
@@ -336,7 +337,7 @@ alias la="ls -lAh --color=always"
 alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 # open vim with fugitive window open
-alias vimgs="vim -c 'G' -c '20wincmd_'"
+alias vimgs="vim -c 'G' -c '20wincmd_' --listen /tmp/nvim_socket_$RANDOM"
 
 function doi2bib () {
 	/usr/bin/doi2bib $1 | bibtex-tidy --curly --numeric --duplicates=key --no-remove-dupe-fields

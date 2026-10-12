@@ -97,17 +97,6 @@ function convertSVGsToeps() {
 # to connect to WiFi on TTY, look in man nmcli for 'wifi connect'.
 # especially difference wifi connect and con ... up
 
-# alias to send current style status to Katja
-sendCurrentState () {
-	cd /home/julgoe/Dropbox/uni/MasterThesis/thesis/thesis-skeleton/
-	detex -e easylist,align,figure,wrapfigure,equation main.tex > main.txt
-	style main.txt > main.style.txt
-	if [ $# -gt 0 ]; then
-		telegram-cli -W -e "send_text Julian_Göltz main.style.txt"
-	fi
-	echo -n "Done, now return to "
-	cd -
-}
 
 # send notifications for lang tasks
 # from: https://superuser.com/questions/553564/is-there-a-way-to-make-zsh-run-a-command-after-reporttime
@@ -141,7 +130,9 @@ fi
 
 # copying files to my homepage to make them available
 copyToWeb (){
-	randNo=$RANDOM$RANDOM$RANDOM
+	if [ -z "${randNo}" ]; then
+		randNo=$RANDOM$RANDOM$RANDOM
+	fi
 	tmpConfig="$(echo ${GIT_SSH_COMMAND:-} | grep -oP "\-F [^ ]*" | awk '{print $2}')"
 	[ -z "$tmpConfig" ] && tmpConfig=~/.ssh/config || tmpConfig=~/.ssh/config_prox
 	echo "Using config file $tmpConfig"
@@ -151,7 +142,9 @@ copyToWeb (){
 			echo "File ${file} does not exist."
 			continue
 		fi
-		fileTrimmed=$(echo $file | sed 's/[^0-9A-Za-z.-]//g')
+		fileTrimmed=$(basename $file | sed 's/[^0-9A-Za-z.-_]//g')
+		# echo $fileTrimmed
+		# return 1
 		fileUrl=http://julian-goeltz.de/sharing/$randNo/$fileTrimmed
 		scp -F $tmpConfig -r "$file" ssh.strato.de:juliangoeltzde/sharing/$randNo/$fileTrimmed && \
 			echo "File is available at $fileUrl"
@@ -188,9 +181,10 @@ timer() {
 sshhel_ () {
 	sshhel_fs && \
 	export ZSH_PROMPT_GIT_DONTDOIT="lala" && \
-	cd /home/$USER/mnt/mntHel/${1:-jenkinsjob_FD_20231009/fastAndDeep/src} && \
+	cd /home/$USER/mnt/mntHel${1:-/jenkinsjob_FD_20231009/fastAndDeep/src} && \
 	zsh && \ 
 	sshhel_fs_unmount && killall watchAndUpdateFile.sh && \
+	killall sshfs && \
 	exit
 }
 
