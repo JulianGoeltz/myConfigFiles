@@ -169,6 +169,9 @@ else
 endif
 " spell rotate
 Plug 'tweekmonster/spellrotate.vim'
+" openscad
+"Plug 'igankevich/openscad.vim'
+Plug 'sirtaj/vim-openscad'
 call plug#end()
 
 
