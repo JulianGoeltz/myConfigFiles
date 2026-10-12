@@ -62,6 +62,7 @@ sudo chmod u+x /usr/local/bin/change_brightness.sh
 #julgoe ALL=(ALL) NOPASSWD:BRIGHTNESSCHANGE
 
 # gpg connection for thunderbird see also https://wiki.mozilla.org/Thunderbird:OpenPGP:Smartcards
+# (enable mail.openpgp.allow_external_gnupg in the config)
 # like in https://avaldes.co/2020/01/28/secret-service-keepassxc.html
 # when secret service is set up in keepassxc
 # add to ~/.gpg/gpg-agent.conf the line `pinentry-program /usr/bin/pinentry-gtk-2`
@@ -70,9 +71,10 @@ sudo chmod u+x /usr/local/bin/change_brightness.sh
 # for extension of validity: https://superuser.com/questions/813421/can-you-extend-the-expiration-date-of-an-already-expired-gpg-key
 # gpg --list-secret-keys
 # gpg --edit-key [ID]
-# `expire`, select validity, `save` (also for subkey)
-# delete in thunderbird key manager, add manually again
-# in thunderird key manager, add the public key `gpg --export --armor [id]`
+# `expire`, select validity, (also for subkey with `key 1`), `save` 
+# export the public key `gpg --export --armor [id]`
+# delete in thunderbird key manager (_not_ for the account (private key via external..., just in pgp key manager)
+# add manually again: public key (might need restart of thunderbird)
 
 # add to rofi commands the ones for chromium, chrome
 
