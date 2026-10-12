@@ -11,7 +11,11 @@ if ! [ -f  "$tmpfile" ]; then
 fi
 
 # open rofi and have user select desired symbol
-line=$(cut -d ' ' -f2-100 $tmpfile  | rofi -dmenu  -lines 10)
+if [ "$#" -lt 1 ]; then
+	line=$(cut -d ' ' -f2-100 $tmpfile | grep umlaut  | rofi -dmenu  -lines 10)
+else
+	line=$(cut -d ' ' -f2-100 $tmpfile | rofi -dmenu  -lines 10)
+fi
 
 # extract symbol from return value (first character) and paste it to xclip
 echo $line | cut -d' ' -f1 -z | xclip -selection c
@@ -22,4 +26,4 @@ echo $line | cut -d' ' -f1 -z | xclip -selection c
 gawk -i inplace '{if ($0 ~ /'"$line"'/) { tmp=$1+1; $1=""; print tmp$0} else {print}}' $tmpfile
 
 # sort st next time the lines are in sorted order
-sort -r -o $tmpfile $tmpfile
+sort -n -r -o $tmpfile $tmpfile

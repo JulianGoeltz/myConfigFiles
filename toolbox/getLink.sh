@@ -3,6 +3,7 @@
 # needs the customBrowser.desktop installed
 # sudo desktop-file-install customBrowser.desktop
 # (should be in /usr/share/applications/customBrowser.desktop)
+# (and maybe set with as default, as described in there ^)
 #
 # and in "$HOME/.config/mimeapps.list"
 # other_configs/mimeapps.list

@@ -1,6 +1,6 @@
 configuration {
 
-	font: "pango:monospace 18";
+	font: "monospace 18";
 }
 
 @theme "solarized"

@@ -11,7 +11,7 @@ if [ $# -eq 0 ]; then
 		return
 	fi
 	# if stopped due to timeout, it unsets
-	tmp_len=$(wget --no-proxy --timeout=1 -qO- http://www.kip.uni-heidelberg.de/proxy 2>/dev/null | wc -c)
+	tmp_len=$(wget --no-proxy --tries 1 --timeout=1 -qO- http://www.kip.uni-heidelberg.de/proxy 2>/dev/null | wc -c)
 	if [ $? -ne 0 ]; then
 		echo "Problem calling kip proxy with wget, do manually with set/unset"
 		return
