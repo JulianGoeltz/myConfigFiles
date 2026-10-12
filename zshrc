@@ -65,7 +65,7 @@ REPORTTIME=10 # print elapsed time when more than 10 seconds
 # To access port on hel locally, add to command (then go to localhost with that port):
 # -L 5678:localhost:5678
 # port forwarding to get notifs when slurm jobs are done
-alias sshhel="ssh -A -Y -o ConnectTimeout=60 -o ForwardX11Timeout=1000000s -o ServerAliveInterval=60 -R localhost:1234:localhost:1234 hel"
+alias sshhel="ssh -A -Y -o ConnectTimeout=60 -o ForwardX11Timeout=1000000s -o ServerAliveInterval=60 -R localhost:1234:localhost:1234 -L 5124:localhost:5124 hel"
 alias sshice="ssh -A -X -o ConnectTimeout=60 -p 7022 jgoeltz@brainscales-r.kip.uni-heidelberg.de"
 alias sshnemo="ssh -A -t hel \"ssh -A -F ~/.ssh/config_prox nemo\""
 alias sshtum="ssh -A -X lxhalle"
@@ -73,10 +73,10 @@ alias sshtum="ssh -A -X lxhalle"
 alias sshcremers="ssh -A -X -R 10000:localhost:2252 cremers"
 # alias sshhel_fs="sudo sshfs jgoeltz@brainscales-r.kip.uni-heidelberg.de:MasterThesis /mnt/hel_fs -p 11022 -o allow_other,IdentityFile=/home/julgoe/.ssh/id_rsa"
 sshhel_fs_helper(){
-	sshfs -p 11022 jgoeltz@brainscales-r.kip.uni-heidelberg.de:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
+	sshfs hel:$1 $2 -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60
 }
-alias sshhel_fs="sshhel_fs_helper \"\" ~/mnt/mntHel; sshhel_fs_helper /ley/users/jgoeltz ~/mnt/mntHel_ley"
-alias sshhel_fs_unmount="fusermount -u -z ~/mnt/mntHel; fusermount -u -z ~/mnt/mntHel_ley"
+alias sshhel_fs="sshhel_fs_helper \"\" ~/mnt/mntHel; sshhel_fs_helper /einc/prod/users/jgoeltz/ ~/mnt/mntHel_prod"
+alias sshhel_fs_unmount="fusermount -u -z ~/mnt/mntHel; fusermount -u -z ~/mnt/mntHel_prod"
 alias sshnemo_fs="sshfs hd_ta400@login1.nemo.uni-freiburg.de:/work/ws/nemo/hd_ta400-TtFS-0 ~/mnt/mntNemo -o delay_connect,idmap=user,transform_symlinks -o ConnectTimeout=60 -o ServerAliveInterval=60"
 alias sshhel_visu="sshhel -L 6931:localhost:6931"
 alias sshnemo_fs_unmount="fusermount -u -z ~/mnt/mntNemo"
