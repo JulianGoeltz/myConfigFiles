@@ -18,11 +18,21 @@ Host brainscales-r.kip.uni-heidelberg.de
     User goeltz
     IdentityFile ~/.ssh/gerrit_ecdsa
 
-Host gerrit.bioai.eu
+Host gerrit
+    # Host gerrit.bioai.eu
     Port 29418
     User goeltz
     HostName brainscales-r.kip.uni-heidelberg.de
     IdentityFile ~/.ssh/gerrit_ecdsa
+
+Host jenkins
+    Port 11022
+    User jgoeltz
+    HostName jenkins.bioai.eu
+    IdentityFile ~/.ssh/hel_rsa
+    ForwardX11 yes
+    ForwardX11Trusted no
+    ForwardAgent yes
 
 Host ssh.strato.de
     User www.julian-goeltz.de
@@ -41,6 +51,7 @@ Host hel
     IdentityFile ~/.ssh/hel_rsa
     ForwardX11 yes
     ForwardX11Trusted no
+    ForwardAgent yes
 
 Host lxhalle
     User goeltz
@@ -74,6 +85,13 @@ Host judac
     User goeltz1
     HostName judac.fz-juelich.de
     IdentityFile ~/.ssh/tmp_judac
+    ForwardX11 yes
+    ForwardAgent yes
+
+Host jusuf
+    HostName jusuf3.fz-juelich.de
+    User goeltz1
+    IdentityFile ~/.ssh/jusuf_ed25519
     ForwardX11 yes
     ForwardAgent yes
 
