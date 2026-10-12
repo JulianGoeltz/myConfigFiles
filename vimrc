@@ -91,9 +91,18 @@ else
 endif
 
 if system('hostname') =~ "P1"
-	"for forward search in latex with zathura
-	let g:vimtex_view_general_viewer='zathura'
-	let g:vimtex_view_method = 'zathura'
+	""for forward search in latex with zathura
+	"let g:vimtex_view_general_viewer='zathura'
+	"let g:vimtex_view_method = 'zathura'
+	" trying evince, also using SVED
+	let g:vimtex_view_general_viewer = 'evince'
+	"let g:vimtex_view_method = 'evince'
+	Plug 'JulianGoeltz/sved'
+	nmap <F4> :call SVED_Sync()<CR>
+	nmap <leader>lv :call SVED_Sync()<CR>
+
+	" use tmp files such that display works all the time
+	let g:vimtex_view_use_temp_files = 1
 
 	let g:vimwiki_list = [{'path':'/home/jutr/Documents/vimwiki/text/',
 				\ 'path_html':'/home/jutr/Documents/vimwiki/html/',
@@ -338,10 +347,11 @@ autocmd FileType vimwiki set colorcolumn=0
 "   \}
 let g:vimtex_quickfix_ignore_filters = [
   \ 'The length marginparwidth is less than 2cm',
+  \ 'Overfull \\hb',
+  \ 'Underfull \\hb',
+  \ 'Marginpar on page',
   \]
-  " \ 'Marginpar on page',
-  " \ 'Underfull',
-"   \ 'Overfull',
+
 "   \ 'hyperref' : 0,
 
 map <localleader>ls :VimtexCompileSS<CR>
