@@ -19,6 +19,7 @@ brainlike
 BrainScaleS
 BrainScaleS-2
 Burstprop
+BurstCCN
 CoBa
 combinatorics
 Crailsheim
@@ -28,6 +29,8 @@ discretised
 distortive
 DYNAP-SE
 EBRAINS
+ELiSE
+ENMC
 energy-to-solution
 EventProp
 expressivity
@@ -35,9 +38,12 @@ feedforward
 first-spike
 GABAergic
 GeNN
+GLE
 glutamatergic
 Göltz
 Heaviside
+Hebb
+Hebbian
 hiPSC
 homeostatic
 homeostasis
@@ -75,7 +81,12 @@ neuromorphics
 neurosynaptic
 nLIF
 NMDA
+non-Hebbian
+non-Markovian
 nonlinearity
+nonlocal
+nonlocality
+Nonlocality
 observables
 Offenburg
 olfaction
@@ -84,6 +95,7 @@ OLs
 organoid
 organoids
 perceptron
+perisomatic
 Petrovici
 polydimethylsiloxane
 postsynaptic
@@ -94,6 +106,7 @@ PPUs
 predate
 predates
 presynaptic
+prospectivity
 pseudounipolar
 PSP
 PyNN
@@ -115,9 +128,12 @@ Senn
 SNN
 SNNs
 softmax
+somata
+somato-dendritic
 SpikeProp
 SpiNNaker
 spintronic
+Stärk
 STDP
 stochasticity
 subthreshold
@@ -133,6 +149,7 @@ trepanations
 TTFS
 Universität
 visuomotor
+VLE
 von-Neumann
 YS
 YY
