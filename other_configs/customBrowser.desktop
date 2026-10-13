@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=/home/jutr/myConfigFiles/toolbox/getLink.sh
+Exec=/home/jutr/myConfigFiles/toolbox/getLink.sh %U
 Name=getLink
 # set with
 # xdg-settings set default-web-browser customBrowser.desktop
